@@ -1,0 +1,7 @@
+:root {
+    --primary-bg-color: black;
+    --primary-fg-color: white;
+
+    --layout-section-margin: 8px;
+    --layout-section-padding: 16px;
+}

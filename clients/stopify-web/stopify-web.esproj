@@ -8,4 +8,10 @@
     <!-- Folder where production build objects will be placed -->
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="mockups\assets\images\" />
+    <Folder Include="mockups\assets\fonts\" />
+    <Folder Include="mockups\css\components\" />
+    <Folder Include="mockups\pages\" />
+  </ItemGroup>
 </Project>

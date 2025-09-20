@@ -17,14 +17,87 @@
 
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout/layout.css" />
+  <link rel="stylesheet" href="css/layout/global-header.css" />
+  <link rel="stylesheet" href="css/layout/now-playing-bar.css" />
   <link rel="stylesheet" href="css/pages/home.css" />
 </head>
 <body>
   <!-- GLOBAL HEADER -->
   <header id="global-header" class="layout-section">
-    GLOBAL HEADER
+    <section id="global-header__left-section">
+      <a id="global-header__stopify-logo--anchor" href="index.html" draggable="false" title="Stopify">
+        <img id="global-header__stopify-logo--img" src="assets/images/icons/favicon.svg" alt="Stopify" draggable="false">
+      </a>
+    </section>
+    <section id="global-header__middle-section">
+      <button id="global-header__home-btn" class="global-header__btn-base" title="Home">
+        <span id="global-header__home-btn--span">
+          <i class="fa-solid fa-house"></i>
+        </span>
+      </button>
+      <form action="javascript:void(0);" id="global-header__search-form" role="search">
+        <label id="global-header__search-bar--group" for="global-header__search-bar--input" tabindex="0">
+          <button id="global-header__search-btn" class="global-header__btn-base" title="Search">
+            <span id="global-header__search-btn--span">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </span>
+          </button>
+          <input id="global-header__search-bar--input" type="text" autocomplete="off" placeholder=" ">
+          <div id="global-header__search-bar--placeholder-group">
+            <span id="global-header__search-bar--placeholder-text">
+              What do you want to play?
+            </span>
+          </div>
+          <button id="global-header__search-btns--clear-btn" class="global-header__btn-base global-header__search-bar--btn" type="reset" title="Clear search field">
+            <span id="global-header__search-btns--clear-span">
+              <i class="fa-solid fa-xmark"></i>
+            </span>
+          </button>
+          <div id="global-header__search-btns--browse-group">
+            <button id="global-header__search-btns--browse-btn" class="global-header__btn-base global-header__search-bar--btn" title="Browse">
+              <span id="global-header__search-btns--browse-span">
+                <i class="fa-solid fa-bucket"></i>
+              </span>
+            </button>
+          </div>
+        </label>
+        <div id="global-header__search-dropdown" role="listbox">
+            <p id="global-header__recent-searches--text">
+              Recent searches
+            </p>
+            <ul id="global-header__recent-searches--list" role="grid"></ul>
+            <button id="global-header__recent-searches--clear-btn">
+              Clear recent searches
+            </button>
+          </div>
+      </form>
+    </section>
+
+    <section id="global-header__right-section">
+      <a href="" id="global-header__install-app--anchor" class="global-header__btn-base" draggable="false">
+        <span id="global-header__install-app--span">
+          <i class="fa-solid fa-arrow-down"></i>
+        </span>
+        <span id="global-header__install-app--text">
+          Install App
+        </span>
+      </a>
+      <div id="global-header__right-group--btns">
+        <button id="global-header__content-feed-btn" class="global-header__right-group--btn" title="What's New">
+          <i class="fa-solid fa-bell"></i>
+        </button>
+        <button id="global-header__friend-activity-btn" class="global-header__right-group--btn" title="Friend Activity">
+          <i class="fa-solid fa-user-group"></i>
+        </button>
+      </div>
+      <button id="global-header__user-widget--btn" title="Aqua Studios`">
+        <span id="global-header__user-widget--span">
+          A
+        </span>
+      </button>
+    </section>
   </header>
 
   <!-- FULL SCREEN VIEW -->

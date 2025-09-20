@@ -1,7 +1,9 @@
 :root {
-    --primary-bg-color: black;
-    --primary-fg-color: white;
-
-    --layout-section-margin: 8px;
-    --layout-section-padding: 16px;
+  --primary-bg-color: black;
+  --primary-fg-color: white;
+  --primary-element-bg-color: #1f1f1f;
+  --primary-element-bg-color-hover: #2a2a2a;
+  --light-gray-fg-color: #b3b3b3;
+  --layout-section-margin: 8px;
+  --layout-section-padding: 8px;
 }

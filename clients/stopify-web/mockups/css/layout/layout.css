@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'StopifyFont';
+  src: url('../assets/fonts/StopifyMedium.ttf') format('truetype');
+}
+
+html {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-fg-color);
+  font-family: 'StopifyFont';
+}
+
+body {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+}
+
+#global-header {
+  grid-row: 1;
+  height: 64px;
+}
+
+.main-section {
+  border: green 1px solid;
+  display: flex;
+  overflow-y: auto;
+}
+
+#full-screen-view__group {
+  display: none;
+}
+
+main {
+  display: grid;
+  grid-row: 2;
+  grid-template-columns: auto 1fr auto;
+}
+
+#left-sidebar__group {
+  width: 300px;
+}
+
+#right-sidebar__group {
+  width: 300px;
+}
+
+.sidebar-main {
+  flex-grow: 1;
+}
+
+#now-playing-bar {
+  grid-row: 3;
+  height: 80px;
+}
+
+.layout-resizer {
+  background-color: aqua;
+  cursor: col-resize;
+  height: 100%;
+  width: 4px;
+}

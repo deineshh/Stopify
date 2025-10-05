@@ -121,12 +121,10 @@
   display: none;
 }
 
-#global-header__search-bar--input:not(:placeholder-shown) + #global-header__search-bar--placeholder-group {
+#global-header__search-bar--input:not(:placeholder-shown) + #global-header__search-bar--placeholder-group,
+#global-header__search-bar--input:placeholder-shown ~ #global-header__search-btns--clear-btn {
+  display: none;
   opacity: 0;
-}
-
-#global-header__search-bar--input:not(:placeholder-shown) ~ #global-header__search-btns--clear-btn {
-  opacity: 1;
 }
 
 .global-header__search-bar--btn {
@@ -135,7 +133,6 @@
 }
 
 #global-header__search-btns--clear-btn {
-  opacity: 0;
   padding: 10px;
 }
 

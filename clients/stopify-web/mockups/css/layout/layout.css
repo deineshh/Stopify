@@ -10,10 +10,10 @@ html {
 }
 
 body {
-  display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
+  overflow: hidden;
 }
 
 #global-header {
@@ -21,42 +21,59 @@ body {
   height: 64px;
 }
 
-.main-section {
-  border: green 1px solid;
-  display: flex;
-  overflow-y: auto;
-}
-
-#full-screen-view__group {
-  display: none;
-}
-
 main {
-  display: grid;
-  grid-row: 2;
-  grid-template-columns: auto 1fr auto;
+  flex: 1;
+  display: flex;
+  min-height: 0;
 }
 
-#left-sidebar__group {
-  width: 300px;
+.main-section {
+  display: flex;
+  min-height: 0;
 }
 
-#right-sidebar__group {
-  width: 300px;
+#left-sidebar__main-group, #right-sidebar__main-group, #main-view {
+  background-color: var(--secondary-bg-color);
+  border-radius: 8px;
+}
+
+.sidebar-group {
+  max-width: 428px;
 }
 
 .sidebar-main {
   flex-grow: 1;
 }
 
+#full-screen-view__group {
+  display: none;
+}
+
+#left-sidebar__group {
+  container-type: inline-size;
+  container-name: left-sidebar__group;
+  margin-left: 8px;
+  min-width: 72px;
+  width: 288px;
+}
+
+#right-sidebar__group {
+  margin-right: 8px;
+  min-width: 288px;
+}
+
+#main-view {
+  flex-grow: 1;
+}
+
 #now-playing-bar {
   grid-row: 3;
-  height: 80px;
+  height: 88px;
 }
 
 .layout-resizer {
-  background-color: aqua;
+  /* background-color: aqua; */
   cursor: col-resize;
   height: 100%;
-  width: 4px;
+  width: 8px;
 }

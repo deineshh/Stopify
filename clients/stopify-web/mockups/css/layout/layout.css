@@ -22,8 +22,8 @@ body {
 }
 
 main {
-  flex: 1;
   display: flex;
+  flex: 1;
   min-height: 0;
 }
 
@@ -35,10 +35,6 @@ main {
 #left-sidebar__main-group, #right-sidebar__main-group, #main-view {
   background-color: var(--secondary-bg-color);
   border-radius: 8px;
-}
-
-.sidebar-group {
-  max-width: 428px;
 }
 
 .sidebar-main {
@@ -60,6 +56,11 @@ main {
 #right-sidebar__group {
   margin-right: 8px;
   min-width: 288px;
+  width: 288px;
+}
+
+#right-sidebar__main-group {
+  position: relative;
 }
 
 #main-view {
@@ -72,8 +73,8 @@ main {
 }
 
 .layout-resizer {
-  /* background-color: aqua; */
   cursor: col-resize;
+  flex-shrink: 0;
   height: 100%;
   width: 8px;
 }

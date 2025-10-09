@@ -7,8 +7,6 @@
   --light-gray-fg-color: #b3b3b3;
   --layout-section-margin: 8px;
   --layout-section-padding: 8px;
+  --layout-section-spacing-primary: 16px;
   --primary-green-color: #1ac356;
-  --primary-scrollbar-color: #404040;
-  --primary-scrollbar-color-hover: #505050;
-  --primary-scrollbar-width: 12px;
 }

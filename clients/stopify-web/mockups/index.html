@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="css/layout/layout.css" />
   <link rel="stylesheet" href="css/layout/global-header.css" />
   <link rel="stylesheet" href="css/layout/sidebar-library.css" />
+  <link rel="stylesheet" href="css/layout/now-playing-view.css" />
+  <link rel="stylesheet" href="css/layout/queue-view.css" />
   <link rel="stylesheet" href="css/layout/now-playing-bar.css" />
   <link rel="stylesheet" href="css/pages/home.css" />
 </head>
@@ -93,7 +95,7 @@
           <i class="fa-solid fa-user-group"></i>
         </button>
       </div>
-      <button id="global-header__user-widget--btn" title="Aqua Studios`">
+      <button id="global-header__user-widget--btn" title="Aqua Studios">
         <span id="global-header__user-widget--span">
           A
         </span>
@@ -718,7 +720,996 @@
     <!-- RIGHT SIDEBAR -->
     <section id="right-sidebar__group" class="main-section sidebar-group">
       <div class="layout-resizer"></div>
-      <aside id="right-sidebar__main-group" class="sidebar-main"></aside>
+      <aside id="right-sidebar__main-group" class="sidebar-main">
+        <section id="now-playing-view__main-group">
+          <header id="now-playing-view__header">
+            <div id="now-playing-view__header--title-group">
+              <button id="now-playing-view__header--hide-btn" title="Hide Now Playing view">
+                <span id="now-playing-view__header--hide-icon">
+                  <i class="fa-regular fa-circle-right"></i>
+                </span>
+              </button>
+              <a href="" id="now-playing-view__header--title-anchor">
+                <h1 id="now-playing-view__header--title-text">
+                  Azahriah
+                </h1>
+              </a>
+            </div>
+            <div id="now-playing-view__header--btns">
+              <button id="now-playing-view__header--more-btn" class="now-playing-view__header--btn" title="More options for PANNONIA">
+                <span id="now-playing-view__header--more-icon" class="now-playing-view__header--btn-icon">
+                  <i class="fa-solid fa-ellipsis"></i>
+                </span>
+              </button>
+              <button id="now-playing-view__header--expand-btn" class="now-playing-view__header--btn" title="Expand Now Playing view">
+                <span id="now-playing-view__header--expand-icon" class="now-playing-view__header--btn-icon">
+                  <i class="fa-solid fa-up-right-and-down-left-from-center"></i>
+                </span>
+              </button>
+            </div>
+          </header>
+          <main id="now-playing-view__main">
+            <div id="now-playing-view__track">
+              <a href="" id="now-playing-view__track--cover--anchor">
+                <img src="assets/images/song.jpg" alt="TRACK COVER" id="now-playing-view__track--cover--img">
+              </a>
+              <div id="now-playing-view__track--btns">
+                <div id="now-playing-view__track--info">
+                  <a href="" id="now-playing-view__track--title-anchor">
+                    <span id="now-playing-view__track--title-span">
+                      PANNONIA
+                    </span>
+                  </a>
+                  <div id="now-playing-view__track--artists" title="PANNONIA">
+                    <a href="" class="now-playing-view__track--artist-anchor">
+                      <span class="now-playing-view__track--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="now-playing-view__track--artist-seperator">,</span>
+                    <a href="" class="now-playing-view__track--artist-anchor">
+                      <span class="now-playing-view__track--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="now-playing-view__track--artist-seperator">,</span>
+                    <a href="" class="now-playing-view__track--artist-anchor">
+                      <span class="now-playing-view__track--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </div>
+                </div>
+                <button id="now-playing-view__track--copy-link-btn" class="now-playing-view__track--btn" title="Copy link to Song">
+                  <span id="now-playing-view__track--copy-link-icon">
+                    <i class="fa-solid fa-upload"></i>
+                  </span>
+                </button>
+                <button id="now-playing-view__track--save-btn" class="now-playing-view__track--btn" title="Add to Liked Songs">
+                  <span id="now-playing-view__track-save-icon">
+                    <i class="fa-solid fa-check"></i>
+                  </span>
+                </button>
+              </div>
+            </div>
+            <div id="now-playing-view__artist-info" class="now-playing-view__section">
+              <div id="now-playing-view__artist-info--header-group">
+                <h2 id="now-playing-view__artist-info--title" class="now-playing-view__section--title">
+                  About the artist
+                </h2>
+                <figure id="now-playing-view__artist-info--avatar-figure" title="Azahriah">
+                  <img src="assets/images/song.jpg" alt="ARTIST AVATAR" id="now-playing-view__artist-info--avatar-img">
+                </figure>
+              </div>
+              <div id="now-playing-view__artist-info--main-group">
+                <a href="" id="now-playing-view__artist-info--artist-anchor">
+                  <span id="now-playing-view__artist-info--artist-span">
+                    DESH
+                  </span>
+                </a>
+                <div id="now-playing-view__artist-info--center-group">
+                  <span id="now-playing-view__artist-info--monthly-listeners">
+                    653,000 monthly listeners
+                  </span>
+                  <button id="now-playing-view__artist-info--follow-btn" class="now-playing-view__follow-btn">
+                    <span id="now-playing-view__artist-info--follow-span" class="now-playing-view__follow-span">
+                      Follow
+                    </span>
+                  </button>
+                </div>
+                <span id="now-playing-view__artist-info--description">
+                  DESH tündérmesébe illő története a magyar zeneipar egyik legizgalmasabb színfoltja. Jelenleg 43 millió megtekintésnél tartó Kukásautó című bemutatkozó dala valódi történetet dolgoz fel: DESH valóban kukásból lett Magyarország legnépszerűbb trap-előadója. 
+
+                  2022-ben két közös slágerlemezt adott ki legjobb barátjával és alkotótársával, Azahriah-val (‘A ló túloldalán’, ‘tripq’), és megjelent első, ‘DESHPERADO’ című nagylemeze is. 2023-ban két EP-t dobott piacra (‘A bús barista balladái’, és ‘CARPE DIEM’).
+
+                  2024-ben újabb sláger EP látott világot, a ‘BAKPAKK’-on DESH és Young Fly mellett Azahriah is közreműködött: a “BAKPAKK” és a “PANNÓNIA” című számokban tér vissza a klasszik Azi-Deshi-Fly vibe.
+
+                  Miután az elmúlt években Azahriah fellépőtársaként végigturnézta az országot és az európai turné állomásain is fel-felbukkant, 2024-ben barátja történelmi pillanatában is részt vett: Azahriah tripla Puskás koncertjén volt előzenekar, így közel 150.000 nézőt melegített be az Azahriah show előtt, amelyben aztán ő is részt vett vendégelőadóként.
+
+                  DESH saját zenekarával is könnyen megtölt koncerttermeket, 2024-ben pedig újabb mérföldkövet ért el: első önálló Budapest Parkos koncertje teltházas lett.
+
+                  2025-ben az előadó tovább építi szóló karrierjét: idén droppol egy újabb EP, számos új dallal, emellett hazai berkeken belül még nem látott extra és nagyszabású turné szettel készül a produkció.
+                </span>
+              </div>
+            </div>
+            <div id="now-playing-view__credits" class="now-playing-view__section">
+              <div id="now-playing-view__credits--header-group">
+                <h2 id="now-playing-view__credits--title" class="now-playing-view__section--title">
+                  Credits
+                </h2>
+                <button id="now-playing-view__credits--show-all-btn" class="now-playing-view__section--more-btn">
+                  <span id="now-playing-view__credits--show-all-span" class="now-playing-view__section--more-span">
+                    Show all
+                  </span>
+                </button>
+              </div>
+              <div id="now-playing-view__credits--main-group">
+                <div class="now-playing-view__credits--artist-group">
+                  <div class="now-playing-view__credits--artist-info">
+                    <button class="now-playing-view__credits--artist-name-btn">
+                      <span class="now-playing-view__credits--artist-name-span">
+                        DESH
+                      </span>
+                    </button>
+                    <span class="now-playing-view__credits--artist-role">
+                      Main Artist
+                    </span>
+                  </div>
+                  <button class="now-playing-view__credits--follow-btn now-playing-view__follow-btn">
+                    <span class="now-playing-view__credits--follow-span now-playing-view__follow-span">
+                      Follow
+                    </span>
+                  </button>
+                </div>
+                <div class="now-playing-view__credits--artist-group">
+                  <div class="now-playing-view__credits--artist-info">
+                    <button class="now-playing-view__credits--artist-name-btn">
+                      <span class="now-playing-view__credits--artist-name-span">
+                        Young Fly
+                      </span>
+                    </button>
+                    <span class="now-playing-view__credits--artist-role">
+                      Main Artist
+                    </span>
+                  </div>
+                  <button class="now-playing-view__credits--follow-btn now-playing-view__follow-btn">
+                    <span class="now-playing-view__credits--follow-span now-playing-view__follow-span">
+                      Follow
+                    </span>
+                  </button>
+                </div>
+                <div class="now-playing-view__credits--artist-group">
+                  <div class="now-playing-view__credits--artist-info">
+                    <button class="now-playing-view__credits--artist-name-btn">
+                      <span class="now-playing-view__credits--artist-name-span">
+                        Azahriah
+                      </span>
+                    </button>
+                    <span class="now-playing-view__credits--artist-role">
+                      Main Artist
+                    </span>
+                  </div>
+                  <button class="now-playing-view__credits--follow-btn now-playing-view__follow-btn">
+                    <span class="now-playing-view__credits--follow-span now-playing-view__follow-span">
+                      Unfollow
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div id="now-playing-view__next">
+              <div id="now-playing-view__next--header-group">
+                <h2 id="now-playing-view__next--title" class="now-playing-view__section--title">
+                  Next in queue
+                </h2>
+                <button id="now-playing-view__next--open-queue-btn" class="now-playing-view__section--more-btn">
+                  <span id="now-playing-view__next--open-queue-span" class="now-playing-view__section--more-span">
+                    Open queue
+                  </span>
+                </button>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span class="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div id="right-sidebar__track-item--right-group">
+                  <button id="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span id="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </section>
+        <section id="queue-view__main-group">
+          <header id="queue-view__header">
+            <h1 id="queue-view__header--title">
+              Queue
+            </h1>
+            <button id="queue-view__header--close-btn" title="Close">
+              <span id="queue-view__header--close-span">
+                <i class="fa-solid fa-xmark"></i>
+              </span>
+            </button>
+          </header>
+          <main id="queue-view__main">
+            <div id="queue-view__now-playing--group">
+              <h2 id="queue-view__now-playing--title">
+                Now playing
+              </h2>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div id="queue-view__next-from--group">
+              <div id="queue-view__next-from--title-group">
+                <h2 id="queue-view__next-from--title-text">
+                  Next from:
+                </h2>
+                <a href="" id="queue-view__next-from--title-artist--anchor">
+                  <span id="queue-view__next-from--title-artist--span">
+                    Azahriah
+                  </span>
+                </a>
+              </div>
+              <div id="queue-view__next-from--items">
+                <div class="right-sidebar__track-item">
+                  <div class="right-sidebar__track-item--left-group">
+                    <div class="right-sidebar__track-item--img-group">
+                      <img class="right-sidebar__track-item--img"></img>
+                    </div>
+                    <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                      <span class="right-sidebar__track-item--play-icon">
+                        <i class="fa-solid fa-play"></i>
+                      </span>
+                    </button>
+                  </div>
+                  <div class="right-sidebar__track-item--center-group">
+                    <p class="right-sidebar__track-item--title">
+                      <span class="right-sidebar__track-item--title-span">
+                        BAKPAKK
+                      </span>
+                    </p>
+                    <p class="right-sidebar__track-item--artists">
+                      <a href="" class="right-sidebar__track-item--artist-anchor">
+                        <span class="right-sidebar__track-item--artist-span">
+                          DESH
+                        </span>
+                      </a>
+                      <span class="right-sidebar__track-item--artist-seperator">,</span>
+                      <a href="" class="right-sidebar__track-item--artist-anchor">
+                        <span class="right-sidebar__track-item--artist-span">
+                          Young Fly
+                        </span>
+                      </a>
+                      <span class="right-sidebar__track-item--artist-seperator">,</span>
+                      <a href="" class="right-sidebar__track-item--artist-anchor">
+                        <span class="right-sidebar__track-item--artist-span">
+                          Azahriah
+                        </span>
+                      </a>
+                    </p>
+                  </div>
+                  <div class="right-sidebar__track-item--right-group">
+                    <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                      <span class="right-sidebar__track-item--more-icon">
+                        <i class="fa-solid fa-ellipsis"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="right-sidebar__track-item">
+                <div class="right-sidebar__track-item--left-group">
+                  <div class="right-sidebar__track-item--img-group">
+                    <img class="right-sidebar__track-item--img"></img>
+                  </div>
+                  <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+                    <span class="right-sidebar__track-item--play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+                <div class="right-sidebar__track-item--center-group">
+                  <p class="right-sidebar__track-item--title">
+                    <span id="right-sidebar__track-item--title-span">
+                      BAKPAKK
+                    </span>
+                  </p>
+                  <p class="right-sidebar__track-item--artists">
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        DESH
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Young Fly
+                      </span>
+                    </a>
+                    <span class="right-sidebar__track-item--artist-seperator">,</span>
+                    <a href="" class="right-sidebar__track-item--artist-anchor">
+                      <span class="right-sidebar__track-item--artist-span">
+                        Azahriah
+                      </span>
+                    </a>
+                  </p>
+                </div>
+                <div class="right-sidebar__track-item--right-group">
+                  <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+                    <span class="right-sidebar__track-item--more-icon">
+                      <i class="fa-solid fa-ellipsis"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              </div>
+            </div>
+          </main>
+        </section>
+      </aside>
     </section>
   </main>
 

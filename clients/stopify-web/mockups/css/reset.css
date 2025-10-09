@@ -4,17 +4,10 @@
   box-sizing: border-box;
 }
 
-button {
+button, input, a {
   all: unset;
-  cursor: pointer;
 }
 
-input {
-  all: unset;
-  cursor: text
-}
-
-a {
-  all: unset;
+button, a {
   cursor: pointer;
 }

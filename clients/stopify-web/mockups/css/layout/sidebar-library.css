@@ -118,14 +118,6 @@
   scrollbar-gutter: stable;
 }
 
-#left-sidebar__main::-webkit-scrollbar {
-  width: var(--primary-scrollbar-width);
-}
-
-#left-sidebar__main::-webkit-scrollbar-thumb {
-  background-color: gray;
-}
-
 #left-sidebar__main--header {
   align-items: center;
   color: var(--light-gray-fg-color);
@@ -225,6 +217,10 @@
   background-color: var(--primary-element-bg-color);
 }
 
+.left-sidebar__main-item:hover .left-sidebar__main-item--play-btn {
+  visibility: visible;
+}
+
 .left-sidebar__main-item--left-group {
   align-items: center;
   display: flex;
@@ -244,6 +240,7 @@
   position: absolute;
   transform: scale(1);
   transition: .05s transform ease-in-out;
+  visibility: collapse;
 }
 
 .left-sidebar__main-item--play-btn:hover {

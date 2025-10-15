@@ -24,7 +24,10 @@
   <link rel="stylesheet" href="css/layout/now-playing-view.css" />
   <link rel="stylesheet" href="css/layout/queue-view.css" />
   <link rel="stylesheet" href="css/layout/now-playing-bar.css" />
+  <link rel="stylesheet" href="css/pages/search.css" />
   <link rel="stylesheet" href="css/pages/home.css" />
+
+  <script src="js/slider.js" defer></script>
 </head>
 <body>
   <!-- GLOBAL HEADER -->
@@ -1714,6 +1717,128 @@
   </main>
 
   <!-- NOW PLAYING BAR -->
-  <aside id="now-playing-bar" class="layout-section"></aside>
+  <aside id="now-playing-bar" class="layout-section">
+    <section id="now-playing-bar__track-info--section">
+      <div id="now-playing-bar__img-group">
+        <button id="now-playing-bar__img-group--btn">
+          <img src="assets/images/song.jpg" alt="TRACK COVER" id="now-playing-bar__img-group--img">
+        </button>
+        <button id="now-playing-bar__expand-btn" title="Collapse">
+          <span id="now-playing-bar__expand-icon">
+            <i class="fa-solid fa-chevron-up"></i>
+          </span>
+        </button>
+      </div>
+      <div id="now-playing-bar__track-info--group">
+        <a href="" id="now-playing-bar__track-info--title-anchor">
+          <span id="now-playing-bar__track-info--title-span">
+            PANNONIA
+          </span>
+        </a>
+        <p id="now-playing-bar__track-info--artists">
+          <a href="" class="now-playing-bar__track-info--artist-anchor">
+            <span class="now-playing-bar__track-info--artist-span">
+              DESH
+            </span>
+          </a>
+          <span class="now-playing-bar__track-info--artist-seperator">,</span>
+          <a href="" class="now-playing-bar__track-info--artist-anchor">
+            <span class="now-playing-bar__track-info--artist-span">
+              Young Fly
+            </span>
+          </a>
+          <span class="now-playing-bar__track-info--artist-seperator">,</span>
+          <a href="" class="now-playing-bar__track-info--artist-anchor">
+            <span class="now-playing-bar__track-info--artist-span">
+              Azahriah
+            </span>
+          </a>
+        </p>
+      </div>
+      <button id="now-playing-bar__save-btn" title="Add to Liked Songs">
+        <span id="now-playing-bar__save-icon">
+          <i class="fa-solid fa-plus"></i>
+        </span>
+      </button>
+    </section>
+    <section id="now-playing-bar__player--section">
+      <div id="now-playing-bar__player--btns">
+        <button id="now-playing-bar__player--shuffle-btn" class="now-playing-bar__btn-base" title="Enable shuffle">
+          <span id="now-playing-bar__player--shuffle-icon">
+            <i class="fa-solid fa-shuffle"></i>
+          </span>
+        </button>
+        <button id="now-playing-bar__player--previous-btn" class="now-playing-bar__btn-base now-playing-bar__skip-btn" title="Previous">
+          <span id="now-playing-bar__player--previous-icon" class="now-playing-bar__skip-icon">
+            <i class="fa-solid fa-backward-step"></i>
+          </span>
+        </button>
+        <button id="now-playing-bar__player--play-btn" title="Play">
+          <span id="now-playing-bar__player--play-icon">
+            <i class="fa-solid fa-play"></i>
+          </span>
+        </button>
+        <button id="now-playing-bar__player--next-btn" class="now-playing-bar__btn-base now-playing-bar__skip-btn" title="Next">
+          <span id="now-playing-bar__player--next-icon" class="now-playing-bar__skip-icon">
+            <i class="fa-solid fa-forward-step"></i>
+          </span>
+        </button>
+        <button id="now-playing-bar__player--repeat-btn" class="now-playing-bar__btn-base" title="Enable repeat">
+          <span id="now-playing-bar__player--repeat-icon">
+            <i class="fa-solid fa-repeat"></i>
+          </span>
+        </button>
+      </div>
+      <div id="now-playing-bar__player--slider-group">
+        <span id="now-playing-bar__player--playback-position" class="now-playing-bar__player--playback-time">0:00</span>
+        <div id="now-playing-bar__player--slider">
+          <input class="now-playing-bar__slider--input" type="range" min="0" max="100" value="32" />
+        </div>
+        <span id="now-playing-bar__player--playback-duration" class="now-playing-bar__player--playback-time">2:27</span>
+      </div>
+    </section>
+    <section id="now-playing-bar__btns-section">
+      <button id="now-playing-bar__now-playing-view-btn" class="now-playing-bar__btn-base" title="Now playing view">
+        <span id="now-playing-bar__now-playing-view-icon" class="now-playing-bar__btns-section--icon">
+          <i class="fa-solid fa-play"></i>
+        </span>
+      </button>
+      <button id="now-playing-bar__lyrics-btn" class="now-playing-bar__btn-base" title="Lyrics">
+        <span id="now-playing-bar__lyrics-icon" class="now-playing-bar__btns-section--icon">
+          <i class="fa-solid fa-microphone"></i>
+        </span>
+      </button>
+      <button id="now-playing-bar__queue-btn" class="now-playing-bar__btn-base" title="Queue">
+        <span id="now-playing-bar__queue-icon" class="now-playing-bar__btns-section--icon">
+          <i class="fa-solid fa-bars"></i>
+        </span>
+      </button>
+      <button id="now-playing-bar__connect-to-device-btn" class="now-playing-bar__btn-base" title="Connect to a device">
+        <span id="now-playing-bar__connect-to-device-icon" class="now-playing-bar__btns-section--icon">
+          <i class="fa-solid fa-computer"></i>
+        </span>
+      </button>
+      <div id="now-playing-bar__volume-group">
+        <button id="now-playing-bar__mute-btn" class="now-playing-bar__btn-base" title="Mute">
+          <span id="now-playing-bar__mute-icon" class="now-playing-bar__btns-section--icon">
+            <i class="fa-solid fa-volume-high"></i>
+          </span>
+        </button>
+        <div id="now-playing-bar__volume-slider">
+          <input class="now-playing-bar__slider--input" type="range" min="0" max="100" value="32" />
+        </div>
+      </div>
+      <button id="now-playing-bar__miniplayer-btn" class="now-playing-bar__btn-base" title="Open Miniplayer">
+        <span id="now-playing-bar__miniplayer-icon" class="now-playing-bar__btns-section--icon">
+          <i class="fa-solid fa-up-right-from-square"></i>
+        </span>
+      </button>
+      <button id="now-playing-bar__full-screen-btn" class="now-playing-bar__btn-base" title="Enter Full screen">
+        <span id="now-playing-bar__full-screen-icon" class="now-playing-bar__btns-section--icon">
+          <i class="fa-solid fa-expand"></i>
+        </span>
+      </button>
+    </section>
+  </aside>
 </body>
 </html>

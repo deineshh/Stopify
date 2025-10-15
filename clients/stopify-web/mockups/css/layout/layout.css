@@ -1,7 +1,7 @@
-@font-face {
+/* @font-face {
   font-family: 'StopifyFont';
-  src: url('../assets/fonts/StopifyMedium.ttf') format('truetype');
-}
+  src: url('../../assets/fonts/StopifyMedium.ttf') format('truetype');
+} */
 
 html {
   background-color: var(--primary-bg-color);

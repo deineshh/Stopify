@@ -1,5 +1,5 @@
 #now-playing-view__main-group {
-  display: none; /* display: flex; - when visible */
+  display: flex; /* display: flex; - to display Now Playing View */
   flex-direction: column;
   height: 100%;
   overflow: hidden;

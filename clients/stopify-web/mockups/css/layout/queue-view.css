@@ -91,7 +91,7 @@
 }
 
 #queue-view__main-group {
-  display: flex;
+  display: none; /* display: flex; - to display Queue View */
   flex-direction: column;
   height: 100%;
   position: absolute;

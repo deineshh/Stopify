@@ -24,8 +24,9 @@
   <link rel="stylesheet" href="css/layout/now-playing-view.css" />
   <link rel="stylesheet" href="css/layout/queue-view.css" />
   <link rel="stylesheet" href="css/layout/now-playing-bar.css" />
-  <link rel="stylesheet" href="css/pages/search.css" />
+  <link rel="stylesheet" href="css/pages/search-browse.css" />
   <link rel="stylesheet" href="css/pages/home.css" />
+  <link rel="stylesheet" href="css/layout/footer.css" />
 
   <script src="js/slider.js" defer></script>
 </head>
@@ -718,7 +719,424 @@
     </section>
 
     <!-- MAIN VIEW -->
-    <section id="main-view" class="main-section"></section>
+    <section id="main-view" class="main-section">
+      <main id="main-page__main">
+        <div id="search-page">
+          <section id="search-browse">
+            <div id="search-browse__header">
+              <h2 id="search-browse__header--title">
+                <span id="search-browse__header--span">
+                  Browse all
+                </span>
+              </h2>
+            </div>
+            <div id="search-browse__main-group" role="list">
+              <a class="search-browse__main-item music" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/music.jpg">
+                <span class="search-browse__main-item--span">Music</span>
+              </a>
+              <a class="search-browse__main-item podcasts" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/podcasts.jpg">
+                <span class="search-browse__main-item--span">Podcasts</span>
+              </a>
+              <a class="search-browse__main-item live-events" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/live-events.jpg">
+                <span class="search-browse__main-item--span">Live Events</span>
+              </a>
+              <a class="search-browse__main-item new-releases" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/new-releases.jpg">
+                <span class="search-browse__main-item--span">New Releases</span>
+              </a>
+              <a class="search-browse__main-item pop" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/pop.jpg">
+                <span class="search-browse__main-item--span">Pop</span>
+              </a>
+              <a class="search-browse__main-item hip-hop" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/hip-hop.jpg">
+                <span class="search-browse__main-item--span">Hip-Hop</span>
+              </a>
+              <a class="search-browse__main-item rock" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/rock.jpg">
+                <span class="search-browse__main-item--span">Rock</span>
+              </a>
+              <a class="search-browse__main-item mood" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/mood.jpg">
+                <span class="search-browse__main-item--span">Mood</span>
+              </a>
+              <a class="search-browse__main-item charts" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/charts.jpg">
+                <span class="search-browse__main-item--span">Charts</span>
+              </a>
+              <a class="search-browse__main-item comedy" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/comedy.jpg">
+                <span class="search-browse__main-item--span">Comedy</span>
+              </a>
+              <a class="search-browse__main-item educational" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/educational.jpg">
+                <span class="search-browse__main-item--span">Educational</span>
+              </a>
+              <a class="search-browse__main-item true-crime" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/true-crime.jpg">
+                <span class="search-browse__main-item--span">True Crime</span>
+              </a>
+              <a class="search-browse__main-item sports" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/sports.jpg">
+                <span class="search-browse__main-item--span">Sports</span>
+              </a>
+              <a class="search-browse__main-item dance-electronic" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/dance-electronic.jpg">
+                <span class="search-browse__main-item--span">Dance/Electronic</span>
+              </a>
+              <a class="search-browse__main-item chill" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/chill.jpg">
+                <span class="search-browse__main-item--span">Chill</span>
+              </a>
+              <a class="search-browse__main-item indie" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/indie.jpg">
+                <span class="search-browse__main-item--span">Indie</span>
+              </a>
+              <a class="search-browse__main-item workout" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/workout.jpg">
+                <span class="search-browse__main-item--span">Workout</span>
+              </a>
+              <a class="search-browse__main-item discover" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/discover.jpeg">
+                <span class="search-browse__main-item--span">Discover</span>
+              </a>
+              <a class="search-browse__main-item folk-acoustic" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/folk-acoustic.jpg">
+                <span class="search-browse__main-item--span">Folk & Acoustic</span>
+              </a>
+              <a class="search-browse__main-item r-b" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/r-b.jpg">
+                <span class="search-browse__main-item--span">R&B</span>
+              </a>
+              <a class="search-browse__main-item k-pop" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/k-pop.jpg">
+                <span class="search-browse__main-item--span">K-pop</span>
+              </a>
+              <a class="search-browse__main-item latin" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/latin.jpg">
+                <span class="search-browse__main-item--span">Latin</span>
+              </a>
+              <a class="search-browse__main-item sleep" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/sleep.jpg">
+                <span class="search-browse__main-item--span">Sleep</span>
+              </a>
+              <a class="search-browse__main-item party" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/party.jpg">
+                <span class="search-browse__main-item--span">Party</span>
+              </a>
+              <a class="search-browse__main-item at-home" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/at-home.jpg">
+                <span class="search-browse__main-item--span">At Home</span>
+              </a>
+              <a class="search-browse__main-item decades" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/decades.jpg">
+                <span class="search-browse__main-item--span">Decades</span>
+              </a>
+              <a class="search-browse__main-item love" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/love.jpg">
+                <span class="search-browse__main-item--span">Love</span>
+              </a>
+              <a class="search-browse__main-item metal" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/metal.jpg">
+                <span class="search-browse__main-item--span">Metal</span>
+              </a>
+              <a class="search-browse__main-item jazz" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/jazz.jpg">
+                <span class="search-browse__main-item--span">Jazz</span>
+              </a>
+              <a class="search-browse__main-item trending" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/trending.jpg">
+                <span class="search-browse__main-item--span">Trending</span>
+              </a>
+              <a class="search-browse__main-item classical" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/classical.jpg">
+                <span class="search-browse__main-item--span">Classical</span>
+              </a>
+              <a class="search-browse__main-item country" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/country.jpg">
+                <span class="search-browse__main-item--span">Country</span>
+              </a>
+              <a class="search-browse__main-item focus" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/focus.jpg">
+                <span class="search-browse__main-item--span">Focus</span>
+              </a>
+              <a class="search-browse__main-item soul" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/soul.jpg">
+                <span class="search-browse__main-item--span">Soul</span>
+              </a>
+              <a class="search-browse__main-item kids-family" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/kids-family.jpg">
+                <span class="search-browse__main-item--span">Kids & Family</span>
+              </a>
+              <a class="search-browse__main-item gaming" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/gaming.jpg">
+                <span class="search-browse__main-item--span">Gaming</span>
+              </a>
+              <a class="search-browse__main-item anime" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/anime.jpg">
+                <span class="search-browse__main-item--span">Anime</span>
+              </a>
+              <a class="search-browse__main-item tv-movies" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/tv-movies.jpg">
+                <span class="search-browse__main-item--span">TV & Movies</span>
+              </a>
+              <a class="search-browse__main-item instrumental" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/instrumental.jpg">
+                <span class="search-browse__main-item--span">Instrumental</span>
+              </a>
+              <a class="search-browse__main-item wellness" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/wellness.jpg">
+                <span class="search-browse__main-item--span">Instrumental</span>
+              </a>
+              <a class="search-browse__main-item punk" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/punk.jpg">
+                <span class="search-browse__main-item--span">Instrumental</span>
+              </a>
+              <a class="search-browse__main-item ambient" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/ambient.jpg">
+                <span class="search-browse__main-item--span">Instrumental</span>
+              </a>
+              <a class="search-browse__main-item blues" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/blues.jpg">
+                <span class="search-browse__main-item--span">Blues</span>
+              </a>
+              <a class="search-browse__main-item cooking-dining" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/cooking-dining.jpg">
+                <span class="search-browse__main-item--span">Cooking & Dining</span>
+              </a>
+              <a class="search-browse__main-item alternative" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/alternative.jpg">
+                <span class="search-browse__main-item--span">Alternative</span>
+              </a>
+              <a class="search-browse__main-item travel" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/travel.jpg">
+                <span class="search-browse__main-item--span">Travel</span>
+              </a>
+              <a class="search-browse__main-item caribbean" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/caribbean.jpg">
+                <span class="search-browse__main-item--span">Caribbean</span>
+              </a>
+              <a class="search-browse__main-item afro" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/afro.jpg">
+                <span class="search-browse__main-item--span">Afro</span>
+              </a>
+              <a class="search-browse__main-item songwriters" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/songwriters.jpg">
+                <span class="search-browse__main-item--span">Songwriters</span>
+              </a>
+              <a class="search-browse__main-item nature-noise" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/nature-noise.jpg">
+                <span class="search-browse__main-item--span">Nature & Noise</span>
+              </a>
+              <a class="search-browse__main-item funk-disco" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/funk-disco.jpg">
+                <span class="search-browse__main-item--span">Funk & Disco</span>
+              </a>
+              <a class="search-browse__main-item glow" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/glow.jpg">
+                <span class="search-browse__main-item--span">GLOW</span>
+              </a>
+              <a class="search-browse__main-item stopify-singles" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/stopify-singles.jpg">
+                <span class="search-browse__main-item--span">Stopify Singles</span>
+              </a>
+              <a class="search-browse__main-item netflix" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/netflix.jpg">
+                <span class="search-browse__main-item--span">Netflix</span>
+              </a>
+              <a class="search-browse__main-item summer" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/summer.jpg">
+                <span class="search-browse__main-item--span">Summer</span>
+              </a>
+              <a class="search-browse__main-item radar" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/radar.jpg">
+                <span class="search-browse__main-item--span">RADAR</span>
+              </a>
+              <a class="search-browse__main-item equal" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/equal.jpg">
+                <span class="search-browse__main-item--span">EQUAL</span>
+              </a>
+              <a class="search-browse__main-item fresh-finds" role="listitem">
+                <img class="search-browse__main-item--img" src="./assets/images/search-categories/fresh-finds.jpg">
+                <span class="search-browse__main-item--span">Fresh Finds</span>
+              </a>
+            </div>
+          </section>
+        </div>
+      </main>
+      <footer id="main-footer">
+        <hr id="main-footer__top-horizontal-rule" class="main-footer__horizontal-rule" role="separator">
+        <nav id="main-footer__nav-group">
+          <div id="main-footer__top-group">
+            <div id="main-footer__table-group">
+              <ul id="main-footer__company-ul" class="main-footer__table-ul">
+                <p id="main-footer__company--title" class="main-footer__ul-title">
+                  Company
+                </p>
+                <a href="" id="main-footer__company--about--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__company--about--span">
+                    About
+                  </span>
+                </a>
+                <a href="" id="main-footer__company--jobs--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__company--jobs--span">
+                    Jobs
+                  </span>
+                </a>
+                <a href="" id="main-footer__company--for-record--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__company--for-record--span">
+                    For the Record
+                  </span>
+                </a>
+              </ul>
+              <ul id="main-footer__communities-ul" class="main-footer__table-ul">
+                <p id="main-footer__communities--title" class="main-footer__ul-title">
+                  Communities
+                </p>
+                <a href="" id="main-footer__communities--for-artists--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__communities--for-artists--span">
+                    For Artists
+                  </span>
+                </a>
+                <a href="" id="main-footer__communities--for-artists--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__communities--for-artists--span">
+                    Developers
+                  </span>
+                </a>
+                <a href="" id="main-footer__communities--for-artists--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__communities--for-artists--span">
+                    Advertising
+                  </span>
+                </a>
+                <a href="" id="main-footer__communities--for-artists--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__communities--for-artists--span">
+                    Investors
+                  </span>
+                </a>
+                <a href="" id="main-footer__communities--for-artists--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__communities--for-artists--span">
+                    Vendors
+                  </span>
+                </a>
+              </ul>
+              <ul id="main-footer__useful-links-ul" class="main-footer__table-ul">
+                <p id="main-footer__useful-links--title" class="main-footer__ul-title">
+                  Useful links
+                </p>
+                <a href="" id="main-footer__useful-links--support--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__useful-links--support--span">
+                    Support
+                  </span>
+                </a>
+                <a href="" id="main-footer__useful-links--mobile-app--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__useful-links--mobile-app--span">
+                    Free Mobile App
+                  </span>
+                </a>
+                <a href="" id="main-footer__useful-links--popular-by-country--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__useful-links--popular-by-country--span">
+                    Popular by Country
+                  </span>
+                </a>
+                <a href="" id="main-footer__useful-links--import-your-music--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__useful-links--import-your-music--span">
+                    Import your music
+                  </span>
+                </a>
+              </ul>
+              <ul id="main-footer__plans-ul" class="main-footer__table-ul">
+                <p id="main-footer__plans--title" class="main-footer__ul-title">
+                  Stopify Plans
+                </p>
+                <a href="" id="main-footer__plans--individual--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__plans--individual--span">
+                    Premium Individual
+                  </span>
+                </a>
+                <a href="" id="main-footer__plans--duo--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__plans--duo--span">
+                    Premium Duo
+                  </span>
+                </a>
+                <a href="" id="main-footer__plans--family--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__plans--family--span">
+                    Premium Family
+                  </span>
+                </a>
+                <a href="" id="main-footer__plans--student--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__plans--student--span">
+                    Premium Student
+                  </span>
+                </a>
+                <a href="" id="main-footer__plans--free--anchor" class="main-footer__ul-item">
+                  <span id="main-footer__plans--free--span">
+                    Stopify Free
+                  </span>
+                </a>
+              </ul>
+            </div>
+            <div id="main-footer__social--group">
+              <a href="" id="main-footer__instagram--anchor" class="main-footer__social--anchor" title="Instagram">
+                <span id="main-footer__instagram--icon" class="main-footer__social--icon">
+                  <i class="fa-brands fa-instagram"></i>
+                </span>
+              </a>
+              <a href="" id="main-footer__twitter--anchor" class="main-footer__social--anchor" title="Twitter">
+                <span id="main-footer__twitter--icon" class="main-footer__social--icon">
+                  <i class="fa-brands fa-twitter"></i>
+                </span>
+              </a>
+              <a href="" id="main-footer__facebook--anchor" class="main-footer__social--anchor" title="Facebook">
+                <span id="main-footer__facebook--icon" class="main-footer__social--icon">
+                  <i class="fa-brands fa-facebook"></i>
+                </span>
+              </a>
+            </div>
+          </div>
+          <hr id="main-footer__bottom-horizontal-rule" class="main-footer__horizontal-rule">
+          <div id="main-footer__bottom-group">
+            <div id="main-footer__bottom-links">
+              <a href="" id="main-footer__bottom-links--legal--anchor" class="main-footer__bottom-link">
+                <span id="main-footer__bottom-links--legal--span">
+                  Legal
+                </span>
+              </a>
+              <a href="" id="main-footer__bottom-links--safety-center--anchor" class="main-footer__bottom-link">
+                <span id="main-footer__bottom-links--safety-center--span">
+                  Safety & Privacy Center
+                </span>
+              </a>
+              <a href="" id="main-footer__bottom-links--privacy-policy--anchor" class="main-footer__bottom-link">
+                <span id="main-footer__bottom-links--privacy-policy--span">
+                  Privacy Policy
+                </span>
+              </a>
+              <a href="" id="main-footer__bottom-links--cookies--anchor" class="main-footer__bottom-link">
+                <span id="main-footer__bottom-links--cookies--span">
+                  Cookies
+                </span>
+              </a>
+              <a href="" id="main-footer__bottom-links--about-ads--anchor" class="main-footer__bottom-link">
+                <span id="main-footer__bottom-links--about-ads--span">
+                  About Ads
+                </span>
+              </a>
+              <a href="" id="main-footer__bottom-links--accessibility--anchor" class="main-footer__bottom-link">
+                <span id="main-footer__bottom-links--accessibility--span">
+                  Accessibility
+                </span>
+              </a>
+            </div>
+            <p id="main-footer__bottom-copyright">
+              &copy; 2025 Stopify AB
+            </p>
+          </div>
+        </nav>
+      </footer>
+    </section>
 
     <!-- RIGHT SIDEBAR -->
     <section id="right-sidebar__group" class="main-section sidebar-group">

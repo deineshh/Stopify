@@ -21,7 +21,7 @@ body {
   height: 64px;
 }
 
-main {
+body > main {
   display: flex;
   flex: 1;
   min-height: 0;
@@ -35,6 +35,10 @@ main {
 #left-sidebar__main-group, #right-sidebar__main-group, #main-view {
   background-color: var(--secondary-bg-color);
   border-radius: 8px;
+}
+
+.sidebar-group {
+  flex-shrink: 0;
 }
 
 .sidebar-main {
@@ -64,7 +68,15 @@ main {
 }
 
 #main-view {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
+  height: 100%;
+  overflow: auto;
+}
+
+#main-page__main {
+  width: 100%;
 }
 
 #now-playing-bar {

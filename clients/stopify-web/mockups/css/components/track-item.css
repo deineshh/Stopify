@@ -1,0 +1,82 @@
+.track-item {
+  flex: 1 1 clamp(159px, 13vw, 170px);
+  align-items: flex-start;
+  background-color: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 9px;
+  max-width: 215px;
+  padding: 12px 11px;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.track-item:hover {
+  background-color: var(--primary-element-bg-color);
+}
+
+.track-item__cover-group {
+  position: relative;
+  width: 100%;
+}
+
+.track-item__cover {
+  aspect-ratio: 1 / .97;
+  height: 100%;
+  width: 100%;
+}
+
+.track-item__cover.circle {
+  border-radius: 100%;
+}
+
+.track-item__cover.rounded {
+  border-radius: 6px;
+}
+
+.track-item__play-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+
+.track-item__info-group {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.track-item__title-anchor {
+  font-size: 1.08rem;
+}
+
+.track-item__title-anchor:hover {
+  text-decoration: underline;
+}
+
+.track-item__description {
+  color: var(--light-gray-fg-color);
+  display: flex;
+  gap: 3px;
+}
+
+.track-item__description-section::after {
+  content: "•";
+  margin-left: -1px;
+}
+
+.track-item__author:hover {
+  text-decoration: underline;
+}
+
+.track-item__author:not(.last-author)::after {
+  content: ",";
+  margin-left: -3px;
+}
+
+.track-item__author-separator {
+  margin-left: -3px;
+}

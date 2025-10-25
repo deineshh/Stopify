@@ -17,18 +17,23 @@
 
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/variables.css" />
-  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/components/scrollbar.css" />
+  <link rel="stylesheet" href="css/components/play-button.css" />
+  <link rel="stylesheet" href="css/components/track-item.css" />
+  <link rel="stylesheet" href="css/components/track-items.css" />
   <link rel="stylesheet" href="css/layout/layout.css" />
   <link rel="stylesheet" href="css/layout/global-header.css" />
   <link rel="stylesheet" href="css/layout/sidebar-library.css" />
   <link rel="stylesheet" href="css/layout/now-playing-view.css" />
   <link rel="stylesheet" href="css/layout/queue-view.css" />
   <link rel="stylesheet" href="css/layout/now-playing-bar.css" />
-  <link rel="stylesheet" href="css/pages/search-browse.css" />
-  <link rel="stylesheet" href="css/pages/home.css" />
   <link rel="stylesheet" href="css/layout/footer.css" />
+  <link rel="stylesheet" href="css/pages/search-browse.css" />
+  <link rel="stylesheet" href="css/pages/search-results.css" />
+  <link rel="stylesheet" href="css/pages/home.css" />
 
   <script src="js/slider.js" defer></script>
+  <script src="js/trackItemsSizeCalc.js" defer></script>
 </head>
 <body>
   <!-- GLOBAL HEADER -->
@@ -963,6 +968,1337 @@
                 <img class="search-browse__main-item--img" src="./assets/images/search-categories/fresh-finds.jpg">
                 <span class="search-browse__main-item--span">Fresh Finds</span>
               </a>
+            </div>
+          </section>
+
+          <section id="search-results">
+            <nav id="search-results__header-nav">
+              <button id="search-results__header-nav--all-btn" class="search-results__header-nav--btn active">
+                <span id="search-results__header-nav--all-btn" class="search-results__header-nav--btn-span">
+                  All
+                </span>
+              </button>
+              <button id="search-results__header-nav--albums-btn" class="search-results__header-nav--btn">
+                <span id="search-results__header-nav--albums-btn" class="search-results__header-nav--btn-span">
+                  Albums
+                </span>
+              </button>
+              <button id="search-results__header-nav--playlists-btn" class="search-results__header-nav--btn">
+                <span id="search-results__header-nav--playlists-btn" class="search-results__header-nav--btn-span">
+                  Playlists
+                </span>
+              </button>
+              <button id="search-results__header-nav--songs-btn" class="search-results__header-nav--btn">
+                <span id="search-results__header-nav--songs-btn" class="search-results__header-nav--btn-span">
+                  Songs
+                </span>
+              </button>
+              <button id="search-results__header-nav--genres-moods-btn" class="search-results__header-nav--btn">
+                <span id="search-results__header-nav--genres-moods-btn" class="search-results__header-nav--btn-span">
+                  Genres & Moods
+                </span>
+              </button>
+              <button id="search-results__header-nav--artists-btn" class="search-results__header-nav--btn">
+                <span id="search-results__header-nav--artists-btn" class="search-results__header-nav--btn-span">
+                  Artists
+                </span>
+              </button>
+              <button id="search-results__header-nav--profiles-btn" class="search-results__header-nav--btn">
+                <span id="search-results__header-nav--profiles-btn" class="search-results__header-nav--btn-span">
+                  Profiles
+                </span>
+              </button>
+            </nav>
+            <div id="search-results__main-group">
+              <div id="search-results__top-result-and-songs">
+                <div id="search-results__top-result-group">
+                  <h2 id="search-results__top-result-title">
+                    Top result
+                  </h2>
+                  <div id="search-results__top-result-item" class="play-btn-parent">
+                    <img src="./assets/images/song.jpg" alt="" id="search-results__top-result-item--cover">
+                    <div id="search-results__top-result-item--info">
+                      <a href="" id="search-results__top-result-item--title" title="Azahriah">
+                        <span id="search-results__top-result-item--title-span">
+                          Azahriah
+                        </span>
+                      </a>
+                      <span id="search-results__top-result-item--type">
+                        Artist
+                      </span>
+                    </div>
+                    <button id="search-results__top-result-item--play-btn" class="play-btn hover-transition" title="Play">
+                      <span id="search-results__top-result-item--play-icon" class="play-icon">
+                        <i class="fa-solid fa-play"></i>
+                      </span>
+                    </button>
+                  </div>
+                </div>
+                <div id="search-results__songs-group">
+                  <a id="search-results__songs-title">
+                    Songs
+                  </a>
+                  <div id="search-results__songs-items" role="presentation">
+                    <div class="search-results__songs-item" role="presentation">
+                      <div class="search-results__songs-item--left-group">
+                        <div class="search-results__songs-item--cover-group" title="Play ACELERADA by sma$her, MAXZI">
+                          <img src="./assets/images/song.jpg" alt="" class="search-results__songs-item--cover">
+                          <button class="search-results__songs-item--play-btn">
+                            <span class="search-results__songs-item--play-icon">
+                              <i class="fa-solid fa-play"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="search-results__songs-item--info-group">
+                          <a href="" class="search-results__songs-item--title-anchor" title="ACELERADA">
+                            <span class="search-results__songs-item--title-span">
+                              ACELERADA
+                            </span>
+                          </a>
+                          <div class="search-results__songs-item--authors" title="sma$her, MXZI">
+                            <a href="" class="search-results__songs-item--author">
+                              sma$her
+                            </a>
+                            <span class="search-results__songs-item--author-separator">,</span>
+                            <a href="" class="search-results__songs-item--author">
+                              MXZI
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="search-results__songs-item--right-group">
+                        <button class="search-results__songs-item--save-btn" title="Add to Liked Songs">
+                          <span class="search-results__songs-item--save-icon">
+                            <i class="fa-solid fa-plus"></i>
+                          </span>
+                        </button>
+                        <span class="search-results__songs-item--duration">
+                          1:01
+                        </span>
+                        <button class="search-results__songs-item--more-btn" title="More options for ACELERADA by sma$her, MAXZI">
+                          <span class="search-results__songs-item--more-icon">
+                            <i class="fa-solid fa-ellipsis"></i>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="search-results__songs-item" role="presentation">
+                      <div class="search-results__songs-item--left-group">
+                        <div class="search-results__songs-item--cover-group" title="Play ACELERADA by sma$her, MAXZI">
+                          <img src="./assets/images/song.jpg" alt="" class="search-results__songs-item--cover">
+                          <button class="search-results__songs-item--play-btn">
+                            <span class="search-results__songs-item--play-icon">
+                              <i class="fa-solid fa-play"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="search-results__songs-item--info-group">
+                          <a href="" class="search-results__songs-item--title-anchor" title="ACELERADA">
+                            <span class="search-results__songs-item--title-span">
+                              ACELERADA
+                            </span>
+                          </a>
+                          <div class="search-results__songs-item--authors" title="sma$her, MXZI">
+                            <a href="" class="search-results__songs-item--author">
+                              sma$her
+                            </a>
+                            <span class="search-results__songs-item--author-separator">,</span>
+                            <a href="" class="search-results__songs-item--author">
+                              MXZI
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="search-results__songs-item--right-group">
+                        <button class="search-results__songs-item--save-btn" title="Add to Liked Songs">
+                          <span class="search-results__songs-item--save-icon">
+                            <i class="fa-solid fa-plus"></i>
+                          </span>
+                        </button>
+                        <span class="search-results__songs-item--duration">
+                          1:01
+                        </span>
+                        <button class="search-results__songs-item--more-btn" title="More options for ACELERADA by sma$her, MAXZI">
+                          <span class="search-results__songs-item--more-icon">
+                            <i class="fa-solid fa-ellipsis"></i>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="search-results__songs-item" role="presentation">
+                      <div class="search-results__songs-item--left-group">
+                        <div class="search-results__songs-item--cover-group" title="Play ACELERADA by sma$her, MAXZI">
+                          <img src="./assets/images/song.jpg" alt="" class="search-results__songs-item--cover">
+                          <button class="search-results__songs-item--play-btn">
+                            <span class="search-results__songs-item--play-icon">
+                              <i class="fa-solid fa-play"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="search-results__songs-item--info-group">
+                          <a href="" class="search-results__songs-item--title-anchor" title="ACELERADA">
+                            <span class="search-results__songs-item--title-span">
+                              ACELERADA
+                            </span>
+                          </a>
+                          <div class="search-results__songs-item--authors" title="sma$her, MXZI">
+                            <a href="" class="search-results__songs-item--author">
+                              sma$her
+                            </a>
+                            <span class="search-results__songs-item--author-separator">,</span>
+                            <a href="" class="search-results__songs-item--author">
+                              MXZI
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="search-results__songs-item--right-group">
+                        <button class="search-results__songs-item--save-btn" title="Add to Liked Songs">
+                          <span class="search-results__songs-item--save-icon">
+                            <i class="fa-solid fa-plus"></i>
+                          </span>
+                        </button>
+                        <span class="search-results__songs-item--duration">
+                          1:01
+                        </span>
+                        <button class="search-results__songs-item--more-btn" title="More options for ACELERADA by sma$her, MAXZI">
+                          <span class="search-results__songs-item--more-icon">
+                            <i class="fa-solid fa-ellipsis"></i>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="search-results__songs-item" role="presentation">
+                      <div class="search-results__songs-item--left-group">
+                        <div class="search-results__songs-item--cover-group" title="Play ACELERADA by sma$her, MAXZI">
+                          <img src="./assets/images/song.jpg" alt="" class="search-results__songs-item--cover">
+                          <button class="search-results__songs-item--play-btn">
+                            <span class="search-results__songs-item--play-icon">
+                              <i class="fa-solid fa-play"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="search-results__songs-item--info-group">
+                          <a href="" class="search-results__songs-item--title-anchor" title="ACELERADA">
+                            <span class="search-results__songs-item--title-span">
+                              ACELERADA
+                            </span>
+                          </a>
+                          <div class="search-results__songs-item--authors" title="sma$her, MXZI">
+                            <a href="" class="search-results__songs-item--author">
+                              sma$her
+                            </a>
+                            <span class="search-results__songs-item--author-separator">,</span>
+                            <a href="" class="search-results__songs-item--author">
+                              MXZI
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="search-results__songs-item--right-group">
+                        <button class="search-results__songs-item--save-btn" title="Add to Liked Songs">
+                          <span class="search-results__songs-item--save-icon">
+                            <i class="fa-solid fa-plus"></i>
+                          </span>
+                        </button>
+                        <span class="search-results__songs-item--duration">
+                          1:01
+                        </span>
+                        <button class="search-results__songs-item--more-btn" title="More options for ACELERADA by sma$her, MAXZI">
+                          <span class="search-results__songs-item--more-icon">
+                            <i class="fa-solid fa-ellipsis"></i>
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="search-results__artists-group" class="search-results__section">
+                <a id="search-results__artists-title" class="search-results__title">
+                  Artists
+                </a>
+                <div id="search-results__artists-items" class="track-items">
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__artists-item track-item play-btn-parent">
+                    <div class="search-results__artists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle">
+                      <button class="search-results__artists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__artists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__artists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__artists-item--title-anchor track-item__title-anchor" title="Arctic Monkeys">
+                        <p class="search-results__artists-item--title-text track-item__title-text">
+                          Arctic Monkeys
+                        </p>
+                      </a>
+                      <div class="search-results__artists-item--description track-item__description">
+                        <span class="search-results__artists-item--type">
+                          Artist
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="search-results__albums-group" class="search-results__section">
+                <h2 id="search-results__albums-title" class="search-results__title">
+                  Albums
+                </h2>
+                <div id="search-results__albums-items" class="track-items">
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__albums-item track-item play-btn-parent">
+                    <div class="search-results__albums-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded">
+                      <button class="search-results__albums-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__albums-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__albums-item--info-group track-item__info-group">
+                      <a href="" class="search-results__albums-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="search-results__albums-item--title-text track-item__title-text">
+                          AL NACER!
+                        </p>
+                      </a>
+                      <div class="search-results__albums-item--description track-item__description">
+                        <span class="search-results__albums-item--year track-item__description-section">
+                          2025
+                        </span>
+                        <div class="search-results__albums-item--authors">
+                          <a href="" class="search-results__albums-item--author track-item__author">
+                            Sayfalse
+                          </a>
+                          <a href="" class="search-results__albums-item--author track-item__author last-author">
+                            Nulteex
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="search-results__playlists-group" class="search-results__section">
+                <h2 id="search-results__playlists-title" class="search-results__title">
+                  Playlists
+                </h2>
+                <div id="search-results__playlists-items" class="track-items">
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="search-results__playlists-item track-item play-btn-parent">
+                    <div class="search-results__playlists-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded">
+                      <button class="search-results__playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__playlists-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__playlists-item--info-group track-item__info-group">
+                      <a href="" class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__playlists-item--title-text track-item__title-text">
+                          + 999999 AURA
+                        </p>
+                      </a>
+                      <div class="search-results__playlists-item--description track-item__description">
+                        <span class="search-results__playlists-item--by-text">
+                          By
+                        </span>
+                        <span class="search-results__playlists-item--author">
+                          Lunar Media
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="search-results__profiles-group" class="search-results__section">
+                <h2 id="search-results__profiles-title" class="search-results__title">
+                  Profiles
+                </h2>
+                <div id="search-results__profiles-items" class="track-items">
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                  <div class="search-results__profiles-item track-item play-btn-parent">
+                    <div class="search-results__profiles-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle">
+                      <button class="search-results__profiles-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="search-results__profiles-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="search-results__profiles-item--info-group track-item__info-group">
+                      <a href="" class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                        <p class="search-results__profiles-item--title-text track-item__title-text">
+                          a
+                        </p>
+                      </a>
+                      <span class="search-results__profiles-item--type track-item__description">
+                        Profile
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="search-results__genres-moods-group" class="search-results__section">
+                <h2 id="search-results__genres-moods-title" class="search-results__title">
+                  Genres & Moods
+                </h2>
+                <div id="search-results__genres-moods-items" class="track-items">
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                  <div class="search-results__genres-moods-item track-item">
+                    <img src="./assets/images/song.jpg" alt="" class="search-results__genres-moods-item--cover track-item__cover rounded">
+                    <a href="" class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                      <p class="search-results__genres-moods-item--title-text track-item__title-text">
+                        Afro
+                      </p>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
         </div>

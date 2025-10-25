@@ -1,0 +1,7 @@
+.track-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: flex-start;
+  overflow: hidden;
+}

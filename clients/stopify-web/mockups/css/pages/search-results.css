@@ -1,5 +1,5 @@
 #search-results {
-  display: block; /* display: block; - to display Search Results */
+  display: none; /* display: block; - to display Search Results */
 }
 
 #search-results__header-nav {
@@ -11,31 +11,6 @@
   position: sticky;
   top: 0;
   z-index: 1;
-}
-
-.search-results__header-nav--btn {
-  align-items: center;
-  background-color: var(--border-gray-color);
-  border-radius: 16px;
-  color: var(--primary-fg-color);
-  display: flex;
-  font-size: .96rem;
-  justify-content: center;
-  padding: 7px 11.5px;
-  transition: .1s background ease-in-out;
-}
-
-.search-results__header-nav--btn:hover {
-  background-color: #333333;
-}
-
-.search-results__header-nav--btn.active {
-  background-color: white;
-  color: black;
-}
-
-.search-results__header-nav--btn.active:hover {
-  background-color: #F0F0F0;
 }
 
 #search-results__main-group {

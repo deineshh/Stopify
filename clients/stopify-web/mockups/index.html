@@ -18,9 +18,10 @@
   <link rel="stylesheet" href="css/reset.css" />
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/components/scrollbar.css" />
+  <link rel="stylesheet" href="css/components/filter-btn.css" />
   <link rel="stylesheet" href="css/components/play-button.css" />
+  <link rel="stylesheet" href="css/components/track-group.css" />
   <link rel="stylesheet" href="css/components/track-item.css" />
-  <link rel="stylesheet" href="css/components/track-items.css" />
   <link rel="stylesheet" href="css/layout/layout.css" />
   <link rel="stylesheet" href="css/layout/global-header.css" />
   <link rel="stylesheet" href="css/layout/sidebar-library.css" />
@@ -34,6 +35,7 @@
 
   <script src="js/slider.js" defer></script>
   <script src="js/trackItemsSizeCalc.js" defer></script>
+  <script src="js/homePageHeaderBgChangeOnScroll.js" defer></script>
 </head>
 <body>
   <!-- GLOBAL HEADER -->
@@ -973,38 +975,38 @@
 
           <section id="search-results">
             <nav id="search-results__header-nav">
-              <button id="search-results__header-nav--all-btn" class="search-results__header-nav--btn active">
-                <span id="search-results__header-nav--all-btn" class="search-results__header-nav--btn-span">
+              <button id="search-results__header-nav--all-btn" class="filter-btn active">
+                <span id="search-results__header-nav--all-btn" class="filter-btn-span">
                   All
                 </span>
               </button>
-              <button id="search-results__header-nav--albums-btn" class="search-results__header-nav--btn">
-                <span id="search-results__header-nav--albums-btn" class="search-results__header-nav--btn-span">
+              <button id="search-results__header-nav--albums-btn" class="filter-btn">
+                <span id="search-results__header-nav--albums-btn" class="filter-btn-span">
                   Albums
                 </span>
               </button>
-              <button id="search-results__header-nav--playlists-btn" class="search-results__header-nav--btn">
-                <span id="search-results__header-nav--playlists-btn" class="search-results__header-nav--btn-span">
+              <button id="search-results__header-nav--playlists-btn" class="filter-btn">
+                <span id="search-results__header-nav--playlists-btn" class="filter-btn-span">
                   Playlists
                 </span>
               </button>
-              <button id="search-results__header-nav--songs-btn" class="search-results__header-nav--btn">
-                <span id="search-results__header-nav--songs-btn" class="search-results__header-nav--btn-span">
+              <button id="search-results__header-nav--songs-btn" class="filter-btn">
+                <span id="search-results__header-nav--songs-btn" class="filter-btn-span">
                   Songs
                 </span>
               </button>
-              <button id="search-results__header-nav--genres-moods-btn" class="search-results__header-nav--btn">
-                <span id="search-results__header-nav--genres-moods-btn" class="search-results__header-nav--btn-span">
+              <button id="search-results__header-nav--genres-moods-btn" class="filter-btn">
+                <span id="search-results__header-nav--genres-moods-btn" class="filter-btn-span">
                   Genres & Moods
                 </span>
               </button>
-              <button id="search-results__header-nav--artists-btn" class="search-results__header-nav--btn">
-                <span id="search-results__header-nav--artists-btn" class="search-results__header-nav--btn-span">
+              <button id="search-results__header-nav--artists-btn" class="filter-btn">
+                <span id="search-results__header-nav--artists-btn" class="filter-btn-span">
                   Artists
                 </span>
               </button>
-              <button id="search-results__header-nav--profiles-btn" class="search-results__header-nav--btn">
-                <span id="search-results__header-nav--profiles-btn" class="search-results__header-nav--btn-span">
+              <button id="search-results__header-nav--profiles-btn" class="filter-btn">
+                <span id="search-results__header-nav--profiles-btn" class="filter-btn-span">
                   Profiles
                 </span>
               </button>
@@ -2301,6 +2303,2043 @@
               </div>
             </div>
           </section>
+        </div>
+
+        <div id="home-page">
+          <header id="home-page__header">
+            <nav id="home-page__header-nav">
+              <button id="home-page__header-nav--all-btn" class="home-page__header-nav--filter-btn filter-btn active">
+                <span id="home-page__header-nav--all-span" class="home-page__header-nav--filter-btn-span filter-btn-span">
+                  All
+                </span>
+              </button>
+              <button id="home-page__header-nav--music-btn" class="home-page__header-nav--filter-btn filter-btn">
+                <span id="home-page__header-nav--music-span" class="home-page__header-nav--filter-btn-span filter-btn-span">
+                  Music
+                </span>
+              </button>
+              <button id="home-page__header-nav--podcasts-btn" class="home-page__header-nav--filter-btn filter-btn">
+                <span id="home-page__header-nav--podcasts-span" class="home-page__header-nav--filter-btn-span filter-btn-span">
+                  Podcasts
+                </span>
+              </button>
+            </nav>
+          </header>
+          <main id="home-page__main">
+            <section id="home-page__recently-played-section">
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="home-page__recently-played-item play-btn-parent">
+                <div class="home-page__recently-played-item--left-side">
+                  <img src="./assets/images/song.jpg" alt="" class="home-page__recently-played-item--cover">
+                </div>
+                <div class="home-page__recently-played-item--right-side">
+                  <a href="" class="home-page__recently-played-item--title-anchor">
+                    <p class="home-page__recently-played-item--title-text">
+                      AL NACER!
+                    </p>
+                  </a>
+                  <button class="home-page__recently-played-item--play-btn play-btn hover-transition" title="Play">
+                    <span class="home-page__recently-played-item--play-icon play-icon">
+                      <i class="fa-solid fa-play"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </section>
+            <section id="home-page__made-for-section" class="track-group">
+              <div id="home-page__made-for-header-group" class="track-group__header-group">
+                <div id="home-page__made-for-header-group--title-group" class="track-group__header-group--title-group">
+                  <p id="home-page__made-for-header-group--title-top-text" class="track-group__header-group--title-top-text">
+                    Made For
+                  </p>
+                  <h2 id="home-page__made-for-header-group--title-text" class="track-group__header-group--title-text">
+                    Aqua Studios
+                  </h2>
+                </div>
+                <a id="home-page__made-for-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                  <span id="home-page__made-for-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                    Show all
+                  </span>
+                </a>
+              </div>
+              <div id="home-page__made-for-main-group" class="track-group__main-group">
+                <div id="home-page__made-for-items" class="track-items">
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                  <div class="home-page__made-for-item track-item play-btn-parent">
+                    <div class="home-page__made-for-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__made-for-item--cover track-item__cover rounded">
+                      <button class="home-page__made-for-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__made-for-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__made-for-item--description track-item__description">
+                      <span class="home-page__made-for-item--artist-examples">
+                        Repsaj, Kordhell, -Prey and more
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="home-page__recommended-section" class="track-group">
+              <div id="home-page__recommended-header-group" class="track-group__header-group">
+                <div id="home-page__recommended-header-group--title-group" class="track-group__header-group--title-group">
+                  <p id="home-page__recommended-header-group--title-top-text" class="track-group__header-group--title-top-text">
+                    Recommended For You
+                  </p>
+                  <h2 id="home-page__recommended-header-group--title-text" class="track-group__header-group--title-text">
+                    Aqua Studios
+                  </h2>
+                </div>
+                <a id="home-page__recommended-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                  <span id="home-page__recommended-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                    Show all
+                  </span>
+                </a>
+              </div>
+              <div id="home-page__recommended-main-group" class="track-group__main-group">
+                <div id="home-page__recommended-items" class="track-items">
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="home-page__discover-section" class="track-group">
+              <div id="home-page__discover-header-group" class="track-group__header-group">
+                <div id="home-page__discover-header-group--title-group" class="track-group__header-group--title-group">
+                  <h2 id="home-page__discover-header-group--title-text" class="track-group__header-group--title-text">
+                    Discover picks for you
+                  </h2>
+                </div>
+                <a id="home-page__discover-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                  <span id="home-page__discover-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                    Show all
+                  </span>
+                </a>
+              </div>
+              <div id="home-page__recommended-main-group" class="track-group__main-group">
+                <div id="home-page__recommended-items" class="track-items">
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__recommended-item track-item play-btn-parent">
+                    <div class="home-page__recommended-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__recommended-item--cover track-item__cover rounded">
+                      <button class="home-page__recommended-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__recommended-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__recommended-item--info-group track-item__info-group">
+                      <a href="" class="home-page__recommended-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__recommended-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__recommended-item--description track-item__description">
+                        <div class="home-page__recommended-item--authors">
+                          <a href="" class="home-page__recommended-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__recommended-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="home-page__jump-back-in-section" class="track-group">
+              <div id="home-page__jump-back-in-header-group" class="track-group__header-group">
+                <div id="home-page__jump-back-in-header-group--title-group" class="track-group__header-group--title-group">
+                  <h2 id="home-page__jump-back-in-header-group--title-text" class="track-group__header-group--title-text">
+                    Jump back in
+                  </h2>
+                </div>
+                <a id="home-page__jump-back-in-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                  <span id="home-page__jump-back-in-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                    Show all
+                  </span>
+                </a>
+              </div>
+              <div id="home-page__jump-back-in-main-group" class="track-group__main-group">
+                <div id="home-page__jump-back-in-items" class="track-items">
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__jump-back-in-item track-item play-btn-parent">
+                    <div class="home-page__jump-back-in-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__jump-back-in-item--cover track-item__cover rounded">
+                      <button class="home-page__jump-back-in-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__jump-back-in-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__jump-back-in-item--info-group track-item__info-group">
+                      <a href="" class="home-page__jump-back-in-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__jump-back-in-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__jump-back-in-item--description track-item__description">
+                        <div class="home-page__jump-back-in-item--authors">
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__jump-back-in-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="home-page__new-releases-section" class="track-group">
+              <div id="home-page__new-releases-header-group" class="track-group__header-group">
+                <div id="home-page__new-releases-header-group--title-group" class="track-group__header-group--title-group">
+                  <p id="home-page__new-releases-header-group--title-top-text" class="track-group__header-group--title-top-text">
+                    Brand new music from artists you love.
+                  </p>
+                  <h2 id="home-page__new-releases-header-group--title-text" class="track-group__header-group--title-text">
+                    New releases for you
+                  </h2>
+                </div>
+                <a id="home-page__new-releases-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                  <span id="home-page__new-releases-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                    Show all
+                  </span>
+                </a>
+              </div>
+              <div id="home-page__new-releases-main-group" class="track-group__main-group">
+                <div id="home-page__new-releases-items" class="track-items">
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__new-releases-item track-item play-btn-parent">
+                    <div class="home-page__new-releases-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__new-releases-item--cover track-item__cover rounded">
+                      <button class="home-page__new-releases-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__new-releases-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__new-releases-item--info-group track-item__info-group">
+                      <a href="" class="home-page__new-releases-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__new-releases-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__new-releases-item--description track-item__description">
+                        <div class="home-page__new-releases-item--authors">
+                          <a href="" class="home-page__new-releases-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__new-releases-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="home-page__trending-section" class="track-group">
+              <div id="home-page__trending-header-group" class="track-group__header-group">
+                <div id="home-page__trending-header-group--title-group" class="track-group__header-group--title-group">
+                  <h2 id="home-page__trending-header-group--title-text" class="track-group__header-group--title-text">
+                    Trending albums for you
+                  </h2>
+                </div>
+                <a id="home-page__trending-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                  <span id="home-page__trending-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                    Show all
+                  </span>
+                </a>
+              </div>
+              <div id="home-page__trending-main-group" class="track-group__main-group">
+                <div id="home-page__trending-items" class="track-items">
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__trending-item track-item play-btn-parent">
+                    <div class="home-page__trending-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__trending-item--cover track-item__cover rounded">
+                      <button class="home-page__trending-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__trending-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__trending-item--info-group track-item__info-group">
+                      <a href="" class="home-page__trending-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__trending-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__trending-item--description track-item__description">
+                        <div class="home-page__trending-item--authors">
+                          <a href="" class="home-page__trending-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__trending-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="home-page__from-your-likes-section" class="track-group">
+              <div id="home-page__from-your-likes-header-group" class="track-group__header-group">
+                <div id="home-page__from-your-likes-header-group--title-group" class="track-group__header-group--title-group">
+                  <h2 id="home-page__from-your-likes-header-group--title-text" class="track-group__header-group--title-text">
+                    Albums featuring songs you like
+                  </h2>
+                </div>
+                <a id="home-page__from-your-likes-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                  <span id="home-page__from-your-likes-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                    Show all
+                  </span>
+                </a>
+              </div>
+              <div id="home-page__from-your-likes-main-group" class="track-group__main-group">
+                <div id="home-page__from-your-likes-items" class="track-items">
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="home-page__from-your-likes-item track-item play-btn-parent">
+                    <div class="home-page__from-your-likes-item--cover-group track-item__cover-group">
+                      <img src="./assets/images/song.jpg" alt="" class="home-page__from-your-likes-item--cover track-item__cover rounded">
+                      <button class="home-page__from-your-likes-item--play-btn track-item__play-btn play-btn hover-transition">
+                        <span class="home-page__from-your-likes-item--play-icon track-item__play-icon play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </div>
+                    <div class="home-page__from-your-likes-item--info-group track-item__info-group">
+                      <a href="" class="home-page__from-your-likes-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                        <p class="home-page__from-your-likes-item--title-text track-item__title-text">
+                          LOS VOLTAJE ULTRAFUNK
+                        </p>
+                      </a>
+                      <div class="home-page__from-your-likes-item--description track-item__description">
+                        <div class="home-page__from-your-likes-item--authors">
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author">
+                            VaporVice
+                          </a>
+                          <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
+                            REMEMBXRED
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
         </div>
       </main>
       <footer id="main-footer">

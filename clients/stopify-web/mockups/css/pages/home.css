@@ -1,0 +1,107 @@
+#home-page {
+  background: linear-gradient(to bottom, #232323 0%, transparent 10%);
+  container-type: inline-size;
+  container-name: home-page;
+  display: block; /* display: block; - to display Home Page */
+}
+
+#home-page__header {
+  padding: 16px 40px 17px;
+  position: sticky;
+  top: 0;
+  transition: background-color .2s linear;
+  z-index: 1;
+}
+
+#home-page__header-nav {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+#home-page__main {
+  padding: 4px 40px;
+  padding-right: 28px;
+}
+
+#home-page__recently-played-section {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: 1fr 1fr;
+}
+
+.home-page__recently-played-item {
+  align-items: center;
+  background-color: rgba(255, 255, 255, .1);
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  overflow: hidden;
+  transition: .3s background ease-in-out;
+}
+
+.home-page__recently-played-item:hover {
+  background-color: rgba(255, 255, 255, .2);
+}
+
+.home-page__recently-played-item--left-side {
+  align-items: center;
+  display: flex;
+}
+
+.home-page__recently-played-item--cover {
+  aspect-ratio: 1 / 1;
+  width: 48px;
+}
+
+.home-page__recently-played-item--right-side {
+  color: var(--primary-fg-color);
+  display: flex;
+  justify-content: space-between;
+  padding: 0 7px;
+  width: 100%;
+}
+
+.home-page__recently-played-item--title-anchor {
+  align-items: center;
+  display: flex;
+  font-size: .9rem;
+  font-weight: bold;
+}
+
+.home-page__recently-played-item--play-btn {
+  width: 31px;
+  font-size: 1rem;
+  margin-right: 3px;
+}
+
+@container home-page (min-width: 780px) {
+  #home-page__recently-played-section {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
+@container home-page (min-width: 1110px) {
+  .home-page__recently-played-item--cover {
+    width: 63px;
+  }
+
+  #home-page__recently-played-section {
+    gap: 14px;
+  }
+
+  .home-page__recently-played-item--right-side {
+    padding: 0 14px;
+  }
+
+  .home-page__recently-played-item--title-anchor {
+    font-size: 1rem;
+  }
+
+  .home-page__recently-played-item--play-btn {
+    width: 48px;
+    font-size: 1.2rem;
+    margin-right: -6px;
+  }
+}

@@ -19,9 +19,10 @@
   <link rel="stylesheet" href="css/variables.css" />
   <link rel="stylesheet" href="css/components/scrollbar.css" />
   <link rel="stylesheet" href="css/components/filter-btn.css" />
-  <link rel="stylesheet" href="css/components/play-button.css" />
+  <link rel="stylesheet" href="css/components/play-btn.css" />
   <link rel="stylesheet" href="css/components/track-group.css" />
   <link rel="stylesheet" href="css/components/track-item.css" />
+  <link rel="stylesheet" href="css/components/track-table.css" />
   <link rel="stylesheet" href="css/layout/layout.css" />
   <link rel="stylesheet" href="css/layout/global-header.css" />
   <link rel="stylesheet" href="css/layout/sidebar-library.css" />
@@ -32,10 +33,12 @@
   <link rel="stylesheet" href="css/pages/search-browse.css" />
   <link rel="stylesheet" href="css/pages/search-results.css" />
   <link rel="stylesheet" href="css/pages/home.css" />
+  <link rel="stylesheet" href="css/pages/playlist.css" />
 
   <script src="js/slider.js" defer></script>
   <script src="js/trackItemsSizeCalc.js" defer></script>
   <script src="js/homePageHeaderBgChangeOnScroll.js" defer></script>
+  <script src="js/playlistPageHeaderBgChangeOnScroll.js" defer></script>
 </head>
 <body>
   <!-- GLOBAL HEADER -->
@@ -4332,6 +4335,2123 @@
                           <a href="" class="home-page__from-your-likes-item--author track-item__author last-author">
                             REMEMBXRED
                           </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </main>
+        </div>
+
+        <div id="playlist-page">
+          <header id="playlist-page__header">
+            <button id="playlist-page__header--play-btn" class="play-btn">
+              <span id="playlist-page__header--play-icon" class="play-icon">
+                <i class="fa-solid fa-play"></i>
+              </span>
+            </button>
+            <span id="playlist-page__header--title">
+              cali
+            </span>
+          </header>
+          <main id="playlist-page__main">
+            <section id="playlist-page__info-section">
+              <div id="playlist-page__info-section--left-group" class="circle">
+                <div id="playlist-page__info-section--cover-group" class="custom-cover">
+                  <img src="./assets/images/song.jpg" alt="" class="playlist-page__info-section--cover">
+                  <img src="./assets/images/song.jpg" alt="" class="playlist-page__info-section--cover">
+                  <img src="./assets/images/song.jpg" alt="" class="playlist-page__info-section--cover">
+                  <img src="./assets/images/song.jpg" alt="" class="playlist-page__info-section--cover">
+                </div>
+                <button id="playlist-page__info-section--choose-photo-btn">
+                  <span id="playlist-page__info-section--choose-photo-icon">
+                    <i class="fa-solid fa-pen"></i>
+                  </span>
+                  <span id="playlist-page__info-section--choose-photo-text">
+                    Choose photo
+                  </span>
+                </button>
+              </div>
+              <div id="playlist-page__info-section--right-group">
+                <div id="playlist-page__info-section--header-group">
+                  <span id="playlist-page__info-section--verification-icon">
+                    <i class="fa-solid fa-circle-check"></i>
+                  </span>
+                  <span id="playlist-page__info-section--header-text">
+                    Verified Artist
+                  </span>
+                </div>
+                <span id="playlist-page__info-section--title">
+                  cali
+                </span>
+                <span id="playlist-page__info-section--description">
+                  asd
+                </span>
+                <div id="playlist-page__info-section--bottom-info-group">
+                  <a href="" id="playlist-page__info-section--author-anchor">
+                    <span id="playlist-page__info-section--author-span">
+                      Aqua Studios
+                    </span>
+                  </a>
+                  <span id="playlist-page__info-section--separator">•</span>
+                  <span id="playlist-page__info-section--year-text" title="October 18, 2025">
+                    2025
+                  </span>
+                  <span id="playlist-page__info-section--separator">•</span>
+                  <span id="playlist-page__info-section--count-and-duration-text">
+                    81 songs, 3 hr 30 min
+                  </span>
+                  <div id="playlist-page__info-section--monthly-listeners">
+                    668,849 monthly listeners
+                  </div>
+                  <div id="playlist-page__info-section--public-playlist-count">
+                    18 Public Playlists
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="playlist-page__main-section">
+              <div id="playlist-page__main-section--btns-group">
+                <button id="playlist-page__main-section--play-btn" class="play-btn" title="Play cali">
+                  <span id="playlist-page__main-section--play-icon" class="play-icon">
+                    <i class="fa-solid fa-play"></i>
+                  </span>
+                </button>
+                <button id="playlist-page__main-section--shuffle-btn" class="playlist-page__main-section--btn shuffling" title="Enable Shuffle for cali">
+                  <span id="playlist-page__main-section--shuffle-icon">
+                    <i class="fa-solid fa-shuffle"></i>
+                  </span>
+                </button>
+                <button id="playlist-page__main-section--follow-btn" class="playlist-page__main-section--btn">
+                  <span id="playlist-page__main-section--follow-icon">
+                    Following
+                  </span>
+                </button>
+                <button id="playlist-page__main-section--save-btn" class="playlist-page__main-section--btn" title="Save to Your Library">
+                  <span id="playlist-page__main-section--save-icon">
+                    <i class="fa-solid fa-plus"></i>
+                  </span>
+                </button>
+                <button id="playlist-page__main-section--download-btn" class="playlist-page__main-section--btn" title="Download">
+                  <span id="playlist-page__main-section--download-icon">
+                    <i class="fa-solid fa-arrow-down"></i>
+                  </span>
+                </button>
+                <button id="playlist-page__main-section--invite-btn" class="playlist-page__main-section--btn" title="Invite collaborators to cali">
+                  <span id="playlist-page__main-section--invite-icon">
+                    <i class="fa-solid fa-user-plus"></i>
+                  </span>
+                </button>
+                <button id="playlist-page__main-section--more-options-btn" class="playlist-page__main-section--btn" title="More options for cali">
+                  <span id="playlist-page__main-section--more-options-icon">
+                    <i class="fa-solid fa-ellipsis"></i>
+                  </span>
+                </button>
+                <button id="playlist-page__main-section--view-as-btn">
+                  <span id="playlist-page__main-section--view-as-text">
+                    List
+                  </span>
+                  <span id="playlist-page__main-section--view-as-icon">
+                    <i class="fa-solid fa-list-ul"></i>
+                  </span>
+                </button>
+              </div>
+              <table class="track-table">
+                <thead>
+                  <tr class="track-table__header">
+                    <th class="track-table__header--index-column">
+                      <span class="track-table__header--index-text">
+                        #
+                      </span>
+                    </th>
+                    <th class="track-table__header--title-column">
+                      <span class="track-table__header--title-text">
+                        Title
+                      </span>
+                    </th>
+                    <th class="track-table__header--album-column">
+                      <span class="track-table__header--album-text">
+                        Album
+                      </span>
+                    </th>
+                    <th class="track-table__header--date-added-column">
+                      <span class="track-table__header--date-added-text">
+                        Date added
+                      </span>
+                    </th>
+                    <th class="track-table__header--duration-column">
+                      <span class="track-table__header--duration-text" title="Duration">
+                        <i class="fa-solid fa-clock"></i>
+                      </span>
+                    </th>
+                    <th class="track-table__header--more-column">
+                      <button class="track-table__header--more-btn">
+                        <span class="track-table__header--more-icon">
+                          <i class="fa-solid fa-caret-down"></i>
+                        </span>
+                      </button>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="track-table__list">
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">1</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">2</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">3</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">4</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">5</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">6</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">7</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">8</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">9</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr class="track-table__track">
+                    <td class="track-table__track--index-column">
+                      <span class="track-table__track--index-text">10</span>
+                      <button class="track-table__track--play-btn" title="Play Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--play-icon">
+                          <i class="fa-solid fa-play"></i>
+                        </span>
+                      </button>
+                    </td>
+                    <td class="track-table__track--title-column">
+                      <img src="./assets/images/song.jpg" alt="" class="track-table__track--cover">
+                      <div class="track-table__track--info-group">
+                        <a href="" class="track-table__track--title-anchor">
+                          <span class="track-table__track--title-span">
+                            Keep You
+                          </span>
+                        </a>
+                        <div class="playlist-page__songs-item--authors-group">
+                          <a href="" class="track-table__track--author-anchor">
+                            <span class="track-table__track--author-span">
+                              Spektrum
+                            </span>
+                          </a>
+                          <a href="" class="track-table__track--author-anchor last-author">
+                            <span class="track-table__track--author-span">
+                              Sara Skinner
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="track-table__track--album-column">
+                      <a href="" class="track-table__track--album-anchor">
+                        <span class="track-table__track--album-span">
+                          Keep You
+                        </span>
+                      </a>
+                    </td>
+                    <td class="track-table__track--date-added-column">
+                      <span class="track-table__track--date-added-text">
+                        Mar 18, 2025
+                      </span>
+                    </td>
+                    <td class="track-table__track--duration-column">
+                      <button class="track-table__track--save-btn" title="Add to playlist">
+                        <span class="track-table__track--save-icon">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                      </button>
+                      <span class="track-table__track--duration-text">
+                        4:49
+                      </span>
+                    </td>
+                    <td class="track-table__track--more-column">
+                      <button class="track-table__track--more-btn" title="More options for Keep You by Spektrum, Sara Skinner">
+                        <span class="track-table__track--more-icon">
+                          <i class="fa-solid fa-ellipsis"></i>
+                        </span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="playlist-page__main-section--see-more-group">
+                <span id="playlist-page__main-section--see-more-text">
+                  See more
+                </span>
+              </div>
+              <div id="playlist-page__main-section--find-more-group">
+                <button id="playlist-page__main-section--find-more-btn">
+                  <span id="playlist-page__main-section--find-more-span">
+                    Find more
+                  </span>
+                </button>
+              </div>
+              <div id="playlist-page__main-section--credits-group">
+                <span id="playlist-page__main-section--date-text">
+                  October 18, 2025
+                </span>
+                <span id="playlist-page__main-section--copyright-text">
+                  &copy; 2025 Supermanagement
+                </span>
+              </div>
+              <div id="playlist-page__main-section--more-by-group" class="track-group">
+                <div id="playlist-page__more-by-header-group" class="track-group__header-group">
+                  <div id="playlist-page__more-by-header-group--title-group" class="track-group__header-group--title-group">
+                    <h2 id="playlist-page__more-by-header-group--title-text" class="track-group__header-group--title-text">
+                      More by Azahriah
+                    </h2>
+                  </div>
+                  <a id="playlist-page__more-by-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                    <span id="playlist-page__more-by-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                      See discography
+                    </span>
+                  </a>
+                </div>
+                <div id="playlist-page__more-by-main-group" class="track-group__main-group">
+                  <div id="playlist-page__more-by-items" class="track-items">
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__more-by-item track-item play-btn-parent">
+                      <div class="playlist-page__more-by-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__more-by-item--cover track-item__cover rounded">
+                        <button class="playlist-page__more-by-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__more-by-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__more-by-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__more-by-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__more-by-item--title-text track-item__title-text">
+                            skatulya II
+                          </p>
+                        </a>
+                        <div class="playlist-page__more-by-item--description track-item__description">
+                          <span class="playlist-page__more-by-item--year-text">
+                            2025
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="playlist-page__main-section--discography-group" class="track-group">
+                <div id="playlist-page__discography-header-group" class="track-group__header-group">
+                  <div id="playlist-page__more-by-header-group--title-group" class="track-group__header-group--title-group">
+                    <h2 id="playlist-page__more-by-header-group--title-text" class="track-group__header-group--title-text">
+                      Discography
+                    </h2>
+                  </div>
+                  <a id="playlist-page__more-by-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                    <span id="playlist-page__more-by-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                      Show all
+                    </span>
+                  </a>
+                </div>
+                <div id="playlist-page__discography-filter-group" class="track-group__filter-group">
+                  <button class="playlist-page__discography-filter-btn filter-btn active">
+                    <span class="playlist-page__discography-filter-span filter-span">
+                      Popular releases
+                    </span>
+                  </button>
+                  <button class="playlist-page__discography-filter-btn filter-btn">
+                    <span class="playlist-page__discography-filter-span filter-span">
+                      Albums
+                    </span>
+                  </button>
+                  <button class="playlist-page__discography-filter-btn filter-btn">
+                    <span class="playlist-page__discography-filter-span filter-span">
+                      Singles and EPs
+                    </span>
+                  </button>
+                </div>
+                <div id="playlist-page__discography-main-group" class="track-group__main-group">
+                  <div id="playlist-page__discography-items" class="track-items">
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__discography-item track-item play-btn-parent">
+                      <div class="playlist-page__discography-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__discography-item--cover track-item__cover rounded">
+                        <button class="playlist-page__discography-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__discography-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__discography-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__discography-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__discography-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__discography-item--description track-item__description">
+                          <span class="playlist-page__discography-item--year-text">
+                            2025
+                          </span>
+                          <span class="playlist-page__discography-item--description-separator">•</span>
+                          <span class="playlist-page__discography-item--type">
+                            Album
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="playlist-page__main-section--about-group">
+                <h2 id="playlist-page__about-group--title">
+                  About
+                </h2>
+                <button id="playlist-page__about-group--main-btn">
+                  <span id="playlist-page__about-group--monthly-listeners">
+                    668,849 monthly listeners
+                  </span>
+                  <span id="playlist-page__about-group--description">
+                    creator from hungary
+                  </span>
+                </button>
+              </div>
+              <div id="playlist-page__main-section--fans-like-group" class="track-group">
+                <div id="playlist-page__fans-like-header-group" class="track-group__header-group">
+                  <div id="playlist-page__fans-like-header-group--title-group" class="track-group__header-group--title-group">
+                    <h2 id="playlist-page__fans-like-header-group--title-text" class="track-group__header-group--title-text">
+                      Fans also like
+                    </h2>
+                  </div>
+                  <a id="playlist-page__fans-like-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                    <span id="playlist-page__fans-like-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                      Show all
+                    </span>
+                  </a>
+                </div>
+                <div id="playlist-page__fans-like-main-group" class="track-group__main-group">
+                  <div id="playlist-page__fans-like-items" class="track-items">
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__fans-like-item track-item play-btn-parent">
+                      <div class="playlist-page__fans-like-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__fans-like-item--cover track-item__cover circle">
+                        <button class="playlist-page__fans-like-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__fans-like-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__fans-like-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__fans-like-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__fans-like-item--title-text track-item__title-text">
+                            DESH
+                          </p>
+                        </a>
+                        <div class="playlist-page__fans-like-item--description track-item__description">
+                          <span class="playlist-page__fans-like-item--type">
+                            Artist
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="playlist-page__main-section--appears-on-group" class="track-group">
+                <div id="playlist-page__appears-on-header-group" class="track-group__header-group">
+                  <div id="playlist-page__appears-on-header-group--title-group" class="track-group__header-group--title-group">
+                    <h2 id="playlist-page__appears-on-header-group--title-text" class="track-group__header-group--title-text">
+                      Appears on
+                    </h2>
+                  </div>
+                  <a id="playlist-page__appears-on-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                    <span id="playlist-page__appears-on-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                      Show all
+                    </span>
+                  </a>
+                </div>
+                <div id="playlist-page__appears-on-main-group" class="track-group__main-group">
+                  <div id="playlist-page__appears-on-items" class="track-items">
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__appears-on-item track-item play-btn-parent">
+                      <div class="playlist-page__appears-on-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__appears-on-item--cover track-item__cover rounded">
+                        <button class="playlist-page__appears-on-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__appears-on-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__appears-on-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__appears-on-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__appears-on-item--title-text track-item__title-text">
+                            BAKPAKK
+                          </p>
+                        </a>
+                        <div class="playlist-page__appears-on-item--description track-item__description">
+                          <span class="playlist-page__appears-on-item--year">
+                            2024
+                          </span>
+                          <span class="playlist-page__appears-on-item--description-separator">•</span>
+                          <span class="playlist-page__appears-on-item--type">
+                            EP
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="playlist-page__main-section--public-playlists-group" class="track-group">
+                <div id="playlist-page__public-playlists-header-group" class="track-group__header-group">
+                  <div id="playlist-page__public-playlists-header-group--title-group" class="track-group__header-group--title-group">
+                    <h2 id="playlist-page__public-playlists-header-group--title-text" class="track-group__header-group--title-text">
+                      Public Playlists
+                    </h2>
+                  </div>
+                  <a id="playlist-page__public-playlists-header-group--show-all-anchor" class="track-group__header-group--show-all-anchor">
+                    <span id="playlist-page__public-playlists-header-group--show-all-span" class="track-group__header-group--show-all-span">
+                      Show all
+                    </span>
+                  </a>
+                </div>
+                <div id="playlist-page__public-playlists-main-group" class="track-group__main-group">
+                  <div id="playlist-page__public-playlists-items" class="track-items">
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="playlist-page__public-playlists-item track-item play-btn-parent">
+                      <div class="playlist-page__public-playlists-item--cover-group track-item__cover-group">
+                        <img src="./assets/images/song.jpg" alt="" class="playlist-page__public-playlists-item--cover track-item__cover rounded">
+                        <button class="playlist-page__public-playlists-item--play-btn track-item__play-btn play-btn hover-transition">
+                          <span class="playlist-page__public-playlists-item--play-icon track-item__play-icon play-icon">
+                            <i class="fa-solid fa-play"></i>
+                          </span>
+                        </button>
+                      </div>
+                      <div class="playlist-page__public-playlists-item--info-group track-item__info-group">
+                        <a href="" class="playlist-page__public-playlists-item--title-anchor track-item__title-anchor" title="AL NACER!">
+                          <p class="playlist-page__public-playlists-item--title-text track-item__title-text">
+                            Aziverzum
+                          </p>
+                        </a>
+                        <div class="playlist-page__public-playlists-item--description track-item__description">
+                          <span class="playlist-page__public-playlists-item--follower-count">
+                            2 Followers
+                          </span>
+                          <span class="playlist-page__public-playlists-item--author">
+                            By Aqua Studios
+                          </span>
                         </div>
                       </div>
                     </div>

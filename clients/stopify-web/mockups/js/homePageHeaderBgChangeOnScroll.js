@@ -1,10 +1,10 @@
-const mainView = document.getElementById("main-view");
-const header = document.getElementById("home-page__header");
+const homeScrollView = document.getElementById("main-view");
+const homeHeader = document.getElementById("home-page__header");
 
-mainView.addEventListener("scroll", () => {
-  const scrollY = mainView.scrollTop;
+homeScrollView.addEventListener("scroll", () => {
+  const scrollY = homeScrollView.scrollTop;
   const fadeDistance = 100;
   const opacity = Math.min(scrollY / fadeDistance, 1);
 
-  header.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
+  homeHeader.style.backgroundColor = `rgba(0, 0, 0, ${opacity})`;
 });

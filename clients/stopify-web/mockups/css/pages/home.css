@@ -2,7 +2,7 @@
   background: linear-gradient(to bottom, #232323 0%, transparent 10%);
   container-type: inline-size;
   container-name: home-page;
-  display: block; /* display: block; - to display Home Page */
+  display: none; /* display: block; - to display Home Page */
 }
 
 #home-page__header {

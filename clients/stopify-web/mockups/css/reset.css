@@ -11,3 +11,9 @@ button, input, a {
 button, a {
   cursor: pointer;
 }
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}

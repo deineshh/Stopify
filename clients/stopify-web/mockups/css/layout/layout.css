@@ -1,12 +1,9 @@
-/* @font-face {
-  font-family: 'StopifyFont';
-  src: url('../../assets/fonts/StopifyMedium.ttf') format('truetype');
-} */
-
 html {
   background-color: var(--primary-bg-color);
   color: var(--primary-fg-color);
-  font-family: 'StopifyFont';
+  font-family: 'Spotify Mix';
+  font-weight: normal;
+  font-style: normal;
 }
 
 body {

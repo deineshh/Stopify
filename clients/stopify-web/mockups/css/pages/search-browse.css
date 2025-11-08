@@ -1,0 +1,293 @@
+#search-browse {
+  display: none; /* display: block; - to display Search Browse */
+  padding-bottom: 20px;
+  padding-right: 12px;
+  padding-left: 20px;
+  padding-top: 67px;
+}
+
+#search-browse__header {
+  margin-bottom: 20px;
+}
+
+#search-browse__header--title {
+  font-size: 1.6rem;
+}
+
+#search-browse__main-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: var(--layout-section-margin) 0;
+}
+
+.search-browse__main-item {
+  aspect-ratio: 351 / 197;
+  border-radius: 8px;
+  container-name: search-browse__main-item;
+  container-type: inline-size;
+  flex: 1 1 clamp(150px, 40%, 232px);
+  max-width: 351px;
+  overflow: hidden;
+  position: relative;
+}
+
+.search-browse__main-item--img {
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  transform: rotateZ(25deg) translate(18%, -2%);
+  width: 45%;
+}
+
+.search-browse__main-item--span {
+  font-size: 1.1rem;
+  font-weight: bold;
+  left: 15px;
+  position: absolute;
+  top: 15px;
+}
+
+.search-browse__main-item.music {
+  background-color: #dc148c;
+}
+
+.search-browse__main-item.podcasts {
+  background-color: #006450;
+}
+
+.search-browse__main-item.live-events {
+  background-color: #8400e7;
+}
+
+.search-browse__main-item.new-releases {
+  background-color: #608108;
+}
+
+.search-browse__main-item.pop {
+  background-color: #477d95;
+}
+
+.search-browse__main-item.hip-hop {
+  background-color: #477d95;
+}
+
+.search-browse__main-item.rock {
+  background-color: #006450;
+}
+
+.search-browse__main-item.mood {
+  background-color: #e1118c;
+}
+
+.search-browse__main-item.charts {
+  background-color: #8d67ab;
+}
+
+.search-browse__main-item.comedy {
+  background-color: #477d95;
+}
+
+.search-browse__main-item.educational {
+  background-color: #dc148c;
+}
+
+.search-browse__main-item.true-crime {
+  background-color: #af2896;
+}
+
+.search-browse__main-item.sports {
+  background-color: #dc148c;
+}
+
+.search-browse__main-item.dance-electronic {
+  background-color: #477d95;
+}
+
+.search-browse__main-item.chill {
+  background-color: #b06239;
+}
+
+.search-browse__main-item.indie {
+  background-color: #e91429;
+}
+
+.search-browse__main-item.workout {
+  background-color: #777777;
+}
+
+.search-browse__main-item.discover {
+  background-color: #8d67ab;
+}
+
+.search-browse__main-item.folk-acoustic {
+  background-color: #bc5900;
+}
+
+.search-browse__main-item.r-b {
+  background-color: #ba5d07;
+}
+
+.search-browse__main-item.k-pop {
+  background-color: #e61e32;
+}
+
+.search-browse__main-item.latin {
+  background-color: #0d73ec;
+}
+
+.search-browse__main-item.sleep {
+  background-color: #1e3264;
+}
+
+.search-browse__main-item.party {
+  background-color: #8d67ab;
+}
+
+.search-browse__main-item.at-home {
+  background-color: #5179a1;
+}
+
+.search-browse__main-item.decades {
+  background-color: #a66853;
+}
+
+.search-browse__main-item.love {
+  background-color: #dc148c;
+}
+
+.search-browse__main-item.metal {
+  background-color: #e91429;
+}
+
+.search-browse__main-item.jazz {
+  background-color: #8d67ab;
+}
+
+.search-browse__main-item.trending {
+  background-color: #b02897;
+}
+
+.search-browse__main-item.classical {
+  background-color: #7d4b32;
+}
+
+.search-browse__main-item.country {
+  background-color: #d84000;
+}
+
+.search-browse__main-item.focus {
+  background-color: #a56752;
+}
+
+.search-browse__main-item.soul {
+  background-color: #dc148c;
+}
+
+.search-browse__main-item.kids-family {
+  background-color: #0d73ec;
+}
+
+.search-browse__main-item.gaming {
+  background-color: #e8115b;
+}
+
+.search-browse__main-item.anime {
+  background-color: #0d73ec;
+}
+
+.search-browse__main-item.tv-movies {
+  background-color: #148a08;
+}
+
+.search-browse__main-item.instrumental {
+  background-color: #537aa1;
+}
+
+.search-browse__main-item.wellness {
+  background-color: #148a08;
+}
+
+.search-browse__main-item.punk {
+  background-color: #e61e32;
+}
+
+.search-browse__main-item.ambient {
+  background-color: #148a08;
+}
+
+.search-browse__main-item.blues {
+  background-color: #0d73ec;
+}
+
+.search-browse__main-item.cooking-dining {
+  background-color: #ba5d07;
+}
+
+.search-browse__main-item.alternative {
+  background-color: #e13300;
+}
+
+.search-browse__main-item.travel {
+  background-color: #0d72ed;
+}
+
+.search-browse__main-item.caribbean {
+  background-color: #0e73ed;
+}
+
+.search-browse__main-item.afro {
+  background-color: #8c1932;
+}
+
+.search-browse__main-item.songwriters {
+  background-color: #8c1932;
+}
+
+.search-browse__main-item.nature-noise {
+  background-color: #477d95;
+}
+
+.search-browse__main-item.funk-disco {
+  background-color: #af2896;
+}
+
+.search-browse__main-item.glow {
+  background-color: #0d73ec;
+}
+
+.search-browse__main-item.stopify-singles {
+  background-color: #777777;
+}
+
+.search-browse__main-item.netflix {
+  background-color: #e61e32;
+}
+
+.search-browse__main-item.summer {
+  background-color: #27856a;
+}
+
+.search-browse__main-item.radar {
+  background-color: #a56752;
+}
+
+.search-browse__main-item.equal {
+  background-color: #148a08;
+}
+
+.search-browse__main-item.fresh-finds {
+  background-color: #ff0090;
+}
+
+.search-browse__main-item.mixed-by {
+  background-color: #8d67ab;
+}
+
+@container search-browse__main-item (min-width: 250px) {
+  .search-browse__main-item--span {
+    font-size: 1.6rem;
+  }
+}

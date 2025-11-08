@@ -1,0 +1,213 @@
+#global-header {
+  padding: var(--layout-section-padding);
+  display: flex;
+  justify-content: space-between;
+}
+
+
+/* || LEFT SECTION */
+
+#global-header__left-section {
+  flex: 0 0 auto;
+}
+
+#global-header__stopify-logo--anchor {
+  display: flex;
+  height: 31.5px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 8px;
+}
+
+#global-header__stopify-logo--img {
+  filter: grayscale(100%) brightness(150%);
+}
+
+
+/* || MIDDLE SECTION */
+
+#global-header__middle-section {
+  display: flex;
+  align-items: top;
+  flex: 1;
+}
+
+.global-header__btn-base {
+  color: var(--light-gray-fg-color);
+  font-size: 1.35rem;
+  transform: scale(1);
+  transition-duration: .1s;
+  transition-property: color transform;
+  transition-timing-function: ease-in-out;
+}
+
+.global-header__btn-base:hover {
+  color: var(--primary-fg-color);
+  transform: scale(1.05);
+}
+
+#global-header__home-btn {
+  background-color: var(--primary-element-bg-color);
+  border-radius: 100%;
+  margin-left: 9px;
+  padding: 11.5px;
+}
+
+#global-header__home-btn:focus {
+  color: var(--primary-fg-color);
+}
+
+#global-header__search-form {
+  margin-left: 8px;
+}
+
+#global-header__search-bar--group {
+  align-items: center;
+  background-color: var(--primary-element-bg-color);
+  border: 2px transparent solid;
+  border-radius: 1.5em;
+  display: flex;
+  height: 100%;
+  padding: 0 11px;
+  transition-duration: .2s;
+  transition-property: background border-color;
+  transition-timing-function: ease-in-out;
+  width: 474.5px;
+}
+
+#global-header__search-bar--group:hover {
+  background-color: var(--primary-element-bg-color-hover);
+  cursor: text;
+}
+
+#global-header__search-bar--group:focus-within {
+  background-color: var(--primary-element-bg-color-hover);
+}
+
+#global-header__search-bar--group:hover #global-header__search-btn {
+  color: var(--primary-fg-color);
+}
+
+#global-header__search-bar--group:focus, #global-header__search-bar--group:focus-within {
+  border-color: white;
+}
+
+#global-header__search-bar--group:focus, #global-header__search-bar--group:focus-within #global-header__search-btn {
+  color: var(--primary-fg-color);
+}
+
+#global-header__search-btn {
+  pointer-events: none;
+}
+
+#global-header__search-bar--input {
+  flex: 1;
+  font-size: 1.1rem;
+  margin-left: 15px;
+  min-width: 0;
+}
+
+#global-header__search-bar--placeholder-group {
+  color: var(--light-gray-fg-color);
+  font-size: 1.1rem;
+  font-weight: 500;
+  pointer-events: none;
+  position: absolute;
+  margin-left: 37px;
+  user-select: none;
+}
+
+#global-header__search-dropdown {
+  display: none;
+}
+
+#global-header__search-bar--input:not(:placeholder-shown) + #global-header__search-bar--placeholder-group,
+#global-header__search-bar--input:placeholder-shown ~ #global-header__search-btns--clear-btn {
+  display: none;
+  opacity: 0;
+}
+
+.global-header__search-bar--btn {
+  font-size: 1.45rem;
+  margin: 0 5px;
+}
+
+#global-header__search-btns--clear-btn {
+  padding: 10px;
+}
+
+#global-header__search-btns--browse-group {
+  border-left: 1px gray solid;
+  padding-left: 9.5px;
+}
+
+
+/* || RIGHT SECTION */
+
+#global-header__right-section {
+  align-items: center;
+  display: flex;
+  flex: 0 0 auto;
+}
+
+#global-header__install-app--anchor {
+  align-items: center;
+  display: flex;
+  font-size: 0.95rem;
+  font-weight: 700;
+  gap: 6px;
+  padding: 7px 16px;
+  margin: 0 16px;
+}
+
+#global-header__install-app--span {
+  align-items: center;
+  border: 2px var(--light-gray-fg-color) solid;
+  border-radius: 100%;
+  display: flex;
+  font-size: .7rem;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.global-header__right-group--btn {
+  color: var(--light-gray-fg-color);
+  margin: 0 2px;
+  padding: 7px;
+  transform: scale(1);
+  transition: .1s color transform ease-in-out;
+}
+
+.global-header__right-group--btn:hover {
+  color: var(--primary-fg-color);
+  transform: scale(1.05);
+}
+
+#global-header__user-widget--btn {
+  align-items: center;
+  background-color: #19e68c;
+  border: 9px var(--primary-element-bg-color) solid;
+  border-radius: 100%;
+  color: black;
+  display: flex;
+  font-weight: 700;
+  justify-content: center;
+  height: 31px;
+  margin-left: 14px;
+  transition: .05s transform ease-in-out;
+  transform: scale(1);
+  width: 31px;
+}
+
+#global-header__user-widget--btn:hover {
+  transform: scale(1.05);
+}
+
+
+/* LARGE SCREEN SIZE */
+@media screen and (min-width: 1412px) {
+  #global-header__middle-section {
+    flex: 0 0 auto;
+  }
+}

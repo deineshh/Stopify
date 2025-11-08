@@ -1,0 +1,15 @@
+:root {
+  --primary-bg-color: black;
+  --primary-fg-color: white;
+  --primary-element-bg-color: #1f1f1f;
+  --primary-element-bg-color-hover: #2a2a2a;
+  --secondary-bg-color: #121212;
+  --light-gray-fg-color: #b3b3b3;
+  --layout-section-margin: 8px;
+  --layout-section-padding: 8px;
+  --layout-section-spacing-primary: 16px;
+  --primary-green-color: #1ac356;
+  --button-green-color: #1ed760;
+  --border-gray-color: #292929;
+  --primary-error-color: #f3727f;
+}

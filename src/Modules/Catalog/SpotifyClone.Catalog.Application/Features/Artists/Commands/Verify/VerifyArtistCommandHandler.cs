@@ -22,7 +22,7 @@ internal sealed class VerifyArtistCommandHandler(
             cancellationToken);
         if (artist is null)
         {
-            return Result.Failure<VerifyArtistCommandResult>(AlbumErrors.NotFound);
+            return Result.Failure<VerifyArtistCommandResult>(ArtistErrors.NotFound);
         }
 
         artist.Verify();

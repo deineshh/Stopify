@@ -26,7 +26,7 @@ internal sealed class EditArtistProfileCommandHandler(
             cancellationToken);
         if (artist is null)
         {
-            return Result.Failure<EditArtistProfileCommandResult>(AlbumErrors.NotFound);
+            return Result.Failure<EditArtistProfileCommandResult>(ArtistErrors.NotFound);
         }
 
         if ((!_currentUser.IsAuthenticated || _currentUser.Id != artist.OwnerId?.Value) &&

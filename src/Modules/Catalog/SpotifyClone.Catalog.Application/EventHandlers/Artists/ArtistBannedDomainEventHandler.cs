@@ -4,6 +4,8 @@ using SpotifyClone.Catalog.Application.Abstractions;
 using SpotifyClone.Catalog.Domain.Aggregates.Albums;
 using SpotifyClone.Catalog.Domain.Aggregates.Artists;
 using SpotifyClone.Catalog.Domain.Aggregates.Artists.Events;
+using SpotifyClone.Shared.BuildingBlocks.Application.Outbox;
+using SpotifyClone.Shared.IntegrationEvents.Catalog.Artists;
 
 namespace SpotifyClone.Catalog.Application.EventHandlers.Artists;
 
@@ -37,6 +39,11 @@ internal sealed class ArtistBannedDomainEventHandler(
         {
             album.RemoveMainArtist(artist.Id);
         }
+
+        var integrationEvent = new ArtistBannedIntegrationEvent(
+            notification.Id.Value);
+        var message = OutboxMessage.FromIntegrationEvent(integrationEvent);
+        await _unit.OutboxMessages.AddAsync(message, cancellationToken);
 
         await _unit.CommitAsync(cancellationToken);
     }

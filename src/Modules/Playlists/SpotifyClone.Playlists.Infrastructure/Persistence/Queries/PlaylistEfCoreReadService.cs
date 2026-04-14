@@ -131,6 +131,46 @@ internal sealed class PlaylistEfCoreReadService(
         {
             query = query.Where(p => p.Tracks.Any(t => filters.TrackIds.Any(id => id == t.Id.Value)));
         }
+        if (filters.GenreIds is not null && filters.GenreIds.Any() ||
+            filters.MoodIds is not null && filters.MoodIds.Any())
+        {
+            IEnumerable<TrackSharedDto> tracks =
+                await _catalogClient.GetAllTracksAsync(cancellationToken);
+
+            var matchingTrackGuids = tracks
+                .Where(tr =>
+                    (filters.GenreIds == null || !filters.GenreIds.Any() ||
+                        tr.GenreIds.Any(g => filters.GenreIds.Contains(g)))
+                    &&
+                    (filters.MoodIds == null || !filters.MoodIds.Any() ||
+                        tr.MoodIds.Any(m => filters.MoodIds.Contains(m)))
+                )
+                .Select(tr => tr.Id)
+                .Distinct()
+                .ToList();
+
+            if (matchingTrackGuids.Count == 0)
+            {
+                query = query.Where(p => false);
+            }
+            else
+            {
+                var matchingTrackIds = matchingTrackGuids
+                    .Select(id => TrackId.From(id))
+                    .ToList();
+
+                List<PlaylistId> matchingPlaylistIds = await _context.PlaylistTracks
+                    .AsNoTracking()
+                    .Where(pt => matchingTrackIds.Contains(pt.Id))
+                    .Select(pt => pt.PlaylistId)
+                    .Distinct()
+                    .ToListAsync(cancellationToken);
+
+                query = matchingPlaylistIds.Count == 0
+                    ? query.Where(p => false)
+                    : query.Where(p => matchingPlaylistIds.Contains(p.Id));
+            }
+        }
 
         var playlists = query.Select(p => new
         {

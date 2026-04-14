@@ -7,4 +7,6 @@ public sealed record PlaylistFilterParams(
     string? Type = null,
     bool? IsPublic = null,
     IEnumerable<Guid>? CollaboratorIds = null,
-    IEnumerable<Guid>? TrackIds = null);
+    IEnumerable<Guid>? TrackIds = null,
+    IEnumerable<Guid>? GenreIds = null,
+    IEnumerable<Guid>? MoodIds = null);

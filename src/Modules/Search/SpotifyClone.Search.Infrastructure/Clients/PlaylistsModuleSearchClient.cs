@@ -5,13 +5,13 @@ using SpotifyClone.Shared.Kernel.Contracts.Playlists;
 
 namespace SpotifyClone.Search.Infrastructure.Clients;
 
-internal sealed class PlaylistsModuleClient(
+internal sealed class PlaylistsModuleSearchClient(
     HttpClient httpClient,
-    ILogger<PlaylistsModuleClient> logger)
-    : IPlaylistsModuleClient
+    ILogger<PlaylistsModuleSearchClient> logger)
+    : IPlaylistsModuleSearchClient
 {
     private readonly HttpClient _httpClient = httpClient;
-    private readonly ILogger<PlaylistsModuleClient> _logger = logger;
+    private readonly ILogger<PlaylistsModuleSearchClient> _logger = logger;
 
     public async Task<IEnumerable<PlaylistSharedDto>> GetAllPlaylistsAsync(
         CancellationToken cancellationToken = default)

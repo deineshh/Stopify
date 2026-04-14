@@ -2,7 +2,7 @@
 
 namespace SpotifyClone.Search.Application.Abstractions.Clients;
 
-public interface ICatalogModuleClient
+public interface ICatalogModuleSearchClient
 {
     Task<IEnumerable<GenreSharedDto>> GetAllGenresAsync(
         CancellationToken cancellationToken = default);

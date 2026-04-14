@@ -2,7 +2,7 @@
 
 namespace SpotifyClone.Search.Application.Abstractions.Clients;
 
-public interface IAccountsModuleClient
+public interface IAccountsModuleSearchClient
 {
     Task<IEnumerable<UserSharedDto>> GetAllUsersAsync(
         CancellationToken cancellationToken = default);

@@ -5,13 +5,13 @@ using SpotifyClone.Shared.Kernel.Contracts.Catalog;
 
 namespace SpotifyClone.Search.Infrastructure.Clients;
 
-internal sealed class CatalogModuleClient(
+internal sealed class CatalogModuleSearchClient(
     HttpClient httpClient,
-    ILogger<CatalogModuleClient> logger)
-    : ICatalogModuleClient
+    ILogger<CatalogModuleSearchClient> logger)
+    : ICatalogModuleSearchClient
 {
     private readonly HttpClient _httpClient = httpClient;
-    private readonly ILogger<CatalogModuleClient> _logger = logger;
+    private readonly ILogger<CatalogModuleSearchClient> _logger = logger;
 
     public async Task<IEnumerable<GenreSharedDto>> GetAllGenresAsync(
         CancellationToken cancellationToken = default)

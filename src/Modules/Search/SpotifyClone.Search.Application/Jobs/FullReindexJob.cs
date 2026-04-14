@@ -10,16 +10,16 @@ using SpotifyClone.Shared.Kernel.Contracts.Catalog;
 namespace SpotifyClone.Search.Application.Jobs;
 
 public sealed class FullReindexJob(
-    IAccountsModuleClient accountsClient,
-    ICatalogModuleClient catalogClient,
-    IPlaylistsModuleClient playlistsClient,
+    IAccountsModuleSearchClient accountsClient,
+    ICatalogModuleSearchClient catalogClient,
+    IPlaylistsModuleSearchClient playlistsClient,
     ISearchIndexer searchIndexer,
     ISearchProvider searchProvider,
     ILogger<FullReindexJob> logger)
 {
-    private readonly IAccountsModuleClient _accountsClient = accountsClient;
-    private readonly ICatalogModuleClient _catalogClient = catalogClient;
-    private readonly IPlaylistsModuleClient _playlistsClient = playlistsClient;
+    private readonly IAccountsModuleSearchClient _accountsClient = accountsClient;
+    private readonly ICatalogModuleSearchClient _catalogClient = catalogClient;
+    private readonly IPlaylistsModuleSearchClient _playlistsClient = playlistsClient;
     private readonly ISearchIndexer _searchIndexer = searchIndexer;
     private readonly ISearchProvider _searchProvider = searchProvider;
     private readonly ILogger<FullReindexJob> _logger = logger;

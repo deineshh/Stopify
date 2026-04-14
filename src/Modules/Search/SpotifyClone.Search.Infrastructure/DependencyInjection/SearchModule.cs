@@ -57,19 +57,19 @@ public static class SearchModule
 
     private static void RegisterClients(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHttpClient<IAccountsModuleClient, AccountsModuleClient>(client =>
+        services.AddHttpClient<IAccountsModuleSearchClient, AccountsModuleSearchClient>(client =>
         {
             client.BaseAddress = new Uri(configuration["Application:ApiUrl"]!);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
         });
 
-        services.AddHttpClient<ICatalogModuleClient, CatalogModuleClient>(client =>
+        services.AddHttpClient<ICatalogModuleSearchClient, CatalogModuleSearchClient>(client =>
         {
             client.BaseAddress = new Uri(configuration["Application:ApiUrl"]!);
             client.DefaultRequestHeaders.Add("Accept", "application/json");
         });
 
-        services.AddHttpClient<IPlaylistsModuleClient, PlaylistsModuleClient>(client =>
+        services.AddHttpClient<IPlaylistsModuleSearchClient, PlaylistsModuleSearchClient>(client =>
         {
             client.BaseAddress = new Uri(configuration["Application:ApiUrl"]!);
             client.DefaultRequestHeaders.Add("Accept", "application/json");

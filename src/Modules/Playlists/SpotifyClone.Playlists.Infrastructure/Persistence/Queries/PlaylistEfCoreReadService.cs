@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SpotifyClone.Playlists.Application.Abstractions.Clients;
 using SpotifyClone.Playlists.Application.Abstractions.Data;
 using SpotifyClone.Playlists.Application.Features.Playlists.Queries;
 using SpotifyClone.Playlists.Application.Models;
@@ -10,15 +11,18 @@ using SpotifyClone.Playlists.Infrastructure.Persistence.Database;
 using SpotifyClone.Playlists.Infrastructure.Persistence.Entities;
 using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
 using SpotifyClone.Shared.BuildingBlocks.Infrastructure.Persistence.Extensions;
+using SpotifyClone.Shared.Kernel.Contracts.Catalog;
 using SpotifyClone.Shared.Kernel.IDs;
 
 namespace SpotifyClone.Playlists.Infrastructure.Persistence.Queries;
 
 internal sealed class PlaylistEfCoreReadService(
-    PlaylistsAppDbContext context)
+    PlaylistsAppDbContext context,
+    ICatalogModulePlaylistsClient catalogClient)
     : IPlaylistReadService
 {
     private readonly PlaylistsAppDbContext _context = context;
+    private readonly ICatalogModulePlaylistsClient _catalogClient = catalogClient;
 
     public async Task<PlaylistDetails?> GetDetailsAsync(
         PlaylistId id,

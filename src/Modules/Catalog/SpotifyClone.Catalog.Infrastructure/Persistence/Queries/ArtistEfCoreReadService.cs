@@ -5,6 +5,7 @@ using SpotifyClone.Catalog.Application.Models;
 using SpotifyClone.Catalog.Domain.Aggregates.Artists;
 using SpotifyClone.Catalog.Domain.Aggregates.Artists.Enums;
 using SpotifyClone.Catalog.Domain.Aggregates.Artists.ValueObjects;
+using SpotifyClone.Catalog.Domain.Aggregates.Tracks;
 using SpotifyClone.Catalog.Infrastructure.Persistence.Database;
 using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
 using SpotifyClone.Shared.BuildingBlocks.Infrastructure.Persistence.Extensions;
@@ -118,6 +119,43 @@ internal sealed class ArtistEfCoreReadService(
         {
             var status = ArtistStatus.From(filters.Status);
             query = query.Where(a => a.Status == status);
+        }
+        if ((filters.GenreIds?.Any() ?? false) ||
+            (filters.MoodIds?.Any() ?? false))
+        {
+            IQueryable<Track> tracksQuery = _context.Tracks
+                .AsNoTracking()
+                .AsQueryable();
+
+            if (filters.GenreIds?.Any() ?? false)
+            {
+                tracksQuery = tracksQuery
+                    .Where(t => t.Genres
+                        .Any(g => filters.GenreIds.Contains(g.Value)));
+            }
+
+            if (filters.MoodIds?.Any() ?? false)
+            {
+                tracksQuery = tracksQuery
+                    .Where(t => t.Moods
+                        .Any(m => filters.MoodIds.Contains(m.Value)));
+            }
+
+            List<Guid> artistIdValues = await tracksQuery
+                .SelectMany(t => t.MainArtists)
+                .Select(ma => ma.Value)
+                .Distinct()
+                .ToListAsync(cancellationToken);
+            var artistIds = artistIdValues
+                .Select(id => ArtistId.From(id))
+                .ToList();
+
+            if (artistIds.Count == 0)
+            {
+                return new PagedList<ArtistSummary>();
+            }
+
+            query = query.Where(a => artistIds.Contains(a.Id));
         }
 
         return await query

@@ -368,6 +368,22 @@ internal sealed class AlbumEfCoreReadService(
         {
             query = query.Where(a => a.Tracks.Any(t => filters.TrackIds.Any(id => id == t.Id.Value)));
         }
+        if (filters.GenreIds is not null && filters.GenreIds.Any())
+        {
+            query = query.Where(a => a.Tracks.Any(at =>
+                _context.Tracks
+                    .Where(t => t.Id == at.Id)
+                    .Any(t => t.Genres.Any(g => filters.GenreIds.Contains(g.Value)))
+            ));
+        }
+        if (filters.MoodIds is not null && filters.MoodIds.Any())
+        {
+            query = query.Where(a => a.Tracks.Any(at =>
+                _context.Tracks
+                    .Where(t => t.Id == at.Id)
+                    .Any(t => t.Moods.Any(m => filters.MoodIds.Contains(m.Value)))
+            ));
+        }
 
         PagedList<Album> pagedAlbums = await query
         .OrderBy(a => a.CreatedAtUtc)

@@ -1,67 +1,47 @@
 1. Finding the subdomains first
 
 You figure these out from the business perspective:
-
 Look at all the goals of Stopify (play music, manage playlists, discover songs, etc.).
-
 Group them into broad business capabilities — not by tech layers, but by what the user/business wants to achieve.
-
 These groups are your subdomains.
 
 Example for Stopify:
-
 Playback Experience (play, pause, next, shuffle, repeat)
-
 Personal Library (curation: playlists, saved albums, songs)
-
 Catalog (artist/album/song metadata)
-
 Listening History & Insights (playback history, recents)
-
 Identity & Access (login, registration, account settings)
+
 
 2. Deciding bounded contexts
 
 For each subdomain, ask:
-
 Is one model enough to handle all the business rules here?
-
 Or are there multiple distinct models that shouldn’t mix?
 
 Bounded contexts are about:
-
 Ubiquitous Language boundaries (same word means the same thing inside the context, but could mean something different outside).
-
 Autonomous models (changes in one don’t break the other).
-
 Clear interfaces (context maps define how they talk to each other).
 
 Example for Listening History & Insights:
-
 You might split into:
-
 History Context → stores playback history (write model)
-
 Recents Projection Context → optimized for showing “recently played” (read model, possibly device-specific)
-
 These are separate bounded contexts inside the same subdomain.
+
 
 3. The “which goes where” rule
 
 Start with subdomains: big picture business capabilities.
-
 Inside each, define bounded contexts that model different aspects or are implemented differently.
-
 Every bounded context should be placed inside exactly one subdomain.
+
 
 4. When to split contexts inside a subdomain
 
 You split when:
-
 Different teams own the models and evolve them independently.
-
 The same term means different things in different parts of the process.
-
 The model changes often in one area but not in the other.
-
 One part is read-heavy and another write-heavy, and you want different optimizations.

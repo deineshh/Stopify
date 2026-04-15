@@ -12,16 +12,19 @@ Stopify is a Spotify-inspired desktop application built with **WPF + MVVM** on *
 
 ## Screenshots
 
-### Home Page
+### Web Mockup (Full Screen)
+![Web](./docs/screenshots/web.png)
+
+### Home Page - Desktop
 ![Home](./docs/screenshots/home.png)
 
-### Artist Details
+### Artist Details - Desktop
 ![Artist](./docs/screenshots/artist.png)
 
-### Playlist Details
+### Playlist Details - Desktop
 ![Playlist](./docs/screenshots/playlist.png)
 
-### Search Details
+### Search Details - Desktop
 ![Search](./docs/screenshots/search.png)
 
 ## Architecture

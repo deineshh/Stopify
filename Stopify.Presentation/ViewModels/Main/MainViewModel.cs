@@ -1,8 +1,11 @@
 ﻿using Stopify.Presentation.Utilities.Stores;
+using Stopify.Presentation.ViewModels.Artist;
 using Stopify.Presentation.ViewModels.Base;
 using Stopify.Presentation.ViewModels.NowPlaying;
 using Stopify.Presentation.ViewModels.Player;
+using Stopify.Presentation.ViewModels.Playlist;
 using Stopify.Presentation.ViewModels.Queue;
+using Stopify.Presentation.ViewModels.Search;
 using Stopify.Presentation.ViewModels.Sidebar;
 using Stopify.Presentation.ViewModels.Titlebar;
 using System.ComponentModel;
@@ -59,7 +62,7 @@ public class MainViewModel : ViewModelBase
         }
     }
 
-    public ViewModelBase MainContentViewModel => _navigationStore.CurrentViewModel;
+    public ViewModelBase MainContentViewModel => new SearchViewModel();
     public TitlebarViewModel TitlebarViewModel { get; }
     public SidebarViewModel SidebarViewModel { get; }
     public NowPlayingViewModel NowPlayingViewModel { get; }

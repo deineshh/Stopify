@@ -10,6 +10,20 @@ Stopify is a Spotify-inspired desktop application built with **WPF + MVVM** on *
   - Implement a maintainable backend/domain layer with explicit services and repositories.
   - Model a realistic music domain and persist it with EF Core migrations and relational constraints.
 
+## Screenshots
+
+### Home Page
+![Home](./docs/screenshots/home.png)
+
+### Artist Details
+![Artist](./docs/screenshots/artist.png)
+
+### Playlist Details
+![Playlist](./docs/screenshots/playlist.png)
+
+### Search Details
+![Search](./docs/screenshots/search.png)
+
 ## Architecture
 
 ### Architecture style

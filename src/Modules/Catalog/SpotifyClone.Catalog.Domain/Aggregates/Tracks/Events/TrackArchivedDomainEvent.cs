@@ -4,5 +4,5 @@ using SpotifyClone.Shared.Kernel.IDs;
 namespace SpotifyClone.Catalog.Domain.Aggregates.Tracks.Events;
 
 public sealed record TrackArchivedDomainEvent(
-    TrackId TrackId)
+    TrackId Id)
     : DomainEvent;

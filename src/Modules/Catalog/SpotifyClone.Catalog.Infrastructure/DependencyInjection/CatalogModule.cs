@@ -20,6 +20,7 @@ using SpotifyClone.Catalog.Domain.Aggregates.Tracks;
 using SpotifyClone.Catalog.Domain.Services;
 using SpotifyClone.Catalog.Infrastructure.Persistence;
 using SpotifyClone.Catalog.Infrastructure.Persistence.Database;
+using SpotifyClone.Catalog.Infrastructure.Persistence.Initialization;
 using SpotifyClone.Catalog.Infrastructure.Persistence.Queries;
 using SpotifyClone.Catalog.Infrastructure.Persistence.Repositories;
 using SpotifyClone.Shared.BuildingBlocks.Application.Abstractions;
@@ -69,11 +70,23 @@ public static class CatalogModule
         return services;
     }
 
-    public static void UseCatalogModule(this IApplicationBuilder app)
+    public static async Task UseCatalogModule(this IApplicationBuilder app)
     {
-        IRecurringJobManager recurringJobManager =
-            app.ApplicationServices.GetRequiredService<IRecurringJobManager>();
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
+        CatalogAppDbContext dbContext = scope.ServiceProvider
+            .GetRequiredService<CatalogAppDbContext>();
+        ISender sender = scope.ServiceProvider
+            .GetRequiredService<ISender>();
 
+        await CatalogSeeder.SeedGenresAsync(dbContext, sender);
+        await CatalogSeeder.SeedMoodsAsync(dbContext, sender);
+        await CatalogSeeder.SeedArtistsAsync(dbContext, sender);
+        await CatalogSeeder.SeedAlbumsAsync(dbContext, sender);
+        await CatalogSeeder.SeedTracksAsync(dbContext, sender);
+        //await CatalogSeeder.PublishSeededAlbumsAsync(dbContext, sender);
+
+        IRecurringJobManager recurringJobManager =
+            scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
         recurringJobManager.AddOrUpdate<ProcessOutboxMessagesJob>(
             "catalog-outbox-processor",
             job => job.ProcessAsync(),

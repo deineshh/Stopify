@@ -28,7 +28,7 @@ public sealed class MoodsAdminController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [HttpPost]
-    public async Task<ActionResult<CreateMoodResponse>> CreateMood(
+    public async Task<ActionResult<CreateMoodResponse>> Create(
         [FromBody] CreateMoodRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -47,7 +47,7 @@ public sealed class MoodsAdminController(IMediator mediator)
         CreateMoodCommandResult createResultData = createResult.Value;
 
         return CreatedAtAction(
-            actionName: nameof(MoodsController.GetMoodDetails),
+            actionName: nameof(MoodsController.GetDetails),
             controllerName: "Moods",
             routeValues: new { id = createResultData.MoodId },
             value: new CreateMoodResponse(createResultData.MoodId));
@@ -119,7 +119,7 @@ public sealed class MoodsAdminController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [HttpDelete("{id:guid}")]
-    public async Task<ActionResult> DeleteMood(
+    public async Task<ActionResult> Delete(
         [FromRoute] Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -145,7 +145,7 @@ public sealed class MoodsAdminController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [HttpPatch("{id:guid}/name")]
-    public async Task<ActionResult> RenameMood(
+    public async Task<ActionResult> Rename(
         [FromRoute] Guid id,
         [FromBody] RenameMoodRequest request,
         CancellationToken cancellationToken = default)

@@ -16,7 +16,11 @@ public sealed class Mood : AggregateRoot<MoodId, Guid>
 
         MoodNameRules.Validate(name);
 
-        return new Mood(id, name, null);
+        var mood = new Mood(id, name, null);
+
+        mood.RaiseDomainEvent(new MoodCreatedDomainEvent(mood.Id, mood.Name));
+
+        return mood;
     }
 
     public void LinkNewCover(MoodCoverImage cover)
@@ -26,7 +30,7 @@ public sealed class Mood : AggregateRoot<MoodId, Guid>
         TryUnlinkCover();
 
         Cover = cover;
-        RaiseDomainEvent(new MoodLinkedToCoverImageDomainEvent(Cover.ImageId));
+        RaiseDomainEvent(new MoodLinkedToCoverImageDomainEvent(Id, Cover.ImageId));
     }
 
     public void TryUnlinkCover()
@@ -36,7 +40,7 @@ public sealed class Mood : AggregateRoot<MoodId, Guid>
             return;
         }
 
-        RaiseDomainEvent(new MoodUnlinkedFromCoverImageDomainEvent(Cover.ImageId));
+        RaiseDomainEvent(new MoodUnlinkedFromCoverImageDomainEvent(Id, Cover.ImageId));
         Cover = null;
     }
 
@@ -44,6 +48,8 @@ public sealed class Mood : AggregateRoot<MoodId, Guid>
     {
         MoodNameRules.Validate(name);
         Name = name;
+
+        RaiseDomainEvent(new MoodRenamedDomainEvent(Id, Name));
     }
 
     public void PrepareForDeletion()

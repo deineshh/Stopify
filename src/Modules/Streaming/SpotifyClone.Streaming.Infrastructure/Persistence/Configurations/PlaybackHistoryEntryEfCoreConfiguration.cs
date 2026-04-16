@@ -14,6 +14,10 @@ internal sealed class PlaybackHistoryEntryEfCoreConfiguration
 
         builder.HasKey(e => e.Id);
 
+        builder.Property(x => x.CreatedAtUtc)
+            .HasColumnName("created_at_utc")
+            .IsRequired();
+
         builder.Property(e => e.Id)
             .HasColumnName("id")
             .HasConversion(StreamingEfCoreValueConverters.PlaybackHistoryEntryIdConverter)

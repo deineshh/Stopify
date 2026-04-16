@@ -29,7 +29,12 @@ public sealed class Artist : AggregateRoot<ArtistId, Guid>
 
         ArtistNameRules.Validate(name);
 
-        return new Artist(id, name, null, ownerId, ArtistStatus.NotVerified, null, null, []);
+        ArtistStatus status = ArtistStatus.NotVerified;
+        var artist = new Artist(id, name, null, ownerId, status, null, null, []);
+
+        artist.RaiseDomainEvent(new ArtistCreatedDomainEvent(artist.Id, artist.Name, artist.Status));
+
+        return artist;
     }
 
     public void LinkNewAvatar(ArtistAvatarImage avatar)
@@ -41,7 +46,7 @@ public sealed class Artist : AggregateRoot<ArtistId, Guid>
         UnlinkAvatar();
 
         Avatar = avatar;
-        RaiseDomainEvent(new ArtistLinkedToAvatarImageDomainEvent(Avatar.ImageId));
+        RaiseDomainEvent(new ArtistLinkedToAvatarImageDomainEvent(Id, Avatar.ImageId));
     }
 
     public void LinkNewBanner(ArtistBannerImage banner)
@@ -64,7 +69,7 @@ public sealed class Artist : AggregateRoot<ArtistId, Guid>
             return;
         }
 
-        RaiseDomainEvent(new ArtistUnlinkedFromAvatarImageDomainEvent(Avatar.ImageId));
+        RaiseDomainEvent(new ArtistUnlinkedFromAvatarImageDomainEvent(Id, Avatar.ImageId));
         Avatar = null;
     }
 
@@ -97,6 +102,8 @@ public sealed class Artist : AggregateRoot<ArtistId, Guid>
         }
 
         Status = ArtistStatus.Verified;
+
+        RaiseDomainEvent(new ArtistVerifiedDomainEvent(Id));
     }
 
     public void Unverify()
@@ -109,6 +116,8 @@ public sealed class Artist : AggregateRoot<ArtistId, Guid>
         }
 
         Status = ArtistStatus.NotVerified;
+
+        RaiseDomainEvent(new ArtistUnverifiedDomainEvent(Id));
     }
 
     public void Rename(string name)
@@ -117,6 +126,8 @@ public sealed class Artist : AggregateRoot<ArtistId, Guid>
 
         ArtistNameRules.Validate(name);
         Name = name;
+
+        RaiseDomainEvent(new ArtistRenamedDomainEvent(Id, Name));
     }
 
     public void UpdateBio(string? bio)
@@ -192,6 +203,8 @@ public sealed class Artist : AggregateRoot<ArtistId, Guid>
         }
 
         Status = ArtistStatus.NotVerified;
+
+        RaiseDomainEvent(new ArtistUnbannedDomainEvent(Id, Name, Status, Avatar?.ImageId));
     }
 
     private void ThrowIfBanned(string message)

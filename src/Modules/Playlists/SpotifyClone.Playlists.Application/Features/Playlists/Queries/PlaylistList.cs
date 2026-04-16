@@ -1,4 +1,6 @@
-﻿namespace SpotifyClone.Playlists.Application.Features.Playlists.Queries;
+﻿using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
+
+namespace SpotifyClone.Playlists.Application.Features.Playlists.Queries;
 
 public sealed record PlaylistList(
-    IReadOnlyCollection<PlaylistSummary> Playlists);
+    PagedList<PlaylistSummary> Playlists);

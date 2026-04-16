@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Text.Json;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpotifyClone.Api.Contracts.v1.Playlists.AddCollaborator;
@@ -19,7 +20,9 @@ using SpotifyClone.Playlists.Application.Features.Playlists.Commands.RemoveColla
 using SpotifyClone.Playlists.Application.Features.Playlists.Commands.RemoveTrackFromPlaylist;
 using SpotifyClone.Playlists.Application.Features.Playlists.Queries;
 using SpotifyClone.Playlists.Application.Features.Playlists.Queries.GetDetails;
+using SpotifyClone.Playlists.Application.Features.Playlists.Queries.List;
 using SpotifyClone.Shared.BuildingBlocks.Application.Auth;
+using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
 using SpotifyClone.Shared.BuildingBlocks.Application.Results;
 
 namespace SpotifyClone.Api.Controllers.Playlists;
@@ -29,6 +32,43 @@ namespace SpotifyClone.Api.Controllers.Playlists;
 public sealed class PlaylistsController(IMediator mediator)
     : ApiController(mediator)
 {
+    [EndpointSummary("List Playlists")]
+    [EndpointDescription("Returns a list of Playlists with pagination support.")]
+    [ProducesResponseType(typeof(PlaylistList), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<ActionResult<PlaylistList>> List(
+        [FromQuery] PlaylistFilterParams filters,
+        [FromQuery] PaginationParams pagination,
+        CancellationToken cancellationToken = default)
+    {
+        Result<PlaylistList> result = await Mediator.Send(
+            new ListPlaylistsQuery(filters, pagination),
+            cancellationToken);
+        if (result.IsFailure)
+        {
+            ProblemDetails problemDetails = ResultToProblemDetailsMapper.MapToProblemDetails(
+                result,
+                HttpContext);
+
+            return new ObjectResult(problemDetails) { StatusCode = problemDetails.Status };
+        }
+
+        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(new
+        {
+            page = result.Value.Playlists.Page,
+            pageSize = result.Value.Playlists.PageSize,
+            hasPreviousPage = result.Value.Playlists.HasPreviousPage,
+            hasNextPage = result.Value.Playlists.HasNextPage,
+            totalCount = result.Value.Playlists.TotalCount,
+        }));
+
+        return Ok(result.Value.Playlists.Items);
+    }
+
     [EndpointSummary("Get Playlist Details")]
     [EndpointDescription("Returns all the necessary Playlist details.")]
     [ProducesResponseType(typeof(PlaylistDetails), StatusCodes.Status200OK)]

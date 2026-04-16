@@ -13,11 +13,11 @@ using SpotifyClone.Accounts.Application.Abstractions.Repositories;
 using SpotifyClone.Accounts.Application.Abstractions.Services;
 using SpotifyClone.Accounts.Application.Behaviors;
 using SpotifyClone.Accounts.Application.Errors;
-using SpotifyClone.Accounts.Application.Features.Auth.Commands.RegisterUser;
 using SpotifyClone.Accounts.Application.Jobs;
 using SpotifyClone.Accounts.Domain.Aggregates.Users;
 using SpotifyClone.Accounts.Infrastructure.Persistence;
 using SpotifyClone.Accounts.Infrastructure.Persistence.Accounts.Database;
+using SpotifyClone.Accounts.Infrastructure.Persistence.Accounts.Initialization;
 using SpotifyClone.Accounts.Infrastructure.Persistence.Accounts.Repositories;
 using SpotifyClone.Accounts.Infrastructure.Persistence.Auth;
 using SpotifyClone.Accounts.Infrastructure.Persistence.Auth.Initialization;
@@ -31,7 +31,6 @@ using SpotifyClone.Accounts.Infrastructure.Services.Jwt;
 using SpotifyClone.Accounts.Infrastructure.Services.Sms;
 using SpotifyClone.Shared.BuildingBlocks.Application.Abstractions;
 using SpotifyClone.Shared.BuildingBlocks.Application.Abstractions.Mappers;
-using SpotifyClone.Shared.BuildingBlocks.Application.Auth;
 
 namespace SpotifyClone.Accounts.Infrastructure.DependencyInjection;
 
@@ -99,55 +98,19 @@ public static class AccountsModule
 
     public async static Task UseAccountsModule(this IApplicationBuilder app)
     {
-        await IdentitySeeder.SeedRolesAsync(app.ApplicationServices);
-
         using IServiceScope scope = app.ApplicationServices.CreateScope();
+        RoleManager<IdentityRole<Guid>> roleManager = scope.ServiceProvider
+            .GetRequiredService<RoleManager<IdentityRole<Guid>>>();
         UserManager<ApplicationUser> userManager = scope.ServiceProvider
             .GetRequiredService<UserManager<ApplicationUser>>();
         ISender sender = scope.ServiceProvider
             .GetRequiredService<ISender>();
 
-        const string adminEmail = "stopify@gmail.com";
-        ApplicationUser? existingAdmin = await userManager.FindByEmailAsync(adminEmail);
-        if (existingAdmin is null)
-        {
-            await sender.Send(new RegisterUserCommand(
-                Email: adminEmail,
-                Password: "Admin_Password123",
-                DisplayName: "Stopify",
-                BirthDate: new DateTimeOffset(2007, 03, 04, 2, 0, 0, TimeSpan.Zero),
-                Gender: "male",
-                Role: UserRoles.Admin));
-        }
-
-        const string creator1Email = "stopifycreator@gmail.com";
-        ApplicationUser? existingCreator1 = await userManager.FindByEmailAsync(creator1Email);
-        if (existingCreator1 is null)
-        {
-            await sender.Send(new RegisterUserCommand(
-                Email: creator1Email,
-                Password: "Creator_Password123",
-                DisplayName: "The Creator",
-                BirthDate: new DateTimeOffset(new DateTime(2007, 03, 04, 2, 0, 0, DateTimeKind.Local)),
-                Gender: "male",
-                Role: UserRoles.Creator));
-        }
-
-        const string creator2Email = "stopifycreator2@gmail.com";
-        ApplicationUser? existingCreator2 = await userManager.FindByEmailAsync(creator2Email);
-        if (existingCreator2 is null)
-        {
-            await sender.Send(new RegisterUserCommand(
-                Email: creator2Email,
-                Password: "Creator_Password123",
-                DisplayName: "The Creator 2",
-                BirthDate: new DateTimeOffset(new DateTime(2007, 03, 04, 2, 0, 0, DateTimeKind.Local)),
-                Gender: "male",
-                Role: UserRoles.Creator));
-        }
+        await IdentitySeeder.SeedRolesAsync(roleManager);
+        await AccountsSeeder.SeedAccountsAsync(userManager, sender);
 
         IRecurringJobManager recurringJobManager =
-            app.ApplicationServices.GetRequiredService<IRecurringJobManager>();
+            scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
         recurringJobManager.AddOrUpdate<ProcessOutboxMessagesJob>(
             "accounts-outbox-processor",
             job => job.ProcessAsync(),

@@ -7,12 +7,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SpotifyClone.Playlists.Application;
 using SpotifyClone.Playlists.Application.Abstractions;
+using SpotifyClone.Playlists.Application.Abstractions.Clients;
 using SpotifyClone.Playlists.Application.Abstractions.Data;
 using SpotifyClone.Playlists.Application.Abstractions.Repositories;
 using SpotifyClone.Playlists.Application.Behaviors;
 using SpotifyClone.Playlists.Application.Errors;
 using SpotifyClone.Playlists.Application.Jobs;
 using SpotifyClone.Playlists.Domain.Aggregates.Playlists;
+using SpotifyClone.Playlists.Infrastructure.Clients;
 using SpotifyClone.Playlists.Infrastructure.Persistence;
 using SpotifyClone.Playlists.Infrastructure.Persistence.Database;
 using SpotifyClone.Playlists.Infrastructure.Persistence.Queries;
@@ -37,6 +39,8 @@ public static class PlaylistsModule
             configuration.GetConnectionString("MainDb"),
             b => b.MigrationsAssembly(typeof(PlaylistsAppDbContext).Assembly.FullName)));
 
+        RegisterClients(services, configuration);
+
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<IPlaylistsUnitOfWork>());
         services.AddScoped<IPlaylistsUnitOfWork, PlaylistsEfCoreUnitOfWork>();
 
@@ -55,15 +59,23 @@ public static class PlaylistsModule
         return services;
     }
 
-    public static void UsePlaylistsModule(this IApplicationBuilder app)
+    public static async Task UsePlaylistsModule(this IApplicationBuilder app)
     {
-        IRecurringJobManager recurringJobManager =
-            app.ApplicationServices.GetRequiredService<IRecurringJobManager>();
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
 
+        IRecurringJobManager recurringJobManager
+            = scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
         recurringJobManager.AddOrUpdate<ProcessOutboxMessagesJob>(
             "playlists-outbox-processor",
             job => job.ProcessAsync(),
             "*/5 * * * * *" // Every 5 seconds (Cron expression)
         );
     }
+
+    private static void RegisterClients(IServiceCollection services, IConfiguration configuration)
+        => services.AddHttpClient<ICatalogModulePlaylistsClient, CatalogModulePlaylistsClient>(client =>
+        {
+            client.BaseAddress = new Uri(configuration["Application:ApiUrl"]!);
+            client.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
 }

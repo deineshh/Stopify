@@ -6,6 +6,7 @@ public abstract class AggregateRoot<TId, TIdValue> : Entity<TId, TIdValue>, IHas
 {
     private readonly List<DomainEvent> _domainEvents = [];
 
+    public DateTimeOffset CreatedAtUtc { get; init; }
     public IReadOnlyCollection<DomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
     protected AggregateRoot()
@@ -15,8 +16,7 @@ public abstract class AggregateRoot<TId, TIdValue> : Entity<TId, TIdValue>, IHas
 
     protected AggregateRoot(TId id)
         : base(id)
-    {
-    }
+        => CreatedAtUtc = DateTimeOffset.UtcNow;
 
     protected void RaiseDomainEvent(DomainEvent domainEvent)
         => _domainEvents.Add(domainEvent);

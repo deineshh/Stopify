@@ -55,7 +55,7 @@ public sealed class Album : AggregateRoot<AlbumId, Guid>
 
         Cover = cover;
         RaiseDomainEvent(new AlbumLinkedToCoverImageDomainEvent(
-            Cover.ImageId,
+            Id, Cover.ImageId,
             _tracks.Select(t => t.Id)));
     }
 
@@ -67,7 +67,7 @@ public sealed class Album : AggregateRoot<AlbumId, Guid>
         }
 
         RaiseDomainEvent(new AlbumUnlinkedFromCoverImageDomainEvent(
-            Cover.ImageId,
+            Id, Cover.ImageId,
             _tracks.Select(t => t.Id)));
 
         Cover = null;
@@ -95,7 +95,10 @@ public sealed class Album : AggregateRoot<AlbumId, Guid>
         ReleaseDate = releaseDate;
         Status = AlbumStatus.Published;
 
-        RaiseDomainEvent(new AlbumPublishedDomainEvent(Id, _tracks.Select(t => t.Id), releaseDate));
+        RaiseDomainEvent(new AlbumPublishedDomainEvent(
+            Id, Title, ReleaseDate.Value, Type, Cover!.ImageId,
+            _mainArtists, Enumerable.Empty<ArtistId>(),
+            _tracks.Select(t => t.Id)));
     }
 
     public void Unpublish()
@@ -131,6 +134,8 @@ public sealed class Album : AggregateRoot<AlbumId, Guid>
         {
             _mainArtists.Add(artistId);
         }
+
+        RaiseDomainEvent(new AlbumMainArtistsUpdatedDomainEvent(Id, MainArtists));
     }
 
     public void RemoveMainArtist(ArtistId artistId)
@@ -148,6 +153,8 @@ public sealed class Album : AggregateRoot<AlbumId, Guid>
         {
             Unpublish();
         }
+
+        RaiseDomainEvent(new AlbumMainArtistsUpdatedDomainEvent(Id, MainArtists));
     }
 
     public void AddTrack(TrackId trackId)
@@ -260,6 +267,8 @@ public sealed class Album : AggregateRoot<AlbumId, Guid>
         ArgumentException.ThrowIfNullOrWhiteSpace(title);
         AlbumTitleRules.Validate(title);
         Title = title;
+
+        RaiseDomainEvent(new AlbumTitleCorrectedDomainEvent(Id, Title));
     }
 
     public void RescheduleRelease(DateTimeOffset releaseDate)
@@ -283,13 +292,7 @@ public sealed class Album : AggregateRoot<AlbumId, Guid>
         }
 
         ReleaseDate = releaseDate;
-        RaiseDomainEvent(new AlbumReleaseRescheduledDomainEvent(Id, releaseDate));
-    }
-
-    public void ChangeCover(AlbumCoverImage newCover)
-    {
-        ArgumentNullException.ThrowIfNull(newCover);
-        Cover = newCover;
+        RaiseDomainEvent(new AlbumReleaseRescheduledDomainEvent(Id, ReleaseDate.Value));
     }
 
     public void PrepareForDeletion()

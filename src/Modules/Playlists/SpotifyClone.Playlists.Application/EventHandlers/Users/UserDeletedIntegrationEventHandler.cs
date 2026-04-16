@@ -29,7 +29,7 @@ internal sealed class UserDeletedIntegrationEventHandler(
         CancellationToken cancellationToken = default)
     {
         IEnumerable<Playlist> playlists = await _unit.Playlists.GetAllByOwnerAsync(
-            UserId.From(notification.UserId), cancellationToken);
+            UserId.From(notification.Id), cancellationToken);
         foreach (Playlist playlist in playlists)
         {
             playlist.PrepareForDeletion(true);
@@ -41,14 +41,14 @@ internal sealed class UserDeletedIntegrationEventHandler(
         UserDeletedIntegrationEvent notification,
         CancellationToken cancellationToken = default)
     {
-        if (!await _unit.UserReferences.ExistsAsync(notification.UserId, cancellationToken))
+        if (!await _unit.UserReferences.ExistsAsync(notification.Id, cancellationToken))
         {
             _logger.LogError(
                 "User reference {Id} was not found in Playlists module.",
-                notification.UserId);
+                notification.Id);
             throw new InvalidOperationException(
-                $"User reference {notification.UserId} was not found in Playlists module.");
+                $"User reference {notification.Id} was not found in Playlists module.");
         }
-        await _unit.UserReferences.DeleteAsync(notification.UserId, cancellationToken);
+        await _unit.UserReferences.DeleteAsync(notification.Id, cancellationToken);
     }
 }

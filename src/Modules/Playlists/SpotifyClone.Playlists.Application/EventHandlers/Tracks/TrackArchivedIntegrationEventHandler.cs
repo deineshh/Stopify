@@ -24,15 +24,15 @@ internal sealed class TrackArchivedIntegrationEventHandler(
         TrackArchivedIntegrationEvent notification,
         CancellationToken cancellationToken)
     {
-        if (!await _unit.TrackReferences.ExistsAsync(notification.TrackId, cancellationToken))
+        if (!await _unit.TrackReferences.ExistsAsync(notification.Id, cancellationToken))
         {
             _logger.LogError(
                 "Track {TrackId} was not found in the Playlists module.",
-                notification.TrackId);
+                notification.Id);
             throw new InvalidOperationException(
-                $"Track {notification.TrackId} was not found in the Playlists module.");
+                $"Track {notification.Id} was not found in the Playlists module.");
         }
-        await _unit.TrackReferences.MarkAsArchivedAsync(notification.TrackId, cancellationToken);
+        await _unit.TrackReferences.MarkAsArchivedAsync(notification.Id, cancellationToken);
 
         if (!_currentUser.IsAuthenticated ||
             !await _unit.UserReferences.ExistsAsync(_currentUser.Id, cancellationToken))
@@ -52,7 +52,7 @@ internal sealed class TrackArchivedIntegrationEventHandler(
             null,
             PlaylistType.ArchivedTracks);
 
-        playlist.AddTrack(TrackId.From(notification.TrackId), ownerId, true);
+        playlist.AddTrack(TrackId.From(notification.Id), ownerId, true);
 
         await _unit.Playlists.AddAsync(playlist, cancellationToken);
         await _unit.CommitAsync(cancellationToken);

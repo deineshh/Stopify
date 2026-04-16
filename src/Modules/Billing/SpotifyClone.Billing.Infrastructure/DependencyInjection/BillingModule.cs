@@ -65,7 +65,7 @@ public static class BillingModule
             app.ApplicationServices.GetRequiredService<IRecurringJobManager>();
 
         recurringJobManager.AddOrUpdate<ProcessOutboxMessagesJob>(
-            "playlists-outbox-processor",
+            "billing-outbox-processor",
             job => job.ProcessAsync(),
             "*/5 * * * * *" // Every 5 seconds (Cron expression)
         );

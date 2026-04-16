@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using System.Text.Json;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SpotifyClone.Api.Contracts.v1.Catalog.Artists.AddGalleryImage;
@@ -7,8 +8,6 @@ using SpotifyClone.Api.Contracts.v1.Catalog.Artists.EditProfile;
 using SpotifyClone.Api.Contracts.v1.Catalog.Artists.LinkNewAvatar;
 using SpotifyClone.Api.Contracts.v1.Catalog.Artists.LinkNewBanner;
 using SpotifyClone.Api.Mappers;
-using SpotifyClone.Catalog.Application.Features.Albums.Queries;
-using SpotifyClone.Catalog.Application.Features.Albums.Queries.GetAllByArtist;
 using SpotifyClone.Catalog.Application.Features.Artists.Commands.AddGalleryImage;
 using SpotifyClone.Catalog.Application.Features.Artists.Commands.Create;
 using SpotifyClone.Catalog.Application.Features.Artists.Commands.EditProfile;
@@ -19,7 +18,9 @@ using SpotifyClone.Catalog.Application.Features.Artists.Commands.UnlinkAvatar;
 using SpotifyClone.Catalog.Application.Features.Artists.Commands.UnlinkBanner;
 using SpotifyClone.Catalog.Application.Features.Artists.Queries;
 using SpotifyClone.Catalog.Application.Features.Artists.Queries.GetDetails;
+using SpotifyClone.Catalog.Application.Features.Artists.Queries.List;
 using SpotifyClone.Shared.BuildingBlocks.Application.Auth;
+using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
 using SpotifyClone.Shared.BuildingBlocks.Application.Results;
 
 namespace SpotifyClone.Api.Controllers.Catalog.Artists;
@@ -29,6 +30,43 @@ namespace SpotifyClone.Api.Controllers.Catalog.Artists;
 public sealed class ArtistsController(IMediator mediator)
     : ApiController(mediator)
 {
+    [EndpointSummary("List Artists")]
+    [EndpointDescription("Returns a list of Artists with pagination support.")]
+    [ProducesResponseType(typeof(ArtistList), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [AllowAnonymous]
+    [HttpGet]
+    public async Task<ActionResult<ArtistList>> List(
+        [FromQuery] ArtistFilterParams filters,
+        [FromQuery] PaginationParams pagination,
+        CancellationToken cancellationToken = default)
+    {
+        Result<ArtistList> result = await Mediator.Send(
+            new ListArtistsQuery(filters, pagination),
+            cancellationToken);
+        if (result.IsFailure)
+        {
+            ProblemDetails problemDetails = ResultToProblemDetailsMapper.MapToProblemDetails(
+                result,
+                HttpContext);
+
+            return new ObjectResult(problemDetails) { StatusCode = problemDetails.Status };
+        }
+
+        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(new
+        {
+            page = result.Value.Artists.Page,
+            pageSize = result.Value.Artists.PageSize,
+            hasPreviousPage = result.Value.Artists.HasPreviousPage,
+            hasNextPage = result.Value.Artists.HasNextPage,
+            totalCount = result.Value.Artists.TotalCount,
+        }));
+
+        return Ok(result.Value.Artists.Items);
+    }
+
     [EndpointSummary("Get Artist Details")]
     [EndpointDescription("Returns all the necessary Artist details.")]
     [ProducesResponseType(typeof(ArtistDetails), StatusCodes.Status200OK)]
@@ -56,33 +94,6 @@ public sealed class ArtistsController(IMediator mediator)
         return Ok(result.Value);
     }
 
-    [EndpointSummary("Get Artist's albums")]
-    [EndpointDescription("Returns Albums owned by a certain Artist.")]
-    [ProducesResponseType(typeof(AlbumList), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [AllowAnonymous]
-    [HttpGet("{id:guid}/albums")]
-    public async Task<ActionResult<AlbumList>> GetByArtist(
-        [FromRoute] Guid id,
-        CancellationToken cancellationToken = default)
-    {
-        Result<AlbumList> result = await Mediator.Send(
-            new GetAllAlbumsByArtistQuery(id),
-            cancellationToken);
-        if (result.IsFailure)
-        {
-            ProblemDetails problemDetails = ResultToProblemDetailsMapper.MapToProblemDetails(
-                result,
-                HttpContext);
-
-            return new ObjectResult(problemDetails) { StatusCode = problemDetails.Status };
-        }
-
-        return Ok(result.Value);
-    }
-
     [EndpointSummary("Create Artist")]
     [EndpointDescription("Creates an Artist in a non-verified state. " +
         "Note: Non-verified artists cannot have custom bio, banner or gallery.")]
@@ -92,7 +103,7 @@ public sealed class ArtistsController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [Authorize(Roles = UserRoles.Creator)]
     [HttpPost]
-    public async Task<ActionResult<CreateArtistResponse>> CreateAlbum(
+    public async Task<ActionResult<CreateArtistResponse>> Create(
         [FromBody] CreateArtistRequest request,
         CancellationToken cancellationToken = default)
     {
@@ -252,7 +263,7 @@ public sealed class ArtistsController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [Authorize(Roles = UserRoles.Creator)]
     [HttpPut("{id:guid}/profile")]
-    public async Task<ActionResult> EditArtistProfile(
+    public async Task<ActionResult> EditProfile(
         [FromRoute] Guid id,
         [FromBody] EditArtistProfileRequest request,
         CancellationToken cancellationToken = default)
@@ -284,7 +295,7 @@ public sealed class ArtistsController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [Authorize(Roles = UserRoles.Creator)]
     [HttpPost("{id:guid}/gallery")]
-    public async Task<ActionResult> AddGalleryImageToArtist(
+    public async Task<ActionResult> AddGalleryImage(
         [FromRoute] Guid id,
         [FromBody] AddGalleryImageToArtistRequest request,
         CancellationToken cancellationToken = default)
@@ -319,7 +330,7 @@ public sealed class ArtistsController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [Authorize(Roles = UserRoles.Creator)]
     [HttpDelete("{id:guid}/gallery/{imageId:guid}")]
-    public async Task<ActionResult> AddGalleryImageToArtist(
+    public async Task<ActionResult> RemoveGalleryImage(
         [FromRoute] Guid id,
         [FromRoute] Guid imageId,
         CancellationToken cancellationToken = default)

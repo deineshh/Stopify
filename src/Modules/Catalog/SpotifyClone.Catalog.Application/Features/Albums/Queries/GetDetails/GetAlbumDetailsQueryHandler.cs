@@ -33,7 +33,7 @@ internal sealed class GetAlbumDetailsQueryHandler(
             return Result.Failure<AlbumDetails>(AlbumErrors.NotFound);
         }
 
-        IEnumerable<ArtistSummary> artists = await _artistReadService.GetAllAsync(
+        IEnumerable<ArtistSummary> artists = await _artistReadService.GetAllByIdsAsync(
             album.MainArtists.Select(a => ArtistId.From(a.Id)).ToList(),
             cancellationToken);
 

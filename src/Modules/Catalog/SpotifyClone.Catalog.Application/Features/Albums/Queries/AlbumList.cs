@@ -1,4 +1,6 @@
-﻿namespace SpotifyClone.Catalog.Application.Features.Albums.Queries;
+﻿using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
+
+namespace SpotifyClone.Catalog.Application.Features.Albums.Queries;
 
 public sealed record AlbumList(
-    IReadOnlyCollection<AlbumSummary> albums);
+    PagedList<AlbumSummary> Albums);

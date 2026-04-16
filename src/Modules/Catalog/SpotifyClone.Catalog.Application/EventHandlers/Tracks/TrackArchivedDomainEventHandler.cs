@@ -17,7 +17,7 @@ internal sealed class TrackArchivedDomainEventHandler(
         CancellationToken cancellationToken)
     {
         var integrationEvent = new TrackArchivedIntegrationEvent(
-                notification.TrackId.Value);
+                notification.Id.Value);
 
         var message = OutboxMessage.FromIntegrationEvent(integrationEvent);
 

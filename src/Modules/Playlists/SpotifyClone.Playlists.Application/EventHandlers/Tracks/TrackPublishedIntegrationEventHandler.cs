@@ -17,17 +17,17 @@ internal sealed class TrackPublishedIntegrationEventHandler(
         TrackPublishedIntegrationEvent notification,
         CancellationToken cancellationToken)
     {
-        if (!await _unit.TrackReferences.ExistsAsync(notification.TrackId, cancellationToken))
+        if (!await _unit.TrackReferences.ExistsAsync(notification.Id, cancellationToken))
         {
             _logger.LogError(
                 "Track {TrackId} was not found in the Playlists module.",
-                notification.TrackId);
+                notification.Id);
             throw new InvalidOperationException(
-                $"Track {notification.TrackId} was not found in the Playlists module.");
+                $"Track {notification.Id} was not found in the Playlists module.");
         }
 
         await _unit.TrackReferences.MarkAsPublishedAsync(
-            notification.TrackId,
+            notification.Id,
             cancellationToken);
 
         await _unit.CommitAsync(cancellationToken);

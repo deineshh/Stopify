@@ -4,5 +4,5 @@ using SpotifyClone.Shared.BuildingBlocks.Domain.Primitives;
 namespace SpotifyClone.Catalog.Domain.Aggregates.Moods.Events;
 
 public sealed record MoodDeletedDomainEvent(
-    MoodId MoodId)
+    MoodId Id)
     : DomainEvent;

@@ -17,7 +17,7 @@ internal sealed class UserDeletedIntegrationEventHandler(
         CancellationToken cancellationToken)
     {
         IEnumerable<Artist> artists = await _unit.Artists.GetAllByOwnerAsync(
-            UserId.From(notification.UserId), cancellationToken);
+            UserId.From(notification.Id), cancellationToken);
 
         foreach (Artist artist in artists)
         {

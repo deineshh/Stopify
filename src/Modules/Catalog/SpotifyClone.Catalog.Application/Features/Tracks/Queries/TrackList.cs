@@ -1,4 +1,6 @@
-﻿namespace SpotifyClone.Catalog.Application.Features.Tracks.Queries;
+﻿using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
+
+namespace SpotifyClone.Catalog.Application.Features.Tracks.Queries;
 
 public sealed record TrackList(
-    IEnumerable<TrackSummary> Tracks);
+    PagedList<TrackSummary> Tracks);

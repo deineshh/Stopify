@@ -7,4 +7,5 @@ public interface ICurrentUser
     bool IsPremium { get; }
     bool IsAuthenticated { get; }
     bool IsInRole(string role);
+    void SetUser(Guid userId, string primaryRole, bool isPremium);
 }

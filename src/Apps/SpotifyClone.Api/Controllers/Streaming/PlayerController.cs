@@ -1,5 +1,7 @@
-﻿using MediatR;
+﻿using System.Text.Json;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using SpotifyClone.Api.Contracts.v1.Streaming.Playback.AddTrackToQueue;
 using SpotifyClone.Api.Contracts.v1.Streaming.Playback.GetQueue;
@@ -14,12 +16,13 @@ using SpotifyClone.Api.Mappers;
 using SpotifyClone.Catalog.Application.Features.Albums.Queries;
 using SpotifyClone.Catalog.Application.Features.Albums.Queries.GetDetails;
 using SpotifyClone.Catalog.Application.Features.Tracks.Queries;
-using SpotifyClone.Catalog.Application.Features.Tracks.Queries.GetAllByIds;
 using SpotifyClone.Catalog.Application.Features.Tracks.Queries.GetSummary;
+using SpotifyClone.Catalog.Application.Features.Tracks.Queries.ListByIds;
 using SpotifyClone.Catalog.Domain.Aggregates.Tracks.Enums;
 using SpotifyClone.Playlists.Application.Features.Playlists.Queries;
 using SpotifyClone.Playlists.Application.Features.Playlists.Queries.GetDetails;
 using SpotifyClone.Shared.BuildingBlocks.Application.Auth;
+using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
 using SpotifyClone.Shared.BuildingBlocks.Application.Results;
 using SpotifyClone.Shared.Kernel.IDs;
 using SpotifyClone.Streaming.Application.Errors;
@@ -173,11 +176,11 @@ public sealed class PlaybackController(IMediator mediator)
             }
         }
 
-        TrackList tracksInQueue = new([]);
+        TrackList tracksInQueue = new(new PagedList<TrackSummary>());
         if (queueResult.Value.TracksInQueue.Any())
         {
             Result<TrackList> tracksInQueueResult = await Mediator.Send(
-            new GetAllTracksByIdsQuery(queueResult.Value.TracksInQueue),
+            new ListTracksByIdsQuery(queueResult.Value.TracksInQueue),
             cancellationToken);
             if (tracksInQueueResult.IsFailure)
             {
@@ -188,9 +191,18 @@ public sealed class PlaybackController(IMediator mediator)
             tracksInQueue = tracksInQueueResult.Value;
         }
 
+        Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(new
+        {
+            page = tracksInQueue.Tracks.Page,
+            pageSize = tracksInQueue.Tracks.PageSize,
+            hasPreviousPage = tracksInQueue.Tracks.HasPreviousPage,
+            hasNextPage = tracksInQueue.Tracks.HasNextPage,
+            totalCount = tracksInQueue.Tracks.TotalCount,
+        }));
+
         return Ok(new GetPlaybackQueueResponse(
             currentTrackResult?.Value,
-            tracksInQueue.Tracks));
+            tracksInQueue.Tracks.Items));
     }
 
     [EndpointSummary("Add Track to Playback Queue")]

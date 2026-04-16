@@ -2,4 +2,5 @@
 
 public sealed record MoodSummary(
     Guid Id,
-    string Name);
+    string Name,
+    Guid? CoverImageId);

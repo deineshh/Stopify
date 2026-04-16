@@ -2,6 +2,8 @@
 using SpotifyClone.Catalog.Application.Abstractions;
 using SpotifyClone.Catalog.Domain.Aggregates.Genres.Events;
 using SpotifyClone.Catalog.Domain.Aggregates.Tracks;
+using SpotifyClone.Shared.BuildingBlocks.Application.Outbox;
+using SpotifyClone.Shared.IntegrationEvents.Catalog.Genres;
 
 namespace SpotifyClone.Catalog.Application.EventHandlers.Genres;
 
@@ -16,12 +18,16 @@ internal sealed class GenreDeletedDomainEventHandler(
         CancellationToken cancellationToken)
     {
         IEnumerable<Track> tracks = await _unit.Tracks.GetAllByGenreAsync(
-            notification.GenreId, cancellationToken);
-
+            notification.Id, cancellationToken);
         foreach (Track track in tracks)
         {
-            track.RemoveGenre(notification.GenreId);
+            track.RemoveGenre(notification.Id);
         }
+
+        var integrationEvent = new GenreDeletedIntegrationEvent(
+                notification.Id.Value);
+        var message = OutboxMessage.FromIntegrationEvent(integrationEvent);
+        await _unit.OutboxMessages.AddAsync(message, cancellationToken);
 
         await _unit.CommitAsync(cancellationToken);
     }

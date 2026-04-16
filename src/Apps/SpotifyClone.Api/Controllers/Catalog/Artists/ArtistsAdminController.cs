@@ -25,7 +25,7 @@ public sealed class ArtistsAdminController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [HttpPost("{id:guid}/ban")]
-    public async Task<ActionResult> BanArtist(
+    public async Task<ActionResult> Ban(
         [FromRoute] Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -51,7 +51,7 @@ public sealed class ArtistsAdminController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [HttpPost("{id:guid}/unban")]
-    public async Task<ActionResult> UnbanArtist(
+    public async Task<ActionResult> Unban(
         [FromRoute] Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -77,7 +77,7 @@ public sealed class ArtistsAdminController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [HttpPost("{id:guid}/verify")]
-    public async Task<ActionResult> VerifyArtist(
+    public async Task<ActionResult> Verify(
         [FromRoute] Guid id,
         CancellationToken cancellationToken = default)
     {
@@ -103,7 +103,7 @@ public sealed class ArtistsAdminController(IMediator mediator)
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [HttpDelete("{id:guid}/verify")]
-    public async Task<ActionResult> UnverifyArtist(
+    public async Task<ActionResult> Unverify(
         [FromRoute] Guid id,
         CancellationToken cancellationToken = default)
     {

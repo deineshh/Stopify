@@ -8,182 +8,185 @@ using SpotifyClone.Accounts.Infrastructure.Persistence.Accounts.Database;
 
 #nullable disable
 
-namespace SpotifyClone.Accounts.Infrastructure.Persistence.Accounts.Migrations
+namespace SpotifyClone.Accounts.Infrastructure.Persistence.Accounts.Migrations;
+
+[DbContext(typeof(AccountsAppDbContext))]
+partial class AccountsAppDbContextModelSnapshot : ModelSnapshot
 {
-    [DbContext(typeof(AccountsAppDbContext))]
-    partial class AccountsAppDbContextModelSnapshot : ModelSnapshot
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasDefaultSchema("accounts")
-                .HasAnnotation("ProductVersion", "10.0.3")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+        modelBuilder
+            .HasDefaultSchema("accounts")
+            .HasAnnotation("ProductVersion", "10.0.3")
+            .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+        NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SpotifyClone.Accounts.Domain.Aggregates.Users.UserProfile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+        modelBuilder.Entity("SpotifyClone.Accounts.Domain.Aggregates.Users.UserProfile", b =>
+            {
+                b.Property<Guid>("Id")
+                    .HasColumnType("uuid")
+                    .HasColumnName("id");
 
-                    b.Property<DateTimeOffset?>("BirthDateUtc")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("birth_date_utc");
+                b.Property<DateTimeOffset?>("BirthDateUtc")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("birth_date_utc");
 
-                    b.Property<string>("DisplayName")
-                        .IsRequired()
-                        .HasMaxLength(32)
-                        .HasColumnType("character varying(32)")
-                        .HasColumnName("display_name");
+                b.Property<DateTimeOffset>("CreatedAtUtc")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("created_at_utc");
 
-                    b.Property<string>("Gender")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("gender");
+                b.Property<string>("DisplayName")
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasColumnType("character varying(32)")
+                    .HasColumnName("display_name");
 
-                    b.HasKey("Id");
+                b.Property<string>("Gender")
+                    .IsRequired()
+                    .HasMaxLength(20)
+                    .HasColumnType("character varying(20)")
+                    .HasColumnName("gender");
 
-                    b.ToTable("user_profiles", "accounts");
-                });
+                b.HasKey("Id");
 
-            modelBuilder.Entity("SpotifyClone.Accounts.Infrastructure.Persistence.Auth.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                b.ToTable("user_profiles", "accounts");
+            });
 
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
+        modelBuilder.Entity("SpotifyClone.Accounts.Infrastructure.Persistence.Auth.RefreshToken", b =>
+            {
+                b.Property<Guid>("Id")
+                    .HasColumnType("uuid")
+                    .HasColumnName("id");
 
-                    b.Property<DateTimeOffset>("ExpiresAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("expires_at");
+                b.Property<DateTimeOffset>("CreatedAt")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("created_at");
 
-                    b.Property<string>("ReplacedByTokenHash")
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("replaced_by_token_hash");
+                b.Property<DateTimeOffset>("ExpiresAt")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("expires_at");
 
-                    b.Property<DateTimeOffset?>("RevokedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("revoked_at");
+                b.Property<string>("ReplacedByTokenHash")
+                    .HasMaxLength(256)
+                    .HasColumnType("character varying(256)")
+                    .HasColumnName("replaced_by_token_hash");
 
-                    b.Property<string>("TokenHash")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("character varying(256)")
-                        .HasColumnName("token_hash");
+                b.Property<DateTimeOffset?>("RevokedAt")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("revoked_at");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
+                b.Property<string>("TokenHash")
+                    .IsRequired()
+                    .HasMaxLength(256)
+                    .HasColumnType("character varying(256)")
+                    .HasColumnName("token_hash");
 
-                    b.HasKey("Id");
+                b.Property<Guid>("UserId")
+                    .HasColumnType("uuid")
+                    .HasColumnName("user_id");
 
-                    b.HasIndex("TokenHash")
-                        .IsUnique();
+                b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                b.HasIndex("TokenHash")
+                    .IsUnique();
 
-                    b.ToTable("refresh_tokens", "accounts");
-                });
+                b.HasIndex("UserId");
 
-            modelBuilder.Entity("SpotifyClone.Shared.BuildingBlocks.Application.Outbox.OutboxMessage", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                b.ToTable("refresh_tokens", "accounts");
+            });
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("content");
+        modelBuilder.Entity("SpotifyClone.Shared.BuildingBlocks.Application.Outbox.OutboxMessage", b =>
+            {
+                b.Property<Guid>("Id")
+                    .HasColumnType("uuid")
+                    .HasColumnName("id");
 
-                    b.Property<string>("Error")
-                        .HasColumnType("text")
-                        .HasColumnName("error");
+                b.Property<string>("Content")
+                    .IsRequired()
+                    .HasColumnType("text")
+                    .HasColumnName("content");
 
-                    b.Property<DateTimeOffset>("OccurredOn")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("occured_on");
+                b.Property<string>("Error")
+                    .HasColumnType("text")
+                    .HasColumnName("error");
 
-                    b.Property<DateTimeOffset?>("ProcessedOn")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("processed_on");
+                b.Property<DateTimeOffset>("OccurredOn")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("occured_on");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("type");
+                b.Property<DateTimeOffset?>("ProcessedOn")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("processed_on");
 
-                    b.HasKey("Id");
+                b.Property<string>("Type")
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .HasColumnType("character varying(255)")
+                    .HasColumnName("type");
 
-                    b.HasIndex("ProcessedOn");
+                b.HasKey("Id");
 
-                    b.ToTable("outbox_messages", "accounts");
-                });
+                b.HasIndex("ProcessedOn");
 
-            modelBuilder.Entity("SpotifyClone.Accounts.Domain.Aggregates.Users.UserProfile", b =>
-                {
-                    b.OwnsOne("SpotifyClone.Accounts.Domain.Aggregates.Users.ValueObjects.AvatarImage", "Avatar", b1 =>
-                        {
-                            b1.Property<Guid>("UserProfileId")
-                                .HasColumnType("uuid");
+                b.ToTable("outbox_messages", "accounts");
+            });
 
-                            b1.Property<Guid>("ImageId")
-                                .HasColumnType("uuid")
-                                .HasColumnName("avatar_image_id");
+        modelBuilder.Entity("SpotifyClone.Accounts.Domain.Aggregates.Users.UserProfile", b =>
+            {
+                b.OwnsOne("SpotifyClone.Accounts.Domain.Aggregates.Users.ValueObjects.AvatarImage", "Avatar", b1 =>
+                    {
+                        b1.Property<Guid>("UserProfileId")
+                            .HasColumnType("uuid");
 
-                            b1.HasKey("UserProfileId");
+                        b1.Property<Guid>("ImageId")
+                            .HasColumnType("uuid")
+                            .HasColumnName("avatar_image_id");
 
-                            b1.ToTable("user_profiles", "accounts");
+                        b1.HasKey("UserProfileId");
 
-                            b1.WithOwner()
-                                .HasForeignKey("UserProfileId");
+                        b1.ToTable("user_profiles", "accounts");
 
-                            b1.OwnsOne("SpotifyClone.Shared.Kernel.ValueObjects.ImageMetadata", "Metadata", b2 =>
-                                {
-                                    b2.Property<Guid>("AvatarImageUserProfileId")
-                                        .HasColumnType("uuid");
+                        b1.WithOwner()
+                            .HasForeignKey("UserProfileId");
 
-                                    b2.Property<string>("FileType")
-                                        .IsRequired()
-                                        .HasMaxLength(10)
-                                        .HasColumnType("character varying(10)")
-                                        .HasColumnName("avatar_file_type");
+                        b1.OwnsOne("SpotifyClone.Shared.Kernel.ValueObjects.ImageMetadata", "Metadata", b2 =>
+                            {
+                                b2.Property<Guid>("AvatarImageUserProfileId")
+                                    .HasColumnType("uuid");
 
-                                    b2.Property<int>("Height")
-                                        .HasColumnType("integer")
-                                        .HasColumnName("avatar_height");
+                                b2.Property<string>("FileType")
+                                    .IsRequired()
+                                    .HasMaxLength(10)
+                                    .HasColumnType("character varying(10)")
+                                    .HasColumnName("avatar_file_type");
 
-                                    b2.Property<long>("SizeInBytes")
-                                        .HasColumnType("bigint")
-                                        .HasColumnName("avatar_size_in_bytes");
+                                b2.Property<int>("Height")
+                                    .HasColumnType("integer")
+                                    .HasColumnName("avatar_height");
 
-                                    b2.Property<int>("Width")
-                                        .HasColumnType("integer")
-                                        .HasColumnName("avatar_width");
+                                b2.Property<long>("SizeInBytes")
+                                    .HasColumnType("bigint")
+                                    .HasColumnName("avatar_size_in_bytes");
 
-                                    b2.HasKey("AvatarImageUserProfileId");
+                                b2.Property<int>("Width")
+                                    .HasColumnType("integer")
+                                    .HasColumnName("avatar_width");
 
-                                    b2.ToTable("user_profiles", "accounts");
+                                b2.HasKey("AvatarImageUserProfileId");
 
-                                    b2.WithOwner()
-                                        .HasForeignKey("AvatarImageUserProfileId");
-                                });
+                                b2.ToTable("user_profiles", "accounts");
 
-                            b1.Navigation("Metadata");
-                        });
+                                b2.WithOwner()
+                                    .HasForeignKey("AvatarImageUserProfileId");
+                            });
 
-                    b.Navigation("Avatar");
-                });
+                        b1.Navigation("Metadata");
+                    });
+
+                b.Navigation("Avatar");
+            });
 #pragma warning restore 612, 618
-        }
     }
 }

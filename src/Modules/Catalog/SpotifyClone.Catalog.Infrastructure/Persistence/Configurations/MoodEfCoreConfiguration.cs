@@ -14,6 +14,10 @@ internal sealed class MoodEfCoreConfiguration : IEntityTypeConfiguration<Mood>
 
         builder.HasKey(m => m.Id);
 
+        builder.Property(x => x.CreatedAtUtc)
+            .HasColumnName("created_at_utc")
+            .IsRequired();
+
         builder.Property(m => m.Id)
             .HasColumnName("id")
             .HasConversion(CatalogEfCoreValueConverters.MoodIdConverter)

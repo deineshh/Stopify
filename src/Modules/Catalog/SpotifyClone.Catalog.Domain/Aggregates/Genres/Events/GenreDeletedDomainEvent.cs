@@ -4,5 +4,5 @@ using SpotifyClone.Shared.BuildingBlocks.Domain.Primitives;
 namespace SpotifyClone.Catalog.Domain.Aggregates.Genres.Events;
 
 public sealed record GenreDeletedDomainEvent(
-    GenreId GenreId)
+    GenreId Id)
     : DomainEvent;

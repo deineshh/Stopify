@@ -35,7 +35,7 @@ public sealed class UserProfile : AggregateRoot<UserId, Guid>
         UnlinkAvatar();
 
         Avatar = avatar;
-        RaiseDomainEvent(new UserLinkedToAvatarImageDomainEvent(Avatar.ImageId));
+        RaiseDomainEvent(new UserProfileLinkedToAvatarImageDomainEvent(Id, Avatar.ImageId));
     }
 
     public void UnlinkAvatar()
@@ -45,7 +45,7 @@ public sealed class UserProfile : AggregateRoot<UserId, Guid>
             return;
         }
 
-        RaiseDomainEvent(new UserUnlinkedFromAvatarImageDomainEvent(Avatar.ImageId));
+        RaiseDomainEvent(new UserProfileUnlinkedFromAvatarImageDomainEvent(Id, Avatar.ImageId));
         Avatar = null;
     }
 
@@ -53,6 +53,8 @@ public sealed class UserProfile : AggregateRoot<UserId, Guid>
     {
         DisplayNameRules.Validate(displayName);
         DisplayName = displayName;
+
+        RaiseDomainEvent(new UserProfileDetailsEditedDomainEvent(Id, DisplayName));
     }
 
     public void EditPersonalInfo(Gender gender, DateTimeOffset birthDateUtc)
@@ -70,7 +72,7 @@ public sealed class UserProfile : AggregateRoot<UserId, Guid>
     public void PrepareForDeletion()
     {
         UnlinkAvatar();
-        RaiseDomainEvent(new UserDeletedDomainEvent(Id));
+        RaiseDomainEvent(new UserProfileDeletedDomainEvent(Id));
     }
 
     private UserProfile()

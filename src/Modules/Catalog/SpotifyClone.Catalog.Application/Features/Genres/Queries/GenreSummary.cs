@@ -2,4 +2,5 @@
 
 public sealed record GenreSummary(
     Guid Id,
-    string Name);
+    string Name,
+    Guid? CoverImageId);

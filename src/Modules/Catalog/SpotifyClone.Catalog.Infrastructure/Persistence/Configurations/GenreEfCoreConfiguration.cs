@@ -14,6 +14,10 @@ internal sealed class GenreEfCoreConfiguration : IEntityTypeConfiguration<Genre>
 
         builder.HasKey(g => g.Id);
 
+        builder.Property(x => x.CreatedAtUtc)
+            .HasColumnName("created_at_utc")
+            .IsRequired();
+
         builder.Property(g => g.Id)
             .HasColumnName("id")
             .HasConversion(CatalogEfCoreValueConverters.GenreIdConverter)

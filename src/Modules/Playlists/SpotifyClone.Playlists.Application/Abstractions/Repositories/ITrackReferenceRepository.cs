@@ -23,7 +23,7 @@ public interface ITrackReferenceRepository
         Guid coverImageId,
         CancellationToken cancellationToken = default);
 
-    Task UninkCoverAsync(
+    Task UnlinkCoverAsync(
         Guid trackId,
         CancellationToken cancellationToken = default);
 

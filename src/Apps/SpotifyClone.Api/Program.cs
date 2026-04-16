@@ -2,6 +2,7 @@ using System.Text;
 using System.Threading.RateLimiting;
 using Hangfire;
 using Hangfire.Redis.StackExchange;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.AspNetCore.StaticFiles;
@@ -10,6 +11,8 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using Serilog;
+using SpotifyClone.Accounts.Application.Features.Accounts.Queries;
+using SpotifyClone.Accounts.Application.Features.Accounts.Queries.List;
 using SpotifyClone.Accounts.Infrastructure.DependencyInjection;
 using SpotifyClone.Accounts.Infrastructure.Persistence.Accounts.Database;
 using SpotifyClone.Accounts.Infrastructure.Persistence.Identity.Database;
@@ -17,8 +20,13 @@ using SpotifyClone.Billing.Infrastructure.DependencyInjection;
 using SpotifyClone.Billing.Infrastructure.Persistence.Database;
 using SpotifyClone.Catalog.Infrastructure.DependencyInjection;
 using SpotifyClone.Catalog.Infrastructure.Persistence.Database;
+using SpotifyClone.Catalog.Infrastructure.Persistence.Initialization;
 using SpotifyClone.Playlists.Infrastructure.DependencyInjection;
 using SpotifyClone.Playlists.Infrastructure.Persistence.Database;
+using SpotifyClone.Search.Infrastructure.DependencyInjection;
+using SpotifyClone.Shared.BuildingBlocks.Application.Abstractions.Primitives;
+using SpotifyClone.Shared.BuildingBlocks.Application.Auth;
+using SpotifyClone.Shared.BuildingBlocks.Application.Results;
 using SpotifyClone.Shared.BuildingBlocks.Infrastructure.DependencyInjection;
 using SpotifyClone.Streaming.Infrastructure.DependencyInjection;
 using SpotifyClone.Streaming.Infrastructure.Notifications;
@@ -33,6 +41,7 @@ builder.Services.AddCatalogModule(builder.Configuration);
 builder.Services.AddStreamingModule(builder.Configuration);
 builder.Services.AddPlaylistsModule(builder.Configuration);
 builder.Services.AddBillingModule(builder.Configuration);
+builder.Services.AddSearchModule(builder.Configuration);
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -234,9 +243,23 @@ if (app.Environment.IsDevelopment())
 }
 
 await app.UseAccountsModule();
-app.UseCatalogModule();
-app.UseStreamingModule();
-app.UsePlaylistsModule();
+using (IServiceScope scope = app.Services.CreateScope())
+{
+    ISender sender = scope.ServiceProvider.GetRequiredService<ISender>();
+    Result<UserList> adminResult = await sender.Send(new ListUsersQuery(new("Stopify"), new()));
+    if (adminResult.IsFailure || adminResult.Value.Users.Items.Count > 1)
+    {
+        return;
+    }
+
+    ICurrentUser currentUser = scope.ServiceProvider.GetRequiredService<ICurrentUser>();
+    currentUser.SetUser(adminResult.Value.Users.Items.Single().Id, UserRoles.Admin, true);
+
+    await app.UseCatalogModule();
+    await app.UseStreamingModule(CatalogSeeder.Tracks);
+    await app.UsePlaylistsModule();
+    await app.UseSearchModule();
+}
 app.UseBillingModule();
 
 await app.RunAsync();

@@ -36,7 +36,7 @@ internal sealed class TrackMarkedAsReadyToPublishDomainEventHandler(
         _albumTrackDomainService.ReevaluateAlbumType(album);
 
         var trackUnpublishedIntegrationEvent = new TrackUnpublishedIntegrationEvent(
-                notification.TrackId.Value);
+            notification.TrackId.Value);
         await _unit.OutboxMessages.AddAsync(
             OutboxMessage.FromIntegrationEvent(trackUnpublishedIntegrationEvent),
             cancellationToken);

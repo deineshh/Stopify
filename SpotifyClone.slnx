@@ -30,6 +30,10 @@
     <Project Path="src/Modules/Playlists/SpotifyClone.Playlists.Domain/SpotifyClone.Playlists.Domain.csproj" Id="4b57c68a-0aec-4535-b41e-e6d24c61843c" />
     <Project Path="src/Modules/Playlists/SpotifyClone.Playlists.Infrastructure/SpotifyClone.Playlists.Infrastructure.csproj" Id="7c78fcdb-cd6b-4383-869f-dc5def019846" />
   </Folder>
+  <Folder Name="/src/Modules/Search/">
+    <Project Path="src/Modules/Search/SpotifyClone.Search.Application/SpotifyClone.Search.Application.csproj" Id="3ff2f4f5-2f21-4382-9018-c3131d15d777" />
+    <Project Path="src/Modules/Search/SpotifyClone.Search.Infrastructure/SpotifyClone.Search.Infrastructure.csproj" Id="edacba35-11ad-4d71-bd44-32e266806267" />
+  </Folder>
   <Folder Name="/src/Modules/Streaming/">
     <Project Path="src/Modules/Streaming/SpotifyClone.Streaming.Application/SpotifyClone.Streaming.Application.csproj" Id="ad2a4d82-0d24-4d95-8cc2-780644f0faac" />
     <Project Path="src/Modules/Streaming/SpotifyClone.Streaming.Domain/SpotifyClone.Streaming.Domain.csproj" Id="6f2658bf-1f5d-4393-a9bd-ee6a6c8b916f" />

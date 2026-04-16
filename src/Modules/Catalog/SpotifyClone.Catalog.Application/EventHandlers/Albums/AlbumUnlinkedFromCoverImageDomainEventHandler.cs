@@ -22,6 +22,7 @@ internal sealed class AlbumUnlinkedFromCoverImageDomainEventHandler(
         await _unit.OutboxMessages.AddAsync(message1, cancellationToken);
 
         var integrationEvent2 = new AlbumUnlinkedFromCoverImageIntegrationEvent(
+            notification.Id.Value,
             notification.Tracks.Select(t => t.Value));
         var message2 = OutboxMessage.FromIntegrationEvent(integrationEvent2);
         await _unit.OutboxMessages.AddAsync(message2, cancellationToken);

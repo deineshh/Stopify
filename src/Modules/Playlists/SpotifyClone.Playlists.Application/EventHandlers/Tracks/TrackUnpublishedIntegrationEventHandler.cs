@@ -17,12 +17,12 @@ internal sealed class TrackUnpublishedIntegrationEventHandler(
         TrackUnpublishedIntegrationEvent notification,
         CancellationToken cancellationToken)
     {
-        if (!await _unit.TrackReferences.ExistsAsync(notification.TrackId, cancellationToken))
+        if (!await _unit.TrackReferences.ExistsAsync(notification.Id, cancellationToken))
         {
             return;
         }
 
-        await _unit.TrackReferences.MarkAsNotPublishedAsync(notification.TrackId, cancellationToken);
+        await _unit.TrackReferences.MarkAsNotPublishedAsync(notification.Id, cancellationToken);
         await _unit.CommitAsync(cancellationToken);
     }
 }

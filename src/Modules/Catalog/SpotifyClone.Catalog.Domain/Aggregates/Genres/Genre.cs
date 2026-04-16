@@ -16,7 +16,11 @@ public sealed class Genre : AggregateRoot<GenreId, Guid>
 
         GenreNameRules.Validate(name);
 
-        return new Genre(id, name, null);
+        var genre = new Genre(id, name, null);
+
+        genre.RaiseDomainEvent(new GenreCreatedDomainEvent(genre.Id, genre.Name));
+
+        return genre;
     }
 
     public void LinkNewCover(GenreCoverImage cover)
@@ -26,7 +30,7 @@ public sealed class Genre : AggregateRoot<GenreId, Guid>
         TryUnlinkCover();
 
         Cover = cover;
-        RaiseDomainEvent(new GenreLinkedToCoverImageDomainEvent(Cover.ImageId));
+        RaiseDomainEvent(new GenreLinkedToCoverImageDomainEvent(Id, Cover.ImageId));
     }
 
     public void TryUnlinkCover()
@@ -36,7 +40,7 @@ public sealed class Genre : AggregateRoot<GenreId, Guid>
             return;
         }
 
-        RaiseDomainEvent(new GenreUnlinkedFromCoverImageDomainEvent(Cover.ImageId));
+        RaiseDomainEvent(new GenreUnlinkedFromCoverImageDomainEvent(Id, Cover.ImageId));
         Cover = null;
     }
 
@@ -44,6 +48,8 @@ public sealed class Genre : AggregateRoot<GenreId, Guid>
     {
         GenreNameRules.Validate(name);
         Name = name;
+
+        RaiseDomainEvent(new GenreRenamedDomainEvent(Id, Name));
     }
 
     public void PrepareForDeletion()

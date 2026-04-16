@@ -3,5 +3,5 @@
 namespace SpotifyClone.Shared.IntegrationEvents.Accounts.Users;
 
 public sealed record UserDeletedIntegrationEvent(
-    Guid UserId)
+    Guid Id)
     : IntegrationEvent;

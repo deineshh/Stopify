@@ -58,6 +58,10 @@ partial class PlaylistsAppDbContextModelSnapshot : ModelSnapshot
                     .HasColumnType("uuid")
                     .HasColumnName("id");
 
+                b.Property<DateTimeOffset>("CreatedAtUtc")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("created_at_utc");
+
                 b.Property<string>("Description")
                     .HasMaxLength(300)
                     .HasColumnType("character varying(300)")

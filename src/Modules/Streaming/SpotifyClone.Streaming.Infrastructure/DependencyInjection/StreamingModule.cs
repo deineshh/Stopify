@@ -1,6 +1,5 @@
 using FluentValidation;
 using Hangfire;
-using Hangfire.MemoryStorage;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +23,7 @@ using SpotifyClone.Streaming.Infrastructure.Media;
 using SpotifyClone.Streaming.Infrastructure.Notifications;
 using SpotifyClone.Streaming.Infrastructure.Persistence;
 using SpotifyClone.Streaming.Infrastructure.Persistence.Database;
+using SpotifyClone.Streaming.Infrastructure.Persistence.Initialization;
 using SpotifyClone.Streaming.Infrastructure.Persistence.Queries;
 using SpotifyClone.Streaming.Infrastructure.Persistence.Repositories;
 using SpotifyClone.Streaming.Infrastructure.Storage;
@@ -77,10 +77,18 @@ public static class StreamingModule
         return services;
     }
 
-    public static void UseStreamingModule(this IApplicationBuilder app)
+    public static async Task UseStreamingModule(
+        this IApplicationBuilder app,
+        IEnumerable<Guid> trackIds)
     {
+        using IServiceScope scope = app.ApplicationServices.CreateScope();
+        ISender sender = scope.ServiceProvider
+            .GetRequiredService<ISender>();
+
+        await StreamingSeeder.SeedAudioAssetsAsync(trackIds, sender);
+
         IRecurringJobManager recurringJobManager =
-            app.ApplicationServices.GetRequiredService<IRecurringJobManager>();
+            scope.ServiceProvider.GetRequiredService<IRecurringJobManager>();
 
         recurringJobManager.AddOrUpdate<AudioAssetCleanupJob>(
             "streaming-audio-asset-cleanup",

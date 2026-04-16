@@ -32,6 +32,8 @@
     <ProjectReference Include="..\..\Modules\Catalog\SpotifyClone.Catalog.Infrastructure\SpotifyClone.Catalog.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Playlists\SpotifyClone.Playlists.Application\SpotifyClone.Playlists.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Playlists\SpotifyClone.Playlists.Infrastructure\SpotifyClone.Playlists.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Search\SpotifyClone.Search.Application\SpotifyClone.Search.Application.csproj" />
+    <ProjectReference Include="..\..\Modules\Search\SpotifyClone.Search.Infrastructure\SpotifyClone.Search.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Modules\Streaming\SpotifyClone.Streaming.Application\SpotifyClone.Streaming.Application.csproj" />
     <ProjectReference Include="..\..\Modules\Streaming\SpotifyClone.Streaming.Infrastructure\SpotifyClone.Streaming.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Shared\BuildingBlocks\SpotifyClone.Shared.BuildingBlocks.Application\SpotifyClone.Shared.BuildingBlocks.Application.csproj" />

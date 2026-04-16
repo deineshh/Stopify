@@ -64,7 +64,7 @@ public sealed class Playlist : AggregateRoot<PlaylistId, Guid>
         UnlinkCover();
 
         Cover = cover;
-        RaiseDomainEvent(new PlaylistLinkedToCoverImageDomainEvent(Cover.ImageId));
+        RaiseDomainEvent(new PlaylistLinkedToCoverImageDomainEvent(Id, Cover.ImageId));
     }
 
     public void UnlinkCover()
@@ -74,7 +74,7 @@ public sealed class Playlist : AggregateRoot<PlaylistId, Guid>
             return;
         }
 
-        RaiseDomainEvent(new PlaylistUnlinkedFromCoverImageDomainEvent(Cover.ImageId));
+        RaiseDomainEvent(new PlaylistUnlinkedFromCoverImageDomainEvent(Id, Cover.ImageId));
         Cover = null;
     }
 
@@ -91,6 +91,8 @@ public sealed class Playlist : AggregateRoot<PlaylistId, Guid>
         Name = name;
         Description = description;
         IsPublic = isPublic;
+
+        RaiseDomainEvent(new PlaylistDetailsEditedDomainEvent(Id, Name, IsPublic, OwnerId, Cover?.ImageId));
     }
 
     public void AddCollaborator(UserId collaboratorId)
@@ -155,7 +157,7 @@ public sealed class Playlist : AggregateRoot<PlaylistId, Guid>
                 "Cannot add the same track to the playlist more than once.");
         }
 
-        // Domain event can be raised here
+        RaiseDomainEvent(new TrackAddedToPlaylistDomainEvent(Id));
     }
 
     public void RemoveTrack(TrackId trackId, UserId removedBy, bool isAdmin)
@@ -185,7 +187,7 @@ public sealed class Playlist : AggregateRoot<PlaylistId, Guid>
                 $"because it was not found in the playlist.");
         }
 
-        // Domain event can be raised here
+        RaiseDomainEvent(new TrackRemovedFromPlaylistDomainEvent(Id));
     }
 
     public void MoveTrack(TrackId trackId, int targetIndex)
@@ -254,6 +256,8 @@ public sealed class Playlist : AggregateRoot<PlaylistId, Guid>
         }
 
         UnlinkCover();
+
+        RaiseDomainEvent(new PlaylistDeletedDomainEvent(Id));
     }
 
     private Playlist(

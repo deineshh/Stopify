@@ -44,7 +44,7 @@ internal sealed class TrackReferenceEfCoreRepository(
             x => x.SetProperty(t => t.CoverImageId, coverImageId),
             cancellationToken);
 
-    public async Task UninkCoverAsync(
+    public async Task UnlinkCoverAsync(
         Guid trackId,
         CancellationToken cancellationToken = default)
         => await _tracks.Where(x => x.Id == trackId)

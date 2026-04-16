@@ -38,6 +38,18 @@ services:
     restart: always
     volumes:
       - redis_data:/data
+  
+  meilisearch:
+    image: getmeili/meilisearch:latest
+    container_name: meilisearch
+    ports:
+      - "7700:7700"
+    environment:
+      - MEILI_MASTER_KEY=meilikey
+      - MEILI_ENV=development
+    volumes:
+      - meilisearch_data:/meili_data
+    restart: always
 
 volumes:
   audio_data:
@@ -45,3 +57,4 @@ volumes:
   postgres_data:
   minio_data:
   redis_data:
+  meilisearch_data:

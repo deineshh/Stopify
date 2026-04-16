@@ -4,6 +4,8 @@ using SpotifyClone.Catalog.Application.Features.Genres.Queries;
 using SpotifyClone.Catalog.Application.Models;
 using SpotifyClone.Catalog.Domain.Aggregates.Genres.ValueObjects;
 using SpotifyClone.Catalog.Infrastructure.Persistence.Database;
+using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
+using SpotifyClone.Shared.BuildingBlocks.Infrastructure.Persistence.Extensions;
 
 namespace SpotifyClone.Catalog.Infrastructure.Persistence.Queries;
 
@@ -35,4 +37,26 @@ internal sealed class GenreEfCoreReadService(
                 g.Cover.Metadata.FileType.Value,
                 g.Cover.Metadata.SizeInBytes)))
         .SingleOrDefaultAsync(cancellationToken);
+
+    public async Task<PagedList<GenreSummary>> ListAsync(
+        PaginationParams pagination,
+        CancellationToken cancellationToken = default)
+        => await _context.Genres
+        .AsNoTracking()
+        .OrderBy(g => g.CreatedAtUtc)
+        .Select(g => new GenreSummary(
+            g.Id.Value,
+            g.Name,
+            g.Cover == null ? null : g.Cover.ImageId.Value))
+        .ToPagedListAsync(pagination, cancellationToken);
+
+    public async Task<IEnumerable<GenreSummary>> GetAllAsync(
+        CancellationToken cancellationToken = default)
+        => await _context.Genres
+        .AsNoTracking()
+        .Select(g => new GenreSummary(
+            g.Id.Value,
+            g.Name,
+            g.Cover == null ? null : g.Cover.ImageId.Value))
+        .ToListAsync(cancellationToken);
 }

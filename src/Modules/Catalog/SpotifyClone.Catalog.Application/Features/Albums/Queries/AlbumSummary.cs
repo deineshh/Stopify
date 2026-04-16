@@ -6,7 +6,7 @@ namespace SpotifyClone.Catalog.Application.Features.Albums.Queries;
 public sealed record AlbumSummary(
     Guid Id,
     string Title,
-    DateTimeOffset? ReleaseDate,
+    DateTimeOffset? ReleaseDateUtc,
     string Status,
     string Type,
     ImageMetadataDetails? Cover,

@@ -1,4 +1,6 @@
-﻿namespace SpotifyClone.Accounts.Application.Features.Accounts.Queries;
+﻿using SpotifyClone.Shared.BuildingBlocks.Application.Pagination;
+
+namespace SpotifyClone.Accounts.Application.Features.Accounts.Queries;
 
 public sealed record UserList(
-    IEnumerable<UserSummary> Users);
+    PagedList<UserSummary> Users);

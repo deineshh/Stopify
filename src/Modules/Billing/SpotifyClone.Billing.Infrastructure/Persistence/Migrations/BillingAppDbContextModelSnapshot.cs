@@ -33,6 +33,10 @@ partial class BillingAppDbContextModelSnapshot : ModelSnapshot
                     .HasColumnType("boolean")
                     .HasColumnName("cancel_at_period_end");
 
+                b.Property<DateTimeOffset>("CreatedAtUtc")
+                    .HasColumnType("timestamp with time zone")
+                    .HasColumnName("created_at_utc");
+
                 b.Property<DateTimeOffset?>("CurrentPeriodEnd")
                     .HasColumnType("timestamp with time zone")
                     .HasColumnName("current_period_end");

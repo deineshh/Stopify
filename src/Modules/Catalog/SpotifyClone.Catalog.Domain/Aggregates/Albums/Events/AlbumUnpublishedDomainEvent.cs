@@ -4,5 +4,5 @@ using SpotifyClone.Shared.BuildingBlocks.Domain.Primitives;
 namespace SpotifyClone.Catalog.Domain.Aggregates.Albums.Events;
 
 public sealed record AlbumUnpublishedDomainEvent(
-    AlbumId AlbumId)
+    AlbumId Id)
     : DomainEvent;

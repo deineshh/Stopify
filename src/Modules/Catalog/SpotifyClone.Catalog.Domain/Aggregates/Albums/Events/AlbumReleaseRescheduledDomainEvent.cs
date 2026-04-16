@@ -4,6 +4,6 @@ using SpotifyClone.Shared.BuildingBlocks.Domain.Primitives;
 namespace SpotifyClone.Catalog.Domain.Aggregates.Albums.Events;
 
 public sealed record AlbumReleaseRescheduledDomainEvent(
-    AlbumId AlbumId,
-    DateTimeOffset ReleaseDate)
+    AlbumId Id,
+    DateTimeOffset ReleaseDateUtc)
     : DomainEvent;

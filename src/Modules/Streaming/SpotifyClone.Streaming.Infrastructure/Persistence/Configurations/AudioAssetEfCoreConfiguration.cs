@@ -14,6 +14,10 @@ internal sealed class AudioAssetEfCoreConfiguration
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.CreatedAtUtc)
+            .HasColumnName("created_at_utc")
+            .IsRequired();
+
         builder.Property(x => x.Id)
             .HasColumnName("id")
             .HasConversion(StreamingEfCoreValueConverters.AudioAssetIdConverter)

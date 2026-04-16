@@ -25,7 +25,7 @@ internal sealed class AlbumUnlinkedFromCoverImageIntegrationEventHandler(
 
         foreach (Guid trackId in notification.Tracks)
         {
-            await _unit.TrackReferences.UninkCoverAsync(trackId, cancellationToken);
+            await _unit.TrackReferences.UnlinkCoverAsync(trackId, cancellationToken);
         }
 
         await _unit.CommitAsync(cancellationToken);

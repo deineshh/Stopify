@@ -196,7 +196,9 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
 
         ReleaseDate = releaseDate;
         Status = TrackStatus.Published;
-        RaiseDomainEvent(new TrackPublishedDomainEvent(Id));
+        RaiseDomainEvent(new TrackPublishedDomainEvent(
+            Id, Title, ReleaseDate.Value, ContainsExplicitContent, AlbumId!,
+            _mainArtists, _featuredArtists, _genres, _moods));
     }
 
     public void Unpublish()
@@ -230,6 +232,8 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         
         TrackTitleRules.Validate(title);
         Title = title;
+
+        RaiseDomainEvent(new TrackTitleCorrectedDomainEvent(Id, Title));
     }
 
     public void RescheduleRelease(DateTimeOffset releaseDate)
@@ -253,13 +257,27 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         }
 
         ReleaseDate = releaseDate;
+
+        RaiseDomainEvent(new TrackReleaseRescheduledDomainEvent(Id, ReleaseDate.Value));
     }
 
     public void MarkAsExplicit()
-        => ContainsExplicitContent = true;
+    {
+        if (!ContainsExplicitContent)
+        {
+            ContainsExplicitContent = true;
+            RaiseDomainEvent(new TrackMarkedAsExplicitDomainEvent(Id));
+        }
+    }
 
     public void MarkAsNotExplicit()
-        => ContainsExplicitContent = false;
+    {
+        if (ContainsExplicitContent)
+        {
+            ContainsExplicitContent = false;
+            RaiseDomainEvent(new TrackMarkedAsNotExplicitDomainEvent(Id));
+        }
+    }
 
     public void UpdateMainArtists(IReadOnlyCollection<ArtistId> artists)
     {
@@ -283,6 +301,8 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         {
             _mainArtists.Add(artistId);
         }
+
+        RaiseDomainEvent(new TrackArtistsUpdatedDomainEvent(Id, _mainArtists, _featuredArtists));
     }
 
     public void UpdateFeaturedArtists(IReadOnlyCollection<ArtistId> artists)
@@ -301,6 +321,8 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         {
             _featuredArtists.Add(artistId);
         }
+
+        RaiseDomainEvent(new TrackArtistsUpdatedDomainEvent(Id, _mainArtists, _featuredArtists));
     }
 
     public void UpdateGenres(IReadOnlyCollection<GenreId> genres)
@@ -325,6 +347,8 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         {
             _genres.Add(genreId);
         }
+
+        RaiseDomainEvent(new TrackGenresUpdatedDomainEvent(Id, _genres));
     }
 
     public void RemoveGenre(GenreId genreId)
@@ -338,6 +362,8 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         }
 
         _genres.Remove(genreId);
+
+        RaiseDomainEvent(new TrackGenresUpdatedDomainEvent(Id, _genres));
     }
 
     public void UpdateMoods(IReadOnlyCollection<MoodId> moods)
@@ -362,6 +388,8 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         {
             _moods.Add(moodId);
         }
+
+        RaiseDomainEvent(new TrackMoodsUpdatedDomainEvent(Id, _moods));
     }
 
     public void RemoveMood(MoodId moodId)
@@ -375,6 +403,8 @@ public sealed class Track : AggregateRoot<TrackId, Guid>
         }
 
         _moods.Remove(moodId);
+
+        RaiseDomainEvent(new TrackMoodsUpdatedDomainEvent(Id, _moods));
     }
 
     private Track(

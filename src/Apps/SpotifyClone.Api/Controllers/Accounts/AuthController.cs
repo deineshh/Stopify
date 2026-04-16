@@ -55,7 +55,7 @@ public sealed class AuthController(IMediator mediator, IHostEnvironment hostEnvi
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [AllowAnonymous]
     [EnableRateLimiting("login-limits")]
-    public async Task<ActionResult<RegisterUserResponse>> RegisterUser(
+    public async Task<ActionResult<RegisterUserResponse>> Register(
         RegisterUserRequest request,
         IOptions<ApplicationSettings> appSettings,
         CancellationToken cancellationToken = default)

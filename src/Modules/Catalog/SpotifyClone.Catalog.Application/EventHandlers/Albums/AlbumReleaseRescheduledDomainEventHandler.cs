@@ -4,6 +4,9 @@ using SpotifyClone.Catalog.Application.Abstractions;
 using SpotifyClone.Catalog.Domain.Aggregates.Albums;
 using SpotifyClone.Catalog.Domain.Aggregates.Albums.Events;
 using SpotifyClone.Catalog.Domain.Aggregates.Tracks;
+using SpotifyClone.Shared.BuildingBlocks.Application.Outbox;
+using SpotifyClone.Shared.IntegrationEvents.Catalog.Albums;
+using SpotifyClone.Shared.IntegrationEvents.Catalog.Artists;
 
 namespace SpotifyClone.Catalog.Application.EventHandlers.Albums;
 
@@ -19,12 +22,12 @@ internal sealed class AlbumReleaseRescheduledDomainEventHandler(
         AlbumReleaseRescheduledDomainEvent notification,
         CancellationToken cancellationToken)
     {
-        Album? album = await _unit.Albums.GetByIdAsync(notification.AlbumId, cancellationToken);
+        Album? album = await _unit.Albums.GetByIdAsync(notification.Id, cancellationToken);
         if (album is null)
         {
             _logger.LogError(
                 "Album with ID {AlbumId} not found while rescheduling release for all album tracks",
-                notification.AlbumId);
+                notification.Id);
             return;
         }
 
@@ -33,14 +36,20 @@ internal sealed class AlbumReleaseRescheduledDomainEventHandler(
         {
             _logger.LogInformation(
                 "Rescheduling release for track {Id} to {ReleaseDate}",
-                track.Id, notification.ReleaseDate);
+                track.Id, notification.ReleaseDateUtc);
 
-            track.RescheduleRelease(notification.ReleaseDate);
+            track.RescheduleRelease(notification.ReleaseDateUtc);
 
             _logger.LogInformation(
                 "Track {Id} release rescheduled to {ReleaseDate}",
                 track.Id, track.ReleaseDate);
         }
+
+        var integrationEvent = new AlbumReleaseDateChangedIntegrationEvent(
+                notification.Id.Value,
+                notification.ReleaseDateUtc);
+        var message = OutboxMessage.FromIntegrationEvent(integrationEvent);
+        await _unit.OutboxMessages.AddAsync(message, cancellationToken);
 
         await _unit.CommitAsync(cancellationToken);
     }

@@ -3,7 +3,8 @@ using SpotifyClone.Shared.BuildingBlocks.Application.Outbox;
 
 namespace SpotifyClone.Shared.BuildingBlocks.Infrastructure.Persistence.Database;
 
-public abstract class ApplicationDbContext<TDbContext>(string schema, DbContextOptions<TDbContext> options)
+public abstract class ApplicationDbContext<TDbContext>(
+    string schema, DbContextOptions<TDbContext> options)
     : DbContext(options)
     where TDbContext : DbContext
 {

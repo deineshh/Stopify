@@ -39,28 +39,34 @@ internal sealed class PlaylistEfCoreReadService(
                 p.OwnerId,
                 p.IsPublic,
                 p.Cover,
-                TrackInfos = p.Tracks.OrderBy(t => t.Position)
-                    .Select(t => new { t.Id, t.Position }).ToList(),
+                TrackIds = p.Tracks.OrderBy(t => t.Position).Select(t => t.Id.Value).ToList(),
                 CollaboratorIds = p.Collaborators.Select(c => c.Value).ToList()
             })
             .SingleOrDefaultAsync(cancellationToken);
+
         if (header == null)
         {
             return null;
         }
 
-        var top4Ids = header.TrackInfos.Take(4).Select(x => x.Id.Value).ToList();
+        var trackCovers = await _context.TrackReferences
+            .AsNoTracking()
+            .Where(t => header.TrackIds.Contains(t.Id) && t.CoverImageId != null)
+            .Select(t => new { t.Id, t.CoverImageId })
+            .ToListAsync(cancellationToken);
 
-        List<CollaboratorSummary> collaboratorsTask = await _context.UserReferences
+        var coverMap = trackCovers.ToDictionary(x => x.Id, x => x.CoverImageId!.Value);
+
+        var generatedCoverIds = header.TrackIds
+            .Where(tid => coverMap.ContainsKey(tid))
+            .Select(tid => coverMap[tid])
+            .Take(4)
+            .ToList();
+
+        List<CollaboratorSummary> collaborators = await _context.UserReferences
             .AsNoTracking()
             .Where(u => header.CollaboratorIds.Contains(u.Id))
             .Select(u => new CollaboratorSummary(u.Id, u.Name, u.AvatarImageId))
-            .ToListAsync(cancellationToken);
-
-        List<Guid> validCoverIdsTask = await _context.TrackReferences
-            .AsNoTracking()
-            .Where(t => top4Ids.Contains(t.Id))
-            .Select(t => t.Id)
             .ToListAsync(cancellationToken);
 
         return new PlaylistDetails(
@@ -75,11 +81,9 @@ internal sealed class PlaylistEfCoreReadService(
                 header.Cover.Metadata.Height,
                 header.Cover.Metadata.FileType.Value,
                 header.Cover.Metadata.SizeInBytes),
-            validCoverIdsTask
-                .OrderBy(id => header.TrackInfos.FindIndex(x => x.Id.Value == id))
-                .ToList(),
-            collaboratorsTask,
-            header.TrackInfos.Select(t => new PlaylistTrackSummary(t.Id.Value, t.Position)).ToList()
+            generatedCoverIds,
+            collaborators,
+            header.TrackIds.Select((tid, index) => new PlaylistTrackSummary(tid, index)).ToList()
         );
     }
 
@@ -172,7 +176,7 @@ internal sealed class PlaylistEfCoreReadService(
             }
         }
 
-        var playlists = query.Select(p => new
+        var playlistsProjection = query.Select(p => new
         {
             p.Id,
             p.Name,
@@ -182,28 +186,36 @@ internal sealed class PlaylistEfCoreReadService(
             p.Cover
         });
 
-        var playlistIds = playlists.Select(p => p.Id).ToList();
+        var pagedPlaylists = await playlistsProjection.ToPagedListAsync(pagination, cancellationToken);
+        var playlistIds = pagedPlaylists.Items.Select(p => p.Id).ToList();
 
-        List<PlaylistTrack> playlistTracks = await _context.PlaylistTracks
+        var playlistTracks = await _context.PlaylistTracks
+            .AsNoTracking()
             .Where(pt => playlistIds.Contains(pt.PlaylistId))
-            .AsNoTracking()
+            .OrderBy(pt => pt.Position)
+            .Select(pt => new { pt.PlaylistId, pt.Id, pt.Position })
             .ToListAsync(cancellationToken);
 
-        List<TrackReference> trackRefs = await _context.TrackReferences
+        var allTrackIds = playlistTracks.Select(pt => pt.Id.Value).Distinct().ToList();
+
+        Dictionary<Guid, Guid> trackCovers = await _context.TrackReferences
             .AsNoTracking()
-            .ToListAsync(cancellationToken);
+            .Where(tr => allTrackIds.Contains(tr.Id) && tr.CoverImageId != null)
+            .Select(tr => new { tr.Id, tr.CoverImageId })
+            .ToDictionaryAsync(x => x.Id, x => x.CoverImageId!.Value, cancellationToken);
 
         var trackLookup = playlistTracks
-            .Join(trackRefs,
-                pt => pt.Id.Value,
-                tr => tr.Id,
-                (pt, tr) => new { pt.PlaylistId, pt.Position, tr.Id })
-            .GroupBy(x => x.PlaylistId)
+            .Where(pt => trackCovers.ContainsKey(pt.Id.Value))
+            .GroupBy(pt => pt.PlaylistId)
             .ToDictionary(
                 g => g.Key,
-                g => g.OrderBy(x => x.Position).Take(4).Select(x => x.Id).ToList());
+                g => g.OrderBy(x => x.Position)
+                      .Select(x => trackCovers[x.Id.Value])
+                      .Take(4)
+                      .ToList()
+            );
 
-        return await playlists.Select(p => new PlaylistSummary(
+        var items = pagedPlaylists.Items.Select(p => new PlaylistSummary(
             p.Id.Value,
             p.Name,
             p.Description,
@@ -216,13 +228,20 @@ internal sealed class PlaylistEfCoreReadService(
                 p.Cover.Metadata.FileType.Value,
                 p.Cover.Metadata.SizeInBytes),
             trackLookup.GetValueOrDefault(p.Id) ?? new List<Guid>()
-        )).ToPagedListAsync(pagination, cancellationToken);
+        )).ToList();
+
+        return new PagedList<PlaylistSummary>(
+            items,
+            pagedPlaylists.TotalCount,
+            pagedPlaylists.Page,
+            pagedPlaylists.PageSize
+        );
     }
 
     public async Task<IEnumerable<PlaylistSummary>> GetAllAsync(
         CancellationToken cancellationToken)
     {
-        var playlists = await _context.Playlists
+        var playlistsProjection = await _context.Playlists
             .AsNoTracking()
             .Select(p => new
             {
@@ -230,76 +249,57 @@ internal sealed class PlaylistEfCoreReadService(
                 p.Name,
                 p.Description,
                 p.IsPublic,
-                OwnerId = p.OwnerId.Value,
+                p.OwnerId,
                 p.Cover
             })
             .ToListAsync(cancellationToken);
 
-        if (playlists.Count <= 0)
+        if (playlistsProjection.Count <= 0)
         {
             return Enumerable.Empty<PlaylistSummary>();
         }
 
-        var playlistIds = playlists
-            .Select(p => p.Id)
-            .ToList();
+        var playlistIds = playlistsProjection.Select(p => p.Id).ToList();
 
-        var trackLookup = await _context.PlaylistTracks
+        var playlistTracks = await _context.PlaylistTracks
             .AsNoTracking()
             .Where(pt => playlistIds.Contains(pt.PlaylistId))
-            .Select(pt => new
-            {
-                PlaylistId = pt.PlaylistId.Value,
-                pt.Position,
-                TrackId = pt.Id.Value
-            })
+            .OrderBy(pt => pt.Position)
+            .Select(pt => new { pt.PlaylistId, pt.Id, pt.Position })
             .ToListAsync(cancellationToken);
 
-        var trackIds = trackLookup
-            .Select(t => t.TrackId)
-            .Distinct()
-            .ToList();
+        var allTrackIds = playlistTracks.Select(pt => pt.Id.Value).Distinct().ToList();
 
-        var trackCovers = await _context.TrackReferences
+        Dictionary<Guid, Guid> trackCovers = await _context.TrackReferences
             .AsNoTracking()
-            .Where(tr => trackIds.Contains(tr.Id))
-            .Select(tr => new
-            {
-                TrackId = tr.Id,
-                tr.CoverImageId
-            })
-            .ToListAsync(cancellationToken);
+            .Where(tr => allTrackIds.Contains(tr.Id) && tr.CoverImageId != null)
+            .Select(tr => new { tr.Id, tr.CoverImageId })
+            .ToDictionaryAsync(x => x.Id, x => x.CoverImageId!.Value, cancellationToken);
 
-        var coverMap = trackCovers
-            .ToDictionary(x => x.TrackId, x => x.CoverImageId);
-
-        var groupedCovers = trackLookup
-            .OrderBy(x => x.Position)
-            .GroupBy(x => x.PlaylistId)
+        var trackLookup = playlistTracks
+            .Where(pt => trackCovers.ContainsKey(pt.Id.Value))
+            .GroupBy(pt => pt.PlaylistId)
             .ToDictionary(
                 g => g.Key,
-                g => g
-                .Select(x => coverMap.GetValueOrDefault(x.TrackId))
-                .Where(x => x != null)
-                .Take(4)
-                .Select(x => x!.Value)
-                .ToList());
+                g => g.OrderBy(x => x.Position)
+                      .Select(x => trackCovers[x.Id.Value])
+                      .Take(4)
+                      .ToList()
+            );
 
-        return playlists.Select(p => new PlaylistSummary(
+        return playlistsProjection.Select(p => new PlaylistSummary(
             p.Id.Value,
             p.Name,
             p.Description,
             p.IsPublic,
-            p.OwnerId,
-            p.Cover == null
-                ? null
-                : new ImageMetadataDetails(
-                    p.Cover.ImageId.Value,
-                    p.Cover.Metadata.Width,
-                    p.Cover.Metadata.Height,
-                    p.Cover.Metadata.FileType.Value,
-                    p.Cover.Metadata.SizeInBytes),
-            groupedCovers.GetValueOrDefault(p.Id.Value) ?? new List<Guid>()
+            p.OwnerId.Value,
+            p.Cover == null ? null : new ImageMetadataDetails(
+                p.Cover.ImageId.Value,
+                p.Cover.Metadata.Width,
+                p.Cover.Metadata.Height,
+                p.Cover.Metadata.FileType.Value,
+                p.Cover.Metadata.SizeInBytes),
+            trackLookup.GetValueOrDefault(p.Id) ?? new List<Guid>()
         )).ToList();
     }
 

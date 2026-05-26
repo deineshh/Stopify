@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://kit.fontawesome.com/fd823335d3.js" crossorigin="anonymous"></script>
+
+  <title>Sign up - Stopify</title>
+
+  <link rel="icon" type="image/png" href="assets/images/icons/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="assets/images/icons/favicon.svg" />
+  <link rel="shortcut icon" href="assets/images/icons/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/images/icons/site.webmanifest" />
+
+  <link rel="stylesheet" href="css/reset.css" />
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/components/scrollbar.css" />
+  <link rel="stylesheet" href="css/pages/sign-up.css" />
+</head>
+<body>
+  <header id="sign-up-page__header">
+    <img src="./assets/images/icons/favicon.ico" alt="" id="sign-up-page__header--stopify-icon">
+  </header>
+  <main id="sign-up-page__main">
+    <h1 id="sign-up-page__main--title">
+      Welcome back
+    </h1>
+    <form id="sign-up-page__main--form" action="javascript:void(0)">
+      <div id="sign-up-page__email-address-group">
+        <label class="sign-up-page__input-label" id="sign-up-page__email-address-group--label" for="sign-up-page__email-address-group--input">
+          Email address
+        </label>
+        <input class="sign-up-page__input" id="sign-up-page__email-address-group--input" type="email" placeholder="name@domain.com">
+        <div class="sign-up-page__error-group" id="sign-up-page__email-address-group--error-group">
+          <span class="sign-up-page__error-icon" id="sign-up-page__email-address-group--error-icon">
+            <i class="fa-solid fa-exclamation"></i>
+          </span>
+          <span class="sign-up-page__error-text" id="sign-up-page__email-address-group--error-text">
+            This email is invalid. Make sure it's written like example@email.com
+          </span>
+        </div>
+        <div class="sign-up-page__info-error-group" id="sign-up-page__email-address-group--in-use-error-group">
+          <span class="sign-up-page__info-error-icon" id="sign-up-page__email-address-group--in-use-error-icon">
+            <i class="fa-solid fa-exclamation"></i>
+          </span>
+          <span class="sign-up-page__info-error-text" id="sign-up-page__email-address-group--in-use-error-text">
+            This address is already linked to an existing account. To continue,
+            <a href="">
+              log in.
+            </a>
+          </span>
+        </div>
+      </div>
+      <div id="sign-up-page__header-group">
+        <div id="sign-up-page__header-group--progressbar-group" role="progressbar">
+          <div id="sign-up-page__header-group--progressbar-progress"></div>
+        </div>
+        <div id="sign-up-page__header-group--title-group">
+          <button id="sign-up-page__title-group--back-btn">
+            <span id="sign-up-page__title-group--back-icon">
+              <i class="fa-solid fa-less-than"></i>
+            </span>
+          </button>
+          <div id="sign-up-page__title-group--info-group">
+            <span id="sign-up-page__title-group--step-number">
+              Step 1 of 3
+            </span>
+            <span id="sign-up-page__title-group--step-title">
+              Create a password
+            </span>
+          </div>
+        </div>
+      </div>
+      <h2 id="sign-up-page__main--form-title">
+        Log in with a password
+      </h2>
+      <div id="sign-up-page__new-password-group">
+        <label class="sign-up-page__input-label" id="sign-up-page__new-password-group--label" for="sign-up-page__new-password-group--input">
+          Password
+        </label>
+        <div class="sign-up-page__password-input-group" id="sign-up-page__new-password-group--input-group">
+          <input class="sign-up-page__password-input-group--input" id="sign-up-page__new-password-group--input" type="password">
+          <button class="sign-up-page__password-input-group--show-hide-password-btn">
+            <span class="sign-up-page__password-input-group--show-password-icon">
+              <i class="fa-solid fa-eye"></i>
+            </span>
+            <span class="sign-up-page__password-input-group--hide-password-icon">
+              <i class="fa-solid fa-eye-slash"></i>
+            </span>
+          </button>
+        </div>
+        <div id="sign-up-page__new-password-group--requirements-group">
+          <span id="sign-up-page__new-password-group--requirements-title">
+            Your password must contain at least
+          </span>
+          <ul id="sign-up-page__new-password-group--requirements-list">
+            <li class="sign-up-page__new-password-group--requirement-item">
+              <span class="sign-up-page__new-password-group--requirement-icon">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span class="sign-up-page__new-password-group--requirement-text">
+                1 letter
+              </span>
+            </li>
+            <li class="sign-up-page__new-password-group--requirement-item">
+              <span class="sign-up-page__new-password-group--requirement-icon">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span class="sign-up-page__new-password-group--requirement-text">
+                1 number or special character (example: # ? ! &)
+              </span>
+            </li>
+            <li class="sign-up-page__new-password-group--requirement-item">
+              <span class="sign-up-page__new-password-group--requirement-icon">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span class="sign-up-page__new-password-group--requirement-text">
+                10 characters
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="sign-up-page__about-yourself-group">
+        <div id="sign-up-page__name-group">
+          <label class="sign-up-page__input-label" for="sign-up-page__name-group--input" id="sign-up-page__name-group--label">
+            Name
+          </label>
+          <p class="sign-up-page__input-description" id="sign-up-page__name-group--description">
+            This name will appear on your profile
+          </p>
+          <input class="sign-up-page__input" id="sign-up-page__name-group--input" type="text">
+          <div class="sign-up-page__error-group" id="sign-up-page__name-group--error-group">
+            <span class="sign-up-page__error-icon" id="sign-up-page__name-group--error-icon">
+              <i class="fa-solid fa-exclamation"></i>
+            </span>
+            <span class="sign-up-page__error-text" id="sign-up-page__name-group--error-text">
+              Enter a name for your profile.
+            </span>
+          </div>
+        </div>
+        <div id="sign-up-page__birth-date-group">
+          <label class="sign-up-page__input-label" for="sign-up-page__birth-date-group--day-input" id="sign-up-page__birth-date-group--label">
+            Date of birth
+          </label>
+          <p class="sign-up-page__input-description" id="sign-up-page__birth-date-group--description">
+            Why do we need your date of birth?
+            <a href="">
+              Learn more.
+            </a>
+          </p>
+          <div id="sign-up-page__birth-date-group--input-group">
+            <input class="sign-up-page__input" id="sign-up-page__birth-date-group--day-input" type="number" placeholder="dd" maxlength="2" minlength="1">
+            <select class="sign-up-page__input" id="sign-up-page__birth-date-group--month-select">
+              <option value="0" selected disabled>Month</option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>
+            <input class="sign-up-page__input" id="sign-up-page__birth-date-group--year-input" type="number" placeholder="yyyy" maxlength="4" minlength="4">
+          </div>
+          <div class="sign-up-page__error-group" id="sign-up-page__birth-date-group--error-group">
+            <span class="sign-up-page__error-icon" id="sign-up-page__birth-date-group--error-icon">
+              <i class="fa-solid fa-exclamation"></i>
+            </span>
+            <span class="sign-up-page__error-text" id="sign-up-page__birth-date-group--error-text">
+              Please enter your date of birth.
+            </span>
+          </div>
+        </div>
+        <div id="sign-up-page__gender-group" role="radiogroup">
+          <span class="sign-up-page__input-label" id="sign-up-page__gender-group--title">
+            Gender
+          </span>
+          <p class="sign-up-page__input-description" id="sign-up-page__gender-group--description">
+            We use your gender to help personalize our content recommendations and ads for you.
+          </p>
+          <div id="sign-up-page__gender-group--items">
+            <label class="sign-up-page__gender-group--item" for="sign-up-page__gender-item--man">
+              <input class="sign-up-page__gender-item--radio" id="sign-up-page__gender-item--man" name="sign-up-page__gender" type="radio">
+              <div class="sign-up-page__gender-item--circle"></div>
+              <span class="sign-up-page__gender-item--span">
+                Man
+              </span>
+            </label>
+            <label class="sign-up-page__gender-group--item" for="sign-up-page__gender-item--woman">
+              <input class="sign-up-page__gender-item--radio" id="sign-up-page__gender-item--woman" name="sign-up-page__gender" type="radio">
+              <div class="sign-up-page__gender-item--circle"></div>
+              <span class="sign-up-page__gender-item--span">
+                Woman
+              </span>
+            </label>
+            <label class="sign-up-page__gender-group--item" for="sign-up-page__gender-item--non-binary">
+              <input class="sign-up-page__gender-item--radio" id="sign-up-page__gender-item--non-binary" name="sign-up-page__gender" type="radio">
+              <div class="sign-up-page__gender-item--circle"></div>
+              <span class="sign-up-page__gender-item--span">
+                Non-binary
+              </span>
+            </label>
+            <label class="sign-up-page__gender-group--item" for="sign-up-page__gender-item--else">
+              <input class="sign-up-page__gender-item--radio" id="sign-up-page__gender-item--else" name="sign-up-page__gender" type="radio">
+              <div class="sign-up-page__gender-item--circle"></div>
+              <span class="sign-up-page__gender-item--span">
+                Something else
+              </span>
+            </label>
+            <label class="sign-up-page__gender-group--item" for="sign-up-page__gender-item--secret">
+              <input class="sign-up-page__gender-item--radio" id="sign-up-page__gender-item--secret" name="sign-up-page__gender" type="radio">
+              <div class="sign-up-page__gender-item--circle"></div>
+              <span class="sign-up-page__gender-item--span">
+                Prefer not to say
+              </span>
+            </label>
+          </div>
+          <div class="sign-up-page__error-group" id="sign-up-page__gender-group--error-group">
+            <span class="sign-up-page__error-icon" id="sign-up-page__gender-group--error-icon">
+              <i class="fa-solid fa-exclamation"></i>
+            </span>
+            <span class="sign-up-page__error-text" id="sign-up-page__gender-group--error-text">
+              Select your gender.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div id="sign-up-page__terms-group">
+        <div class="sign-up-page__terms-group--item">
+          <input class="sign-up-page__terms-group--input" type="checkbox">
+          <label class="sign-up-page__terms-group--label" for="checkbox-marketing">
+            <span class="sign-up-page__terms-group--item-icon">
+              <i class="fa-solid fa-check"></i>
+            </span>
+            <span class="sign-up-page__terms-group--item-text">
+              I would prefer not to receive marketing messages from Stopify
+            </span>
+          </label>
+        </div>
+        <div class="sign-up-page__terms-group--item">
+          <input class="sign-up-page__terms-group--input" type="checkbox">
+          <label class="sign-up-page__terms-group--label" for="checkbox-privacy">
+            <span class="sign-up-page__terms-group--item-icon">
+              <i class="fa-solid fa-check"></i>
+            </span>
+            <span class="sign-up-page__terms-group--item-text">
+              Share my registration data with Spotify's content providers for marketing purposes
+            </span>
+          </label>
+        </div>
+        <div class="sign-up-page__terms-group--item">
+          <input class="sign-up-page__terms-group--input" type="checkbox">
+          <label class="sign-up-page__terms-group--label" for="checkbox-terms-conditions">
+            <span class="sign-up-page__terms-group--item-icon">
+              <i class="fa-solid fa-check"></i>
+            </span>
+            <span class="sign-up-page__terms-group--item-text">
+              <span>
+                Stopify is a personalised service.
+              </span>
+              <span>
+                I agree to the
+                <a href="">
+                  Spotify Terms and Conditions of Use
+                </a>
+                and
+                <a href="">
+                  Privacy Policy
+                </a>
+              </span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <div id="sign-up-page__login-with-password-input-group">
+        <div id="sign-up-page__login-with-password-input-group--username-group">
+          <label class="sign-up-page__input-label" id="sign-up-page__login-with-password-input-group--username-title" for="sign-up-page__login-with-password-input-group--username-input">
+            Email or username
+          </label>
+          <input class="sign-up-page__input" id="sign-up-page__login-with-password-input-group--username-input" type="text" placeholder="Email or username">
+        </div>
+        <div class="sign-up-page__error-group" id="sign-up-page__login-with-password-input-group--username-error-group">
+          <span class="sign-up-page__error-icon" id="sign-up-page__login-with-password-input-group--username-error-icon">
+            <i class="fa-solid fa-exclamation"></i>
+          </span>
+          <span class="sign-up-page__error-text" id="sign-up-page__login-with-password-input-group--username-error-text">
+            Email or username isn't linked to a Stopify account.
+          </span>
+        </div>
+        <div class="sign-up-page__password-input-group" id="sign-up-page__login-with-password-input-group--password-group">
+          <input class="sign-up-page__password-input-group--input" id="sign-up-page__login-with-password-input-group--password-input" type="password">
+          <button class="sign-up-page__password-input-group--show-hide-password-btn">
+            <span class="sign-up-page__password-input-group--show-password-icon">
+              <i class="fa-solid fa-eye"></i>
+            </span>
+            <span class="sign-up-page__password-input-group--hide-password-icon">
+              <i class="fa-solid fa-eye-slash"></i>
+            </span>
+          </button>
+        </div>
+        <div class="sign-up-page__error-group" id="sign-up-page__login-with-password-input-group--password-error-group">
+          <span class="sign-up-page__error-icon" id="sign-up-page__login-with-password-input-group--password-error-icon">
+            <i class="fa-solid fa-exclamation"></i>
+          </span>
+          <span class="sign-up-page__error-text" id="sign-up-page__login-with-password-input-group--password-error-text">
+            Invalid code.
+          </span>
+        </div>
+      </div>
+      <div id="sign-up-page__verification-group">
+        <div class="sign-up-page__info-error-group" id="sign-up-page__verification-group--early-request-error-group">
+          <span class="sign-up-page__info-error-icon" id="sign-up-page__verification-group--early-request-error-icon">
+            <i class="fa-solid fa-exclamation"></i>
+          </span>
+          <span class="sign-up-page__info-error-text" id="sign-up-page__verification-group--early-request-error-text">
+            Please wait at least 30 seconds before requesting another code.
+          </span>
+        </div>
+        <div id="sign-up-page__verification-group--code-group">
+          <input class="sign-up-page__verification-group--code-input" type="number" maxlength="1" required>
+          <input class="sign-up-page__verification-group--code-input" type="number" maxlength="1" required>
+          <input class="sign-up-page__verification-group--code-input" type="number" maxlength="1" required>
+          <input class="sign-up-page__verification-group--code-input" type="number" maxlength="1" required>
+          <input class="sign-up-page__verification-group--code-input" type="number" maxlength="1" required>
+          <input class="sign-up-page__verification-group--code-input" type="number" maxlength="1" required>
+        </div>
+        <div class="sign-up-page__error-group" id="sign-up-page__verification-group--error-group">
+          <span class="sign-up-page__error-icon" id="sign-up-page__verification-group--error-icon">
+            <i class="fa-solid fa-exclamation"></i>
+          </span>
+          <span class="sign-up-page__error-text" id="sign-up-page__verification-group--error-text">
+            Invalid code.
+          </span>
+        </div>
+        <div id="sign-up-page__verification-group--resend-group">
+          <button id="sign-up-page__verification-group--resend-btn">
+            <span id="sign-up-page__verification-group--resend-span">
+              Resend code
+            </span>
+          </button>
+        </div>
+      </div>
+      <button id="sign-up-page__next-btn">
+        <span id="sign-up-page__next-span">
+          Continue
+        </span>
+      </button>
+      <div class="sign-up-page__footer-group" id="sign-up-page__have-account-group">
+        <p class="sign-up-page__footer-group--title" id="sign-up-page__have-account-group--title">
+          Already have an account?
+        </p>
+        <a href="" class="sign-up-page__footer-group--anchor" id="sign-up-page__have-account-group--login-anchor">
+          <span class="sign-up-page__footer-group--span" id="sign-up-page__have-account-group--login-span">
+            Log in
+          </span>
+        </a>
+      </div>
+      <div class="sign-up-page__footer-group" id="sign-up-page__dont-have-account-group">
+        <span class="sign-up-page__footer-group--title" id="sign-up-page__dont-have-account-group--title">
+          Don't have an account?
+        </span>
+        <a href="" class="sign-up-page__footer-group--anchor" id="sign-up-page__dont-have-account-group--anchor">
+          <span class="sign-up-page__footer-group--span" id="sign-up-page__dont-have-account-group--span">
+            Sign up
+          </span>
+        </a>
+      </div>
+      <div class="sign-up-page__footer-group" id="sign-up-page__password-login-group">
+        <a href="" class="sign-up-page__footer-group--anchor" id="sign-up-page__password-login--anchor">
+          <span class="sign-up-page__footer-group--span" id="sign-up-page__password-login-group--span">
+            Log in with a password
+          </span>
+        </a>
+      </div>
+      <div class="sign-up-page__footer-group" id="sign-up-page__without-password-login-group">
+        <a href="" class="sign-up-page__footer-group--anchor" id="sign-up-page__without-password-login--anchor">
+          <span class="sign-up-page__footer-group--span" id="sign-up-page__without-password-login-group--span">
+            Log in without password
+          </span>
+        </a>
+      </div>
+    </form>
+  </main>
+</body>
+</html>

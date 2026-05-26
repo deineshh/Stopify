@@ -1,0 +1,31 @@
+.play-btn-parent:hover .play-btn.hover-transition {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.play-btn {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  background-color: #1ed760;
+  border-radius: 100%;
+  color: black;
+  display: flex;
+  font-size: 1.2rem;
+  justify-content: center;
+  box-shadow:
+    0 4px 4px rgba(0, 0, 0, 0.25),
+    0 8px 16px rgba(0, 0, 0, 0.3);
+  transition: .2s ease-in-out;
+  transition-property: background, opacity, transform;
+  width: 48px;
+}
+
+.play-btn:hover {
+  background-color: #3BE477;
+  transform: scale(1.05);
+}
+
+.play-btn.hover-transition {
+  opacity: 0;
+  transform: translateY(10px);
+}

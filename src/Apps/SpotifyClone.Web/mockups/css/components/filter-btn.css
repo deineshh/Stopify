@@ -1,0 +1,24 @@
+.filter-btn {
+  align-items: center;
+  background-color: rgba(255, 255, 255, .1);
+  border-radius: 16px;
+  color: var(--primary-fg-color);
+  display: flex;
+  font-size: .96rem;
+  justify-content: center;
+  padding: 7px 11.5px;
+  transition: .1s background ease-in-out;
+}
+
+.filter-btn:hover {
+  background-color: rgba(255, 255, 255, .15);
+}
+
+.filter-btn.active {
+  background-color: white;
+  color: black;
+}
+
+.filter-btn.active:hover {
+  background-color: #F0F0F0;
+}

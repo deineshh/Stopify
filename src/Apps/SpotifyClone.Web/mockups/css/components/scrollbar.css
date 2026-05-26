@@ -1,0 +1,15 @@
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*:hover *::-webkit-scrollbar-thumb {
+  visibility: visible;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #5a5a5a;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: #888888;
+}

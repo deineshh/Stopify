@@ -1,0 +1,51 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Search.SearchView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:Components="clr-namespace:SpotifyClone.Desktop.Views.Components"
+    xmlns:SearchBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Search"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Search"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    SearchBehaviors:SearchSizeChangeBehavior.Enable="True"
+    SearchBehaviors:SearchSizeChangeBehavior.TotalColumns="{Binding TotalColumns}"
+    d:DesignWidth="500"
+    Background="#121212"
+    mc:Ignorable="d">
+
+    <ScrollViewer Name="MainPanel">
+        <StackPanel>
+            <ItemsControl ItemsSource="{Binding FilterRows}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Components:FilterRow />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
+            <Button
+                Margin="15,0"
+                HorizontalAlignment="Left"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="Browse all"
+                FontSize="24"
+                FontWeight="Bold"
+                Foreground="White" />
+
+            <ItemsControl ItemsSource="{Binding SearchCategoryItems}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="{Binding TotalColumns}" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:SearchCategoryItem />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

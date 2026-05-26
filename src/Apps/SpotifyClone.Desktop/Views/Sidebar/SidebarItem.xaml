@@ -1,0 +1,146 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Sidebar.SidebarItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:SidebarItemBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Sidebar.SidebarItem"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Sidebar"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Button
+        Name="ItemBtn"
+        Height="64"
+        HorizontalAlignment="Stretch"
+        HorizontalContentAlignment="Stretch"
+        VerticalContentAlignment="Stretch"
+        InputBehaviors:CursorBehavior.Enable="True"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.Description="{Binding ElementName=Description, Path=Text, Mode=TwoWay}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.Enable="True"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.IsPlaying="{Binding IsPlaying}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.ItemImgBtnOpacity="{Binding ElementName=ItemImgBtn, Path=Opacity, Mode=TwoWay}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.PlayBtnContent="{Binding ElementName=PlayBtn, Path=Content, Mode=TwoWay}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.PlayBtnFontSize="{Binding ElementName=PlayBtn, Path=FontSize, Mode=TwoWay}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.PlayBtnWidth="{Binding ElementName=PlayBtn, Path=Width, Mode=TwoWay}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.PlaylistAuthor="{Binding PlaylistAuthor}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.PlaylistSongQuantity="{Binding PlaylistSongQuantity}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.PlaylistTitle="{Binding PlaylistTitle}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.PlaylistType="{Binding PlaylistType}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.SidebarCollapseState="{Binding SidebarCollapseState}"
+        SidebarItemBehaviors:SidebarItemButtonBehavior.SidebarPlayingIconWidth="{Binding ElementName=SidebarPlayingIcon, Path=Width, Mode=TwoWay}"
+        SidebarItemBehaviors:SidebarItemTogglePlayOnClicksBehavior.Enable="True"
+        SidebarItemBehaviors:SidebarItemTogglePlayOnClicksBehavior.IsPlaying="{Binding IsPlaying, Mode=TwoWay}"
+        Background="Transparent"
+        BorderThickness="0">
+        <Border
+            Name="ItemBorder"
+            Padding="7"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.Duration="0.1"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.EnableOnHover="True"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.InColor="#1f1f1f"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.OutColor="#121212"
+            Background="#121212"
+            CornerRadius="7">
+
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Image  -->
+                <Button
+                    Name="ItemImgBtn"
+                    Grid.Column="0"
+                    Width="48"
+                    Height="48"
+                    Margin="0,0,12,0"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    SidebarItemBehaviors:SidebarItemImageButtonBehavior.Enable="True"
+                    SidebarItemBehaviors:SidebarItemImageButtonBehavior.IsPlaying="{Binding IsPlaying}"
+                    SidebarItemBehaviors:SidebarItemImageButtonBehavior.PlayBtn="{Binding ElementName=PlayBtn}"
+                    SidebarItemBehaviors:SidebarItemImageButtonBehavior.PlaylistTitle="{Binding PlaylistTitle}"
+                    SidebarItemBehaviors:SidebarItemImageButtonBehavior.SidebarCollapseState="{Binding SidebarCollapseState}"
+                    SidebarItemBehaviors:SidebarItemTogglePlayOnClicksBehavior.Enable="True"
+                    SidebarItemBehaviors:SidebarItemTogglePlayOnClicksBehavior.IsPlaying="{Binding IsPlaying}"
+                    SidebarItemBehaviors:SidebarItemTogglePlayOnClicksBehavior.SidebarCollapseState="{Binding SidebarCollapseState}"
+                    Background="#121212"
+                    BorderThickness="0">
+                    <Border CornerRadius="5">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/Assets/Images/song.jpg" />
+                        </Border.Background>
+                    </Border>
+                </Button>
+
+                <!--  Play/Pause  -->
+                <Button
+                    Name="PlayBtn"
+                    Grid.Column="0"
+                    Width="0"
+                    Margin="0,0,12,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    Foreground="White"
+                    IsHitTestVisible="False" />
+
+                <StackPanel
+                    Grid.Column="1"
+                    Margin="0,0,0,2"
+                    VerticalAlignment="Center">
+                    <!--  Title  -->
+                    <TextBlock
+                        FontSize="16.3"
+                        FontWeight="SemiBold"
+                        Foreground="WhiteSmoke"
+                        Text="{Binding PlaylistTitle}"
+                        TextTrimming="CharacterEllipsis" />
+                    <!--  Description  -->
+                    <StackPanel Orientation="Horizontal">
+                        <!--  To hide pin: remove margin and set width to 0  -->
+                        <!--  Margin on show: 6,5,3,0  -->
+                        <TextBlock
+                            Width="0"
+                            Margin="0"
+                            FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                            FontSize="14"
+                            Foreground="#1cc658"
+                            Text="&#xf08d;">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform Angle="45" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+
+                        <TextBlock
+                            Name="Description"
+                            Margin="0,3,0,0"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Foreground="DarkGray"
+                            TextTrimming="CharacterEllipsis" />
+                    </StackPanel>
+                </StackPanel>
+
+                <!--  Now Playing Icon  -->
+                <TextBlock
+                    x:Name="SidebarPlayingIcon"
+                    Grid.Column="2"
+                    Width="0"
+                    Margin="7,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="14"
+                    Foreground="#1ed760"
+                    Text="&#xf028;" />
+            </Grid>
+        </Border>
+    </Button>
+</UserControl>

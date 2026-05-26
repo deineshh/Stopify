@@ -1,4 +1,4 @@
-﻿namespace SpotifyClone.Billing.Infrastructure.Models;
+﻿namespace SpotifyClone.Billing.Application.Models;
 
 public static class PaymentProviderSubscriptionStatuses
 {

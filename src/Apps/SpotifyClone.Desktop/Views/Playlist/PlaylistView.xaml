@@ -1,0 +1,714 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Playlist.PlaylistView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:Components="clr-namespace:SpotifyClone.Desktop.Views.Components"
+    xmlns:ControlBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Controls"
+    xmlns:CustomCollections="clr-namespace:SpotifyClone.Desktop.Utilities.Collections"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:Models="clr-namespace:SpotifyClone.Desktop.Utilities.Models"
+    xmlns:PlaylistBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Playlist"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Playlist"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    PlaylistBehaviors:PlaylistSizeChangeBehavior.Enable="True"
+    mc:Ignorable="d">
+
+    <Border CornerRadius="8">
+        <Grid>
+            <!--  Sticky Header  -->
+            <Grid
+                Name="StickyHeader"
+                Height="0"
+                Panel.ZIndex="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Playlist Info  -->
+                <Border
+                    Name="StickyHeaderBg"
+                    Grid.Row="0"
+                    Background="Transparent"
+                    CornerRadius="8 8 0 0">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Play/Pause  -->
+                        <Button
+                            x:Name="StickyPlayBtn"
+                            Grid.Column="0"
+                            Width="50"
+                            Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                            Margin="15,7,7,7"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                            ControlBehaviors:PlayBehavior.Enable="True"
+                            ControlBehaviors:PlayBehavior.IsPlaying="{Binding IsPlaying}"
+                            ControlBehaviors:PlayBehavior.PlayIcon="{Binding ElementName=StickyPlayIcon, Path=Text}"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0">
+
+                            <Border
+                                x:Name="StickyPlayBorder"
+                                Background="#1ed760"
+                                CornerRadius="30">
+                                <TextBlock
+                                    x:Name="StickyPlayIcon"
+                                    Margin="0,15"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                    FontSize="19"
+                                    Text="&#xf04b;" />
+                            </Border>
+                        </Button>
+
+                        <!--  Title  -->
+                        <TextBlock
+                            Grid.Column="1"
+                            MaxHeight="35"
+                            Margin="0,0,20,0"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            LineStackingStrategy="BlockLineHeight"
+                            Text="{Binding Title}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="Wrap" />
+                    </Grid>
+                </Border>
+
+                <local:PlaylistHeader Grid.Row="1" Background="#1f1f1f" />
+            </Grid>
+
+            <!--  Main  -->
+            <ScrollViewer
+                Name="Scroller"
+                Panel.ZIndex="0"
+                ControlBehaviors:ScrollerStickyHeaderBehavior.Enable="True"
+                ControlBehaviors:ScrollerStickyHeaderBehavior.StickyHeaderHeight="{Binding ElementName=StickyHeader, Path=Height}"
+                ControlBehaviors:ScrollerStickyHeaderBehavior.StickyHeaderVerticalScrollAppearValue="195"
+                VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <StackPanel.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop x:Name="ScrollerBg" Color="Transparent" />
+                            <GradientStop Offset=".17" Color="#121212" />
+                        </LinearGradientBrush>
+                    </StackPanel.Background>
+
+                    <!--  Main Header  -->
+                    <Grid
+                        Name="MainHeader"
+                        Height="187"
+                        VerticalAlignment="Top"
+                        Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".32*" MinWidth="160" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Playlist Image  -->
+                        <Border
+                            Grid.Column="0"
+                            Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                            MinWidth="126"
+                            MaxWidth="170"
+                            Margin="17,0,17,18"
+                            VerticalAlignment="Bottom"
+                            CornerRadius="4">
+
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Assets/Images/song.jpg" />
+                            </Border.Background>
+                        </Border>
+
+                        <!--  Playlist Info  -->
+                        <Grid
+                            Grid.Column="1"
+                            Margin="0,0,17,17"
+                            VerticalAlignment="Bottom">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <!--  Type  -->
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Margin="0,-1,0,3"
+                                    FontSize="13.5"
+                                    FontWeight="SemiBold"
+                                    Foreground="LightGray"
+                                    Text="{Binding Type}" />
+
+                                <!--  Title  -->
+                                <TextBlock
+                                    Name="PlaylistTitle"
+                                    Grid.Row="1"
+                                    FontSize="23"
+                                    FontWeight="UltraBold"
+                                    Foreground="White"
+                                    Text="{Binding Title}"
+                                    TextTrimming="WordEllipsis"
+                                    TextWrapping="Wrap" />
+
+                                <!--  Description  -->
+                                <TextBlock
+                                    Grid.Row="2"
+                                    MaxHeight="19"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="DarkGray"
+                                    LineHeight="18"
+                                    Text="{Binding Description}"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="Wrap" />
+
+                                <!--  Info  -->
+                                <WrapPanel Grid.Row="3" Margin="0,9,0,0">
+                                    <!--  Author  -->
+                                    <ItemsControl Height="Auto" ItemsSource="{Binding Authors}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <WrapPanel />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,2" Orientation="Horizontal">
+                                                    <Border
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="0,0,4,0"
+                                                        CornerRadius="30">
+
+                                                        <Border.Background>
+                                                            <ImageBrush ImageSource="/Assets/Images/stopify-icon.ico" />
+                                                        </Border.Background>
+                                                    </Border>
+
+                                                    <Button
+                                                        Name="AuthorBtn"
+                                                        Margin="0,0,0,1"
+                                                        Padding="0"
+                                                        AnimationBehaviors:ScaleAnimationBehavior.Duration="0.05"
+                                                        AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                                        AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.02"
+                                                        InputBehaviors:CursorBehavior.Enable="True"
+                                                        Background="Transparent"
+                                                        BorderBrush="White"
+                                                        BorderThickness="0"
+                                                        Content="{Binding Name}"
+                                                        FontSize="14"
+                                                        FontWeight="Bold"
+                                                        Foreground="White" />
+
+                                                    <TextBlock
+                                                        Height="18"
+                                                        Margin="5,-9,5,0"
+                                                        FontSize="20"
+                                                        FontWeight="Bold"
+                                                        Foreground="DarkGray"
+                                                        Text="·" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                    <!--  Saves Count  -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="DarkGray"
+                                            Text="{Binding Saves}" />
+                                        <TextBlock
+                                            Margin="4,0,0,0"
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="DarkGray"
+                                            Text="saves" />
+                                    </StackPanel>
+
+                                    <!--  Songs/Duration  -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Height="18"
+                                            Margin="5,-9,5,0"
+                                            FontSize="20"
+                                            FontWeight="Bold"
+                                            Foreground="DarkGray"
+                                            Text="·" />
+                                        <TextBlock
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="DarkGray"
+                                            Text="{Binding Songs}" />
+                                        <TextBlock
+                                            Margin="4,0,0,0"
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="DarkGray"
+                                            Text="songs, " />
+
+                                        <TextBlock
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="DarkGray"
+                                            Text="{Binding Duration}" />
+                                    </StackPanel>
+                                </WrapPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+                    <!--  Control Buttons  -->
+                    <Grid Margin="-2,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid
+                            Grid.Column="0"
+                            Margin="17,0,3,0"
+                            HorizontalAlignment="Left">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Play/Pause  -->
+                            <Button
+                                Name="PlayBtn"
+                                Grid.Column="0"
+                                Width="50"
+                                Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                                ControlBehaviors:PlayBehavior.Enable="True"
+                                ControlBehaviors:PlayBehavior.IsPlaying="{Binding IsPlaying}"
+                                ControlBehaviors:PlayBehavior.PlayIcon="{Binding ElementName=PlayIcon, Path=Text}"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0">
+
+                                <Border
+                                    Name="PlayBorder"
+                                    Background="#1ed760"
+                                    CornerRadius="30">
+                                    <TextBlock
+                                        Name="PlayIcon"
+                                        Margin="0,15"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                        FontSize="20"
+                                        IsHitTestVisible="False"
+                                        Text="&#xf04b;" />
+                                </Border>
+                            </Button>
+
+                            <!--  Shuffle  -->
+                            <Button
+                                Name="ShuffleBtn"
+                                Grid.Column="1"
+                                Width="32"
+                                Height="32"
+                                Margin="19,0,0,0"
+                                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                                ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding IsShuffling, Converter={StaticResource BooleanToByteConverter}, Mode=TwoWay}"
+                                ControlBehaviors:ToggleButtonStateBehavior.DefaultHoverPopupText="{Binding HoverPopupText}"
+                                ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                                ControlBehaviors:ToggleButtonStateBehavior.MouseEnterColor="White"
+                                ControlBehaviors:ToggleButtonStateBehavior.MouseLeaveColor="DarkGray"
+                                ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="&#xf074;"
+                                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                FontSize="23"
+                                Foreground="DarkGray">
+                                <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                                    <CustomCollections:ButtonStateCollection>
+                                        <Models:ButtonStateModel ChangeColorOnHover="True" Color="DarkGray" />
+                                        <Models:ButtonStateModel ChangeColorOnHover="False" Color="#1ED760" />
+                                    </CustomCollections:ButtonStateCollection>
+                                </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                            </Button>
+
+                            <!--  Save  -->
+                            <Button
+                                Name="SaveBtn"
+                                Grid.Column="2"
+                                Width="24"
+                                Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                                Margin="12,0"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.04"
+                                ControlBehaviors:SaveBehavior.Enable="True"
+                                ControlBehaviors:SaveBehavior.IsSaved="{Binding IsSaved}"
+                                ControlBehaviors:SaveBehavior.SaveBorderBackground="{Binding ElementName=SaveBorder, Path=Background}"
+                                ControlBehaviors:SaveBehavior.SaveBorderBrush="{Binding ElementName=SaveBorder, Path=BorderBrush}"
+                                ControlBehaviors:SaveBehavior.SaveBorderThickness="{Binding ElementName=SaveBorder, Path=BorderThickness}"
+                                ControlBehaviors:SaveBehavior.SaveForeground="{Binding ElementName=SaveText, Path=Foreground}"
+                                ControlBehaviors:SaveBehavior.SaveText="{Binding ElementName=SaveText, Path=Text}"
+                                ControlBehaviors:SaveBehavior.SaveTextMargin="{Binding ElementName=SaveText, Path=Margin}"
+                                ControlBehaviors:SaveBehavior.SaveTo="{Binding SaveTo}"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0">
+                                <Border
+                                    Name="SaveBorder"
+                                    Padding="0,0,3,1"
+                                    Background="Transparent"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="2"
+                                    CornerRadius="30">
+                                    <TextBlock
+                                        Name="SaveText"
+                                        Margin="5"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                        FontSize="12"
+                                        Foreground="DarkGray"
+                                        Text="+" />
+                                </Border>
+                            </Button>
+
+                            <!--  Download  -->
+                            <Button
+                                Name="DownloadBtn"
+                                Grid.Column="3"
+                                Width="24"
+                                Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                                Margin="4,0"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                                ControlBehaviors:HoverPopupBehavior.PopupText="Download"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                InputBehaviors:CursorBehavior.HoverCursor="No"
+                                Background="Transparent"
+                                BorderThickness="0">
+                                <Border
+                                    Name="DownloadBorder"
+                                    BorderBrush="#363636"
+                                    BorderThickness="2"
+                                    CornerRadius="30">
+                                    <TextBlock
+                                        Name="DownloadText"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                        FontSize="13"
+                                        Foreground="#363636"
+                                        Text="&#xf063;" />
+                                </Border>
+                            </Button>
+
+                            <!--  More Options  -->
+                            <Button
+                                Name="OptionsBtn"
+                                Grid.Column="4"
+                                Width="25"
+                                Height="45"
+                                Margin="12,0,0,1"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                                ControlBehaviors:HoverPopupBehavior.PopupText="{Binding Title, StringFormat='More options for {0}'}"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="• • •"
+                                FontSize="12"
+                                Foreground="DarkGray" />
+                        </Grid>
+
+                        <Grid Grid.Column="1" HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Search Button  -->
+                            <Button
+                                Name="SearchBtn"
+                                Grid.Column="0"
+                                Width="32"
+                                Height="32"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Stretch"
+                                VerticalContentAlignment="Stretch"
+                                ControlBehaviors:SearchButtonBehavior.Enable="True"
+                                ControlBehaviors:SearchButtonBehavior.IsSearching="{Binding IsSearching}"
+                                ControlBehaviors:SearchButtonBehavior.MouseEnterBackgroundColor="#33272727"
+                                ControlBehaviors:SearchButtonBehavior.MouseLeaveBackgroundColor="#00272727"
+                                ControlBehaviors:SearchButtonBehavior.SearchBorder="{Binding ElementName=SearchBorder}"
+                                ControlBehaviors:SearchButtonBehavior.SearchText="{Binding ElementName=SearchText}"
+                                Background="Transparent"
+                                BorderThickness="0">
+
+                                <Border
+                                    Name="SearchBorder"
+                                    Background="Transparent"
+                                    CornerRadius="30">
+                                    <TextBlock
+                                        Name="SearchText"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                        FontSize="15"
+                                        Foreground="DarkGray"
+                                        Text="&#xf002;" />
+                                </Border>
+                            </Button>
+
+                            <!--  Search Bar  -->
+                            <Border
+                                Name="SearchBar"
+                                Grid.Column="1"
+                                Width="0"
+                                Margin="-1,10,0,10"
+                                ControlBehaviors:SearchBarBehavior.Enable="True"
+                                ControlBehaviors:SearchBarBehavior.IsSearching="{Binding IsSearching}"
+                                ControlBehaviors:SearchBarBehavior.MouseLeaveSearchButtonBackgroundColor="#00272727"
+                                ControlBehaviors:SearchBarBehavior.SearchBarPlaceholderVisibility="{Binding ElementName=SearchbarText, Path=Visibility}"
+                                ControlBehaviors:SearchBarBehavior.SearchBarWidth="{Binding ElementName=SearchBar, Path=Width}"
+                                ControlBehaviors:SearchBarBehavior.SearchBorder="{Binding ElementName=SearchBorder}"
+                                ControlBehaviors:SearchBarBehavior.SearchBorderRadius="{Binding ElementName=SearchBorder, Path=CornerRadius}"
+                                ControlBehaviors:SearchBarBehavior.SearchBox="{Binding ElementName=SearchBox}"
+                                ControlBehaviors:SearchBarBehavior.SearchButton="{Binding ElementName=SearchBtn}"
+                                ControlBehaviors:SearchBarBehavior.SearchCloseButton="{Binding ElementName=SearchCloseBtn}"
+                                ControlBehaviors:SearchBarBehavior.SearchCloseButtonWidth="{Binding ElementName=SearchCloseBtn, Path=Width}"
+                                ControlBehaviors:SearchBarBehavior.SearchText="{Binding SearchText}"
+                                ControlBehaviors:SearchBarBehavior.SearchTextBlock="{Binding ElementName=SearchText}"
+                                Background="#33272727"
+                                CornerRadius="0 5 5 0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Text  -->
+                                    <TextBox
+                                        Name="SearchBox"
+                                        Grid.Column="0"
+                                        VerticalAlignment="Center"
+                                        Panel.ZIndex="1"
+                                        InputBehaviors:CursorBehavior.Enable="True"
+                                        InputBehaviors:CursorBehavior.HoverCursor="IBeam"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="DarkGray"
+                                        Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+
+                                    <!--  Placeholder  -->
+                                    <TextBlock
+                                        Name="SearchbarText"
+                                        Grid.Column="0"
+                                        Margin="2,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Panel.ZIndex="0"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="DarkGray"
+                                        Text="Search in playlist" />
+
+                                    <!--  Close  -->
+                                    <Button
+                                        Name="SearchCloseBtn"
+                                        Grid.Column="1"
+                                        Padding="7,0"
+                                        Panel.ZIndex="2"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Content="✕"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="DarkGray" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+
+                        <!--  Custom order Menu Filter  -->
+                        <Grid
+                            Grid.Column="2"
+                            Margin="7,0,17,0"
+                            HorizontalAlignment="Right">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Button
+                                Name="CustomOrderBtn"
+                                Grid.Column="1"
+                                Padding="0,5"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                ControlBehaviors:FilterButtonBehavior.Enable="True"
+                                ControlBehaviors:FilterButtonBehavior.FilterIcon="{Binding ElementName=CustomOrderFilterIcon}"
+                                ControlBehaviors:FilterButtonBehavior.FilterText="{Binding ElementName=CustomOrderFilterText}"
+                                ControlBehaviors:FilterButtonBehavior.FilterTextWidth="{Binding ElementName=CustomOrderFilterText, Path=Width}"
+                                ControlBehaviors:FilterButtonBehavior.IsSearching="{Binding IsSearching}"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0">
+
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock
+                                        Name="CustomOrderFilterText"
+                                        Width="Auto"
+                                        Padding="8,0,0,2"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="DarkGray"
+                                        Text="Custom order" />
+                                    <TextBlock
+                                        Name="CustomOrderFilterIcon"
+                                        Padding="8,0"
+                                        VerticalAlignment="Center"
+                                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                        FontSize="16"
+                                        Foreground="DarkGray"
+                                        Text="&#xf03a;" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
+                    </Grid>
+
+                    <!--  Playlist Header  -->
+                    <local:PlaylistHeader Margin="0,16,0,0" />
+
+                    <!--  Songs  -->
+                    <ItemsControl Margin="16,7,0,7" ItemsSource="{Binding SongItems}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <local:PlaylistItem />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!--  Recommended  -->
+                    <Grid Margin="16,20,0,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            FontSize="25"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="Recommended" />
+
+                        <TextBlock
+                            Grid.Row="1"
+                            Margin="0,5"
+                            FontSize="14"
+                            FontWeight="SemiBold"
+                            Foreground="DarkGray"
+                            Text="Based on what's in this playlist" />
+
+                        <ItemsControl
+                            Grid.Row="2"
+                            Margin="0,15"
+                            ItemsSource="{Binding RecommendedItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <local:PlaylistItem />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <Button
+                            Name="RefreshBtn"
+                            Grid.Row="3"
+                            Margin="5,0"
+                            Padding="25,10"
+                            HorizontalAlignment="Right"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Content="Refresh"
+                            FontSize="17"
+                            FontWeight="Bold"
+                            Foreground="DarkGray" />
+                    </Grid>
+
+                    <!--  More by {Artist}  -->
+                    <ItemsControl ItemsSource="{Binding Authors}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Components:CommonRow Grid.Row="1" DataContext="{Binding MoreByArtist}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

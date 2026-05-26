@@ -8,6 +8,7 @@
   <Folder Name="/src/" />
   <Folder Name="/src/Apps/">
     <Project Path="src/Apps/SpotifyClone.Api/SpotifyClone.Api.csproj" />
+    <Project Path="src/Apps/SpotifyClone.Desktop/SpotifyClone.Desktop.csproj" Id="47c825ef-2e14-4b7d-8caa-63242969daf9" />
   </Folder>
   <Folder Name="/src/Modules/" />
   <Folder Name="/src/Modules/Accounts/">

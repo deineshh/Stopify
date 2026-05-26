@@ -3,7 +3,7 @@ using SpotifyClone.Accounts.Domain.Aggregates.Users;
 using SpotifyClone.Accounts.Domain.Aggregates.Users.Enums;
 using SpotifyClone.Shared.Kernel.IDs;
 
-namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.Users;
+namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.User;
 
 public sealed class UserProfileTests
 {

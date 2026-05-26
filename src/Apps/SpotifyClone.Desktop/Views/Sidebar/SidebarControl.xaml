@@ -1,0 +1,318 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Sidebar.SidebarControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:ControlBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Controls"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:SidebarBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Sidebar"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Sidebar"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    SidebarBehaviors:SidebarSizeChangeBehavior.Enable="True"
+    mc:Ignorable="d">
+
+    <Grid Margin="8,8,0,8">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--  Header  -->
+        <Grid
+            Grid.Row="0"
+            Margin="9,4,8,4"
+            VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Your Library  -->
+            <Button
+                Name="YourLibraryBtn"
+                Grid.Column="0"
+                Padding="9,9,6,9"
+                InputBehaviors:CursorBehavior.Enable="True"
+                SidebarBehaviors:YourLibraryButtonBehavior.Enable="True"
+                SidebarBehaviors:YourLibraryButtonBehavior.SearchGridHeight="{Binding ElementName=SearchGrid, Path=Height, Mode=TwoWay}"
+                SidebarBehaviors:YourLibraryButtonBehavior.SidebarCollapseState="{Binding SidebarCollapseState}"
+                SidebarBehaviors:YourLibraryButtonBehavior.YourLibraryText="{Binding ElementName=YourLibraryText}"
+                Background="Transparent"
+                BorderThickness="0"
+                Foreground="#b3b3b3">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                        FontSize="22"
+                        Text="&#xf02d;" />
+                    <TextBlock
+                        Name="YourLibraryText"
+                        Margin="15,-1,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Text="Your Library"
+                        Visibility="Hidden" />
+                </StackPanel>
+            </Button>
+
+            <!--  Create Playlist or Folder  -->
+            <Border
+                Name="CreateBorder"
+                Grid.Column="2"
+                Width="30"
+                Height="30"
+                Margin="0,0,1,0"
+                AnimationBehaviors:BackgroundColorAnimationBehavior.Duration="0.1"
+                AnimationBehaviors:BackgroundColorAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:BackgroundColorAnimationBehavior.InColor="#1f1f1f"
+                AnimationBehaviors:BackgroundColorAnimationBehavior.OutColor="#121212"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.Placement="Mouse"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Create playlist or folder"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="#121212"
+                CornerRadius="30">
+                <Button
+                    Name="CreateBtn"
+                    Padding="0,-8,0,0"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.2"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="LightGray"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Content="+"
+                    FontSize="30"
+                    FontWeight="SemiBold"
+                    Foreground="DarkGray" />
+            </Border>
+        </Grid>
+
+        <!--  Playlists & Artists Filter Buttons  -->
+        <Grid
+            Name="FilterBtns"
+            Grid.Row="1"
+            Height="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Playlists  -->
+            <Border
+                Name="PlaylistFilterBorder"
+                Grid.Column="0"
+                Margin="8,12,4,8"
+                ControlBehaviors:ToggleFilterBehavior.Enable="True"
+                ControlBehaviors:ToggleFilterBehavior.GroupName="YourLibraryFilterGroup"
+                ControlBehaviors:ToggleFilterBehavior.IsSelected="{Binding IsPlaylistsFilter}"
+                ControlBehaviors:ToggleFilterBehavior.TurnOffOnClick="True"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="#2a2a2a"
+                CornerRadius="15">
+                <Button
+                    Name="PlaylistFilterBtn"
+                    Padding="12.5,5.5,12.5,7.5"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Content="Playlists"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="White" />
+            </Border>
+
+            <!--  Artists  -->
+            <Border
+                Name="ArtistFilterBorder"
+                Grid.Column="1"
+                Margin="4,12,8,8"
+                ControlBehaviors:ToggleFilterBehavior.Enable="True"
+                ControlBehaviors:ToggleFilterBehavior.GroupName="YourLibraryFilterGroup"
+                ControlBehaviors:ToggleFilterBehavior.IsSelected="{Binding IsArtistsFilter}"
+                ControlBehaviors:ToggleFilterBehavior.TurnOffOnClick="True"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="#2a2a2a"
+                CornerRadius="15">
+                <Button
+                    Name="ArtistFilterBtn"
+                    Padding="12.5,5.5,12.5,7.5"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Content="Artists"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="White" />
+            </Border>
+        </Grid>
+
+        <!--  Item List  -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Visible">
+            <StackPanel>
+                <Grid Name="SearchGrid" Height="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Search Button  -->
+                    <Button
+                        Name="SearchBtn"
+                        Grid.Column="0"
+                        Width="32"
+                        Height="32"
+                        Margin="8,2,0,2"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        ControlBehaviors:SearchButtonBehavior.Enable="True"
+                        ControlBehaviors:SearchButtonBehavior.IsSearching="{Binding IsSearching, Mode=TwoWay}"
+                        ControlBehaviors:SearchButtonBehavior.SearchBorder="{Binding ElementName=SearchBorder}"
+                        ControlBehaviors:SearchButtonBehavior.SearchText="{Binding ElementName=SearchText}"
+                        Background="Transparent"
+                        BorderThickness="0">
+
+                        <Border
+                            Name="SearchBorder"
+                            Background="#121212"
+                            CornerRadius="30">
+                            <TextBlock
+                                Name="SearchText"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                FontSize="15"
+                                Foreground="DarkGray"
+                                Text="&#xf002;" />
+                        </Border>
+                    </Button>
+
+                    <!--  Search Bar  -->
+                    <Border
+                        Name="SearchBar"
+                        Grid.Column="1"
+                        Width="0"
+                        Margin="-1,3,0,3"
+                        ControlBehaviors:SearchBarBehavior.Enable="True"
+                        ControlBehaviors:SearchBarBehavior.IsSearching="{Binding IsSearching, Mode=TwoWay}"
+                        ControlBehaviors:SearchBarBehavior.SearchBarPlaceholderVisibility="{Binding ElementName=SearchbarText, Path=Visibility, Mode=TwoWay}"
+                        ControlBehaviors:SearchBarBehavior.SearchBarWidth="{Binding ElementName=SearchBar, Path=Width, Mode=TwoWay}"
+                        ControlBehaviors:SearchBarBehavior.SearchBorder="{Binding ElementName=SearchBorder}"
+                        ControlBehaviors:SearchBarBehavior.SearchBorderRadius="{Binding ElementName=SearchBorder, Path=CornerRadius, Mode=TwoWay}"
+                        ControlBehaviors:SearchBarBehavior.SearchBox="{Binding ElementName=SearchBox}"
+                        ControlBehaviors:SearchBarBehavior.SearchButton="{Binding ElementName=SearchBtn}"
+                        ControlBehaviors:SearchBarBehavior.SearchCloseButton="{Binding ElementName=SearchCloseBtn}"
+                        ControlBehaviors:SearchBarBehavior.SearchCloseButtonWidth="{Binding ElementName=SearchCloseBtn, Path=Width, Mode=TwoWay}"
+                        ControlBehaviors:SearchBarBehavior.SearchText="{Binding SearchText, Mode=TwoWay}"
+                        ControlBehaviors:SearchBarBehavior.SearchTextBlock="{Binding ElementName=SearchText}"
+                        Background="#272727"
+                        CornerRadius="0 5 5 0">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  TextBox  -->
+                            <TextBox
+                                Name="SearchBox"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Panel.ZIndex="1"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                InputBehaviors:CursorBehavior.HoverCursor="IBeam"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="DarkGray"
+                                Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <!--  Placeholder  -->
+                            <TextBlock
+                                Name="SearchbarText"
+                                Grid.Column="0"
+                                Margin="2,0,0,0"
+                                VerticalAlignment="Center"
+                                Panel.ZIndex="0"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="DarkGray"
+                                Text="Search in Your Library" />
+
+                            <!--  Close  -->
+                            <Button
+                                Name="SearchCloseBtn"
+                                Grid.Column="1"
+                                Width="0"
+                                Padding="7,0"
+                                Panel.ZIndex="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="✕"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="DarkGray" />
+                        </Grid>
+                    </Border>
+
+                    <!--  Recents Menu Filter  -->
+                    <Button
+                        Name="RecentsBtn"
+                        Grid.Column="2"
+                        Padding="0,5"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        ControlBehaviors:FilterButtonBehavior.Enable="True"
+                        ControlBehaviors:FilterButtonBehavior.FilterIcon="{Binding ElementName=RecentsFilterIcon}"
+                        ControlBehaviors:FilterButtonBehavior.FilterText="{Binding ElementName=RecentsFilterText}"
+                        ControlBehaviors:FilterButtonBehavior.FilterTextWidth="{Binding ElementName=RecentsFilterText, Path=Width}"
+                        ControlBehaviors:FilterButtonBehavior.IsSearching="{Binding IsSearching}"
+                        InputBehaviors:CursorBehavior.Enable="True"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Name="RecentsFilterText"
+                                Width="Auto"
+                                Padding="16,0,0,2"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="DarkGray"
+                                Text="Recents" />
+                            <TextBlock
+                                Name="RecentsFilterIcon"
+                                Padding="8,0"
+                                VerticalAlignment="Center"
+                                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                FontSize="16"
+                                Foreground="DarkGray"
+                                Text="&#xf03a;" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <!--  Normal Margin="0 6 0 0"  -->
+                <ItemsControl Margin="-5,2,0,0" ItemsSource="{Binding Items}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:SidebarItem />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

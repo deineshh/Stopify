@@ -1,0 +1,115 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Home.HomeRecentPlaysItem"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:ControlBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Controls"
+    xmlns:HomeBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Home"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Home"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Button
+        Name="RecentBtn"
+        Margin="3,0,3,6"
+        HorizontalContentAlignment="Stretch"
+        HomeBehaviors:HomeRecentPlaysItemBehavior.Enable="True"
+        HomeBehaviors:HomeRecentPlaysItemBehavior.PlayButtonVisibility="{Binding ElementName=PlayBtn, Path=Visibility}"
+        InputBehaviors:CursorBehavior.Enable="True"
+        Background="Transparent"
+        BorderThickness="0">
+        <Border
+            Name="RecentBorder"
+            Height="48.1"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.Duration="0.05"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.EnableOnHover="True"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.InColor="#b3757575"
+            AnimationBehaviors:BackgroundColorAnimationBehavior.OutColor="#66757575"
+            Background="#66757575"
+            CornerRadius="4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Image  -->
+                <Border Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}" CornerRadius="4 0 0 4">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Assets/Images/song.jpg" />
+                    </Border.Background>
+                </Border>
+
+                <!--  Title  -->
+                <TextBlock
+                    Grid.Column="1"
+                    Height="38"
+                    Margin="9,7,9,9"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    FontSize="14"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="{Binding Title}"
+                    TextTrimming="WordEllipsis"
+                    TextWrapping="Wrap" />
+
+                <!--  Playing  -->
+                <TextBlock
+                    Name="PlayingIcon"
+                    Grid.Column="3"
+                    Margin="0,0,13,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="16"
+                    Foreground="#24a853"
+                    Text="&#xe473;"
+                    Visibility="Hidden" />
+
+                <!--  Play/Pause  -->
+                <Button
+                    Name="PlayBtn"
+                    Grid.Column="3"
+                    Height="35"
+                    Margin="0,0,8,1"
+                    AnimationBehaviors:ScaleAnimationBehavior.Duration="0.05"
+                    AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                    ControlBehaviors:PlayBehavior.Enable="True"
+                    ControlBehaviors:PlayBehavior.IsPlaying="{Binding IsPlaying}"
+                    ControlBehaviors:PlayBehavior.PlayIcon="{Binding ElementName=PlayIcon, Path=Text}"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Visibility="Hidden">
+                    <Button.Effect>
+                        <DropShadowEffect
+                            BlurRadius="8"
+                            Opacity="0.5"
+                            ShadowDepth="3"
+                            Color="Black" />
+                    </Button.Effect>
+
+                    <Border
+                        Name="PlayBorder"
+                        Width="33"
+                        Height="33"
+                        Background="#3adf74"
+                        CornerRadius="30">
+                        <TextBlock
+                            Name="PlayIcon"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                            FontSize="16"
+                            Foreground="Black"
+                            Text="&#xf04b;" />
+                    </Border>
+                </Button>
+            </Grid>
+        </Border>
+    </Button>
+</UserControl>

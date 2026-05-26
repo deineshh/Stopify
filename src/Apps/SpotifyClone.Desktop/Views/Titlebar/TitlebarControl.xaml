@@ -1,0 +1,446 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Titlebar.TitlebarControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:ControlBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Controls"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:OutputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Output"
+    xmlns:TitlebarBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Titlebar"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa1="http://schemas.fontawesome.io/icons/"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Titlebar"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    TitlebarBehaviors:DragMoveWindowBehavior.EnableDrag="True"
+    TitlebarBehaviors:TitlebarSizeBehavior.Enable="True"
+    TitlebarBehaviors:TitlebarSizeBehavior.FriendActivityBtnWidth="{Binding FriendActivityBtnWidth, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.NewsBtnWidth="{Binding NewsBtnWidth, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.SearchBarWidth="{Binding SearchBarWidth, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.SearchBtnBorderRadius="{Binding SearchBtnBorderRadius, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.SearchbarBrowseWidth="{Binding SearchbarBrowseWidth, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.SearchbarInput="{Binding SearchbarInput, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.SearchbarInputWidth="{Binding SearchbarInputWidth, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.SearchbarLineWidth="{Binding SearchbarLineWidth, Mode=TwoWay}"
+    TitlebarBehaviors:TitlebarSizeBehavior.SearchbarTextWidth="{Binding SearchbarTextWidth, Mode=TwoWay}"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid
+        Height="64"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Top"
+        Background="Transparent">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Options  -->
+        <Button
+            Name="OptionsBtn"
+            Grid.Column="0"
+            Margin="14,-3,0,0"
+            Padding="10"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.2"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnFocus="True"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="DarkGray"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="White"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding ToggleOptionsMenuCommand}"
+            Content="• • •"
+            FontSize="14"
+            FontWeight="Bold"
+            Foreground="White" />
+
+        <!--  Options Menu  -->
+        <Popup
+            IsOpen="{Binding IsOptionsMenuOpen, Mode=TwoWay}"
+            Placement="Bottom"
+            StaysOpen="False">
+
+            <Border
+                Padding="5"
+                Background="Black"
+                BorderBrush="WhiteSmoke"
+                BorderThickness="1"
+                CornerRadius="5">
+
+                <StackPanel>
+                    <ItemsControl ItemsSource="{Binding OptionsMenuItems}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button
+                                    Padding="5,2"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding Command}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Foreground="WhiteSmoke" Text="{Binding Header}" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            Foreground="WhiteSmoke"
+                                            Text=" &gt; " />
+                                    </StackPanel>
+                                </Button>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <!--  Go back  -->
+        <Button
+            Name="BackBtn"
+            Grid.Column="1"
+            Margin="3,8,5,8"
+            Padding="0,-15,0,0"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="Go back"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding NavigateBackCommand}"
+            FontSize="25">
+            <Label
+                x:Name="BackBtnLabel"
+                Margin="0,13,0,0"
+                HorizontalAlignment="Center"
+                TitlebarBehaviors:NavigationButtonBehavior.Enable="{Binding CanNavigateBack}"
+                Content="&#xf053;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="23"
+                Foreground="#323232" />
+        </Button>
+
+        <!--  Go forward  -->
+        <Button
+            Name="ForwardBtn"
+            Grid.Column="2"
+            Margin="3,8,0,8"
+            Padding="0,-15,0,0"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="Go forward"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding NavigateForwardCommand}"
+            FontSize="25">
+            <Label
+                x:Name="ForwardBtnLabel"
+                Margin="0,13,0,0"
+                HorizontalAlignment="Center"
+                TitlebarBehaviors:NavigationButtonBehavior.Enable="{Binding CanNavigateForward}"
+                Content="&#xf054;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="23"
+                Foreground="#323232" />
+        </Button>
+
+        <!--  Home Button  -->
+        <Border
+            Name="HomeBtnBorder"
+            Grid.Column="3"
+            Margin="12,8,8,8"
+            Background="#1f1f1f"
+            CornerRadius="30">
+            <Button
+                Name="HomeBtn"
+                Padding="13"
+                VerticalAlignment="Center"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.2"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.IsClicked="True"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.2"
+                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.05"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Home"
+                InputBehaviors:CursorBehavior.Enable="True"
+                TitlebarBehaviors:PageSwitchBehavior.Enable="True"
+                TitlebarBehaviors:PageSwitchBehavior.HomeBtn="{Binding ElementName=HomeBtn}"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding NavigateHomeCommand}"
+                Content="&#xf015;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="20"
+                Foreground="White" />
+        </Border>
+
+        <!--  Search Button  -->
+        <Button
+            Name="SearchBtn"
+            Grid.Column="4"
+            Width="50"
+            Height="50"
+            Margin="-2,7,0,7"
+            HorizontalContentAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.IsClicked="False"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="Search"
+            InputBehaviors:CursorBehavior.Enable="True"
+            TitlebarBehaviors:PageSwitchBehavior.Enable="True"
+            TitlebarBehaviors:PageSwitchBehavior.SearchBtn="{Binding ElementName=SearchBtn}"
+            TitlebarBehaviors:SearchButtonBehavior.Enable="True"
+            TitlebarBehaviors:SearchButtonBehavior.SearchBar="{Binding ElementName=SearchBar}"
+            TitlebarBehaviors:SearchButtonBehavior.SearchBarActualWidth="{Binding SearchBarActualWidth}"
+            TitlebarBehaviors:SearchButtonBehavior.SearchBtnBorder="{Binding ElementName=SearchBtnBorder}"
+            TitlebarBehaviors:SearchButtonBehavior.SearchBtnText="{Binding ElementName=SearchBtnText}"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding ToggleSearchbarCommand}">
+            <Border
+                Name="SearchBtnBorder"
+                Padding="0"
+                Background="#1f1f1f"
+                BorderBrush="White"
+                CornerRadius="{Binding SearchBtnBorderRadius}">
+
+                <TextBlock
+                    Name="SearchBtnText"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    TitlebarBehaviors:PageSwitchBehavior.SearchIcon="{Binding ElementName=SearchBtnText}"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="20"
+                    Foreground="DarkGray"
+                    Text="&#xf002;" />
+            </Border>
+        </Button>
+
+        <!--  Search Bar (Border)  -->
+        <Border
+            x:Name="SearchBar"
+            Grid.Column="5"
+            Width="{Binding SearchBarWidth}"
+            Margin="-3,8,-13,8"
+            HorizontalAlignment="Stretch"
+            Panel.ZIndex="0"
+            Background="#1f1f1f"
+            BorderBrush="White"
+            BorderThickness="0"
+            CornerRadius="0 23 23 0" />
+
+        <!--  Search Bar (Placeholder)  -->
+        <TextBlock
+            x:Name="SearchbarTxt"
+            Grid.Column="5"
+            Width="{Binding SearchbarTextWidth}"
+            Margin="-2,0,0,2"
+            VerticalAlignment="Center"
+            Panel.ZIndex="1"
+            Background="Transparent"
+            FontSize="16.3"
+            FontWeight="SemiBold"
+            Foreground="DarkGray"
+            Text="What do you want to play?" />
+
+        <!--  Search Bar Input  -->
+        <TextBox
+            x:Name="SearchbarBox"
+            Grid.Column="5"
+            Width="{Binding SearchbarInputWidth}"
+            Margin="-4,0,40,2"
+            VerticalAlignment="Stretch"
+            VerticalContentAlignment="Center"
+            Panel.ZIndex="2"
+            InputBehaviors:CursorBehavior.Enable="True"
+            InputBehaviors:CursorBehavior.HoverCursor="IBeam"
+            TitlebarBehaviors:SearchbarInputBehavior.Enable="True"
+            TitlebarBehaviors:SearchbarInputBehavior.SearchBar="{Binding ElementName=SearchBar}"
+            TitlebarBehaviors:SearchbarInputBehavior.SearchBtnBorder="{Binding ElementName=SearchBtnBorder}"
+            TitlebarBehaviors:SearchbarInputBehavior.SearchBtnText="{Binding ElementName=SearchBtnText}"
+            TitlebarBehaviors:SearchbarInputBehavior.SearchbarText="{Binding ElementName=SearchbarTxt}"
+            Background="Transparent"
+            BorderThickness="0"
+            FontSize="16.3"
+            FontWeight="SemiBold"
+            Foreground="White"
+            Text="{Binding SearchbarInput}" />
+
+        <!--  Search Bar (Line)  -->
+        <TextBlock
+            x:Name="SearchbarLine"
+            Grid.Column="5"
+            Width="{Binding SearchbarLineWidth}"
+            Margin="0,0,36,7"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            FontSize="25"
+            FontWeight="UltraLight"
+            Foreground="DarkGray"
+            Text="|" />
+
+        <!--  Search Bar (Browse Button)  -->
+        <Button
+            x:Name="SearchbarBrowse"
+            Grid.Column="5"
+            Width="{Binding SearchbarBrowseWidth}"
+            Margin="9,8,0,9"
+            Padding="7,0"
+            HorizontalAlignment="Right"
+            Panel.ZIndex="3"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="Browse"
+            InputBehaviors:CursorBehavior.Enable="True"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding BrowseCommand}"
+            Content="&#xe4cf;"
+            FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+            FontSize="24"
+            Foreground="White" />
+
+        <!--  What's New  -->
+        <Button
+            x:Name="WhatsNewBtn"
+            Grid.Column="6"
+            Width="{Binding NewsBtnWidth}"
+            Margin="15,16,4,16"
+            Padding="8"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+            AnimationBehaviors:ForegroundColorAnimationOnClickBehavior.Duration="0.1"
+            AnimationBehaviors:ForegroundColorAnimationOnClickBehavior.EnableOnClick="True"
+            AnimationBehaviors:ForegroundColorAnimationOnClickBehavior.TargetColor="White"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="What's New"
+            InputBehaviors:CursorBehavior.Enable="True"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding NavigateNewsCommand}"
+            Content="&#xf0f3;"
+            FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+            FontSize="16"
+            Foreground="DarkGray" />
+
+        <!--  Friend Activity  -->
+        <Button
+            x:Name="FriendActivityBtn"
+            Grid.Column="7"
+            Width="{Binding FriendActivityBtnWidth}"
+            Margin="0,16,9,16"
+            Padding="10"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+            AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+            AnimationBehaviors:ForegroundColorAnimationOnClickBehavior.Duration="0.1"
+            AnimationBehaviors:ForegroundColorAnimationOnClickBehavior.EnableOnClick="True"
+            AnimationBehaviors:ForegroundColorAnimationOnClickBehavior.TargetColor="White"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="What's New"
+            InputBehaviors:CursorBehavior.Enable="True"
+            Background="Transparent"
+            BorderThickness="0"
+            Command="{Binding ToggleFriendActivityCommand}"
+            Content="&#xf500;"
+            FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+            FontSize="13"
+            Foreground="DarkGray" />
+
+        <!--  Avatar  -->
+        <Border
+            Name="AvatarBorder"
+            Grid.Column="8"
+            Width="48"
+            Margin="8,8,20,8"
+            AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+            AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+            AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="{Binding Username}"
+            InputBehaviors:CursorBehavior.Enable="True"
+            Background="#19e68c"
+            BorderBrush="#1f1f1f"
+            BorderThickness="8"
+            CornerRadius="30">
+            <Button
+                Name="AvatarBtn"
+                Padding="0,0,0,1"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="{Binding AvatarPlaceholder}"
+                FontSize="14"
+                FontWeight="Bold"
+                Foreground="Black" />
+        </Border>
+
+        <!--  Minimize Button  -->
+        <Button
+            Name="MinimizeBtn"
+            Grid.Column="9"
+            Width="45"
+            Padding="-3,-3,0,0"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="Minimize"
+            TitlebarBehaviors:WindowStateBehavior.StateOnClick="Minimized"
+            Background="#3f3f3f"
+            BorderBrush="Transparent"
+            BorderThickness="1"
+            Content="⎯"
+            FontSize="15"
+            Foreground="White" />
+
+        <!--  Maximize Button  -->
+        <Button
+            Name="MaximizeBtn"
+            Grid.Column="10"
+            Width="45"
+            Padding="-1,-7,0,0"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="Maximize"
+            TitlebarBehaviors:WindowStateBehavior.StateOnClick="Maximized"
+            Background="#3f3f3f"
+            BorderBrush="Transparent"
+            BorderThickness="1"
+            Content="□"
+            FontSize="21"
+            Foreground="White" />
+
+        <!--  Close Button  -->
+        <Button
+            Name="CloseBtn"
+            Grid.Column="11"
+            Width="45"
+            Padding="-1,-2,0,0"
+            ControlBehaviors:HoverPopupBehavior.Enable="True"
+            ControlBehaviors:HoverPopupBehavior.Placement="Bottom"
+            ControlBehaviors:HoverPopupBehavior.PopupText="Close"
+            TitlebarBehaviors:CloseWindowBehavior.CloseOnClick="True"
+            Background="#c42b1c"
+            BorderBrush="Transparent"
+            BorderThickness="1"
+            Content="✕"
+            FontSize="14"
+            Foreground="LightGray" />
+    </Grid>
+</UserControl>

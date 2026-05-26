@@ -1,0 +1,639 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Player.PlayerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:ControlBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Controls"
+    xmlns:CustomCollections="clr-namespace:SpotifyClone.Desktop.Utilities.Collections"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:Models="clr-namespace:SpotifyClone.Desktop.Utilities.Models"
+    xmlns:PlayerBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Player"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Player"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+
+    <Grid Margin="8,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width=".2*"
+                MinWidth="230"
+                MaxWidth="300" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition x:Name="OptionsBtnsColumn" Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <!--  Song Info  -->
+        <Grid Grid.Column="0" Margin="7,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Image  -->
+            <Button
+                Name="ImgBtn"
+                Grid.Column="0"
+                Height="58"
+                Margin="0,1,0,0"
+                InputBehaviors:CursorBehavior.Enable="True"
+                PlayerBehaviors:ImageButtonBehavior.Enable="True"
+                PlayerBehaviors:ImageButtonBehavior.NowPlayingBorderVisibility="{Binding ElementName=NowPlayingBorder, Path=Visibility, Mode=OneWayToSource}"
+                PlayerBehaviors:ImageButtonBehavior.NowPlayingBtnContent="{Binding ElementName=NowPlayingBtn, Path=Content, Mode=TwoWay}"
+                PlayerBehaviors:ImageButtonBehavior.NowPlayingCollapseState="{Binding NowPlayingCollapseState}"
+                Background="Transparent"
+                BorderThickness="0">
+                <Border
+                    Width="56"
+                    Height="56"
+                    CornerRadius="4">
+                    <Border.Background>
+                        <ImageBrush ImageSource="/Assets/Images/song.jpg" />
+                    </Border.Background>
+                </Border>
+            </Button>
+
+            <!--  Now Playing Show/Collapse  -->
+            <Border
+                Name="NowPlayingBorder"
+                Grid.Column="0"
+                Width="24"
+                Height="24"
+                Margin="5,23"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Background="Black"
+                CornerRadius="30"
+                IsHitTestVisible="False"
+                Opacity=".7"
+                Visibility="Hidden">
+                <Button
+                    x:Name="NowPlayingBtn"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Content="&#xf107;"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="16"
+                    Foreground="DarkGray" />
+            </Border>
+
+            <!--  Title & Artists  -->
+            <Grid
+                Grid.Column="1"
+                MaxWidth="120"
+                Margin="14,0,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <!--  Title  -->
+                <Button
+                    Name="Title"
+                    Grid.Row="0"
+                    Margin="0,4,0,2"
+                    HorizontalAlignment="Left"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    InputBehaviors:TextDecorationBehavior.EnableOnHover="True"
+                    InputBehaviors:TextDecorationBehavior.TextDecorationOnMouseEnter="Underline"
+                    InputBehaviors:TextDecorationBehavior.TextDecorationOnMouseLeave="None"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding NavigatePlaylistCommand}"
+                    FontSize="14"
+                    FontWeight="SemiBold"
+                    Foreground="White">
+                    <TextBlock
+                        MaxHeight="20"
+                        Text="{Binding Title}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="Wrap" />
+                </Button>
+
+                <!--  Authors  -->
+                <ItemsControl
+                    Name="AuthorsControl"
+                    Grid.Row="1"
+                    Margin="0,-2.5,0,0"
+                    Padding="0,3"
+                    HorizontalAlignment="Left"
+                    AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}"
+                    FontSize="12"
+                    FontWeight="SemiBold"
+                    Foreground="DarkGray"
+                    ItemsSource="{Binding Authors}">
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock x:Name="AuthorsSeparator" Text=", " />
+
+                                <Button
+                                    InputBehaviors:CursorBehavior.Enable="True"
+                                    InputBehaviors:TextDecorationBehavior.EnableOnHover="True"
+                                    InputBehaviors:TextDecorationBehavior.TextDecorationOnMouseEnter="Underline"
+                                    InputBehaviors:TextDecorationBehavior.TextDecorationOnMouseLeave="None"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Command="{Binding NavigateArtistCommand}"
+                                    Content="{Binding AuthorName}"
+                                    Foreground="DarkGray" />
+                            </StackPanel>
+
+                            <DataTemplate.Triggers>
+                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                    <Setter TargetName="AuthorsSeparator" Property="Visibility" Value="Collapsed" />
+                                </Trigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+                </ItemsControl>
+            </Grid>
+
+            <!--  Add to Liked Songs  -->
+            <Button
+                Name="SaveBtn"
+                Grid.Column="2"
+                Width="32"
+                Height="30"
+                Margin="5,5,0,0"
+                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                ControlBehaviors:SaveBehavior.Enable="True"
+                ControlBehaviors:SaveBehavior.IsSaved="{Binding IsSaved, Mode=TwoWay}"
+                ControlBehaviors:SaveBehavior.SaveBorderBackground="{Binding ElementName=SaveBorder, Path=Background, Mode=TwoWay}"
+                ControlBehaviors:SaveBehavior.SaveBorderBrush="{Binding ElementName=SaveBorder, Path=BorderBrush, Mode=TwoWay}"
+                ControlBehaviors:SaveBehavior.SaveBorderThickness="{Binding ElementName=SaveBorder, Path=BorderThickness, Mode=TwoWay}"
+                ControlBehaviors:SaveBehavior.SaveForeground="{Binding ElementName=SaveText, Path=Foreground, Mode=TwoWay}"
+                ControlBehaviors:SaveBehavior.SaveText="{Binding ElementName=SaveText, Path=Text, Mode=TwoWay}"
+                ControlBehaviors:SaveBehavior.SaveTextMargin="{Binding ElementName=SaveText, Path=Margin, Mode=TwoWay}"
+                ControlBehaviors:SaveBehavior.SaveTo="Liked Songs"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="Transparent"
+                BorderThickness="0"
+                Command="{Binding SaveSongCommand}">
+                <Border
+                    Name="SaveBorder"
+                    Width="16.5"
+                    Height="16.5"
+                    BorderBrush="#969696"
+                    BorderThickness="1.8"
+                    CornerRadius="30">
+                    <TextBlock
+                        Name="SaveText"
+                        Margin="1.5,.7,0,0"
+                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                        FontSize="11"
+                        FontWeight="ExtraBold"
+                        Foreground="#969696"
+                        Text="+" />
+                </Border>
+            </Button>
+        </Grid>
+
+        <!--  Music Player  -->
+        <Grid
+            x:Name="MusicPlayer"
+            Grid.Column="1"
+            MaxWidth="700"
+            Margin="20,0,18,0"
+            HorizontalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <!--  Player Buttons  -->
+            <Grid
+                Grid.Row="0"
+                Width="235"
+                Margin="3,17,0,-10"
+                HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Shuffle  -->
+                <Button
+                    Name="ShuffleBtn"
+                    Grid.Column="0"
+                    Width="32"
+                    Height="32"
+                    Margin="11,0,0,0"
+                    AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                    AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                    ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding IsShuffling, Converter={StaticResource BooleanToByteConverter}, Mode=TwoWay}"
+                    ControlBehaviors:ToggleButtonStateBehavior.DefaultHoverPopupText="{Binding HoverPopupText}"
+                    ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                    ControlBehaviors:ToggleButtonStateBehavior.MouseEnterColor="White"
+                    ControlBehaviors:ToggleButtonStateBehavior.MouseLeaveColor="DarkGray"
+                    ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding ShuffleQueueCommand}"
+                    Content="&#xf074;"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="17"
+                    Foreground="DarkGray">
+                    <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                        <CustomCollections:ButtonStateCollection>
+                            <Models:ButtonStateModel ChangeColorOnHover="True" Color="DarkGray" />
+                            <Models:ButtonStateModel ChangeColorOnHover="False" Color="#1ED760" />
+                        </CustomCollections:ButtonStateCollection>
+                    </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                </Button>
+
+                <!--  Previous  -->
+                <Button
+                    Name="PreviousBtn"
+                    Grid.Column="1"
+                    Width="32"
+                    Height="32"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                    AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                    AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                    ControlBehaviors:HoverPopupBehavior.Enable="True"
+                    ControlBehaviors:HoverPopupBehavior.PopupText="Previous"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding PreviousSongCommand}"
+                    Content="&#xf048;"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="19"
+                    Foreground="DarkGray" />
+
+                <!--  Play/Pause  -->
+                <Border
+                    Name="PlayBorder"
+                    Grid.Column="2"
+                    Width="32"
+                    Height="32"
+                    AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                    AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.04"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    Background="White"
+                    CornerRadius="30">
+                    <Button
+                        Name="PlayBtn"
+                        ControlBehaviors:PlayBehavior.Enable="True"
+                        ControlBehaviors:PlayBehavior.IsPlaying="{Binding IsPlaying, Mode=TwoWay}"
+                        ControlBehaviors:PlayBehavior.PlayIcon="{Binding ElementName=PlayBtn, Path=Content}"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Command="{Binding PlayCommand}"
+                        Content="&#xf04b;"
+                        FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                        FontSize="17" />
+                </Border>
+
+                <!--  Next  -->
+                <Button
+                    Name="NextBtn"
+                    Grid.Column="3"
+                    Width="32"
+                    Height="32"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                    AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                    AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                    AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                    ControlBehaviors:HoverPopupBehavior.Enable="True"
+                    ControlBehaviors:HoverPopupBehavior.PopupText="Next"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding NextSongCommand}"
+                    Content="&#xf051;"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="19"
+                    Foreground="DarkGray" />
+
+                <!--  Repeat  -->
+                <Button
+                    Name="RepeatBtn"
+                    Grid.Column="4"
+                    Width="32"
+                    Height="32"
+                    Margin="0,0,11,0"
+                    AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                    AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                    AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.04"
+                    ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding RepeatState, Mode=TwoWay}"
+                    ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                    ControlBehaviors:ToggleButtonStateBehavior.MouseEnterColor="White"
+                    ControlBehaviors:ToggleButtonStateBehavior.MouseLeaveColor="DarkGray"
+                    ControlBehaviors:ToggleButtonStateBehavior.StateDependentElement="{Binding ElementName=RepeatText}"
+                    ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="3"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Command="{Binding RepeatSongCommand}"
+                    Content="&#xf363;"
+                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                    FontSize="17"
+                    Foreground="DarkGray">
+                    <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                        <CustomCollections:ButtonStateCollection>
+                            <Models:ButtonStateModel
+                                ChangeColorOnHover="True"
+                                DependentElementVisibility="Hidden"
+                                HoverPopupText="Enable repeat"
+                                Color="DarkGray" />
+                            <Models:ButtonStateModel
+                                ChangeColorOnHover="False"
+                                DependentElementVisibility="Hidden"
+                                HoverPopupText="Enable repeat one"
+                                Color="#1ED760" />
+                            <Models:ButtonStateModel
+                                ChangeColorOnHover="False"
+                                DependentElementVisibility="Visible"
+                                HoverPopupText="Disable repeat"
+                                Color="#1ED760" />
+                        </CustomCollections:ButtonStateCollection>
+                    </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                </Button>
+
+                <!--  Repeat one  -->
+                <TextBlock
+                    Name="RepeatText"
+                    Grid.Column="4"
+                    Margin="-10.5,-1.3,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="9"
+                    FontWeight="Bold"
+                    Foreground="#1ed760"
+                    IsHitTestVisible="False"
+                    Text="1"
+                    Visibility="Hidden" />
+            </Grid>
+
+            <!--  Seek Bar  -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Current Time  -->
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="0,13,2,0"
+                    FontSize="13"
+                    FontWeight="SemiBold"
+                    Foreground="DarkGray"
+                    Text="{Binding CurrentTime}" />
+
+                <!--  Media Bar  -->
+                <Slider
+                    Name="MediaBar"
+                    Grid.Column="1"
+                    MinWidth="220"
+                    Margin="0,-1,1,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    ControlBehaviors:SliderBehavior.Enable="True"
+                    PlayerBehaviors:MediaBarBehavior.CurrentTime="{Binding CurrentTime, Mode=TwoWay}"
+                    PlayerBehaviors:MediaBarBehavior.Enable="True"
+                    PlayerBehaviors:MediaBarBehavior.MediaPlayer="{Binding MediaPlayer}"
+                    PlayerBehaviors:MediaBarBehavior.Timer="{Binding Timer}"
+                    BorderThickness="0"
+                    IsSelectionRangeEnabled="True"
+                    Maximum="{Binding MaxMediaValue}"
+                    Minimum="0"
+                    Style="{DynamicResource SliderStyle1}"
+                    Value="{Binding CurrentMediaValue}" />
+
+                <!--  Total Time  -->
+                <TextBlock
+                    Grid.Column="2"
+                    Margin="0,13,0,0"
+                    FontSize="13"
+                    FontWeight="SemiBold"
+                    Foreground="DarkGray"
+                    Text="{Binding TotalTime}" />
+            </Grid>
+        </Grid>
+
+        <!--  Options  -->
+        <Grid
+            x:Name="OptionsBtns"
+            Grid.Column="2"
+            MaxWidth="290"
+            Margin="0,3,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Now Playing  -->
+            <Button
+                Name="NowPlayingOption"
+                Grid.Column="0"
+                Height="32"
+                Padding="6,3,6,0"
+                HorizontalAlignment="Right"
+                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Now playing view"
+                ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding NowPlayingCollapseState, Converter={StaticResource BooleanToByteConverter}}"
+                ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                ControlBehaviors:ToggleButtonStateBehavior.MouseEnterColor="White"
+                ControlBehaviors:ToggleButtonStateBehavior.MouseLeaveColor="DarkGray"
+                ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="&#xf144;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="17"
+                Foreground="#1ed760">
+                <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                    <CustomCollections:ButtonStateCollection>
+                        <Models:ButtonStateModel ChangeColorOnHover="False" Color="#1ed760" />
+                        <Models:ButtonStateModel ChangeColorOnHover="True" Color="DarkGray" />
+                    </CustomCollections:ButtonStateCollection>
+                </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+            </Button>
+
+            <!--  Lyrics  -->
+            <Button
+                Name="LyricsBtn"
+                Grid.Column="1"
+                Height="32"
+                Padding="7,3,7,0"
+                HorizontalAlignment="Right"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Lyrics"
+                InputBehaviors:CursorBehavior.Enable="True"
+                InputBehaviors:CursorBehavior.HoverCursor="No"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="&#xf130;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="17"
+                Foreground="#363636" />
+
+            <!--  Queue  -->
+            <Button
+                Name="QueueBtn"
+                Grid.Column="2"
+                Height="32"
+                Padding="8,3,8,0"
+                HorizontalAlignment="Right"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Queue"
+                ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding QueueCollapseState}"
+                ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                ControlBehaviors:ToggleButtonStateBehavior.MouseEnterColor="White"
+                ControlBehaviors:ToggleButtonStateBehavior.MouseLeaveColor="DarkGray"
+                ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="&#xf039;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="15"
+                Foreground="DarkGray">
+                <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                    <CustomCollections:ButtonStateCollection>
+                        <Models:ButtonStateModel ChangeColorOnHover="False" Color="#1ed760" />
+                        <Models:ButtonStateModel ChangeColorOnHover="True" Color="DarkGray" />
+                    </CustomCollections:ButtonStateCollection>
+                </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+            </Button>
+
+            <!--  Connect to Device  -->
+            <Button
+                Name="ConnectBtn"
+                Grid.Column="3"
+                Height="32"
+                Padding="8,3,8,0"
+                HorizontalAlignment="Right"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Connect to device"
+                InputBehaviors:CursorBehavior.Enable="True"
+                InputBehaviors:CursorBehavior.HoverCursor="No"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="&#xe4e5;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="15"
+                Foreground="#363636" />
+
+            <!--  Volume Button  -->
+            <Button
+                Name="VolumeBtn"
+                Grid.Column="4"
+                Height="32"
+                Margin="0,0,1,0"
+                Padding="5,2,2,0"
+                HorizontalAlignment="Right"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding IsMuted, Converter={StaticResource BooleanToByteConverter}, Mode=TwoWay}"
+                ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                InputBehaviors:CursorBehavior.Enable="True"
+                PlayerBehaviors:VolumeButtonBehavior.IsMuted="{Binding IsMuted, Mode=TwoWay}"
+                PlayerBehaviors:VolumeButtonBehavior.VolumeBarCover="{Binding ElementName=VolumeBarCover}"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="&#xf028;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="14"
+                Foreground="DarkGray">
+                <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                    <CustomCollections:ButtonStateCollection>
+                        <Models:ButtonStateModel HoverPopupText="Mute" />
+                        <Models:ButtonStateModel HoverPopupText="Unmute" />
+                    </CustomCollections:ButtonStateCollection>
+                </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+            </Button>
+
+            <!--  Volume Bar  -->
+            <Slider
+                Name="VolumeBar"
+                Grid.Column="5"
+                MinWidth="52"
+                MaxWidth="150"
+                Margin="3,1,1.5,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Panel.ZIndex="1"
+                ControlBehaviors:SliderBehavior.Enable="True"
+                PlayerBehaviors:VolumeBarBehavior.Enable="True"
+                PlayerBehaviors:VolumeBarBehavior.VolumeValue="{Binding VolumeValue, Mode=TwoWay}"
+                BorderThickness="0"
+                IsSelectionRangeEnabled="True"
+                Maximum="1"
+                Minimum="0"
+                Style="{DynamicResource SliderStyle1}"
+                Value="{Binding VolumeValue}" />
+
+            <!--  Volume Bar Cover  -->
+            <Label
+                Name="VolumeBarCover"
+                Grid.Column="5"
+                Height="50"
+                HorizontalAlignment="Stretch"
+                Panel.ZIndex="0"
+                Background="Black"
+                Opacity="0" />
+
+            <!--  Full Screen  -->
+            <Button
+                Name="FullScreenBtn"
+                Grid.Column="6"
+                Height="32"
+                Padding="10,3,10,0"
+                HorizontalAlignment="Right"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Full screen"
+                InputBehaviors:CursorBehavior.Enable="True"
+                InputBehaviors:CursorBehavior.HoverCursor="No"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="&#xf424;"
+                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                FontSize="13.5"
+                Foreground="#363636" />
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using SpotifyClone.Billing.Application.Abstractions;
 using SpotifyClone.Billing.Application.Abstractions.Services;
+using SpotifyClone.Billing.Application.Models;
 using SpotifyClone.Billing.Domain.Aggregates.Subscriptions;
-using SpotifyClone.Billing.Infrastructure.Models;
 
 namespace SpotifyClone.Billing.Application.Jobs;
 

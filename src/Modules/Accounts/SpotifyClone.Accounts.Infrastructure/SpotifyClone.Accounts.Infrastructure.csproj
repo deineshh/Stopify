@@ -71,6 +71,7 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" />
 		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" />
+		<PackageReference Include="System.Security.Cryptography.Xml" />
 		<PackageReference Include="Twilio" />
 	</ItemGroup>
 	<ItemGroup>

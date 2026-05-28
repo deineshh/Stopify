@@ -30,16 +30,10 @@ public class MinioFileStorage : IFileStorage
     }
 
     public string GetImageRootPath()
-    {
-        string baseUrl = _options.StorageUrl.TrimEnd('/');
-        return $"{baseUrl}/{_options.ImageBucketName}";
-    }
+        => $"/{_options.ImageBucketName}";
 
     public string GetAudioRootPath()
-    {
-        string baseUrl = _options.StorageUrl.TrimEnd('/');
-        return $"{baseUrl}/{_options.AudioBucketName}";
-    }
+        => $"/{_options.AudioBucketName}";
 
     public string GetLocalConversionRootPath()
     {

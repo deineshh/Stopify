@@ -10,18 +10,18 @@ services:
       - ./src/Apps/SpotifyClone.Web:/app
       - /app/node_modules
 
-  # pinggy:
-  #   image: alpine:latest
-  #   container_name: spotifyclone-pinggy
-  #   depends_on:
-  #     web:
-  #       condition: service_started
-  #   command: >
-  #     sh -c "
-  #     apk add --no-cache openssh-client &&
-  #     ssh -o StrictHostKeyChecking=no -p 80 -R 0:web:4200 a.pinggy.io
-  #     "
-  #   restart: always
+  pinggy:
+    image: alpine:latest
+    container_name: spotifyclone-pinggy
+    depends_on:
+      web:
+        condition: service_started
+    command: >
+      sh -c "
+      apk add --no-cache openssh-client &&
+      ssh -o StrictHostKeyChecking=no -p 80 -R 0:web:4200 a.pinggy.io
+      "
+    restart: always
   
   api:
     image: spotifyclone.api
@@ -41,9 +41,14 @@ services:
       DOTNET_RUNNING_IN_CONTAINER: true
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
-      Application__ApiUrl: http://api:8080
       Jwt__SecretKey: some-fairly-super-super-long-secret-key-for-validating-JWTs
+      Jwt__Issuer: spotifyclone
+      Jwt__Audience: spotifyclone
+      Application__ApiUrl: http://api:8080
+      Application__FrontendUrl: http://web:4200
       Minio__Endpoint: minio
+      Minio__Port: 9000
+      Minio__StorageUrl: http://minio:9000
       Minio__LocalScratchPath: /app/wwwroot/temp/conversion
       Minio__AccessKey: admin
       Minio__SecretKey: password123

@@ -1,0 +1,9 @@
+<div class="layout-resizer"></div>
+<aside id="right-sidebar__main-group" class="sidebar-main">
+  @if (showNowPlaying) {
+    <app-now-playing-view />
+  }
+  @if (showQueue) {
+    <app-queue-view />
+  }
+</aside>

@@ -1,0 +1,28 @@
+<div class="track-item__cover-group">
+  <img
+    class="track-item__cover"
+    [class.circle]="track.coverShape === 'circle'"
+    [class.rounded]="track.coverShape === 'rounded' || !track.coverShape"
+    [src]="track.coverUrl"
+    [alt]="track.title"
+    draggable="false"
+  />
+  <button
+    app-play-btn
+    class="track-item__play-btn"
+    [showOnHover]="true"
+    [title]="'Play ' + track.title"
+  ></button>
+</div>
+<div class="track-item__info-group">
+  <a class="track-item__title-anchor" href>{{ track.title }}</a>
+  <p class="track-item__description">
+    @for (author of track.authors; track author; let last = $last) {
+      <a
+        class="track-item__author"
+        [class.last-author]="last"
+        href
+      >{{ author.name }}</a>
+    }
+  </p>
+</div>

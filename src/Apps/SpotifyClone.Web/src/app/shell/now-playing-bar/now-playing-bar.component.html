@@ -1,0 +1,76 @@
+<div id="now-playing-bar__track-info--section">
+  <div id="now-playing-bar__track-info--group">
+    <a id="now-playing-bar__track-info--title-anchor" href>{{ playbackService.currentTrack()?.title ?? 'No track playing' }}</a>
+    <p id="now-playing-bar__track-info--artists">
+      @for (artist of playbackService.currentTrack()?.artists ?? []; track artist.id; let last = $last) {
+        <a class="now-playing-bar__track-info--artist-anchor" href>{{ artist.name }}</a>
+        @if (!last) { <span>, </span> }
+      }
+    </p>
+  </div>
+  <button id="now-playing-bar__save-btn" title="Save to Liked Songs">
+    <fa-icon [icon]="faHeart" />
+  </button>
+</div>
+
+<div id="now-playing-bar__player--section">
+  <div id="now-playing-bar__player--btns">
+    <button class="now-playing-bar__btn-base" title="Shuffle" (click)="toggleShuffle()" [disabled]="!playbackService.currentTrack()" [class.active]="playbackService.isShuffled()">
+      <fa-icon [icon]="faShuffle" />
+    </button>
+    <button class="now-playing-bar__btn-base now-playing-bar__skip-btn" title="Previous" (click)="previousTrack()" [disabled]="!playbackService.currentTrack()">
+      <fa-icon [icon]="faBackward" />
+    </button>
+    <button id="now-playing-bar__player--play-btn"
+      [title]="playbackService.isPlaying() ? 'Pause' : 'Play'"
+      [disabled]="!playbackService.currentTrack()"
+      (click)="togglePlayback()">
+      <span id="now-playing-bar__player--play-icon">
+        @if (playbackService.isPlaying()) {
+          <fa-icon [icon]="faPause" />
+        } @else {
+          <fa-icon [icon]="faPlay" />
+        }
+      </span>
+    </button>
+    <button class="now-playing-bar__btn-base now-playing-bar__skip-btn" title="Next" (click)="nextTrack()" [disabled]="!playbackService.currentTrack()">
+      <fa-icon [icon]="faForward" />
+    </button>
+    <button class="now-playing-bar__btn-base now-playing-bar__repeat-btn" title="Repeat" (click)="toggleRepeat()" [disabled]="!playbackService.currentTrack()" [class.active]="playbackService.repeatMode() !== 'Off'">
+      <fa-icon [icon]="faRepeat" />
+      @if (playbackService.repeatMode() === 'Track') {
+        <span class="now-playing-bar__repeat-one">1</span>
+      }
+    </button>
+  </div>
+  <div id="now-playing-bar__player--slider-group">
+    <span id="now-playing-bar__player--current-time">{{ playbackService.formatTime(displayPosition) }}</span>
+    <div id="now-playing-bar__player--slider">
+      <input app-slider
+        class="now-playing-bar__slider--input"
+        [value]="displayPosition"
+        [max]="playbackService.currentDuration()"
+        (valueChange)="onDrag($event)"
+        (changeEnd)="onSeek($event)"
+        type="range" />
+    </div>
+    <span id="now-playing-bar__player--total-time">{{ playbackService.formatTime(playbackService.currentDuration()) }}</span>
+  </div>
+</div>
+
+<div id="now-playing-bar__btns-section">
+  <button id="now-playing-bar__now-playing-view-btn" title="Now Playing View">
+    <fa-icon [icon]="faMicrochip" />
+  </button>
+  <button class="now-playing-bar__btn-base" title="Queue">
+    <fa-icon [icon]="faUpRightAndDownLeftFromCenter" />
+  </button>
+  <div id="now-playing-bar__volume-group">
+    <button class="now-playing-bar__btn-base" title="Volume">
+      <fa-icon [icon]="faVolumeHigh" />
+    </button>
+    <div id="now-playing-bar__volume-slider">
+      <input app-slider class="now-playing-bar__slider--input" [value]="volumeValue" [max]="100" type="range" />
+    </div>
+  </div>
+</div>

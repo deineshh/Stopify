@@ -1,0 +1,64 @@
+<div id="home-page__header" #homeHeader>
+  <nav id="home-page__header-nav">
+    @for (filter of navFilters; track filter) {
+      <button class="filter-btn">{{ filter }}</button>
+    }
+  </nav>
+</div>
+<main id="home-page__main">
+  <div id="home-page__recently-played-section">
+    @for (item of recentlyPlayed; track item.id) {
+      <div class="home-page__recently-played-item">
+        <div class="home-page__recently-played-item--left-side">
+          <img class="home-page__recently-played-item--cover" [src]="item.coverUrl" [alt]="item.title" draggable="false" />
+        </div>
+        <div class="home-page__recently-played-item--right-side">
+          <a class="home-page__recently-played-item--title-anchor" href>{{ item.title }}</a>
+          <button app-play-btn class="home-page__recently-played-item--play-btn" title="Play"></button>
+        </div>
+      </div>
+    }
+  </div>
+
+  <app-track-group topText="Made For" title="Aqua Studios">
+    @for (track of madeForTracks; track track.id) {
+      <app-track-item [track]="track" />
+    }
+  </app-track-group>
+
+  <app-track-group topText="Recommended For You" title="Aqua Studios">
+    @for (track of recommendedTracks; track track.id) {
+      <app-track-item [track]="track" />
+    }
+  </app-track-group>
+
+  <app-track-group title="Discover picks for you">
+    @for (track of discoverTracks; track track.id) {
+      <app-track-item [track]="track" />
+    }
+  </app-track-group>
+
+  <app-track-group title="Jump back in">
+    @for (track of jumpBackTracks; track track.id) {
+      <app-track-item [track]="track" />
+    }
+  </app-track-group>
+
+  <app-track-group topText="Brand new music from artists you love." title="New releases for you">
+    @for (track of newReleasesTracks; track track.id) {
+      <app-track-item [track]="track" />
+    }
+  </app-track-group>
+
+  <app-track-group title="Trending albums for you">
+    @for (track of trendingTracks; track track.id) {
+      <app-track-item [track]="track" />
+    }
+  </app-track-group>
+
+  <app-track-group title="Albums featuring songs you like">
+    @for (track of fromLikesTracks; track track.id) {
+      <app-track-item [track]="track" />
+    }
+  </app-track-group>
+</main>

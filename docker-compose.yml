@@ -1,6 +1,31 @@
 services:
-  spotifyclone.api:
+  web:
+    container_name: spotifyclone-web
+    build: 
+      context: ./src/Apps/SpotifyClone.Web
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./src/Apps/SpotifyClone.Web:/app
+      - /app/node_modules
+
+  # pinggy:
+  #   image: alpine:latest
+  #   container_name: spotifyclone-pinggy
+  #   depends_on:
+  #     web:
+  #       condition: service_started
+  #   command: >
+  #     sh -c "
+  #     apk add --no-cache openssh-client &&
+  #     ssh -o StrictHostKeyChecking=no -p 80 -R 0:web:4200 a.pinggy.io
+  #     "
+  #   restart: always
+  
+  api:
     image: spotifyclone.api
+    container_name: spotifyclone-api
     user: root
     build:
       context: .
@@ -16,7 +41,7 @@ services:
       DOTNET_RUNNING_IN_CONTAINER: true
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:8080
-      Application__ApiUrl: http://spotifyclone.api:8080
+      Application__ApiUrl: http://api:8080
       Jwt__SecretKey: some-fairly-super-super-long-secret-key-for-validating-JWTs
       Minio__Endpoint: minio
       Minio__LocalScratchPath: /app/wwwroot/temp/conversion
@@ -75,7 +100,7 @@ services:
   
   meilisearch:
     image: getmeili/meilisearch:latest
-    container_name: meilisearch
+    container_name: spotifyclone-meilisearch
     ports:
       - "7700:7700"
     environment:

@@ -1,0 +1,27 @@
+:host {
+  margin-right: 8px;
+  min-width: 288px;
+  width: 288px;
+  flex-shrink: 0;
+}
+
+#right-sidebar__main-group {
+  position: relative;
+  background-color: var(--secondary-bg-color);
+  border-radius: 8px;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.layout-resizer {
+  cursor: col-resize;
+  flex-shrink: 0;
+  height: 100%;
+  width: 8px;
+}
+
+@media (max-width: 768px) {
+  :host {
+    display: none;
+  }
+}

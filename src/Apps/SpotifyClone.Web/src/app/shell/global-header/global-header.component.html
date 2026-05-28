@@ -1,0 +1,63 @@
+<section id="global-header__left-section">
+  <a id="global-header__stopify-logo--anchor" routerLink="/" draggable="false" title="Stopify">
+    <img id="global-header__stopify-logo--img" src="assets/images/icons/favicon.svg" alt="Stopify" draggable="false">
+  </a>
+</section>
+<section id="global-header__middle-section">
+  <button id="global-header__home-btn" class="global-header__btn-base" routerLink="/" title="Home">
+    <span id="global-header__home-btn--span">
+      <fa-icon [icon]="faHouse" />
+    </span>
+  </button>
+  <form id="global-header__search-form" role="search">
+    <label id="global-header__search-bar--group" for="global-header__search-bar--input" tabindex="0">
+      <button id="global-header__search-btn" class="global-header__btn-base" title="Search">
+        <span id="global-header__search-btn--span">
+          <fa-icon [icon]="faMagnifyingGlass" />
+        </span>
+      </button>
+      <input id="global-header__search-bar--input" type="text" autocomplete="off" placeholder=" ">
+      <div id="global-header__search-bar--placeholder-group">
+        <span id="global-header__search-bar--placeholder-text">
+          What do you want to play?
+        </span>
+      </div>
+      <button id="global-header__search-btns--clear-btn" class="global-header__btn-base global-header__search-bar--btn" type="reset" title="Clear search field">
+        <span id="global-header__search-btns--clear-span">
+          <fa-icon [icon]="faXmark" />
+        </span>
+      </button>
+      <div id="global-header__search-btns--browse-group">
+        <button id="global-header__search-btns--browse-btn" class="global-header__btn-base global-header__search-bar--btn" title="Browse">
+          <span id="global-header__search-btns--browse-span">
+            <fa-icon [icon]="faBucket" />
+          </span>
+        </button>
+      </div>
+    </label>
+    <div id="global-header__search-dropdown" role="listbox">
+      <p id="global-header__recent-searches--text">Recent searches</p>
+      <ul id="global-header__recent-searches--list" role="grid"></ul>
+      <button id="global-header__recent-searches--clear-btn">Clear recent searches</button>
+    </div>
+  </form>
+</section>
+<section id="global-header__right-section">
+  <a id="global-header__install-app--anchor" class="global-header__btn-base" draggable="false">
+    <span id="global-header__install-app--span">
+      <fa-icon [icon]="faArrowDown" />
+    </span>
+    <span id="global-header__install-app--text">Install App</span>
+  </a>
+  <div id="global-header__right-group--btns">
+    <button id="global-header__content-feed-btn" class="global-header__right-group--btn" title="What's New">
+      <fa-icon [icon]="faBell" />
+    </button>
+    <button id="global-header__friend-activity-btn" class="global-header__right-group--btn" title="Friend Activity">
+      <fa-icon [icon]="faUserGroup" />
+    </button>
+  </div>
+  <button id="global-header__user-widget--btn" title="Aqua Studios">
+    <span id="global-header__user-widget--span">A</span>
+  </button>
+</section>

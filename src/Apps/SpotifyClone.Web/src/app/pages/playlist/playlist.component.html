@@ -1,0 +1,36 @@
+<div id="playlist-page__header" #playlistHeader>
+  <button app-play-btn [showOnHover]="false" title="Play playlist"></button>
+  <h1 id="playlist-page__header--title">{{ playlist?.name ?? 'Playlist' }}</h1>
+</div>
+
+<section id="playlist-page__info-section">
+  <div id="playlist-page__info-section--left-group" class="circle">
+    <div id="playlist-page__info-section--cover-group" class="custom-cover">
+      <img class="playlist-page__info-section--cover" src="assets/images/song.jpg" alt="Playlist cover" draggable="false" />
+    </div>
+    <button id="playlist-page__info-section--choose-photo-btn">
+      <span id="playlist-page__info-section--choose-photo-icon">
+        <fa-icon [icon]="faMusic" />
+      </span>
+      <span id="playlist-page__info-section--choose-photo-text">Choose photo</span>
+    </button>
+  </div>
+  <div id="playlist-page__info-section--right-group">
+    <h1 id="playlist-page__info-section--title">{{ playlist?.name ?? 'Playlist' }}</h1>
+    <p id="playlist-page__info-section--description">{{ playlist?.description ?? 'No description' }}</p>
+    <div id="playlist-page__info-section--bottom-info-group">
+      <span>{{ tracks.length }} songs</span>
+    </div>
+  </div>
+</section>
+
+<main id="playlist-page__main-section">
+  <div id="playlist-page__main-section--btns-group">
+    <button app-play-btn class="play-btn" id="playlist-page__main-section--play-btn" title="Play" (click)="playPlaylist()" [playing]="playbackService.isPlaying()"></button>
+    <button id="playlist-page__main-section--shuffle-btn" class="playlist-page__main-section--btn" title="Shuffle playlist" (click)="playbackService.toggleShuffle()" [class.shuffling]="playbackService.isShuffled()" [disabled]="!playbackService.currentTrack()">
+      <fa-icon [icon]="faShuffle" />
+    </button>
+  </div>
+
+  <app-track-table [tracks]="tracks" [playingTrackId]="playbackService.currentTrack()?.id ?? null" (trackClick)="playTrack($event)" />
+</main>

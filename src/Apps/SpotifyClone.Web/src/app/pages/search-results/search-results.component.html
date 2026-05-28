@@ -1,0 +1,184 @@
+<div id="search-results">
+  <nav id="search-results__header-nav">
+    @for (filter of filters; track filter) {
+      <button
+        class="filter-btn"
+        [class.active]="filter === activeFilter"
+        (click)="setFilter(filter)"
+      >
+        <span class="filter-btn-span">{{ filter }}</span>
+      </button>
+    }
+  </nav>
+  <div id="search-results__main-group">
+    <div id="search-results__top-result-and-songs">
+      <div id="search-results__top-result-group">
+        <h2 id="search-results__top-result-title">Top result</h2>
+        <div id="search-results__top-result-item" class="play-btn-parent">
+          <img src="assets/images/song.jpg" alt="" id="search-results__top-result-item--cover" />
+          <div id="search-results__top-result-item--info">
+            <a href id="search-results__top-result-item--title" title="Artist Name">
+              <span id="search-results__top-result-item--title-span">Artist Name</span>
+            </a>
+            <span id="search-results__top-result-item--type">Artist</span>
+          </div>
+          <button app-play-btn class="hover-transition" id="search-results__top-result-item--play-btn" title="Play"></button>
+        </div>
+      </div>
+      <div id="search-results__songs-group">
+        <a id="search-results__songs-title">Songs</a>
+        <div id="search-results__songs-items" role="presentation">
+          @for (song of songs; track song.id) {
+            <div class="search-results__songs-item" role="presentation">
+              <div class="search-results__songs-item--left-group">
+                <div class="search-results__songs-item--cover-group" [title]="'Play ' + song.title">
+                  <img src="assets/images/song.jpg" alt="" class="search-results__songs-item--cover" />
+                  <button class="search-results__songs-item--play-btn">
+                    <span class="search-results__songs-item--play-icon">
+                      <fa-icon [icon]="faPlay" />
+                    </span>
+                  </button>
+                </div>
+                <div class="search-results__songs-item--info-group">
+                  <a href class="search-results__songs-item--title-anchor" [title]="song.title">
+                    <span class="search-results__songs-item--title-span">{{ song.title }}</span>
+                  </a>
+                  <div class="search-results__songs-item--authors">
+                    @for (author of song.authors; track author; let last = $last) {
+                      <a href class="search-results__songs-item--author">{{ author.name }}</a>
+                      @if (!last) {<span class="search-results__songs-item--author-separator">,</span>}
+                    }
+                  </div>
+                </div>
+              </div>
+              <div class="search-results__songs-item--right-group">
+                <button class="search-results__songs-item--save-btn" title="Add to Liked Songs">
+                  <span class="search-results__songs-item--save-icon">
+                    <fa-icon [icon]="faPlus" />
+                  </span>
+                </button>
+                <span class="search-results__songs-item--duration">{{ song.duration }}</span>
+                <button class="search-results__songs-item--more-btn" title="More options">
+                  <span class="search-results__songs-item--more-icon">
+                    <fa-icon [icon]="faEllipsisH" />
+                  </span>
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+
+    <div id="search-results__artists-group" class="search-results__section">
+      <a id="search-results__artists-title" class="search-results__title">Artists</a>
+      <div id="search-results__artists-items" class="track-items">
+        @for (artist of artists; track artist.id) {
+          <div class="search-results__artists-item track-item play-btn-parent">
+            <div class="search-results__artists-item--cover-group track-item__cover-group">
+              <img src="assets/images/song.jpg" alt="" class="search-results__artists-item--cover track-item__cover circle" />
+              <button app-play-btn class="search-results__artists-item--play-btn track-item__play-btn hover-transition"></button>
+            </div>
+            <div class="search-results__artists-item--info-group track-item__info-group">
+              <a href class="search-results__artists-item--title-anchor track-item__title-anchor" [title]="artist.name">
+                <p class="search-results__artists-item--title-text track-item__title-text">{{ artist.name }}</p>
+              </a>
+              <div class="search-results__artists-item--description track-item__description">
+                <span class="search-results__artists-item--type">Artist</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div id="search-results__albums-group" class="search-results__section">
+      <h2 id="search-results__albums-title" class="search-results__title">Albums</h2>
+      <div id="search-results__albums-items" class="track-items">
+        @for (album of albums; track album.id) {
+          <div class="search-results__albums-item track-item play-btn-parent">
+            <div class="search-results__albums-item--cover-group track-item__cover-group">
+              <img src="assets/images/song.jpg" alt="" class="search-results__albums-item--cover track-item__cover rounded" />
+              <button app-play-btn class="search-results__albums-item--play-btn track-item__play-btn hover-transition"></button>
+            </div>
+            <div class="search-results__albums-item--info-group track-item__info-group">
+              <a href class="search-results__albums-item--title-anchor track-item__title-anchor" [title]="album.title">
+                <p class="search-results__albums-item--title-text track-item__title-text">{{ album.title }}</p>
+              </a>
+              <div class="search-results__albums-item--description track-item__description">
+                <span class="search-results__albums-item--year track-item__description-section">{{ album.year }}</span>
+                <div class="search-results__albums-item--authors">
+                  @for (author of album.authors; track author; let last = $last) {
+                    <a href class="search-results__albums-item--author track-item__author" [class.last-author]="last">{{ author.name }}</a>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div id="search-results__playlists-group" class="search-results__section">
+      <h2 id="search-results__playlists-title" class="search-results__title">Playlists</h2>
+      <div id="search-results__playlists-items" class="track-items">
+        @for (pl of playlists; track pl.id) {
+          <div class="search-results__playlists-item track-item play-btn-parent">
+            <div class="search-results__playlists-item--cover-group track-item__cover-group">
+              <img src="assets/images/song.jpg" alt="" class="search-results__playlists-item--cover track-item__cover rounded" />
+              <button app-play-btn class="search-results__playlists-item--play-btn track-item__play-btn hover-transition"></button>
+            </div>
+            <div class="search-results__playlists-item--info-group track-item__info-group">
+              <a href class="search-results__playlists-item--title-anchor track-item__title-anchor">
+                <p class="search-results__playlists-item--title-text track-item__title-text">{{ pl.title }}</p>
+              </a>
+              <div class="search-results__playlists-item--description track-item__description">
+                <span class="search-results__playlists-item--by-text">By</span>
+                <span class="search-results__playlists-item--author">{{ pl.author }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div id="search-results__profiles-group" class="search-results__section">
+      <h2 id="search-results__profiles-title" class="search-results__title">Profiles</h2>
+      <div id="search-results__profiles-items" class="track-items">
+        @for (profile of profiles; track profile.id) {
+          <div class="search-results__profiles-item track-item play-btn-parent">
+            <div class="search-results__profiles-item--cover-group track-item__cover-group">
+              <img src="assets/images/song.jpg" alt="" class="search-results__profiles-item--cover track-item__cover circle" />
+            </div>
+            <div class="search-results__profiles-item--info-group track-item__info-group">
+              <a href class="search-results__profiles-item--title-anchor track-item__title-anchor">
+                <p class="search-results__profiles-item--title-text track-item__title-text">{{ profile.name }}</p>
+              </a>
+              <div class="search-results__profiles-item--description track-item__description">
+                <span class="search-results__profiles-item--type">Profile</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <div id="search-results__genres-group" class="search-results__section">
+      <h2 id="search-results__genres-title" class="search-results__title">Genres & Moods</h2>
+      <div id="search-results__genres-items" class="track-items">
+        @for (genre of genres; track genre.id) {
+          <div class="search-results__genres-item track-item play-btn-parent">
+            <div class="search-results__genres-item--cover-group track-item__cover-group">
+              <img src="assets/images/song.jpg" alt="" class="search-results__genres-item--cover track-item__cover rounded" />
+            </div>
+            <div class="search-results__genres-item--info-group track-item__info-group">
+              <a href class="search-results__genres-item--title-anchor track-item__title-anchor">
+                <p class="search-results__genres-item--title-text track-item__title-text">{{ genre.name }}</p>
+              </a>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

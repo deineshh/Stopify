@@ -1,0 +1,99 @@
+<table class="track-table">
+  <thead class="track-table__header">
+    <tr>
+      @if (columns.index) {
+        <th class="track-table__header--index-column">
+          <span class="track-table__header--index-text">#</span>
+        </th>
+      }
+      <th class="track-table__header--title-column">
+        <span>Title</span>
+      </th>
+      @if (columns.album) {
+        <th class="track-table__header--album-column">
+          <span>Album</span>
+        </th>
+      }
+      @if (columns.dateAdded) {
+        <th class="track-table__header--date-added-column">
+          <span>Date added</span>
+        </th>
+      }
+      @if (columns.duration) {
+        <th class="track-table__header--duration-column">
+          <fa-icon [icon]="faPlay" />
+        </th>
+      }
+      @if (columns.more) {
+        <th class="track-table__header--more-column">
+          <button class="track-table__header--more-btn" title="More options">
+            <fa-icon [icon]="faEllipsisH" />
+          </button>
+        </th>
+      }
+    </tr>
+  </thead>
+  <tbody>
+    @for (track of tracks; track track.id) {
+      <tr class="track-table__track" (click)="trackClick.emit(track.id)">
+        @if (columns.index) {
+          <td class="track-table__track--index-column">
+            <span class="track-table__track--index-text">{{ track.index }}</span>
+            <button class="track-table__track--play-btn" [title]="'Play ' + track.title">
+              <fa-icon [icon]="faPlay" />
+            </button>
+          </td>
+        }
+        <td class="track-table__track--title-column">
+          <img
+            class="track-table__track--cover"
+            src="../../../../assets/images/song.jpg"
+            [alt]="track.title"
+            draggable="false"
+          />
+          <div class="track-table__track--info-group">
+            <a class="track-table__track--title-anchor" [class.track-table__track--title-active]="track.id === playingTrackId">{{ track.title }}</a>
+            <div>
+              @for (author of track.authors; track author; let last = $last) {
+                  <a
+                    class="track-table__track--author-anchor"
+                    [class.last-author]="last"
+                  >{{ author.name }}</a>
+              }
+            </div>
+          </div>
+        </td>
+        @if (columns.album) {
+          <td>
+            <a class="track-table__track--album-anchor">{{ track.album.name }}</a>
+          </td>
+        }
+        @if (columns.dateAdded) {
+          <td>
+            <span>{{ track.dateAdded }}</span>
+          </td>
+        }
+        @if (columns.duration) {
+          <td class="track-table__track--duration-column">
+            @if (columns.save) {
+              <button
+                class="track-table__track--save-btn"
+                [title]="(track.saved ? 'Remove from' : 'Save to') + ' Liked Songs'"
+              >
+                <fa-icon [icon]="faCheck" />
+              </button>
+            }
+            <span>{{ track.duration }}</span>
+          </td>
+        }
+        @if (columns.more) {
+          <td class="track-table__track--more-column">
+            <button class="track-table__track--more-btn" title="More options">
+              <fa-icon [icon]="faEllipsisH" />
+            </button>
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

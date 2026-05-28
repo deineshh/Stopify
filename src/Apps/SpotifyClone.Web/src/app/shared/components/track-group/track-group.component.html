@@ -1,0 +1,26 @@
+<div class="track-group__header-group">
+  <div class="track-group__header-group--title-group">
+    @if (topText) {
+      <span class="track-group__header-group--title-top-text">{{ topText }}</span>
+    }
+    @if (title) {
+      <a class="track-group__header-group--title-text" href>{{ title }}</a>
+    }
+  </div>
+  @if (showAll) {
+    <a class="track-group__header-group--show-all-anchor" href>{{ showAll }}</a>
+  }
+</div>
+@if (filters && filters.length > 0) {
+  <div class="track-group__filter-group">
+    @for (filter of filters; track filter.id) {
+      <button
+        app-filter-btn
+        [active]="!!filter.active"
+      >{{ filter.label }}</button>
+    }
+  </div>
+}
+<div class="track-items">
+  <ng-content />
+</div>

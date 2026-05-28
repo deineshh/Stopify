@@ -1,0 +1,58 @@
+import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import {
+  faHouse,
+  faMagnifyingGlass,
+  faPlay,
+  faXmark,
+  faBucket,
+  faArrowDown,
+  faBell,
+  faUserGroup,
+  faPlus,
+  faUpRightAndDownLeftFromCenter,
+  faThumbtack,
+  faListUl,
+  faCheck,
+  faEye,
+  faEyeSlash,
+  faExclamation,
+  faLessThan,
+  faGreaterThan,
+  faShuffle,
+  faEllipsisH,
+  faHeart,
+  faDownload,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faCircleLeft,
+  faCircleRight,
+} from '@fortawesome/free-regular-svg-icons';
+
+export function registerIcons(library: FaIconLibrary): void {
+  library.addIcons(
+    faHouse,
+    faMagnifyingGlass,
+    faPlay,
+    faXmark,
+    faBucket,
+    faArrowDown,
+    faBell,
+    faUserGroup,
+    faPlus,
+    faUpRightAndDownLeftFromCenter,
+    faThumbtack,
+    faListUl,
+    faCheck,
+    faEye,
+    faEyeSlash,
+    faExclamation,
+    faLessThan,
+    faGreaterThan,
+    faShuffle,
+    faEllipsisH,
+    faHeart,
+    faDownload,
+    faCircleLeft,
+    faCircleRight,
+  );
+}

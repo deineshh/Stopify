@@ -1,0 +1,146 @@
+<header id="now-playing-view__header">
+  <div id="now-playing-view__header--title-group">
+    <button id="now-playing-view__header--hide-btn" title="Hide Now Playing view">
+      <span id="now-playing-view__header--hide-icon">
+        <fa-icon [icon]="faCircleRight" />
+      </span>
+    </button>
+    <a href id="now-playing-view__header--title-anchor">
+      <h1 id="now-playing-view__header--title-text">Azahriah</h1>
+    </a>
+  </div>
+  <div id="now-playing-view__header--btns">
+    <button id="now-playing-view__header--more-btn" class="now-playing-view__header--btn" title="More options for PANNONIA">
+      <span id="now-playing-view__header--more-icon" class="now-playing-view__header--btn-icon">
+        <fa-icon [icon]="faEllipsisH" />
+      </span>
+    </button>
+    <button id="now-playing-view__header--expand-btn" class="now-playing-view__header--btn" title="Expand Now Playing view">
+      <span id="now-playing-view__header--expand-icon" class="now-playing-view__header--btn-icon">
+        <fa-icon [icon]="faUpRightAndDownLeftFromCenter" />
+      </span>
+    </button>
+  </div>
+</header>
+<main id="now-playing-view__main">
+  <div id="now-playing-view__track">
+    <a href id="now-playing-view__track--cover--anchor">
+      <img src="assets/images/song.jpg" alt="TRACK COVER" id="now-playing-view__track--cover--img">
+    </a>
+    <div id="now-playing-view__track--btns">
+      <div id="now-playing-view__track--info">
+    <a href id="now-playing-view__track--title-anchor">
+      <span id="now-playing-view__track--title-span">{{ playbackService.currentTrack()?.title ?? 'No track playing' }}</span>
+    </a>
+    <div id="now-playing-view__track--artists" [title]="playbackService.currentTrack()?.title ?? ''">
+      @for (artist of playbackService.currentTrack()?.artists ?? []; track artist.id; let last = $last) {
+        <a href class="now-playing-view__track--artist-anchor">
+          <span class="now-playing-view__track--artist-span">{{ artist.name }}</span>
+        </a>
+        @if (!last) {
+          <span class="now-playing-view__track--artist-seperator">,</span>
+        }
+      }
+        </div>
+        @if (playbackService.currentTrack()) {
+          <div id="now-playing-view__track--duration">
+            <span>{{ playbackService.formatTime(playbackService.currentDuration()) }}</span>
+          </div>
+        }
+      </div>
+      <button id="now-playing-view__track--copy-link-btn" class="now-playing-view__track--btn" title="Copy link to Song">
+        <fa-icon [icon]="faUpload" />
+      </button>
+      <button id="now-playing-view__track--save-btn" class="now-playing-view__track--btn" title="Add to Liked Songs">
+        <fa-icon [icon]="faCheck" />
+      </button>
+    </div>
+  </div>
+
+  <div id="now-playing-view__artist-info" class="now-playing-view__section">
+    <div id="now-playing-view__artist-info--header-group">
+      <h2 id="now-playing-view__artist-info--title" class="now-playing-view__section--title">About the artist</h2>
+      <figure id="now-playing-view__artist-info--avatar-figure" title="Azahriah">
+        <img src="assets/images/song.jpg" alt="ARTIST AVATAR" id="now-playing-view__artist-info--avatar-img">
+      </figure>
+    </div>
+    <div id="now-playing-view__artist-info--main-group">
+      <a href id="now-playing-view__artist-info--artist-anchor">
+        <span id="now-playing-view__artist-info--artist-span">DESH</span>
+      </a>
+      <div id="now-playing-view__artist-info--center-group">
+        <span id="now-playing-view__artist-info--monthly-listeners">653,000 monthly listeners</span>
+        <button id="now-playing-view__artist-info--follow-btn" class="now-playing-view__follow-btn">
+          <span id="now-playing-view__artist-info--follow-span" class="now-playing-view__follow-span">Follow</span>
+        </button>
+      </div>
+      <span id="now-playing-view__artist-info--description">
+        DESH tündérmesébe illő története a magyar zeneipar egyik legizgalmasabb színfoltja.
+      </span>
+    </div>
+  </div>
+
+  <div id="now-playing-view__credits" class="now-playing-view__section">
+    <div id="now-playing-view__credits--header-group">
+      <h2 id="now-playing-view__credits--title" class="now-playing-view__section--title">Credits</h2>
+      <button id="now-playing-view__credits--show-all-btn" class="now-playing-view__section--more-btn">
+        <span id="now-playing-view__credits--show-all-span" class="now-playing-view__section--more-span">Show all</span>
+      </button>
+    </div>
+    <div id="now-playing-view__credits--main-group">
+      @for (artist of creditArtists; track artist.name) {
+        <div class="now-playing-view__credits--artist-group">
+          <div class="now-playing-view__credits--artist-info">
+            <button class="now-playing-view__credits--artist-name-btn">
+              <span class="now-playing-view__credits--artist-name-span">{{ artist.name }}</span>
+            </button>
+            <span class="now-playing-view__credits--artist-role">{{ artist.role }}</span>
+          </div>
+          <button class="now-playing-view__credits--follow-btn now-playing-view__follow-btn">
+            <span class="now-playing-view__credits--follow-span now-playing-view__follow-span">
+              {{ artist.following ? 'Unfollow' : 'Follow' }}
+            </span>
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div id="now-playing-view__next">
+    <div id="now-playing-view__next--header-group">
+      <h2 id="now-playing-view__next--title" class="now-playing-view__section--title">Next in queue</h2>
+      <button id="now-playing-view__next--open-queue-btn" class="now-playing-view__section--more-btn">
+        <span id="now-playing-view__next--open-queue-span" class="now-playing-view__section--more-span">Open queue</span>
+      </button>
+    </div>
+    <div class="right-sidebar__track-item">
+      <div class="right-sidebar__track-item--left-group">
+        <div class="right-sidebar__track-item--img-group">
+          <img class="right-sidebar__track-item--img" alt />
+        </div>
+        <button class="right-sidebar__track-item--play-btn" title="Play BAKPAKK by DESH, Young Fly, Azahriah">
+          <span class="right-sidebar__track-item--play-icon">
+            <fa-icon [icon]="faCircleRight" />
+          </span>
+        </button>
+      </div>
+      <div class="right-sidebar__track-item--center-group">
+        <p class="right-sidebar__track-item--title">
+          <span class="right-sidebar__track-item--title-span">BAKPAKK</span>
+        </p>
+        <p class="right-sidebar__track-item--artists">
+          <a href class="right-sidebar__track-item--artist-anchor">DESH</a>
+          <span class="right-sidebar__track-item--artist-seperator">,</span>
+          <a href class="right-sidebar__track-item--artist-anchor">Young Fly</a>
+          <span class="right-sidebar__track-item--artist-seperator">,</span>
+          <a href class="right-sidebar__track-item--artist-anchor">Azahriah</a>
+        </p>
+      </div>
+      <div class="right-sidebar__track-item--right-group">
+        <button class="right-sidebar__track-item--more-btn" title="More options for BAKPAKK">
+          <fa-icon [icon]="faEllipsisH" />
+        </button>
+      </div>
+    </div>
+  </div>
+</main>

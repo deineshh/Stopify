@@ -1,0 +1,15 @@
+<div id="search-browse">
+  <div id="search-browse__header">
+    <h2 id="search-browse__header--title">
+      <span id="search-browse__header--span">Browse all</span>
+    </h2>
+  </div>
+  <div id="search-browse__main-group" role="list">
+    @for (cat of categories; track cat.id) {
+      <a class="search-browse__main-item {{ cat.className }}" role="listitem">
+        <img class="search-browse__main-item--img" [src]="cat.img" alt="" />
+        <span class="search-browse__main-item--span">{{ cat.label }}</span>
+      </a>
+    }
+  </div>
+</div>

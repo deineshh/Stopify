@@ -1,4 +1,39 @@
 services:
+  api:
+    image: spotifyclone.api
+    container_name: spotifyclone-api
+    user: root
+    build:
+      context: .
+      dockerfile: src/Apps/SpotifyClone.Api/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_started
+      redis:
+        condition: service_started
+    environment:
+      DOTNET_RUNNING_IN_CONTAINER: true
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:8080
+      Application__ApiUrl: http://api:8080
+      Jwt__SecretKey: some-fairly-super-super-long-secret-key-for-validating-JWTs
+      Minio__Endpoint: minio
+      Minio__LocalScratchPath: /app/wwwroot/temp/conversion
+      Minio__AccessKey: admin
+      Minio__SecretKey: password123
+      MeiliSearch__Endpoint: http://meilisearch:7700
+      MeiliSearch__MasterKey: meilikey
+      ConnectionStrings__MainDb: Host=postgres;Port=5432;Database=spotifyclone_dev;Username=postgres;Password=postgres
+      ConnectionStrings__Redis: redis:6379
+    ports:
+      - "5000:8080"
+    volumes:
+      - ./src/Modules/Streaming/SpotifyClone.Streaming.Infrastructure/Persistence/Initialization/AudioFiles:/app/seed_data/audio
+      - audio_data:/app/wwwroot/audio
+      - temp_data:/app/wwwroot/temp
+  
   postgres:
     image: postgres:15
     container_name: spotifyclone-postgres
@@ -41,7 +76,7 @@ services:
   
   meilisearch:
     image: getmeili/meilisearch:latest
-    container_name: meilisearch
+    container_name: spotifyclone-meilisearch
     ports:
       - "7700:7700"
     environment:

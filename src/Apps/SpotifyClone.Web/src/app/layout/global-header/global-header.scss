@@ -183,27 +183,6 @@
   transform: scale(1.05);
 }
 
-.global-header__user-widget--btn {
-  align-items: center;
-  background-color: #19e68c;
-  border: 9px var(--primary-element-bg-color) solid;
-  border-radius: 100%;
-  color: black;
-  display: flex;
-  font-weight: 700;
-  justify-content: center;
-  height: 31px;
-  margin-left: 14px;
-  transition: .05s transform ease-in-out;
-  transform: scale(1);
-  width: 31px;
-}
-
-.global-header__user-widget--btn:hover {
-  transform: scale(1.05);
-}
-
-
 /* LARGE SCREEN SIZE */
 @media screen and (min-width: 1412px) {
   .global-header__middle-section {
@@ -229,5 +208,51 @@
 
   .global-header__search-bar--group {
     width: min(474.5px, 46vw);
+  }
+}
+
+// ---------------------------------------------------------------- signed out (not in the mockup)
+
+.global-header__guest-group {
+  align-items: center;
+  display: flex;
+  gap: 8px;
+  margin-left: 8px;
+}
+
+.global-header__sign-up-btn {
+  color: var(--light-gray-fg-color);
+  font-weight: bold;
+  padding: 8px 16px;
+  transition: 0.1s ease-in-out;
+  transition-property: color, transform;
+}
+
+.global-header__sign-up-btn:hover {
+  color: var(--primary-fg-color);
+  transform: scale(1.04);
+}
+
+.global-header__log-in-btn {
+  align-items: center;
+  background-color: var(--primary-fg-color);
+  border-radius: 1000px;
+  color: black;
+  display: flex;
+  font-weight: bold;
+  height: 48px;
+  padding: 0 32px;
+  transition: 0.1s ease-in-out;
+  transition-property: background-color, transform;
+}
+
+.global-header__log-in-btn:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.04);
+}
+
+@include bp.below-laptop {
+  .global-header__log-in-btn {
+    padding: 0 24px;
   }
 }

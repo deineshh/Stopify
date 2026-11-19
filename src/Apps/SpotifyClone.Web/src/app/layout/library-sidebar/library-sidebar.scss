@@ -412,3 +412,49 @@
     transform: none;
   }
 }
+
+// ---------------------------------------------------------------- signed out (not in the mockup)
+
+.left-sidebar__guest {
+  padding: 8px;
+}
+
+.left-sidebar__guest-card {
+  background-color: var(--primary-element-bg-color);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px;
+}
+
+.left-sidebar__guest-title {
+  font-size: 1rem;
+}
+
+.left-sidebar__guest-text {
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.left-sidebar__guest-btn {
+  align-self: flex-start;
+  background-color: var(--primary-fg-color);
+  border-radius: 1000px;
+  color: black;
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-top: 12px;
+  padding: 6px 16px;
+  transition: transform 0.1s ease-in-out;
+}
+
+.left-sidebar__guest-btn:hover {
+  transform: scale(1.04);
+}
+
+@container left-sidebar__group (max-width: 120px) {
+  .left-sidebar__guest {
+    display: none;
+  }
+}

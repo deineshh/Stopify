@@ -2,7 +2,7 @@
 
 Angular 21 web client for Stopify. It is a server-rendered (SSR + hydration), zoneless, standalone-component app built from the HTML/CSS mockups in [`mockups/`](./mockups).
 
-The UI is design-complete and runs on mock data. Every button, toggle, slider, panel and form reacts like the real thing, but nothing is streamed or sent to the API yet.
+Authentication is connected to the Accounts API. The catalog, library and player still run on mock data, so their buttons, toggles, sliders and panels work but nothing is loaded from the API or streamed yet.
 
 ## Getting started
 
@@ -13,6 +13,8 @@ npm run build       # production build (browser + SSR server)
 npm test            # unit tests (Vitest)
 npm run serve:ssr:SpotifyClone.Web   # serve the production build on :4000
 ```
+
+The dev server proxies `/api` to `API_PROXY_TARGET` (default `http://localhost:5000`) and `/audio` to `STORAGE_PROXY_TARGET` (default `http://localhost:9000`). Docker Compose points them at the `api` and `minio` containers. Server-side rendering calls the API directly at `API_URL`.
 
 ## Architecture
 
@@ -43,6 +45,15 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 - **Styles ported 1:1 from the mockups.** Each component's `.scss` starts from its mockup stylesheet. ID selectors became BEM classes, and responsive and state rules come after the ported block.
 - **Route parameters as inputs** (`withComponentInputBinding`). For example, `PlaylistPage.id` is the `:id` parameter.
 
+## Authentication
+
+- **Session:** `AuthStore` keeps the access token in memory only. The refresh token is the API's HttpOnly `refreshToken` cookie, so a reload restores the session through `POST /auth/refresh` once the app has hydrated. The token is also refreshed a minute before it expires.
+- **Requests:** `authInterceptor` adds `Authorization: Bearer …` to `/api/v1/*` calls. On a 401 it refreshes once, shared by every request waiting at that moment (the API rotates refresh tokens), then replays them.
+- **Errors:** API failures are converted from ProblemDetails into `ApiError` (`code`, `message`, `errors[]`, plus helpers like `has('Auth.InvalidPassword')`).
+- **Routes:** `authGuard` protects signed-in pages such as `/collection`. `guestGuard` sends signed-in users away from `/login` and `/signup`. Redirect targets are restricted to in-app paths.
+- **Flows:** sign up with email verification, log in with a password or an SMS code (phone numbers), password reset, and Google sign-in (the API redirects to `/auth-success`).
+- **Password policy:** the rules shown on screen mirror the API's ASP.NET Identity options (`features/auth/password-policy.ts`).
+
 ## Routes
 
 | Path | Page |
@@ -51,8 +62,9 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 | `/search` | Browse all categories |
 | `/search/:query` | Search results |
 | `/playlist/:id` | Playlist / artist page |
-| `/collection` | Your Library (the Library tab on phones) |
-| `/signup`, `/login` | Auth flows (sign-up wizard, code and password log-in) |
+| `/collection` | Your Library (signed in only) |
+| `/signup`, `/login` | Sign up, log in and password reset (signed out only) |
+| `/auth-success` | Google sign-in return page |
 
 ## Responsive behaviour
 
@@ -65,5 +77,5 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 
 ## Testing
 
-- **Unit tests** (`npm test`): pipes, stores and services, plus component behaviour (cards, shelves, header search, player bar, the full auth wizard).
+- **Unit tests** (`npm test`): pipes, stores and services, the auth session and interceptor against a mocked HTTP backend, guards, and component behaviour (cards, shelves, header, account menu, library, every auth flow).
 - The UI was also checked against the mockups with pixel diffs (0.03–0.17% difference per page at 1920×1080; the remaining pixels are intentional state differences). End-to-end interaction checks and an axe-core accessibility audit (0 violations) were run as well.

@@ -1,0 +1,31 @@
+@let user = auth.user();
+<button
+  #trigger
+  class="global-header__user-widget--btn"
+  type="button"
+  aria-haspopup="menu"
+  [attr.aria-expanded]="open()"
+  [attr.aria-controls]="open() ? 'user-menu' : null"
+  [title]="user?.displayName ?? 'Account'"
+  (click)="toggle()"
+>
+  @if (user?.avatar?.url; as avatar) {
+    <img class="global-header__user-widget--img" [src]="avatar" alt="" />
+  } @else {
+    <span class="global-header__user-widget--span">{{ auth.initial() }}</span>
+  }
+</button>
+
+@if (open()) {
+  <div id="user-menu" class="user-menu" role="menu" [attr.aria-label]="user?.displayName ?? 'Account'">
+    <a class="user-menu__item" role="menuitem" href="" (click)="$event.preventDefault(); close()">
+      <span>Account</span>
+      <fa-icon class="user-menu__external" [icon]="['fas', 'up-right-from-square']" />
+    </a>
+    <a class="user-menu__item" role="menuitem" routerLink="/collection" (click)="close()">Profile</a>
+    <hr class="user-menu__divider" />
+    <button class="user-menu__item" role="menuitem" type="button" [disabled]="loggingOut()" (click)="logOut()">
+      Log out
+    </button>
+  </div>
+}

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from '@layout/main-layout/main-layout';
-import { guestGuard } from '@core/auth/auth.guards';
+import { authGuard, guestGuard } from '@core/auth/auth.guards';
 
 const TITLE = 'Stopify - Web Player: Music for everyone';
 
@@ -34,6 +34,7 @@ export const routes: Routes = [
       {
         path: 'collection',
         title: 'Your Library - Stopify',
+        canActivate: [authGuard],
         loadComponent: () => import('@features/library/library-page').then((m) => m.LibraryPage),
       },
     ],

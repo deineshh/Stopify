@@ -68,20 +68,29 @@
     </span>
     <span class="global-header__install-app--text">Install App</span>
   </a>
-  <div class="global-header__right-group--btns">
-    <button class="global-header__content-feed-btn global-header__right-group--btn" type="button" title="What's New">
-      <fa-icon [icon]="['fas', 'bell']" />
-    </button>
-    &ngsp;
-    <button
-      class="global-header__friend-activity-btn global-header__right-group--btn"
-      type="button"
-      title="Friend Activity"
-    >
-      <fa-icon [icon]="['fas', 'user-group']" />
-    </button>
-  </div>
-  <a class="global-header__user-widget--btn" routerLink="/login" title="Aqua Studios">
-    <span class="global-header__user-widget--span">A</span>
-  </a>
+  @switch (auth.status()) {
+    @case ('authenticated') {
+      <div class="global-header__right-group--btns">
+        <button class="global-header__content-feed-btn global-header__right-group--btn" type="button" title="What's New">
+          <fa-icon [icon]="['fas', 'bell']" />
+        </button>
+        &ngsp;
+        <button
+          class="global-header__friend-activity-btn global-header__right-group--btn"
+          type="button"
+          title="Friend Activity"
+        >
+          <fa-icon [icon]="['fas', 'user-group']" />
+        </button>
+      </div>
+      <app-user-menu />
+    }
+    @case ('anonymous') {
+      <div class="global-header__guest-group">
+        <a class="global-header__sign-up-btn" routerLink="/signup" [queryParams]="returnTo()">Sign up</a>
+        <a class="global-header__log-in-btn" routerLink="/login" [queryParams]="returnTo()">Log in</a>
+      </div>
+    }
+    <!-- 'unknown': the session is still being restored; render nothing to avoid a flash. -->
+  }
 </section>

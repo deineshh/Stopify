@@ -2,7 +2,7 @@
 using SpotifyClone.Accounts.Domain.Aggregates.Users.Exceptions;
 using SpotifyClone.Accounts.Domain.Aggregates.Users.Rules;
 
-namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.Users.Rules;
+namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.User.Rules;
 
 public sealed class DisplayNameRulesTests
 {

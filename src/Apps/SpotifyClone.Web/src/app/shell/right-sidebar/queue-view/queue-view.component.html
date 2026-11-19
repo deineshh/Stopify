@@ -1,0 +1,67 @@
+<header id="queue-view__header">
+  <h1 id="queue-view__header--title">Queue</h1>
+  <button id="queue-view__header--close-btn" title="Close">
+    <span id="queue-view__header--close-span">
+      <fa-icon [icon]="faXmark" />
+    </span>
+  </button>
+</header>
+<main id="queue-view__main">
+  <div id="queue-view__now-playing--group">
+    <h2 id="queue-view__now-playing--title">Now playing</h2>
+    <div class="right-sidebar__track-item">
+      <div class="right-sidebar__track-item--left-group">
+        <div class="right-sidebar__track-item--img-group">
+          <img class="right-sidebar__track-item--img" alt />
+        </div>
+        <button class="right-sidebar__track-item--play-btn" title="Play">
+          <span class="right-sidebar__track-item--play-icon">
+            <fa-icon [icon]="faPlay" />
+          </span>
+        </button>
+      </div>
+      <div class="right-sidebar__track-item--center-group">
+        <p class="right-sidebar__track-item--title">
+          <span class="right-sidebar__track-item--title-span">PANNONIA</span>
+        </p>
+        <p class="right-sidebar__track-item--artists">DESH, Young Fly, Azahriah</p>
+      </div>
+      <div class="right-sidebar__track-item--right-group">
+        <button class="right-sidebar__track-item--more-btn" title="More options">
+          <fa-icon [icon]="faEllipsisH" />
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="queue-view__next-from--group">
+    <div id="queue-view__next-from--title-group">
+      <span id="queue-view__next-from--title-text">Next from:</span>
+      <a href id="queue-view__next-from--title-artist--anchor">DESH</a>
+    </div>
+    @for (item of [1,2,3,4,5]; track item) {
+      <div class="right-sidebar__track-item">
+        <div class="right-sidebar__track-item--left-group">
+          <div class="right-sidebar__track-item--img-group">
+            <img class="right-sidebar__track-item--img" alt />
+          </div>
+          <button class="right-sidebar__track-item--play-btn" title="Play">
+            <span class="right-sidebar__track-item--play-icon">
+              <fa-icon [icon]="faPlay" />
+            </span>
+          </button>
+        </div>
+        <div class="right-sidebar__track-item--center-group">
+          <p class="right-sidebar__track-item--title">
+            <span class="right-sidebar__track-item--title-span">Track {{ item }}</span>
+          </p>
+          <p class="right-sidebar__track-item--artists">Artist Name</p>
+        </div>
+        <div class="right-sidebar__track-item--right-group">
+          <button class="right-sidebar__track-item--more-btn" title="More options">
+            <fa-icon [icon]="faEllipsisH" />
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</main>

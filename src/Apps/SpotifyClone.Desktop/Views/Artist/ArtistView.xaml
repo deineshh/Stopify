@@ -1,0 +1,650 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.Artist.ArtistView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:ArtistBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Artist"
+    xmlns:Components="clr-namespace:SpotifyClone.Desktop.Views.Components"
+    xmlns:ControlBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Controls"
+    xmlns:Controls="clr-namespace:SpotifyClone.Desktop.Utilities.Controls"
+    xmlns:CustomCollections="clr-namespace:SpotifyClone.Desktop.Utilities.Collections"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:Models="clr-namespace:SpotifyClone.Desktop.Utilities.Models"
+    xmlns:Playlist="clr-namespace:SpotifyClone.Desktop.Views.Playlist"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.Artist"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    ArtistBehaviors:ArtistSizeChangeBehavior.Enable="True"
+    mc:Ignorable="d">
+
+    <Border CornerRadius="8">
+        <Grid>
+            <!--  Sticky Header  -->
+            <Grid
+                Name="StickyHeader"
+                Height="0"
+                VerticalAlignment="Top"
+                Panel.ZIndex="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--  Artist Info  -->
+                <Border
+                    Name="StickyHeaderBg"
+                    Grid.Row="0"
+                    Background="Transparent"
+                    CornerRadius="8 8 0 0">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Play/Pause  -->
+                        <Button
+                            Name="PlayBtnHeader"
+                            Grid.Column="0"
+                            Width="50"
+                            Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                            Margin="15,7,7,7"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            ControlBehaviors:PlayBehavior.Enable="True"
+                            ControlBehaviors:PlayBehavior.IsPlaying="{Binding IsPlaying}"
+                            ControlBehaviors:PlayBehavior.PlayIcon="{Binding ElementName=PlayIconHeader, Path=Text}"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0">
+
+                            <Border
+                                Name="PlayBorderHeader"
+                                Background="#1ed760"
+                                CornerRadius="30">
+                                <TextBlock
+                                    Name="PlayIconHeader"
+                                    Margin="0,15"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                    FontSize="19"
+                                    Text="&#xf04b;" />
+                            </Border>
+                        </Button>
+
+                        <!--  Title  -->
+                        <TextBlock
+                            Grid.Column="1"
+                            MaxHeight="35"
+                            Margin="0,0,20,0"
+                            VerticalAlignment="Center"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding Title}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="Wrap" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!--  Main Panel  -->
+            <ScrollViewer
+                Name="Scroller"
+                Panel.ZIndex="0"
+                ControlBehaviors:ScrollerStickyHeaderBehavior.Enable="True"
+                ControlBehaviors:ScrollerStickyHeaderBehavior.StickyHeaderHeight="{Binding ElementName=StickyHeader, Path=Height}"
+                ControlBehaviors:ScrollerStickyHeaderBehavior.StickyHeaderVerticalScrollAppearValue="195"
+                VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop x:Name="ScrollerBg" Offset=".1" Color="Transparent" />
+                            <GradientStop Offset=".25" Color="#121212" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!--  Main Header  -->
+                    <Border
+                        Name="MainHeader"
+                        Grid.Row="0"
+                        CornerRadius="8 8 0 0">
+                        <Grid Height="187" VerticalAlignment="Top">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width=".32*" MinWidth="160" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Artist Profile  -->
+                            <Border
+                                Grid.Column="0"
+                                Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                                MinWidth="126"
+                                MaxWidth="170"
+                                Margin="17,0,17,18"
+                                VerticalAlignment="Bottom"
+                                CornerRadius="100">
+
+                                <Border.Background>
+                                    <ImageBrush ImageSource="/Assets/Images/song.jpg" />
+                                </Border.Background>
+                            </Border>
+
+                            <!--  Artist Info  -->
+                            <Grid
+                                Grid.Column="1"
+                                Margin="0,0,17,17"
+                                VerticalAlignment="Bottom">
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <!--  Type  -->
+                                    <Grid Grid.Row="0" Margin="2,0,0,-5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0" Margin="0,1,9,0">
+                                            <TextBlock
+                                                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                                FontSize="17"
+                                                Foreground="#4cb3ff"
+                                                Text="&#xf0a3;" />
+
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                                FontSize="10"
+                                                Foreground="White"
+                                                Text="&#xf00c;" />
+                                        </Grid>
+
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            FontSize="14"
+                                            FontWeight="SemiBold"
+                                            Foreground="LightGray"
+                                            Text="Verified Artist" />
+                                    </Grid>
+
+                                    <!--  Title  -->
+                                    <TextBlock
+                                        Name="ArtistName"
+                                        Grid.Row="1"
+                                        FontSize="70"
+                                        FontWeight="UltraBold"
+                                        Foreground="White"
+                                        Text="{Binding Title}"
+                                        TextTrimming="WordEllipsis"
+                                        TextWrapping="Wrap" />
+
+                                    <!--  Monthly Listeners  -->
+                                    <StackPanel
+                                        Grid.Row="2"
+                                        Margin="0,8,0,5"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontSize="17"
+                                            FontWeight="SemiBold"
+                                            Foreground="LightGray"
+                                            Text="{Binding MonthlyListeners}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap" />
+
+                                        <TextBlock
+                                            VerticalAlignment="Bottom"
+                                            FontSize="16"
+                                            FontWeight="SemiBold"
+                                            Foreground="LightGray"
+                                            Text=" monthly listeners"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <!--  Control Buttons  -->
+                    <Grid
+                        Grid.Row="1"
+                        Margin="15,14,0,0"
+                        HorizontalAlignment="Left">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Play/Pause  -->
+                        <Button
+                            Name="PlayBtn"
+                            Grid.Column="0"
+                            Width="50"
+                            Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            ControlBehaviors:PlayBehavior.Enable="True"
+                            ControlBehaviors:PlayBehavior.IsPlaying="{Binding IsPlaying}"
+                            ControlBehaviors:PlayBehavior.PlayIcon="{Binding ElementName=PlayIcon, Path=Text}"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0">
+
+                            <Border
+                                Name="PlayBorder"
+                                Background="#1ed760"
+                                CornerRadius="30">
+                                <TextBlock
+                                    Name="PlayIcon"
+                                    Margin="0,15"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                    FontSize="20"
+                                    IsHitTestVisible="False"
+                                    Text="&#xf04b;" />
+                            </Border>
+                        </Button>
+
+                        <!--  Shuffle  -->
+                        <Button
+                            Name="ShuffleBtn"
+                            Grid.Column="1"
+                            Width="32"
+                            Height="32"
+                            Margin="19,0,0,0"
+                            AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                            ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding IsShuffling, Converter={StaticResource BooleanToByteConverter}, Mode=TwoWay}"
+                            ControlBehaviors:ToggleButtonStateBehavior.DefaultHoverPopupText="{Binding HoverPopupText}"
+                            ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                            ControlBehaviors:ToggleButtonStateBehavior.MouseEnterColor="White"
+                            ControlBehaviors:ToggleButtonStateBehavior.MouseLeaveColor="DarkGray"
+                            ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Content="&#xf074;"
+                            FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                            FontSize="23"
+                            Foreground="DarkGray">
+                            <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                                <CustomCollections:ButtonStateCollection>
+                                    <Models:ButtonStateModel ChangeColorOnHover="True" Color="DarkGray" />
+                                    <Models:ButtonStateModel ChangeColorOnHover="False" Color="#1ED760" />
+                                </CustomCollections:ButtonStateCollection>
+                            </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                        </Button>
+
+                        <!--  Follow  -->
+                        <Border
+                            Name="FollowBorder"
+                            Grid.Column="2"
+                            Margin="11,0"
+                            VerticalAlignment="Center"
+                            AnimationBehaviors:BorderBrushAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:BorderBrushAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:BorderBrushAnimationBehavior.InColor="White"
+                            AnimationBehaviors:BorderBrushAnimationBehavior.OutColor="DarkGray"
+                            AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            BorderBrush="DarkGray"
+                            BorderThickness="1.5"
+                            CornerRadius="15">
+                            <Button
+                                Name="FollowBtn"
+                                Margin="0,0,0,1"
+                                Padding="14,6"
+                                ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding IsFollowing, Mode=TwoWay}"
+                                ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                                ControlBehaviors:ToggleButtonStateBehavior.StateDependentValue="{Binding IsFollowing, Mode=TwoWay}"
+                                ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="{Binding IsFollowing, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Following|Follow'}"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Foreground="White">
+                                <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                                    <CustomCollections:ButtonStateCollection>
+                                        <Models:ButtonStateModel DependentValueBoolean="False" />
+                                        <Models:ButtonStateModel DependentValueBoolean="True" />
+                                    </CustomCollections:ButtonStateCollection>
+                                </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                            </Button>
+                        </Border>
+
+                        <!--  More Options  -->
+                        <Button
+                            Name="OptionsBtn"
+                            Grid.Column="4"
+                            Width="25"
+                            Height="45"
+                            Margin="4,0,0,1"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                            AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                            ControlBehaviors:HoverPopupBehavior.Enable="True"
+                            ControlBehaviors:HoverPopupBehavior.Placement="Top"
+                            ControlBehaviors:HoverPopupBehavior.PopupText="{Binding Title, StringFormat='More options for {0}'}"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Content="• • •"
+                            FontSize="12"
+                            Foreground="DarkGray" />
+                    </Grid>
+
+                    <!--  Popular  -->
+                    <Grid Grid.Row="2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="15,20,0,0"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="Popular" />
+
+                        <Playlist:PlaylistHeader Grid.Row="1" Margin="16,15,0,0" />
+
+                        <ItemsControl
+                            Grid.Row="2"
+                            Margin="16,0,0,0"
+                            ItemsSource="{Binding Populars}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Playlist:PlaylistItem />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <!--  See more  -->
+                        <Button
+                            Name="SeeMoreBtn"
+                            Grid.Row="3"
+                            Margin="20,1"
+                            Padding="12,13"
+                            HorizontalAlignment="Left"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                            AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                            AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                            AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                            AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.01"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Content="See more"
+                            FontSize="14.4"
+                            FontWeight="Bold"
+                            Foreground="DarkGray" />
+                    </Grid>
+
+                    <!--  Discography  -->
+                    <Grid Grid.Row="3" Margin="15,50,0,30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--  Header  -->
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  Title  -->
+                            <Button
+                                Name="DiscographyBtn"
+                                Grid.Column="0"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="Discography"
+                                FontSize="24"
+                                FontWeight="Bold"
+                                Foreground="White" />
+
+                            <!--  Show all  -->
+                            <Button
+                                Name="ShowAllBtn"
+                                Grid.Column="2"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Bottom"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                                AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.01"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="Show all"
+                                FontSize="13.5"
+                                FontWeight="Bold"
+                                Foreground="DarkGray" />
+                        </Grid>
+
+                        <!--  Filters  -->
+                        <StackPanel
+                            Grid.Row="1"
+                            Margin="0,15"
+                            Orientation="Horizontal">
+
+                            <!--  Popular releases  -->
+                            <Border
+                                Name="PopularBorder"
+                                Padding="13,6"
+                                ControlBehaviors:ToggleFilterBehavior.Enable="True"
+                                ControlBehaviors:ToggleFilterBehavior.GroupName="ArtistDiscographyFilterGroup"
+                                ControlBehaviors:ToggleFilterBehavior.IsSelected="{Binding IsFilteringPopularReleases}"
+                                ControlBehaviors:ToggleFilterBehavior.TurnOffOnClick="False"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="White"
+                                CornerRadius="15">
+                                <Button
+                                    Name="PopularBtn"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Content="Popular releases"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="Black" />
+                            </Border>
+
+                            <!--  Albums  -->
+                            <Border
+                                Name="AlbumsBorder"
+                                Margin="5,0"
+                                Padding="13,6"
+                                ControlBehaviors:ToggleFilterBehavior.Enable="True"
+                                ControlBehaviors:ToggleFilterBehavior.GroupName="ArtistDiscographyFilterGroup"
+                                ControlBehaviors:ToggleFilterBehavior.IsSelected="{Binding IsFilteringAlbums}"
+                                ControlBehaviors:ToggleFilterBehavior.TurnOffOnClick="False"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="#2a2a2a"
+                                CornerRadius="15">
+                                <Button
+                                    Name="AlbumsBtn"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Content="Albums"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="White" />
+                            </Border>
+
+                            <!--  Singles and EPs  -->
+                            <Border
+                                Name="SinglesBorder"
+                                Padding="13,6"
+                                ControlBehaviors:ToggleFilterBehavior.Enable="True"
+                                ControlBehaviors:ToggleFilterBehavior.GroupName="ArtistDiscographyFilterGroup"
+                                ControlBehaviors:ToggleFilterBehavior.IsSelected="{Binding IsFilteringSingles}"
+                                ControlBehaviors:ToggleFilterBehavior.TurnOffOnClick="False"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="#2a2a2a"
+                                CornerRadius="15">
+                                <Button
+                                    Name="SinglesBtn"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Content="Singles ad EPs"
+                                    FontSize="14"
+                                    FontWeight="SemiBold"
+                                    Foreground="White" />
+                            </Border>
+                        </StackPanel>
+
+                        <!--  Items  -->
+                        <ItemsControl Grid.Row="2" ItemsSource="{Binding DiscographyItems}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <Controls:StretchyWrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Components:CommonItem />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
+
+                    <!--  About  -->
+                    <Grid Grid.Row="4" Margin="15,30,0,30">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!--  Title  -->
+                        <TextBlock
+                            Grid.Row="0"
+                            HorizontalAlignment="Left"
+                            Background="Transparent"
+                            FontSize="24"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="About" />
+
+                        <!--  Image  -->
+                        <Button
+                            Name="AboutBtn"
+                            Grid.Row="1"
+                            Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                            MaxWidth="600"
+                            Margin="0,12"
+                            HorizontalContentAlignment="Stretch"
+                            VerticalContentAlignment="Stretch"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            Background="Transparent"
+                            BorderThickness="0">
+
+                            <Border CornerRadius="8">
+                                <Border.Background>
+                                    <ImageBrush
+                                        AlignmentY="Top"
+                                        ImageSource="/Assets/Images/stopify-icon.ico"
+                                        Stretch="Uniform" />
+                                </Border.Background>
+                            </Border>
+                        </Button>
+
+                        <!--  Info  -->
+                        <Grid
+                            Grid.Row="1"
+                            Margin="40"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            IsHitTestVisible="False">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--  Monthly listeners  -->
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="0,10"
+                                Orientation="Horizontal">
+
+                                <TextBlock
+                                    FontSize="16"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="{Binding MonthlyListeners}" />
+                                <TextBlock
+                                    Margin="5,0"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="16"
+                                    FontWeight="SemiBold"
+                                    Foreground="White"
+                                    Text="monthly listeners" />
+                            </StackPanel>
+
+                            <!--  Description  -->
+                            <TextBlock
+                                Grid.Row="1"
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                Foreground="White"
+                                Text="creator from hungary"
+                                TextTrimming="WordEllipsis"
+                                TextWrapping="Wrap" />
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</UserControl>

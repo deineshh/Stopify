@@ -1,0 +1,89 @@
+html {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-fg-color);
+  font-family: 'Spotify Mix';
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#global-header {
+  grid-row: 1;
+  height: 64px;
+}
+
+body > main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.main-section {
+  display: flex;
+  min-height: 0;
+}
+
+#left-sidebar__main-group, #right-sidebar__main-group, #main-view {
+  background-color: var(--secondary-bg-color);
+  border-radius: 8px;
+}
+
+.sidebar-group {
+  flex-shrink: 0;
+}
+
+.sidebar-main {
+  flex-grow: 1;
+}
+
+#full-screen-view__group {
+  display: none;
+}
+
+#left-sidebar__group {
+  container-type: inline-size;
+  container-name: left-sidebar__group;
+  margin-left: 8px;
+  min-width: 72px;
+  width: 288px;
+}
+
+#right-sidebar__group {
+  margin-right: 8px;
+  min-width: 288px;
+  width: 288px;
+}
+
+#right-sidebar__main-group {
+  position: relative;
+}
+
+#main-view {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  overflow: auto;
+}
+
+#main-page__main {
+  width: 100%;
+}
+
+#now-playing-bar {
+  grid-row: 3;
+  height: 88px;
+}
+
+.layout-resizer {
+  cursor: col-resize;
+  flex-shrink: 0;
+  height: 100%;
+  width: 8px;
+}

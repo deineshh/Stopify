@@ -1,0 +1,116 @@
+#main-footer {
+  padding: 40px 0 0;
+}
+
+.main-footer__horizontal-rule {
+  border: none;
+  height: 1px;
+  background-color: var(--border-gray-color);
+}
+
+#main-footer__top-horizontal-rule {
+  margin: 0 12px;
+  margin-bottom: 66px;
+  margin-left: 24px;
+  margin-top: 23px;
+}
+
+#main-footer__nav-group {
+  padding: 0 20px 40px 32px;
+}
+
+#main-footer__top-group {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 32px;
+}
+
+#main-footer__table-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  width: 75%;
+}
+
+.main-footer__table-ul {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.08rem;
+  gap: 10px;
+  justify-self: left;
+  margin-right: 24px;
+  margin-bottom: 30px;
+}
+
+.main-footer__ul-title {
+  font-weight: bold;
+}
+
+.main-footer__ul-item {
+  color: var(--light-gray-fg-color);
+  width: 100%;
+}
+
+.main-footer__ul-item:hover {
+  color: var(--primary-fg-color);
+  text-decoration: underline;
+}
+
+#main-footer__social--group {
+  align-items: start;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: -2px;
+}
+
+.main-footer__social--anchor {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  background-color: #292929;
+  border-radius: 100%;
+  cursor: initial;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+}
+
+.main-footer__social--anchor:hover {
+  background-color: #727272;
+}
+
+#main-footer__instagram--icon {
+  font-size: 1.15rem;
+}
+
+#main-footer__twitter--icon {
+  font-size: .9rem;
+}
+
+#main-footer__bottom-horizontal-rule {
+  margin-bottom: 24px;
+}
+
+#main-footer__bottom-group {
+  color: var(--light-gray-fg-color);
+  font-size: .95rem;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 19px;
+  margin-bottom: 9px;
+}
+
+#main-footer__bottom-links {
+  display: flex;
+  gap: var(--layout-section-spacing-primary);
+}
+
+.main-footer__bottom-link:hover {
+  color: var(--primary-fg-color);
+}
+
+#main-footer__bottom-copyright {
+  margin-right: 16px;
+  font-size: .93rem;
+}

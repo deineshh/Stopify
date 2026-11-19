@@ -4,7 +4,7 @@ using SpotifyClone.Accounts.Domain.Aggregates.Users.ValueObjects;
 using SpotifyClone.Shared.Kernel.Enums;
 using SpotifyClone.Shared.Kernel.IDs;
 
-namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.Users.ValueObjects;
+namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.User.ValueObjects;
 
 public sealed class AvatarImageTests
 {

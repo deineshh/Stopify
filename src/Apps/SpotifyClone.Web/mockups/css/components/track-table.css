@@ -1,0 +1,219 @@
+.track-table {
+  border-collapse: collapse;
+  color: var(--light-gray-fg-color);
+  display: table;
+  margin-top: 34px;
+  width: 100%;
+}
+
+.track-table__header:hover
+.track-table__header--more-btn {
+  opacity: 1;
+}
+
+.track-table__header th {
+  border-bottom: 1px solid;
+  border-color: #292929;
+  font-weight: lighter;
+  padding-bottom: var(--layout-section-padding);
+}
+
+.track-table__header--index-column {
+  padding-left: 22px;
+  padding-right: 17px;
+  width: 20px;
+}
+
+.track-table__header--index-text {
+  font-weight: bold;
+}
+
+.track-table__header--title-column,
+.track-table__header--album-column,
+.track-table__header--date-added-column {
+  border-right: 1px solid;
+  text-align: left;
+}
+
+.track-table__header--album-column,
+.track-table__header--date-added-column,
+.track-table__track--album-column,
+.track-table__track--date-added-column {
+  padding-left: 22px;
+}
+
+.track-table__header--album-column.hidden-column,
+.track-table__header--date-added-column.hidden-column,
+.track-table__track--album-column.hidden-column,
+.track-table__track--date-added-column.hidden-column {
+  display: none;
+}
+
+.track-table__header--duration-column,
+.track-table__header--more-column,
+.track-table__track--duration-column {
+  text-align: right;
+}
+
+.track-table__header--title-column {
+  width: 37.5%;
+}
+
+.track-table__header--album-column {
+  width: 32.5%;
+}
+
+.track-table__header--date-added-column {
+  width: 13.5%;
+}
+
+.track-table__header--more-column {
+  width: 37px;
+}
+
+.track-table__header--more-btn {
+  opacity: 0;
+  transition: .1s ease-in-out;
+  transition-property: color transform;
+  width: 100%;
+}
+
+.track-table__header--more-btn:hover {
+  color: var(--primary-fg-color);
+  transform: scale(1.02);
+}
+
+.track-table__track td {
+  transition: .1s background ease-in-out;
+}
+
+.track-table__track:hover td {
+  background-color: rgba(255, 255, 255, .05);
+}
+
+.track-table__track:hover
+.track-table__track--index-text {
+  visibility: hidden;
+}
+
+.track-table__track:hover
+.track-table__track--play-btn {
+  display: initial;
+}
+
+.track-table__track:hover
+.track-table__track--author-anchor {
+  color: var(--primary-fg-color);
+}
+
+.track-table__track:hover
+.track-table__track--album-anchor {
+  color: var(--primary-fg-color);
+}
+
+.track-table__track:hover
+.track-table__track--save-btn,
+.track-table__track:hover
+.track-table__track--more-btn {
+  opacity: 1;
+}
+
+.track-table__track--index-column {
+  position: relative;
+}
+
+.track-table__track--index-text,
+.track-table__track--play-btn {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  right: 17px;
+}
+
+.track-table__track--index-text {
+  font-size: 1.1rem;
+}
+
+.track-table__track--play-btn {
+  color: var(--primary-fg-color);
+  cursor: default;
+  font-size: .9rem;
+}
+
+.track-table__track--play-btn {
+  position: absolute;
+  display: none;
+}
+
+.track-table__track--title-column {
+  display: flex;
+  gap: 12px;
+  padding: 6px 0;
+}
+
+.track-table__track--cover {
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  width: 43px;
+}
+
+.track-table__track--info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.track-table__track--title-anchor {
+  color: var(--primary-fg-color);
+  font-size: 1.05rem;
+}
+
+.track-table__track--author-anchor:not(.last-author)::after {
+  color: var(--light-gray-fg-color);
+  content: ",";
+  margin-left: -3px;
+  margin-right: -1px;
+}
+
+.track-table__track--author-anchor:hover,
+.track-table__track--album-anchor:hover {
+  text-decoration: underline;
+}
+
+.track-table__track--author-anchor,
+.track-table__track--album-anchor {
+  transition: .1s color ease-in-out;
+}
+
+.track-table__track--save-btn {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+  background-color: #1ac356;
+  color: black;
+  display: inline-flex;
+  font-size: .6rem;
+  justify-content: center;
+  opacity: 0;
+  margin-right: 30px;
+  transition: .1s ease-in-out;
+  transition-property: opacity transform;
+  width: 15px;
+}
+
+.track-table__track--save-btn:hover {
+  transform: scale(1.07);
+}
+
+.track-table__track--more-btn {
+  color: var(--primary-fg-color);
+  margin-left: 16px;
+  opacity: 0;
+  transform: scaleX(1.2);
+  transition: .1s ease-in-out;
+  transition-property: opacity transform;
+}
+
+.track-table__track--more-btn:hover {
+  transform: scaleX(1.3) scaleY(1.1);
+}

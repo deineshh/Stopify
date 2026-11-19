@@ -3,7 +3,7 @@ using SpotifyClone.Accounts.Domain.Aggregates.Users.Enums;
 using SpotifyClone.Accounts.Domain.Aggregates.Users.Exceptions;
 using SpotifyClone.Shared.BuildingBlocks.Domain.Primitives;
 
-namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.Users.Enums;
+namespace SpotifyClone.Accounts.Domain.Tests.Aggregates.User.Enums;
 
 public sealed class GenderTests
 {

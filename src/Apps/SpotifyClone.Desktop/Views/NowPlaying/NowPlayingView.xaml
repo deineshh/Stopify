@@ -1,0 +1,525 @@
+﻿<UserControl
+    x:Class="SpotifyClone.Desktop.Views.NowPlaying.NowPlayingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AnimationBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Animations"
+    xmlns:ControlBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Controls"
+    xmlns:CustomCollections="clr-namespace:SpotifyClone.Desktop.Utilities.Collections"
+    xmlns:InputBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.Common.Input"
+    xmlns:Models="clr-namespace:SpotifyClone.Desktop.Utilities.Models"
+    xmlns:NowPlayingBehaviors="clr-namespace:SpotifyClone.Desktop.Utilities.Behaviors.NowPlaying"
+    xmlns:Queue="clr-namespace:SpotifyClone.Desktop.Views.Queue"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:SpotifyClone.Desktop.Views.NowPlaying"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    NowPlayingBehaviors:NowPlayingSizeChangeBehavior.Enable="True"
+    NowPlayingBehaviors:NowPlayingSizeChangeBehavior.IsSaved="{Binding IsSaved, Mode=TwoWay}"
+    mc:Ignorable="d">
+
+    <Grid Name="NowPlayingPanel">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Header  -->
+        <Grid Grid.Row="0" Margin="16,16,17,17">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <!--  Playlist Title  -->
+            <Button
+                Name="HeaderTitleBtn"
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                InputBehaviors:CursorBehavior.Enable="True"
+                InputBehaviors:TextDecorationBehavior.EnableOnHover="True"
+                InputBehaviors:TextDecorationBehavior.TextDecorationOnMouseEnter="Underline"
+                Background="Transparent"
+                BorderThickness="0"
+                FontSize="16"
+                FontWeight="Bold"
+                Foreground="White">
+                <TextBlock Name="HeaderTitleText" Text="{Binding PlaylistTitle}" />
+            </Button>
+
+            <!--  More Options  -->
+            <Button
+                Name="OptionsBtn"
+                Grid.Column="2"
+                Width="25"
+                Margin="0,-2,0,0"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.1"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.Placement="Top"
+                ControlBehaviors:HoverPopupBehavior.PopupText="{Binding PlaylistTitle, Mode=TwoWay, StringFormat='More options for {0}'}"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="Transparent"
+                BorderThickness="0"
+                Content="• • •"
+                FontSize="11"
+                Foreground="DarkGray" />
+
+            <!--  Close  -->
+            <Button
+                Name="CloseBtn"
+                Grid.Column="3"
+                Margin="4,0,-1,0"
+                HorizontalAlignment="Right"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                ControlBehaviors:CloseButtonBehavior.CloseBorder="{Binding ElementName=CloseBorder}"
+                ControlBehaviors:CloseButtonBehavior.CloseText="{Binding ElementName=CloseText}"
+                ControlBehaviors:CloseButtonBehavior.Enable="True"
+                ControlBehaviors:CloseButtonBehavior.IsClosed="{Binding NowPlayingCollapseState}"
+                ControlBehaviors:HoverPopupBehavior.Enable="True"
+                ControlBehaviors:HoverPopupBehavior.Placement="Top"
+                ControlBehaviors:HoverPopupBehavior.PopupText="Close"
+                InputBehaviors:CursorBehavior.Enable="True"
+                Background="Transparent"
+                BorderThickness="0">
+                <Border
+                    Name="CloseBorder"
+                    Width="29"
+                    Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    Background="#121212"
+                    CornerRadius="30">
+                    <TextBlock
+                        Name="CloseText"
+                        Margin="0,0,1,1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        FontWeight="SemiBold"
+                        Foreground="DarkGray"
+                        Text="✕" />
+                </Border>
+            </Button>
+        </Grid>
+
+        <!--  Main  -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
+            <StackPanel Margin="16,-1,0,16">
+                <!--  Song Image  -->
+                <Button
+                    Name="SongImgBtn"
+                    Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                    HorizontalAlignment="Stretch"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    Background="Transparent"
+                    BorderThickness="0">
+                    <Border CornerRadius="8">
+                        <Border.Background>
+                            <ImageBrush ImageSource="/Assets/Images/song.jpg" />
+                        </Border.Background>
+                    </Border>
+                </Button>
+
+                <!--  Info  -->
+                <Grid Margin="1,12,1,25">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Title & Artist  -->
+                    <StackPanel>
+                        <Button
+                            Name="SongTitleBtn"
+                            Padding="0"
+                            HorizontalAlignment="Left"
+                            InputBehaviors:CursorBehavior.Enable="True"
+                            InputBehaviors:TextDecorationBehavior.EnableOnHover="True"
+                            InputBehaviors:TextDecorationBehavior.TextDecorationOnMouseEnter="Underline"
+                            Background="Transparent"
+                            BorderThickness="0">
+                            <TextBlock
+                                Name="SongTitleText"
+                                FontSize="24"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="{Binding Title}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
+                        </Button>
+
+                        <ItemsControl
+                            Name="AuthorsControl"
+                            HorizontalAlignment="Left"
+                            AlternationCount="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}"
+                            FontSize="16"
+                            FontWeight="SemiBold"
+                            Foreground="DarkGray"
+                            ItemsSource="{Binding Authors}">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock x:Name="AuthorsSeparator" Text=", " />
+
+                                        <Button
+                                            AnimationBehaviors:ForegroundColorAnimationBehavior.Duration="0.05"
+                                            AnimationBehaviors:ForegroundColorAnimationBehavior.EnableOnHover="True"
+                                            AnimationBehaviors:ForegroundColorAnimationBehavior.InColor="White"
+                                            AnimationBehaviors:ForegroundColorAnimationBehavior.OutColor="DarkGray"
+                                            InputBehaviors:CursorBehavior.Enable="True"
+                                            InputBehaviors:TextDecorationBehavior.EnableOnHover="True"
+                                            InputBehaviors:TextDecorationBehavior.TextDecorationOnMouseEnter="Underline"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Content="{Binding}"
+                                            Foreground="DarkGray" />
+                                    </StackPanel>
+
+                                    <DataTemplate.Triggers>
+                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                            <Setter TargetName="AuthorsSeparator" Property="Visibility" Value="Collapsed" />
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+                    </StackPanel>
+
+                    <!--  Add to Liked Songs  -->
+                    <Button
+                        Name="SaveBtn"
+                        Grid.Column="1"
+                        Height="30"
+                        Margin="0,4,-1,0"
+                        AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                        AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                        AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                        ControlBehaviors:SaveBehavior.Enable="True"
+                        ControlBehaviors:SaveBehavior.IsSaved="{Binding IsSaved, Mode=TwoWay}"
+                        ControlBehaviors:SaveBehavior.SaveBorderBackground="{Binding ElementName=SaveBorder, Path=Background, Mode=TwoWay}"
+                        ControlBehaviors:SaveBehavior.SaveBorderBrush="{Binding ElementName=SaveBorder, Path=BorderBrush, Mode=TwoWay}"
+                        ControlBehaviors:SaveBehavior.SaveBorderThickness="{Binding ElementName=SaveBorder, Path=BorderThickness, Mode=TwoWay}"
+                        ControlBehaviors:SaveBehavior.SaveForeground="{Binding ElementName=SaveText, Path=Foreground, Mode=TwoWay}"
+                        ControlBehaviors:SaveBehavior.SaveText="{Binding ElementName=SaveText, Path=Text, Mode=TwoWay}"
+                        ControlBehaviors:SaveBehavior.SaveTextMargin="{Binding ElementName=SaveText, Path=Margin, Mode=TwoWay}"
+                        ControlBehaviors:SaveBehavior.SaveTo="{Binding SaveTo}"
+                        InputBehaviors:CursorBehavior.Enable="True"
+                        Background="Transparent"
+                        BorderThickness="0">
+                        <Border
+                            Name="SaveBorder"
+                            Width="16.5"
+                            Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}"
+                            BorderBrush="LightGray"
+                            BorderThickness="1.8"
+                            CornerRadius="30">
+                            <TextBlock
+                                Name="SaveText"
+                                Margin="1.5,.7,0,0"
+                                FontFamily="/Assets/Fonts/#Font Awesome 6 Free Solid"
+                                FontSize="11"
+                                FontWeight="ExtraBold"
+                                Foreground="LightGray"
+                                Text="+" />
+                        </Border>
+                    </Button>
+                </Grid>
+
+                <!--  About the artist  -->
+                <Button
+                    Name="AboutBtn"
+                    Height="Auto"
+                    HorizontalContentAlignment="Stretch"
+                    VerticalContentAlignment="Stretch"
+                    InputBehaviors:CursorBehavior.Enable="True"
+                    Background="Transparent"
+                    BorderThickness="0">
+                    <Border Background="#1f1f1f" CornerRadius="8">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <!--  Image  -->
+                            <Image Grid.Row="0" Source="/Assets/Images/stopify-icon.ico" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Margin="16"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                IsHitTestVisible="False"
+                                Text="About the artist" />
+
+                            <!--  Info  -->
+                            <StackPanel Grid.Row="1" Margin="15,0,10,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--  Artist  -->
+                                    <Button
+                                        Name="AboutArtist"
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Left"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        Content="{Binding Artist}"
+                                        FontSize="16"
+                                        FontWeight="Bold"
+                                        Foreground="White" />
+
+                                    <!--  Monthly listeners  -->
+                                    <WrapPanel
+                                        Grid.Row="1"
+                                        Margin="0,5"
+                                        Orientation="Horizontal">
+
+                                        <TextBlock
+                                            Margin="0,0,5,0"
+                                            FontSize="16"
+                                            FontWeight="SemiBold"
+                                            Foreground="DarkGray"
+                                            Text="{Binding MonthlyListeners}" />
+                                        <TextBlock
+                                            VerticalAlignment="Bottom"
+                                            FontSize="16"
+                                            FontWeight="SemiBold"
+                                            Foreground="DarkGray"
+                                            Text="monthly listeners" />
+                                    </WrapPanel>
+
+                                    <!--  Follow  -->
+                                    <Border
+                                        Name="FollowBorder"
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        AnimationBehaviors:BorderBrushAnimationBehavior.Duration="0.1"
+                                        AnimationBehaviors:BorderBrushAnimationBehavior.EnableOnHover="True"
+                                        AnimationBehaviors:BorderBrushAnimationBehavior.InColor="White"
+                                        AnimationBehaviors:BorderBrushAnimationBehavior.OutColor="DarkGray"
+                                        AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                        AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                        AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                                        InputBehaviors:CursorBehavior.Enable="True"
+                                        BorderBrush="DarkGray"
+                                        BorderThickness="1"
+                                        CornerRadius="15">
+                                        <Button
+                                            Name="FollowBtn"
+                                            Margin="0,0,0,1"
+                                            Padding="15,7"
+                                            ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding IsFollowing, Mode=TwoWay}"
+                                            ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                                            ControlBehaviors:ToggleButtonStateBehavior.StateDependentValue="{Binding IsFollowing, Mode=TwoWay}"
+                                            ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Content="{Binding IsFollowing, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Unfollow|Follow'}"
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            Foreground="White">
+                                            <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                                                <CustomCollections:ButtonStateCollection>
+                                                    <Models:ButtonStateModel DependentValueBoolean="False" />
+                                                    <Models:ButtonStateModel DependentValueBoolean="True" />
+                                                </CustomCollections:ButtonStateCollection>
+                                            </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                                        </Button>
+                                    </Border>
+                                </Grid>
+
+                                <!--  Description  -->
+                                <WrapPanel
+                                    Grid.Row="2"
+                                    Margin="0,5,0,25"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="0,0,5,0"
+                                        FontSize="14"
+                                        FontWeight="SemiBold"
+                                        Foreground="DarkGray"
+                                        Text="{Binding ArtistDescription}"
+                                        TextTrimming="WordEllipsis"
+                                        TextWrapping="Wrap" />
+                                </WrapPanel>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </Button>
+
+                <!--  Credits  -->
+                <Border
+                    Margin="0,15"
+                    Background="#1f1f1f"
+                    CornerRadius="8">
+                    <StackPanel Margin="15">
+                        <!--  Header  -->
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="Credits" />
+
+                            <Button
+                                Name="ShowAll"
+                                Grid.Column="1"
+                                HorizontalAlignment="Right"
+                                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.01"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="Show all"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Foreground="White" />
+                        </Grid>
+
+                        <!--  List  -->
+                        <ItemsControl
+                            Background="Transparent"
+                            BorderThickness="0"
+                            ItemsSource="{Binding Credits}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--  Artist  -->
+                                        <StackPanel Grid.Column="0" Margin="0,15,0,15">
+                                            <Button
+                                                HorizontalAlignment="Left"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Content="{Binding Artist}"
+                                                FontSize="16"
+                                                FontWeight="SemiBold"
+                                                Foreground="White" />
+                                            <TextBlock
+                                                VerticalAlignment="Bottom"
+                                                FontSize="14"
+                                                FontWeight="SemiBold"
+                                                Foreground="White"
+                                                Text="Main Artist" />
+                                        </StackPanel>
+
+                                        <!--  Follow  -->
+                                        <Border
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            AnimationBehaviors:BorderBrushAnimationBehavior.Duration="0.1"
+                                            AnimationBehaviors:BorderBrushAnimationBehavior.EnableOnHover="True"
+                                            AnimationBehaviors:BorderBrushAnimationBehavior.InColor="White"
+                                            AnimationBehaviors:BorderBrushAnimationBehavior.OutColor="DarkGray"
+                                            AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                            AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                            AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.03"
+                                            InputBehaviors:CursorBehavior.Enable="True"
+                                            BorderBrush="DarkGray"
+                                            BorderThickness="1"
+                                            CornerRadius="15">
+                                            <Button
+                                                Margin="0,0,0,1"
+                                                Padding="15,7"
+                                                ControlBehaviors:ToggleButtonStateBehavior.CurrentState="{Binding IsFollowing, Mode=TwoWay}"
+                                                ControlBehaviors:ToggleButtonStateBehavior.Enable="True"
+                                                ControlBehaviors:ToggleButtonStateBehavior.StateDependentValue="{Binding IsFollowing, Mode=TwoWay}"
+                                                ControlBehaviors:ToggleButtonStateBehavior.StateQuantity="2"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Content="{Binding IsFollowing, Converter={StaticResource BooleanToStringConverter}, ConverterParameter='Unfollow|Follow'}"
+                                                FontSize="14"
+                                                FontWeight="Bold"
+                                                Foreground="White">
+                                                <ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                                                    <CustomCollections:ButtonStateCollection>
+                                                        <Models:ButtonStateModel DependentValueBoolean="False" />
+                                                        <Models:ButtonStateModel DependentValueBoolean="True" />
+                                                    </CustomCollections:ButtonStateCollection>
+                                                </ControlBehaviors:ToggleButtonStateBehavior.StateInfos>
+                                            </Button>
+                                        </Border>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+
+                <!--  Next in Queue  -->
+                <Border Background="#1f1f1f" CornerRadius="8">
+                    <StackPanel Margin="0,0,0,14">
+                        <!--  Header  -->
+                        <DockPanel Margin="15,17,15,7">
+                            <!--  Next in queue Text  -->
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                DockPanel.Dock="Left"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="Next in queue" />
+
+                            <!--  Open queue  -->
+                            <Button
+                                Name="OpenQueue"
+                                HorizontalAlignment="Right"
+                                AnimationBehaviors:ScaleAnimationBehavior.Duration="0.1"
+                                AnimationBehaviors:ScaleAnimationBehavior.EnableOnHover="True"
+                                AnimationBehaviors:ScaleAnimationBehavior.ScaleFactor="1.01"
+                                InputBehaviors:CursorBehavior.Enable="True"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Content="Open queue"
+                                DockPanel.Dock="Right"
+                                FontSize="14"
+                                FontWeight="Bold"
+                                Foreground="White" />
+                        </DockPanel>
+
+                        <!--  Song  -->
+                        <Queue:QueueItem x:Name="NextSongItem" DataContext="{Binding NextSong}" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

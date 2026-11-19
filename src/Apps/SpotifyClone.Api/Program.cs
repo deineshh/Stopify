@@ -151,9 +151,12 @@ builder.Host.UseSerilog((ctx, lc) => lc
 builder.Services.AddCors(options =>
 options.AddPolicy(name: "DevCors",
         policy => policy.WithOrigins(
-            "https://localhost:3000",
-            "http://localhost:3000",
-            "http://localhost:5000")
+            "https://localhost:4200",
+            "http://localhost:4200",
+            "http://localhost:5000",
+            "https://localhost:5000",
+            "http://localhost:8080",
+            "https://localhost:8080")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials()));

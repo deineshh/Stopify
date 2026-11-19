@@ -161,7 +161,6 @@ public sealed class AuthController(IMediator mediator, IHostEnvironment hostEnvi
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
     [AllowAnonymous]
-    [EnableRateLimiting("login-limits")]
     public async Task<ActionResult<LoginUserResponse>> Refresh(
         CancellationToken cancellationToken = default)
     {

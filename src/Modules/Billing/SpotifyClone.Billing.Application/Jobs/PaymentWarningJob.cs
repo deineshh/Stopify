@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Options;
 using SpotifyClone.Billing.Application.Abstractions;
 using SpotifyClone.Billing.Application.Abstractions.Services;
+using SpotifyClone.Billing.Application.Models;
 using SpotifyClone.Billing.Domain.Aggregates.Subscriptions;
-using SpotifyClone.Billing.Infrastructure.Models;
 using SpotifyClone.Shared.BuildingBlocks.Application.Configuration;
 using SpotifyClone.Shared.BuildingBlocks.Application.Email;
 using SpotifyClone.Shared.BuildingBlocks.Application.Results;

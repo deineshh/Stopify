@@ -1,0 +1,78 @@
+<nav id="left-sidebar__main-group" class="sidebar-main">
+  <header id="left-sidebar__header">
+    <div id="left-sidebar__title-bar">
+      <button id="left-sidebar__title-bar--title-btn" type="button" title="Collapse Your Library">
+        <span id="left-sidebar__title-bar--title-icon">
+          <fa-icon [icon]="faCircleLeft" />
+        </span>
+        <h1 id="left-sidebar__title-bar--title-text">Your Library</h1>
+      </button>
+      <button id="left-sidebar__title-bar--create-btn" class="left-sidebar__header-title-btn" title="Create a playlist, folder, or Jam">
+        <fa-icon [icon]="faPlus" />
+        <span id="left-sidebar__title-bar--create-text">Create</span>
+      </button>
+      <button id="left-sidebar__title-bar--expand-btn" class="left-sidebar__header-title-btn" title="Expand Your Library">
+        <fa-icon [icon]="faUpRightAndDownLeftFromCenter" />
+      </button>
+    </div>
+    <div id="left-sidebar__filter-btns">
+      <button id="left-sidebar__filter-btns--playlists" class="left-sidebar__filter-btn" role="option">Playlists</button>
+      <button id="left-sidebar__filter-btns--artists" class="left-sidebar__filter-btn" role="option">Artists</button>
+    </div>
+  </header>
+  <form id="left-sidebar__main">
+    <div id="left-sidebar__main--header">
+      <button id="left-sidebar__search-btn" class="left-sidebar__search-bar--btn" title="Search in Your Library">
+        <span id="left-sidebar__search-btn--span">
+          <fa-icon [icon]="faMagnifyingGlass" />
+        </span>
+      </button>
+      <label id="left-sidebar__search-bar" for="left-sidebar__search-bar--input" tabindex="0">
+        <input id="left-sidebar__search-bar--input" type="text" autocomplete="off" placeholder=" ">
+        <div id="left-sidebar__search-bar--placeholder-group">
+          <span id="left-sidebar__search-bar--placeholder-text">Search in Your Library</span>
+        </div>
+        <button id="left-sidebar__search-bar--clear-btn" class="left-sidebar__search-bar--btn" type="reset">
+          <span id="left-sidebar__search-bar--clear-span">
+            <fa-icon [icon]="faXmark" />
+          </span>
+        </button>
+      </label>
+      <button id="left-sidebar__sort--btn">
+        <span id="left-sidebar__sort--text">Recents</span>
+        <span id="left-sidebar__sort--icon">
+          <fa-icon [icon]="faListUl" />
+        </span>
+      </button>
+    </div>
+    <div id="left-sidebar__main-items">
+      @for (item of libraryItems; track item.id) {
+        <div class="left-sidebar__main-item">
+          <div class="left-sidebar__main-item--left-group">
+            <div class="left-sidebar__main-item--img-group">
+              <img class="left-sidebar__main-item--img" alt="" />
+            </div>
+            <button class="left-sidebar__main-item--play-btn" title="Play Liked Songs">
+              <span class="left-sidebar__main-item--play-icon">
+                <fa-icon [icon]="faPlay" />
+              </span>
+            </button>
+          </div>
+          <div class="left-sidebar__main-item--right-group">
+            <p class="left-sidebar__main-item--title">
+              <span class="left-sidebar__main-item--title-span">{{ item.title }}</span>
+            </p>
+            <p class="left-sidebar__main-item--description">
+              @if (item.pinned) {
+                <span class="left-sidebar__main-item--pin-icon">
+                  <fa-icon [icon]="faThumbtack" />
+                </span>
+              }
+              <span class="left-sidebar__main-item--description-text">{{ item.description }}</span>
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+  </form>
+</nav>

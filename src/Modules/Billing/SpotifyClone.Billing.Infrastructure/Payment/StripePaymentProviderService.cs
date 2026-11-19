@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using SpotifyClone.Billing.Application.Abstractions.Services;
-using SpotifyClone.Billing.Infrastructure.Models;
+using SpotifyClone.Billing.Application.Models;
 using SpotifyClone.Shared.BuildingBlocks.Application.Configuration;
 using Stripe;
 using Stripe.Checkout;

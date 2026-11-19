@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from '@layout/main-layout/main-layout';
+import { guestGuard } from '@core/auth/auth.guards';
 
 const TITLE = 'Stopify - Web Player: Music for everyone';
 
@@ -41,13 +42,21 @@ export const routes: Routes = [
     path: 'signup',
     title: 'Sign up - Stopify',
     data: { flow: 'signup' },
+    canActivate: [guestGuard],
     loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
   },
   {
     path: 'login',
     title: 'Log in - Stopify',
     data: { flow: 'login' },
+    canActivate: [guestGuard],
     loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
+  },
+  {
+    // Google sign-in lands here (AuthController.LoginGoogleCallback).
+    path: 'auth-success',
+    title: 'Logging in - Stopify',
+    loadComponent: () => import('@features/auth/auth-callback-page').then((m) => m.AuthCallbackPage),
   },
   { path: '**', redirectTo: '' },
 ];

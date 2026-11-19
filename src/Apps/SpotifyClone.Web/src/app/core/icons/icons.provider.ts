@@ -1,6 +1,6 @@
 import { EnvironmentProviders, inject, provideAppInitializer } from '@angular/core';
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faGoogle, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import { faCircleLeft, faCircleRight } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowDown,
@@ -50,6 +50,7 @@ import {
 const APP_ICONS = [
   // brands
   faFacebook,
+  faGoogle,
   faInstagram,
   faTwitter,
   // regular

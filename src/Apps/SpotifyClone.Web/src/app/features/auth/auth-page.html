@@ -15,12 +15,22 @@
     }
   }
 
-  <form class="sign-up-page__main--form" novalidate (submit)="$event.preventDefault(); next()">
+  <form class="sign-up-page__main--form" novalidate [attr.aria-busy]="pending()" (submit)="$event.preventDefault(); next()">
     @if (showBackHeader()) {
       <div class="sign-up-page__header-group">
         @if (signupStepIndex() > 0) {
-          <div class="sign-up-page__header-group--progressbar-group" role="progressbar" aria-valuemin="0" aria-valuemax="3" [attr.aria-valuenow]="signupStepIndex()">
-            <div class="sign-up-page__header-group--progressbar-progress" [style.width.%]="(signupStepIndex() / 3) * 100"></div>
+          <div
+            class="sign-up-page__header-group--progressbar-group"
+            role="progressbar"
+            aria-label="Sign up progress"
+            aria-valuemin="0"
+            aria-valuemax="3"
+            [attr.aria-valuenow]="signupStepIndex()"
+          >
+            <div
+              class="sign-up-page__header-group--progressbar-progress"
+              [style.width.%]="(signupStepIndex() / 3) * 100"
+            ></div>
           </div>
         }
         <div class="sign-up-page__header-group--title-group">
@@ -31,6 +41,7 @@
           </button>
           @if (signupStepIndex() > 0) {
             <div class="sign-up-page__title-group--info-group">
+              <h1 class="visually-hidden">Sign up – {{ stepTitle() }}</h1>
               <span class="sign-up-page__title-group--step-number">Step {{ signupStepIndex() }} of 3</span>
               <span class="sign-up-page__title-group--step-title">{{ stepTitle() }}</span>
             </div>
@@ -50,52 +61,22 @@
             type="email"
             autocomplete="email"
             placeholder="name@domain.com"
-            [class.invalid]="submitted() && !emailValid()"
+            [class.invalid]="(submitted() && !emailValid()) || serverError()?.offerLogin"
             [value]="email()"
             (input)="email.set($any($event.target).value)"
           />
           @if (submitted() && !emailValid()) {
-            <div class="sign-up-page__error-group" role="alert">
-              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-              <span class="sign-up-page__error-text">
-                This email is invalid. Make sure it's written like example&#64;email.com
-              </span>
-            </div>
+            <ng-container
+              [ngTemplateOutlet]="fieldError"
+              [ngTemplateOutletContext]="{ $implicit: 'This email is invalid. Make sure it\'s written like example@email.com' }"
+            />
           }
         </div>
       }
 
       <!-- ------------------------------------------------ sign up: password -->
       @case ('signup-password') {
-        <div class="sign-up-page__new-password-group">
-          <label class="sign-up-page__input-label" for="signup-password">Password</label>
-          <div class="sign-up-page__password-input-group sign-up-page__new-password-group--input-group" [class.invalid]="submitted() && !passwordValid()">
-            <input
-              id="signup-password"
-              class="sign-up-page__password-input-group--input"
-              autocomplete="new-password"
-              [type]="showPassword() ? 'text' : 'password'"
-              [value]="password()"
-              (input)="password.set($any($event.target).value)"
-            />
-            <ng-container [ngTemplateOutlet]="passwordToggle" />
-          </div>
-          <div class="sign-up-page__new-password-group--requirements-group">
-            <span class="sign-up-page__new-password-group--requirements-title">Your password must contain at least</span>
-            <ul class="sign-up-page__new-password-group--requirements-list">
-              @for (rule of passwordRules(); track rule.label) {
-                <li class="sign-up-page__new-password-group--requirement-item">
-                  <span class="sign-up-page__new-password-group--requirement-icon" [class.unmet]="!rule.met">
-                    <fa-icon [icon]="['fas', 'check']" />
-                  </span>
-                  <span class="sign-up-page__new-password-group--requirement-text" [class.error]="submitted() && !rule.met">
-                    {{ rule.label }}
-                  </span>
-                </li>
-              }
-            </ul>
-          </div>
-        </div>
+        <ng-container [ngTemplateOutlet]="newPassword" [ngTemplateOutletContext]="{ $implicit: 'signup-password' }" />
       }
 
       <!-- ------------------------------------------------ sign up: about you -->
@@ -109,15 +90,13 @@
               class="sign-up-page__input"
               type="text"
               autocomplete="name"
-              [class.invalid]="submitted() && !nameValid()"
+              maxlength="64"
+              [class.invalid]="submitted() && nameError()"
               [value]="name()"
               (input)="name.set($any($event.target).value)"
             />
-            @if (submitted() && !nameValid()) {
-              <div class="sign-up-page__error-group" role="alert">
-                <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-                <span class="sign-up-page__error-text">Enter a name for your profile.</span>
-              </div>
+            @if (submitted() && nameError(); as message) {
+              <ng-container [ngTemplateOutlet]="fieldError" [ngTemplateOutletContext]="{ $implicit: message }" />
             }
           </div>
 
@@ -135,7 +114,7 @@
                 placeholder="dd"
                 aria-label="Day"
                 autocomplete="bday-day"
-                [class.invalid]="submitted() && !birthDateValid()"
+                [class.invalid]="submitted() && birthDateError()"
                 [value]="birthDay()"
                 (input)="birthDay.set($any($event.target).value)"
               />
@@ -143,7 +122,7 @@
                 class="sign-up-page__input sign-up-page__birth-date-group--month-select"
                 aria-label="Month"
                 autocomplete="bday-month"
-                [class.invalid]="submitted() && !birthDateValid()"
+                [class.invalid]="submitted() && birthDateError()"
                 [value]="birthMonth()"
                 (change)="birthMonth.set($any($event.target).value)"
               >
@@ -159,16 +138,13 @@
                 placeholder="yyyy"
                 aria-label="Year"
                 autocomplete="bday-year"
-                [class.invalid]="submitted() && !birthDateValid()"
+                [class.invalid]="submitted() && birthDateError()"
                 [value]="birthYear()"
                 (input)="birthYear.set($any($event.target).value)"
               />
             </div>
-            @if (submitted() && !birthDateValid()) {
-              <div class="sign-up-page__error-group" role="alert">
-                <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-                <span class="sign-up-page__error-text">Please enter your date of birth.</span>
-              </div>
+            @if (submitted() && birthDateError(); as message) {
+              <ng-container [ngTemplateOutlet]="fieldError" [ngTemplateOutletContext]="{ $implicit: message }" />
             }
           </div>
 
@@ -178,26 +154,23 @@
               We use your gender to help personalize our content recommendations and ads for you.
             </p>
             <div class="sign-up-page__gender-group--items">
-              @for (option of genders; track option) {
+              @for (option of genders; track option.value) {
                 <label class="sign-up-page__gender-group--item">
                   <input
                     class="sign-up-page__gender-item--radio"
                     type="radio"
                     name="gender"
-                    [value]="option"
-                    [checked]="gender() === option"
-                    (change)="gender.set(option)"
+                    [value]="option.value"
+                    [checked]="gender() === option.value"
+                    (change)="gender.set(option.value)"
                   />
                   <span class="sign-up-page__gender-item--circle"></span>
-                  <span class="sign-up-page__gender-item--span">{{ option }}</span>
+                  <span class="sign-up-page__gender-item--span">{{ option.label }}</span>
                 </label>
               }
             </div>
-            @if (submitted() && !genderValid()) {
-              <div class="sign-up-page__error-group" role="alert">
-                <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-                <span class="sign-up-page__error-text">Select your gender.</span>
-              </div>
+            @if (submitted() && gender() === null) {
+              <ng-container [ngTemplateOutlet]="fieldError" [ngTemplateOutletContext]="{ $implicit: 'Select your gender.' }" />
             }
           </div>
         </div>
@@ -207,7 +180,13 @@
       @case ('signup-terms') {
         <div class="sign-up-page__terms-group">
           <div class="sign-up-page__terms-group--item">
-            <input id="terms-marketing" class="sign-up-page__terms-group--input" type="checkbox" [checked]="marketingOptOut()" (change)="marketingOptOut.set(!marketingOptOut())" />
+            <input
+              id="terms-marketing"
+              class="sign-up-page__terms-group--input"
+              type="checkbox"
+              [checked]="marketingOptOut()"
+              (change)="marketingOptOut.set(!marketingOptOut())"
+            />
             <label class="sign-up-page__terms-group--label" for="terms-marketing">
               <span class="sign-up-page__terms-group--item-icon"><fa-icon [icon]="['fas', 'check']" /></span>
               <span class="sign-up-page__terms-group--item-text">
@@ -216,7 +195,13 @@
             </label>
           </div>
           <div class="sign-up-page__terms-group--item">
-            <input id="terms-share" class="sign-up-page__terms-group--input" type="checkbox" [checked]="shareData()" (change)="shareData.set(!shareData())" />
+            <input
+              id="terms-share"
+              class="sign-up-page__terms-group--input"
+              type="checkbox"
+              [checked]="shareData()"
+              (change)="shareData.set(!shareData())"
+            />
             <label class="sign-up-page__terms-group--label" for="terms-share">
               <span class="sign-up-page__terms-group--item-icon"><fa-icon [icon]="['fas', 'check']" /></span>
               <span class="sign-up-page__terms-group--item-text">
@@ -225,7 +210,13 @@
             </label>
           </div>
           <div class="sign-up-page__terms-group--item">
-            <input id="terms-accept" class="sign-up-page__terms-group--input" type="checkbox" [checked]="acceptTerms()" (change)="acceptTerms.set(!acceptTerms())" />
+            <input
+              id="terms-accept"
+              class="sign-up-page__terms-group--input"
+              type="checkbox"
+              [checked]="acceptTerms()"
+              (change)="acceptTerms.set(!acceptTerms())"
+            />
             <label class="sign-up-page__terms-group--label" for="terms-accept">
               <span class="sign-up-page__terms-group--item-icon"><fa-icon [icon]="['fas', 'check']" /></span>
               <span class="sign-up-page__terms-group--item-text">
@@ -238,74 +229,58 @@
             </label>
           </div>
           @if (submitted() && !acceptTerms()) {
-            <div class="sign-up-page__error-group" role="alert">
-              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-              <span class="sign-up-page__error-text">Please accept the terms and conditions to continue.</span>
-            </div>
+            <ng-container
+              [ngTemplateOutlet]="fieldError"
+              [ngTemplateOutletContext]="{ $implicit: 'Accept the terms and conditions to continue.' }"
+            />
           }
         </div>
+      }
+
+      <!-- ------------------------------------------------ sign up: verify email -->
+      @case ('signup-verify') {
+        <h1 class="sign-up-page__main--form-title">Verify your email</h1>
+        <p class="sign-up-page__input-description sign-up-page__form-description">
+          Enter the 6-digit code we sent to <strong>{{ email() }}</strong>.
+        </p>
+        <ng-container [ngTemplateOutlet]="codeField" />
       }
 
       <!-- ------------------------------------------------ log in: identifier -->
       @case ('login-identifier') {
         <div class="sign-up-page__email-address-group">
-          <label class="sign-up-page__input-label" for="login-identifier">Email or username</label>
+          <label class="sign-up-page__input-label" for="login-identifier">Email, username or phone number</label>
           <input
             id="login-identifier"
             class="sign-up-page__input"
             type="text"
             autocomplete="username"
-            placeholder="Email or username"
+            placeholder="Email, username or phone number"
             [class.invalid]="submitted() && !identifierValid()"
-            [value]="email()"
-            (input)="email.set($any($event.target).value)"
+            [value]="identifier()"
+            (input)="identifier.set($any($event.target).value)"
           />
           @if (submitted() && !identifierValid()) {
-            <div class="sign-up-page__error-group" role="alert">
-              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-              <span class="sign-up-page__error-text">Please enter your Stopify username or email address.</span>
-            </div>
+            <ng-container
+              [ngTemplateOutlet]="fieldError"
+              [ngTemplateOutletContext]="{ $implicit: 'Enter your email, username or phone number.' }"
+            />
           }
         </div>
       }
 
-      <!-- ------------------------------------------------ log in: code -->
+      <!-- ------------------------------------------------ log in: SMS code -->
       @case ('login-code') {
-        <h2 class="sign-up-page__main--form-title">Enter the 6-digit code sent to you</h2>
-        <div class="sign-up-page__verification-group">
-          <div class="sign-up-page__verification-group--code-group" (paste)="pasteCode($event)">
-            @for (slot of codeSlots; track slot) {
-              <input
-                #digit
-                class="sign-up-page__verification-group--code-input"
-                type="text"
-                inputmode="numeric"
-                maxlength="1"
-                autocomplete="one-time-code"
-                required
-                [attr.aria-label]="'Digit ' + (slot + 1)"
-                (input)="setCodeDigit(slot, digit)"
-                (keydown.backspace)="onCodeBackspace(slot, digit)"
-              />
-            }
-          </div>
-          @if (submitted() && !codeValid()) {
-            <div class="sign-up-page__error-group" role="alert">
-              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-              <span class="sign-up-page__error-text">Invalid code.</span>
-            </div>
-          }
-          <div class="sign-up-page__verification-group--resend-group">
-            <button class="sign-up-page__verification-group--resend-btn" type="button">
-              <span>Resend code</span>
-            </button>
-          </div>
-        </div>
+        <h1 class="sign-up-page__main--form-title">Enter the 6-digit code sent to you</h1>
+        <p class="sign-up-page__input-description sign-up-page__form-description">
+          We texted it to <strong>{{ phoneNumber() }}</strong>.
+        </p>
+        <ng-container [ngTemplateOutlet]="codeField" [ngTemplateOutletContext]="{ resend: true }" />
       }
 
       <!-- ------------------------------------------------ log in: password -->
       @case ('login-password') {
-        <h2 class="sign-up-page__main--form-title">Log in with a password</h2>
+        <h1 class="sign-up-page__main--form-title">Log in with a password</h1>
         <div class="sign-up-page__login-with-password-input-group">
           <div class="sign-up-page__login-with-password-input-group--username-group">
             <label class="sign-up-page__input-label" for="login-username">Email or username</label>
@@ -316,17 +291,20 @@
               autocomplete="username"
               placeholder="Email or username"
               [class.invalid]="submitted() && !identifierValid()"
-              [value]="email()"
-              (input)="email.set($any($event.target).value)"
+              [value]="identifier()"
+              (input)="identifier.set($any($event.target).value)"
             />
           </div>
           @if (submitted() && !identifierValid()) {
-            <div class="sign-up-page__error-group" role="alert">
-              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-              <span class="sign-up-page__error-text">Email or username isn't linked to a Stopify account.</span>
-            </div>
+            <ng-container
+              [ngTemplateOutlet]="fieldError"
+              [ngTemplateOutletContext]="{ $implicit: 'Enter your email or username.' }"
+            />
           }
-          <div class="sign-up-page__password-input-group sign-up-page__login-with-password-input-group--password-group" [class.invalid]="submitted() && password().length === 0">
+          <div
+            class="sign-up-page__password-input-group sign-up-page__login-with-password-input-group--password-group"
+            [class.invalid]="submitted() && password().length === 0"
+          >
             <input
               class="sign-up-page__password-input-group--input"
               autocomplete="current-password"
@@ -339,34 +317,100 @@
             <ng-container [ngTemplateOutlet]="passwordToggle" />
           </div>
           @if (submitted() && password().length === 0) {
-            <div class="sign-up-page__error-group" role="alert">
-              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
-              <span class="sign-up-page__error-text">Please enter your password.</span>
-            </div>
+            <ng-container [ngTemplateOutlet]="fieldError" [ngTemplateOutletContext]="{ $implicit: 'Enter your password.' }" />
+          }
+          <a class="sign-up-page__forgot-password" (click)="goTo('reset-email')">Forgot your password?</a>
+        </div>
+      }
+
+      <!-- ------------------------------------------------ reset: email -->
+      @case ('reset-email') {
+        <h1 class="sign-up-page__main--form-title">Reset your password</h1>
+        <p class="sign-up-page__input-description sign-up-page__form-description">
+          Enter the email address linked to your Stopify account and we'll send you a code.
+        </p>
+        <div class="sign-up-page__email-address-group">
+          <label class="sign-up-page__input-label" for="reset-email">Email address</label>
+          <input
+            id="reset-email"
+            class="sign-up-page__input"
+            type="email"
+            autocomplete="email"
+            placeholder="name@domain.com"
+            [class.invalid]="submitted() && !emailValid()"
+            [value]="email()"
+            (input)="email.set($any($event.target).value)"
+          />
+          @if (submitted() && !emailValid()) {
+            <ng-container
+              [ngTemplateOutlet]="fieldError"
+              [ngTemplateOutletContext]="{ $implicit: 'This email is invalid. Make sure it\'s written like example@email.com' }"
+            />
           }
         </div>
       }
+
+      <!-- ------------------------------------------------ reset: code -->
+      @case ('reset-code') {
+        <h1 class="sign-up-page__main--form-title">Enter the 6-digit code</h1>
+        <p class="sign-up-page__input-description sign-up-page__form-description">
+          We sent it to <strong>{{ email() }}</strong>.
+        </p>
+        <ng-container [ngTemplateOutlet]="codeField" [ngTemplateOutletContext]="{ resend: true }" />
+      }
+
+      <!-- ------------------------------------------------ reset: new password -->
+      @case ('reset-password') {
+        <h1 class="sign-up-page__main--form-title">Create a new password</h1>
+        <ng-container [ngTemplateOutlet]="newPassword" [ngTemplateOutletContext]="{ $implicit: 'reset-password' }" />
+      }
     }
 
-    <button class="sign-up-page__next-btn" type="submit">
-      <span class="sign-up-page__next-span">
-        {{ current === 'signup-email' || current === 'signup-password' || current === 'signup-profile' ? 'Next' : current === 'signup-terms' ? 'Sign up' : 'Continue' }}
-      </span>
+    @if (serverError(); as error) {
+      <div class="sign-up-page__error-group sign-up-page__server-error" role="alert">
+        <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+        <span class="sign-up-page__error-text">
+          {{ error.message }}
+          @if (error.offerLogin) {
+            <a routerLink="/login" [queryParams]="redirect() ? { redirect: redirect() } : {}">Log in</a>
+          }
+        </span>
+      </div>
+    }
+
+    <button class="sign-up-page__next-btn" type="submit" [disabled]="pending()">
+      <span class="sign-up-page__next-span">{{ pending() ? 'Please wait…' : submitLabel() }}</span>
     </button>
+
+    @if (current === 'signup-email' || current === 'login-identifier') {
+      <div class="sign-up-page__divider" role="presentation"><span>or</span></div>
+      <button class="sign-up-page__social-btn" type="button" (click)="loginWithGoogle()">
+        <fa-icon class="sign-up-page__social-icon" [icon]="['fab', 'google']" />
+        <span>{{ current === 'signup-email' ? 'Sign up with Google' : 'Continue with Google' }}</span>
+      </button>
+    }
 
     @switch (current) {
       @case ('signup-email') {
         <div class="sign-up-page__footer-group sign-up-page__have-account-group">
           <p class="sign-up-page__footer-group--title">Already have an account?</p>
-          <a class="sign-up-page__footer-group--anchor" routerLink="/login">
+          <a class="sign-up-page__footer-group--anchor" routerLink="/login" [queryParams]="redirect() ? { redirect: redirect() } : {}">
             <span class="sign-up-page__footer-group--span">Log in</span>
+          </a>
+        </div>
+      }
+      @case ('signup-verify') {
+        <div class="sign-up-page__footer-group">
+          <p class="sign-up-page__footer-group--title">Can't find it? Check your spam folder.</p>
+          <a class="sign-up-page__footer-group--anchor sign-up-page__skip-verify" (click)="skipVerification()">
+            <span class="sign-up-page__footer-group--span">Do this later</span>
           </a>
         </div>
       }
       @case ('login-identifier') {
         <div class="sign-up-page__footer-group sign-up-page__dont-have-account-group">
           <span class="sign-up-page__footer-group--title">Don't have an account?</span>
-          <a class="sign-up-page__footer-group--anchor" routerLink="/signup">
+          <a class="sign-up-page__footer-group--anchor" routerLink="/signup" [queryParams]="redirect() ? { redirect: redirect() } : {}">
             <span class="sign-up-page__footer-group--span">Sign up</span>
           </a>
         </div>
@@ -380,14 +424,82 @@
       }
       @case ('login-password') {
         <div class="sign-up-page__footer-group sign-up-page__without-password-login-group">
-          <a class="sign-up-page__footer-group--anchor" (click)="goTo('login-code')">
-            <span class="sign-up-page__footer-group--span">Log in without password</span>
+          <a class="sign-up-page__footer-group--anchor" (click)="goTo('login-identifier')">
+            <span class="sign-up-page__footer-group--span">Log in with a phone number</span>
           </a>
         </div>
       }
     }
   </form>
 </main>
+
+<!-- ---------------------------------------------------------------- shared fragments -->
+
+<ng-template #fieldError let-message>
+  <div class="sign-up-page__error-group" role="alert">
+    <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+    <span class="sign-up-page__error-text">{{ message }}</span>
+  </div>
+</ng-template>
+
+<ng-template #newPassword let-id>
+  <div class="sign-up-page__new-password-group">
+    <label class="sign-up-page__input-label" [for]="id">Password</label>
+    <div
+      class="sign-up-page__password-input-group sign-up-page__new-password-group--input-group"
+      [class.invalid]="submitted() && !passwordValid()"
+    >
+      <input
+        class="sign-up-page__password-input-group--input"
+        autocomplete="new-password"
+        [id]="id"
+        [type]="showPassword() ? 'text' : 'password'"
+        [value]="password()"
+        (input)="password.set($any($event.target).value)"
+      />
+      <ng-container [ngTemplateOutlet]="passwordToggle" />
+    </div>
+    <div class="sign-up-page__new-password-group--requirements-group">
+      <span class="sign-up-page__new-password-group--requirements-title">Your password must contain at least</span>
+      <ul class="sign-up-page__new-password-group--requirements-list">
+        @for (rule of passwordRules(); track rule.label) {
+          <li class="sign-up-page__new-password-group--requirement-item">
+            <span class="sign-up-page__new-password-group--requirement-icon" [class.unmet]="!rule.met">
+              <fa-icon [icon]="['fas', 'check']" />
+            </span>
+            <span
+              class="sign-up-page__new-password-group--requirement-text"
+              [class.error]="submitted() && !rule.met"
+            >
+              {{ rule.label }}
+            </span>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #codeField let-resend="resend">
+  <div class="sign-up-page__verification-group">
+    <app-code-input [invalid]="submitted() && !codeValid()" [(value)]="code" />
+    @if (submitted() && !codeValid()) {
+      <ng-container [ngTemplateOutlet]="fieldError" [ngTemplateOutletContext]="{ $implicit: 'Enter all 6 digits.' }" />
+    }
+    @if (resend) {
+      <div class="sign-up-page__verification-group--resend-group">
+        <button
+          class="sign-up-page__verification-group--resend-btn"
+          type="button"
+          [disabled]="resendIn() > 0 || pending()"
+          (click)="resendCode()"
+        >
+          <span>{{ resendIn() > 0 ? 'Resend code in ' + resendIn() + 's' : 'Resend code' }}</span>
+        </button>
+      </div>
+    }
+  </div>
+</ng-template>
 
 <ng-template #passwordToggle>
   <button

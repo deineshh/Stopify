@@ -1,0 +1,32 @@
+@let data = shelf();
+<div class="track-group__header-group">
+  <div class="track-group__header-group--title-group">
+    @if (data.eyebrow) {
+      <p class="track-group__header-group--title-top-text" [id]="eyebrowId()">{{ data.eyebrow }}</p>
+    }
+    <h2 class="track-group__header-group--title-text" [id]="titleId()">{{ data.title }}</h2>
+  </div>
+  @if (data.showAllLabel) {
+    <a class="track-group__header-group--show-all-anchor" href="" (click)="$event.preventDefault()">
+      <span class="track-group__header-group--show-all-span">{{ data.showAllLabel }}</span>
+    </a>
+  }
+</div>
+
+@if (data.filters?.length) {
+  <div class="track-group__filter-group" role="group" [attr.aria-label]="data.title + ' filters'">
+    @for (filter of data.filters; track filter) {
+      <button appFilterChip [active]="filter === activeFilter()" (click)="activeFilter.set(filter)">
+        {{ filter }}
+      </button>
+    }
+  </div>
+}
+
+<div class="track-group__main-group">
+  <div class="track-items" role="list" appSingleRow>
+    @for (item of data.items; track item.id) {
+      <app-media-card [item]="item" />
+    }
+  </div>
+</div>

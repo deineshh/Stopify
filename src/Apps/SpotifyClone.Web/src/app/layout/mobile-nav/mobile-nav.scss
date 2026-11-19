@@ -1,0 +1,28 @@
+:host {
+  align-items: center;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), black 40%);
+  display: flex;
+  height: var(--mobile-nav-height);
+  justify-content: space-around;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.mobile-nav__tab {
+  align-items: center;
+  color: var(--light-gray-fg-color);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: 0.7rem;
+  gap: 4px;
+  padding: 6px 0;
+  transition: color 0.1s ease-in-out;
+}
+
+.mobile-nav__tab.active {
+  color: var(--primary-fg-color);
+}
+
+.mobile-nav__icon {
+  font-size: 1.35rem;
+}

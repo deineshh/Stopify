@@ -1,0 +1,23 @@
+<div class="search-browse__header">
+  <h1 class="search-browse__header--title">
+    <span class="search-browse__header--span">Browse all</span>
+  </h1>
+</div>
+<nav class="search-browse__main-group" aria-label="Browse categories">
+  @for (genre of genres(); track genre.id) {
+    <a
+      class="search-browse__main-item"
+      [routerLink]="['/search', genre.name]"
+      [style.background-color]="genre.color"
+    >
+      <img
+        class="search-browse__main-item--img"
+        [src]="genre.image"
+        alt=""
+        draggable="false"
+        [attr.loading]="$index < 12 ? 'eager' : 'lazy'"
+      />
+      <span class="search-browse__main-item--span">{{ genre.name }}</span>
+    </a>
+  }
+</nav>

@@ -1,0 +1,402 @@
+@let current = step();
+<header class="sign-up-page__header">
+  <a routerLink="/" title="Stopify">
+    <img class="sign-up-page__header--stopify-icon" src="/assets/images/icons/favicon.svg" alt="Stopify" />
+  </a>
+</header>
+
+<main class="sign-up-page__main">
+  @switch (current) {
+    @case ('signup-email') {
+      <h1 class="sign-up-page__main--title">Sign up to start listening</h1>
+    }
+    @case ('login-identifier') {
+      <h1 class="sign-up-page__main--title">Welcome back</h1>
+    }
+  }
+
+  <form class="sign-up-page__main--form" novalidate (submit)="$event.preventDefault(); next()">
+    @if (showBackHeader()) {
+      <div class="sign-up-page__header-group">
+        @if (signupStepIndex() > 0) {
+          <div class="sign-up-page__header-group--progressbar-group" role="progressbar" aria-valuemin="0" aria-valuemax="3" [attr.aria-valuenow]="signupStepIndex()">
+            <div class="sign-up-page__header-group--progressbar-progress" [style.width.%]="(signupStepIndex() / 3) * 100"></div>
+          </div>
+        }
+        <div class="sign-up-page__header-group--title-group">
+          <button class="sign-up-page__title-group--back-btn" type="button" title="Go back" (click)="back()">
+            <span class="sign-up-page__title-group--back-icon">
+              <fa-icon [icon]="['fas', 'less-than']" />
+            </span>
+          </button>
+          @if (signupStepIndex() > 0) {
+            <div class="sign-up-page__title-group--info-group">
+              <span class="sign-up-page__title-group--step-number">Step {{ signupStepIndex() }} of 3</span>
+              <span class="sign-up-page__title-group--step-title">{{ stepTitle() }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    @switch (current) {
+      <!-- ------------------------------------------------ sign up: email -->
+      @case ('signup-email') {
+        <div class="sign-up-page__email-address-group">
+          <label class="sign-up-page__input-label" for="signup-email">Email address</label>
+          <input
+            id="signup-email"
+            class="sign-up-page__input"
+            type="email"
+            autocomplete="email"
+            placeholder="name@domain.com"
+            [class.invalid]="submitted() && !emailValid()"
+            [value]="email()"
+            (input)="email.set($any($event.target).value)"
+          />
+          @if (submitted() && !emailValid()) {
+            <div class="sign-up-page__error-group" role="alert">
+              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+              <span class="sign-up-page__error-text">
+                This email is invalid. Make sure it's written like example&#64;email.com
+              </span>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- ------------------------------------------------ sign up: password -->
+      @case ('signup-password') {
+        <div class="sign-up-page__new-password-group">
+          <label class="sign-up-page__input-label" for="signup-password">Password</label>
+          <div class="sign-up-page__password-input-group sign-up-page__new-password-group--input-group" [class.invalid]="submitted() && !passwordValid()">
+            <input
+              id="signup-password"
+              class="sign-up-page__password-input-group--input"
+              autocomplete="new-password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [value]="password()"
+              (input)="password.set($any($event.target).value)"
+            />
+            <ng-container [ngTemplateOutlet]="passwordToggle" />
+          </div>
+          <div class="sign-up-page__new-password-group--requirements-group">
+            <span class="sign-up-page__new-password-group--requirements-title">Your password must contain at least</span>
+            <ul class="sign-up-page__new-password-group--requirements-list">
+              @for (rule of passwordRules(); track rule.label) {
+                <li class="sign-up-page__new-password-group--requirement-item">
+                  <span class="sign-up-page__new-password-group--requirement-icon" [class.unmet]="!rule.met">
+                    <fa-icon [icon]="['fas', 'check']" />
+                  </span>
+                  <span class="sign-up-page__new-password-group--requirement-text" [class.error]="submitted() && !rule.met">
+                    {{ rule.label }}
+                  </span>
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+
+      <!-- ------------------------------------------------ sign up: about you -->
+      @case ('signup-profile') {
+        <div class="sign-up-page__about-yourself-group">
+          <div class="sign-up-page__name-group">
+            <label class="sign-up-page__input-label" for="signup-name">Name</label>
+            <p class="sign-up-page__input-description">This name will appear on your profile</p>
+            <input
+              id="signup-name"
+              class="sign-up-page__input"
+              type="text"
+              autocomplete="name"
+              [class.invalid]="submitted() && !nameValid()"
+              [value]="name()"
+              (input)="name.set($any($event.target).value)"
+            />
+            @if (submitted() && !nameValid()) {
+              <div class="sign-up-page__error-group" role="alert">
+                <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+                <span class="sign-up-page__error-text">Enter a name for your profile.</span>
+              </div>
+            }
+          </div>
+
+          <div class="sign-up-page__birth-date-group">
+            <label class="sign-up-page__input-label" for="sign-up-page__birth-date-group--day-input">Date of birth</label>
+            <p class="sign-up-page__input-description sign-up-page__birth-date-group--description">
+              Why do we need your date of birth? <a href="" (click)="$event.preventDefault()">Learn more.</a>
+            </p>
+            <div class="sign-up-page__birth-date-group--input-group">
+              <input
+                id="sign-up-page__birth-date-group--day-input"
+                class="sign-up-page__input sign-up-page__birth-date-group--day-input"
+                type="number"
+                inputmode="numeric"
+                placeholder="dd"
+                aria-label="Day"
+                autocomplete="bday-day"
+                [class.invalid]="submitted() && !birthDateValid()"
+                [value]="birthDay()"
+                (input)="birthDay.set($any($event.target).value)"
+              />
+              <select
+                class="sign-up-page__input sign-up-page__birth-date-group--month-select"
+                aria-label="Month"
+                autocomplete="bday-month"
+                [class.invalid]="submitted() && !birthDateValid()"
+                [value]="birthMonth()"
+                (change)="birthMonth.set($any($event.target).value)"
+              >
+                <option value="0" disabled>Month</option>
+                @for (month of months; track month; let index = $index) {
+                  <option [value]="index + 1">{{ month }}</option>
+                }
+              </select>
+              <input
+                class="sign-up-page__input sign-up-page__birth-date-group--year-input"
+                type="number"
+                inputmode="numeric"
+                placeholder="yyyy"
+                aria-label="Year"
+                autocomplete="bday-year"
+                [class.invalid]="submitted() && !birthDateValid()"
+                [value]="birthYear()"
+                (input)="birthYear.set($any($event.target).value)"
+              />
+            </div>
+            @if (submitted() && !birthDateValid()) {
+              <div class="sign-up-page__error-group" role="alert">
+                <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+                <span class="sign-up-page__error-text">Please enter your date of birth.</span>
+              </div>
+            }
+          </div>
+
+          <div class="sign-up-page__gender-group" role="radiogroup" aria-labelledby="signup-gender-title">
+            <span id="signup-gender-title" class="sign-up-page__input-label">Gender</span>
+            <p class="sign-up-page__input-description">
+              We use your gender to help personalize our content recommendations and ads for you.
+            </p>
+            <div class="sign-up-page__gender-group--items">
+              @for (option of genders; track option) {
+                <label class="sign-up-page__gender-group--item">
+                  <input
+                    class="sign-up-page__gender-item--radio"
+                    type="radio"
+                    name="gender"
+                    [value]="option"
+                    [checked]="gender() === option"
+                    (change)="gender.set(option)"
+                  />
+                  <span class="sign-up-page__gender-item--circle"></span>
+                  <span class="sign-up-page__gender-item--span">{{ option }}</span>
+                </label>
+              }
+            </div>
+            @if (submitted() && !genderValid()) {
+              <div class="sign-up-page__error-group" role="alert">
+                <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+                <span class="sign-up-page__error-text">Select your gender.</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- ------------------------------------------------ sign up: terms -->
+      @case ('signup-terms') {
+        <div class="sign-up-page__terms-group">
+          <div class="sign-up-page__terms-group--item">
+            <input id="terms-marketing" class="sign-up-page__terms-group--input" type="checkbox" [checked]="marketingOptOut()" (change)="marketingOptOut.set(!marketingOptOut())" />
+            <label class="sign-up-page__terms-group--label" for="terms-marketing">
+              <span class="sign-up-page__terms-group--item-icon"><fa-icon [icon]="['fas', 'check']" /></span>
+              <span class="sign-up-page__terms-group--item-text">
+                I would prefer not to receive marketing messages from Stopify
+              </span>
+            </label>
+          </div>
+          <div class="sign-up-page__terms-group--item">
+            <input id="terms-share" class="sign-up-page__terms-group--input" type="checkbox" [checked]="shareData()" (change)="shareData.set(!shareData())" />
+            <label class="sign-up-page__terms-group--label" for="terms-share">
+              <span class="sign-up-page__terms-group--item-icon"><fa-icon [icon]="['fas', 'check']" /></span>
+              <span class="sign-up-page__terms-group--item-text">
+                Share my registration data with Stopify's content providers for marketing purposes
+              </span>
+            </label>
+          </div>
+          <div class="sign-up-page__terms-group--item">
+            <input id="terms-accept" class="sign-up-page__terms-group--input" type="checkbox" [checked]="acceptTerms()" (change)="acceptTerms.set(!acceptTerms())" />
+            <label class="sign-up-page__terms-group--label" for="terms-accept">
+              <span class="sign-up-page__terms-group--item-icon"><fa-icon [icon]="['fas', 'check']" /></span>
+              <span class="sign-up-page__terms-group--item-text">
+                <span>Stopify is a personalised service.</span>
+                <span>
+                  I agree to the <a href="" (click)="$event.preventDefault()">Stopify Terms and Conditions of Use</a> and
+                  <a href="" (click)="$event.preventDefault()">Privacy Policy</a>.
+                </span>
+              </span>
+            </label>
+          </div>
+          @if (submitted() && !acceptTerms()) {
+            <div class="sign-up-page__error-group" role="alert">
+              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+              <span class="sign-up-page__error-text">Please accept the terms and conditions to continue.</span>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- ------------------------------------------------ log in: identifier -->
+      @case ('login-identifier') {
+        <div class="sign-up-page__email-address-group">
+          <label class="sign-up-page__input-label" for="login-identifier">Email or username</label>
+          <input
+            id="login-identifier"
+            class="sign-up-page__input"
+            type="text"
+            autocomplete="username"
+            placeholder="Email or username"
+            [class.invalid]="submitted() && !identifierValid()"
+            [value]="email()"
+            (input)="email.set($any($event.target).value)"
+          />
+          @if (submitted() && !identifierValid()) {
+            <div class="sign-up-page__error-group" role="alert">
+              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+              <span class="sign-up-page__error-text">Please enter your Stopify username or email address.</span>
+            </div>
+          }
+        </div>
+      }
+
+      <!-- ------------------------------------------------ log in: code -->
+      @case ('login-code') {
+        <h2 class="sign-up-page__main--form-title">Enter the 6-digit code sent to you</h2>
+        <div class="sign-up-page__verification-group">
+          <div class="sign-up-page__verification-group--code-group" (paste)="pasteCode($event)">
+            @for (slot of codeSlots; track slot) {
+              <input
+                #digit
+                class="sign-up-page__verification-group--code-input"
+                type="text"
+                inputmode="numeric"
+                maxlength="1"
+                autocomplete="one-time-code"
+                required
+                [attr.aria-label]="'Digit ' + (slot + 1)"
+                (input)="setCodeDigit(slot, digit)"
+                (keydown.backspace)="onCodeBackspace(slot, digit)"
+              />
+            }
+          </div>
+          @if (submitted() && !codeValid()) {
+            <div class="sign-up-page__error-group" role="alert">
+              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+              <span class="sign-up-page__error-text">Invalid code.</span>
+            </div>
+          }
+          <div class="sign-up-page__verification-group--resend-group">
+            <button class="sign-up-page__verification-group--resend-btn" type="button">
+              <span>Resend code</span>
+            </button>
+          </div>
+        </div>
+      }
+
+      <!-- ------------------------------------------------ log in: password -->
+      @case ('login-password') {
+        <h2 class="sign-up-page__main--form-title">Log in with a password</h2>
+        <div class="sign-up-page__login-with-password-input-group">
+          <div class="sign-up-page__login-with-password-input-group--username-group">
+            <label class="sign-up-page__input-label" for="login-username">Email or username</label>
+            <input
+              id="login-username"
+              class="sign-up-page__input"
+              type="text"
+              autocomplete="username"
+              placeholder="Email or username"
+              [class.invalid]="submitted() && !identifierValid()"
+              [value]="email()"
+              (input)="email.set($any($event.target).value)"
+            />
+          </div>
+          @if (submitted() && !identifierValid()) {
+            <div class="sign-up-page__error-group" role="alert">
+              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+              <span class="sign-up-page__error-text">Email or username isn't linked to a Stopify account.</span>
+            </div>
+          }
+          <div class="sign-up-page__password-input-group sign-up-page__login-with-password-input-group--password-group" [class.invalid]="submitted() && password().length === 0">
+            <input
+              class="sign-up-page__password-input-group--input"
+              autocomplete="current-password"
+              aria-label="Password"
+              placeholder="Password"
+              [type]="showPassword() ? 'text' : 'password'"
+              [value]="password()"
+              (input)="password.set($any($event.target).value)"
+            />
+            <ng-container [ngTemplateOutlet]="passwordToggle" />
+          </div>
+          @if (submitted() && password().length === 0) {
+            <div class="sign-up-page__error-group" role="alert">
+              <span class="sign-up-page__error-icon"><fa-icon [icon]="['fas', 'exclamation']" /></span>
+              <span class="sign-up-page__error-text">Please enter your password.</span>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    <button class="sign-up-page__next-btn" type="submit">
+      <span class="sign-up-page__next-span">
+        {{ current === 'signup-email' || current === 'signup-password' || current === 'signup-profile' ? 'Next' : current === 'signup-terms' ? 'Sign up' : 'Continue' }}
+      </span>
+    </button>
+
+    @switch (current) {
+      @case ('signup-email') {
+        <div class="sign-up-page__footer-group sign-up-page__have-account-group">
+          <p class="sign-up-page__footer-group--title">Already have an account?</p>
+          <a class="sign-up-page__footer-group--anchor" routerLink="/login">
+            <span class="sign-up-page__footer-group--span">Log in</span>
+          </a>
+        </div>
+      }
+      @case ('login-identifier') {
+        <div class="sign-up-page__footer-group sign-up-page__dont-have-account-group">
+          <span class="sign-up-page__footer-group--title">Don't have an account?</span>
+          <a class="sign-up-page__footer-group--anchor" routerLink="/signup">
+            <span class="sign-up-page__footer-group--span">Sign up</span>
+          </a>
+        </div>
+      }
+      @case ('login-code') {
+        <div class="sign-up-page__footer-group sign-up-page__password-login-group">
+          <a class="sign-up-page__footer-group--anchor" (click)="goTo('login-password')">
+            <span class="sign-up-page__footer-group--span">Log in with a password</span>
+          </a>
+        </div>
+      }
+      @case ('login-password') {
+        <div class="sign-up-page__footer-group sign-up-page__without-password-login-group">
+          <a class="sign-up-page__footer-group--anchor" (click)="goTo('login-code')">
+            <span class="sign-up-page__footer-group--span">Log in without password</span>
+          </a>
+        </div>
+      }
+    }
+  </form>
+</main>
+
+<ng-template #passwordToggle>
+  <button
+    class="sign-up-page__password-input-group--show-hide-password-btn"
+    type="button"
+    [title]="showPassword() ? 'Hide password' : 'Show password'"
+    [attr.aria-pressed]="showPassword()"
+    (click)="showPassword.set(!showPassword())"
+  >
+    <fa-icon [icon]="['fas', showPassword() ? 'eye' : 'eye-slash']" />
+  </button>
+</ng-template>

@@ -1,1 +1,39 @@
-/* Global styles */
+// Global styles. Component styles live next to their components;
+// only document-level rules and shared design tokens belong here.
+
+@use 'fonts';
+@use 'tokens';
+@use 'reset';
+@use 'scrollbar';
+
+html {
+  background-color: var(--primary-bg-color);
+  color: var(--primary-fg-color);
+  font-family: 'Spotify Mix';
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+// Cards marked `.play-btn-parent` reveal their `[appPlayButton][revealOnHover]` on hover.
+// Lives here because the parent and the button are different components.
+.play-btn-parent:hover .play-btn.hover-transition {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+// Visually hidden but still announced by screen readers.
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

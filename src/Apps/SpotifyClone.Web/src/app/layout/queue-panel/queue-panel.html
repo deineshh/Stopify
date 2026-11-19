@@ -1,0 +1,28 @@
+@let queue = player.queue();
+<header class="queue-view__header">
+  <h1 class="queue-view__header--title">Queue</h1>
+  <button class="queue-view__header--close-btn" type="button" title="Close" (click)="layout.closeRightPanel()">
+    <span class="queue-view__header--close-span">
+      <fa-icon [icon]="['fas', 'xmark']" />
+    </span>
+  </button>
+</header>
+<div class="queue-view__main">
+  <section class="queue-view__now-playing--group" aria-labelledby="queue-now-playing-title">
+    <h2 id="queue-now-playing-title" class="queue-view__now-playing--title">Now playing</h2>
+    <app-sidebar-track-row [track]="queue.current" />
+  </section>
+  <section class="queue-view__next-from--group" aria-labelledby="queue-next-from-title">
+    <div class="queue-view__next-from--title-group">
+      <h2 id="queue-next-from-title" class="queue-view__next-from--title-text">Next from:</h2>
+      <a class="queue-view__next-from--title-artist--anchor" [routerLink]="['/playlist', queue.nextFrom.id]">
+        <span class="queue-view__next-from--title-artist--span">{{ queue.nextFrom.name }}</span>
+      </a>
+    </div>
+    <div class="queue-view__next-from--items" role="list">
+      @for (track of queue.upNext; track track.id) {
+        <app-sidebar-track-row role="listitem" [track]="track" />
+      }
+    </div>
+  </section>
+</div>

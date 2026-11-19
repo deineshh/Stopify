@@ -1,3 +1,53 @@
 import { Routes } from '@angular/router';
+import { MainLayout } from '@layout/main-layout/main-layout';
 
-export const routes: Routes = [];
+const TITLE = 'Stopify - Web Player: Music for everyone';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: MainLayout,
+    children: [
+      {
+        path: '',
+        title: TITLE,
+        loadComponent: () => import('@features/home/home-page').then((m) => m.HomePage),
+      },
+      {
+        path: 'search',
+        title: 'Search - Stopify',
+        loadComponent: () =>
+          import('@features/search/search-browse/search-browse-page').then((m) => m.SearchBrowsePage),
+      },
+      {
+        path: 'search/:query',
+        title: 'Search - Stopify',
+        loadComponent: () =>
+          import('@features/search/search-results/search-results-page').then((m) => m.SearchResultsPage),
+      },
+      {
+        path: 'playlist/:id',
+        title: TITLE,
+        loadComponent: () => import('@features/playlist/playlist-page').then((m) => m.PlaylistPage),
+      },
+      {
+        path: 'collection',
+        title: 'Your Library - Stopify',
+        loadComponent: () => import('@features/library/library-page').then((m) => m.LibraryPage),
+      },
+    ],
+  },
+  {
+    path: 'signup',
+    title: 'Sign up - Stopify',
+    data: { flow: 'signup' },
+    loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
+  },
+  {
+    path: 'login',
+    title: 'Log in - Stopify',
+    data: { flow: 'login' },
+    loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
+  },
+  { path: '**', redirectTo: '' },
+];

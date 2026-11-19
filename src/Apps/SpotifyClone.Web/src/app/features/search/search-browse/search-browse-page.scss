@@ -1,0 +1,143 @@
+// Ported from mockups/css/pages/search-browse.css (tile colours now come from the data)
+@use 'breakpoints' as bp;
+
+:host {
+  display: block;
+  padding-bottom: 20px;
+  padding-right: 12px;
+  padding-left: 20px;
+  padding-top: 67px;
+}
+
+.search-browse__header {
+  margin-bottom: 20px;
+}
+
+.search-browse__header--title {
+  font-size: 1.6rem;
+}
+
+.search-browse__main-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin: var(--layout-section-margin) 0;
+}
+
+.search-browse__main-item {
+  aspect-ratio: 351 / 197;
+  border-radius: 8px;
+  container-name: search-browse__main-item;
+  container-type: inline-size;
+  flex: 1 1 clamp(150px, 40%, 232px);
+  max-width: 351px;
+  overflow: hidden;
+  position: relative;
+}
+
+.search-browse__main-item--img {
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  bottom: 0;
+  position: absolute;
+  right: 0;
+  transform: rotateZ(25deg) translate(18%, -2%);
+  width: 45%;
+}
+
+.search-browse__main-item--span {
+  font-size: 1.1rem;
+  font-weight: bold;
+  left: 15px;
+  position: absolute;
+  top: 15px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@container search-browse__main-item (min-width: 250px) {
+  .search-browse__main-item--span {
+    font-size: 1.6rem;
+  }
+}
+
+.search-browse__main-item {
+  transition: filter 0.15s ease-in-out;
+}
+
+.search-browse__main-item:hover {
+  filter: brightness(1.08);
+}
+
+@include bp.mobile {
+  :host {
+    padding: 24px 16px;
+  }
+
+  .search-browse__main-group {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-browse__main-item {
+    max-width: none;
+  }
+}

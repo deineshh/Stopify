@@ -1,0 +1,165 @@
+@let details = player.nowPlaying();
+@let track = details.track;
+@let spotlight = details.spotlight;
+<header class="now-playing-view__header">
+  <div class="now-playing-view__header--title-group">
+    <button
+      class="now-playing-view__header--hide-btn"
+      type="button"
+      title="Hide Now Playing view"
+      (click)="layout.closeRightPanel()"
+    >
+      <span class="now-playing-view__header--hide-icon">
+        <fa-icon [icon]="['far', 'circle-right']" />
+      </span>
+    </button>
+    <a class="now-playing-view__header--title-anchor" [routerLink]="['/playlist', details.context.id]">
+      <h1 class="now-playing-view__header--title-text">{{ details.context.name }}</h1>
+    </a>
+  </div>
+  <div class="now-playing-view__header--btns">
+    <button
+      class="now-playing-view__header--more-btn now-playing-view__header--btn"
+      type="button"
+      [title]="'More options for ' + track.title"
+    >
+      <span class="now-playing-view__header--more-icon now-playing-view__header--btn-icon">
+        <fa-icon [icon]="['fas', 'ellipsis']" />
+      </span>
+    </button>
+    <button
+      class="now-playing-view__header--expand-btn now-playing-view__header--btn"
+      type="button"
+      title="Expand Now Playing view"
+    >
+      <span class="now-playing-view__header--expand-icon now-playing-view__header--btn-icon">
+        <fa-icon [icon]="['fas', 'up-right-and-down-left-from-center']" />
+      </span>
+    </button>
+  </div>
+</header>
+
+<div class="now-playing-view__main">
+  <div class="now-playing-view__track">
+    <a class="now-playing-view__track--cover--anchor" [routerLink]="['/playlist', track.album.id]">
+      <img class="now-playing-view__track--cover--img" [src]="track.cover" [alt]="track.title + ' cover'" />
+    </a>
+    <div class="now-playing-view__track--btns">
+      <div class="now-playing-view__track--info">
+        <a class="now-playing-view__track--title-anchor" [routerLink]="['/playlist', track.album.id]">
+          <span class="now-playing-view__track--title-span">{{ track.title }}</span>
+        </a>
+        <div class="now-playing-view__track--artists" [title]="track.title">
+          @for (artist of track.artists; track artist.id; let last = $last) {
+            <a class="now-playing-view__track--artist-anchor" [routerLink]="['/playlist', artist.id]">
+              <span class="now-playing-view__track--artist-span">{{ artist.name }}</span>
+            </a>
+            @if (!last) {
+              &ngsp;<span class="now-playing-view__track--artist-seperator">,</span>&ngsp;
+            }
+          }
+        </div>
+      </div>
+      <button
+        class="now-playing-view__track--copy-link-btn now-playing-view__track--btn"
+        type="button"
+        title="Copy link to Song"
+      >
+        <span class="now-playing-view__track--copy-link-icon">
+          <fa-icon [icon]="['fas', 'upload']" />
+        </span>
+      </button>
+      <button
+        class="now-playing-view__track--save-btn now-playing-view__track--btn"
+        type="button"
+        [class.saved]="player.saved()"
+        [title]="player.saved() ? 'Add to playlist' : 'Add to Liked Songs'"
+        [attr.aria-pressed]="player.saved()"
+        (click)="player.toggleSaved()"
+      >
+        <span class="now-playing-view__track-save-icon">
+          <fa-icon [icon]="['fas', player.saved() ? 'check' : 'plus']" />
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <section class="now-playing-view__artist-info now-playing-view__section">
+    <div class="now-playing-view__artist-info--header-group">
+      <h2 class="now-playing-view__artist-info--title now-playing-view__section--title">About the artist</h2>
+      <figure class="now-playing-view__artist-info--avatar-figure" [title]="spotlight.artist.name">
+        <img class="now-playing-view__artist-info--avatar-img" [src]="spotlight.avatar" [alt]="spotlight.artist.name" />
+      </figure>
+    </div>
+    <div class="now-playing-view__artist-info--main-group">
+      <a class="now-playing-view__artist-info--artist-anchor" [routerLink]="['/playlist', spotlight.artist.id]">
+        <span class="now-playing-view__artist-info--artist-span">{{ spotlight.artist.name }}</span>
+      </a>
+      <div class="now-playing-view__artist-info--center-group">
+        <span class="now-playing-view__artist-info--monthly-listeners"
+          >{{ spotlight.monthlyListeners | number }} monthly listeners</span
+        >
+        @let followingSpotlight = isFollowing(spotlight.artist.id);
+        <button
+          class="now-playing-view__artist-info--follow-btn now-playing-view__follow-btn"
+          type="button"
+          [attr.aria-pressed]="followingSpotlight"
+          (click)="toggleFollow(spotlight.artist.id)"
+        >
+          <span class="now-playing-view__artist-info--follow-span now-playing-view__follow-span">{{
+            followingSpotlight ? 'Unfollow' : 'Follow'
+          }}</span>
+        </button>
+      </div>
+      <span class="now-playing-view__artist-info--description">{{ spotlight.bio }}</span>
+    </div>
+  </section>
+
+  <section class="now-playing-view__credits now-playing-view__section">
+    <div class="now-playing-view__credits--header-group">
+      <h2 class="now-playing-view__credits--title now-playing-view__section--title">Credits</h2>
+      <button class="now-playing-view__credits--show-all-btn now-playing-view__section--more-btn" type="button">
+        <span class="now-playing-view__credits--show-all-span now-playing-view__section--more-span">Show all</span>
+      </button>
+    </div>
+    <div class="now-playing-view__credits--main-group">
+      @for (credit of details.credits; track credit.artist.id) {
+        @let followingCredit = isFollowing(credit.artist.id);
+        <div class="now-playing-view__credits--artist-group">
+          <div class="now-playing-view__credits--artist-info">
+            <a class="now-playing-view__credits--artist-name-btn" [routerLink]="['/playlist', credit.artist.id]">
+              <span class="now-playing-view__credits--artist-name-span">{{ credit.artist.name }}</span>
+            </a>
+            <span class="now-playing-view__credits--artist-role">{{ credit.role }}</span>
+          </div>
+          <button
+            class="now-playing-view__credits--follow-btn now-playing-view__follow-btn"
+            type="button"
+            [attr.aria-pressed]="followingCredit"
+            (click)="toggleFollow(credit.artist.id)"
+          >
+            <span class="now-playing-view__credits--follow-span now-playing-view__follow-span">{{
+              followingCredit ? 'Unfollow' : 'Follow'
+            }}</span>
+          </button>
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="now-playing-view__next">
+    <div class="now-playing-view__next--header-group">
+      <h2 class="now-playing-view__next--title now-playing-view__section--title">Next in queue</h2>
+      <button
+        class="now-playing-view__next--open-queue-btn now-playing-view__section--more-btn"
+        type="button"
+        (click)="layout.openRightPanel('queue')"
+      >
+        <span class="now-playing-view__next--open-queue-span now-playing-view__section--more-span">Open queue</span>
+      </button>
+    </div>
+    @if (player.queue().upNext[0]; as next) {
+      <app-sidebar-track-row [track]="next" />
+    }
+  </section>
+</div>

@@ -6,6 +6,7 @@ services:
       dockerfile: Dockerfile
     environment:
       API_PROXY_TARGET: http://api:8080
+      API_URL: http://api:8080
       STORAGE_PROXY_TARGET: http://minio:9000
     ports:
       - "4200:4200"

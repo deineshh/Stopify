@@ -48,6 +48,7 @@ export interface Track {
   /** ISO date the track was added to the playlist. */
   addedAt?: string;
   saved?: boolean;
+  explicit?: boolean;
 }
 
 export interface Genre {

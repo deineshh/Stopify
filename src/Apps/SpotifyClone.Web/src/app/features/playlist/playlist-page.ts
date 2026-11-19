@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, signal } from '@angular/core';
-import { DatePipe, DecimalPipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { CatalogService } from '@data/services/catalog.service';
+import { AuthStore } from '@core/auth/auth.store';
+import { CollectionService } from '@data/services/collection.service';
 import { PlayerService } from '@data/services/player.service';
 import { CollectionLayout, CollectionMetaItem } from '@shared/ui/collection-layout/collection-layout';
-import { MediaShelf } from '@shared/ui/media-shelf/media-shelf';
+import { PageState } from '@shared/ui/page-state/page-state';
 import { TrackTable } from '@shared/ui/track-table/track-table';
 import { DurationPipe } from '@shared/pipes/duration.pipe';
 
 @Component({
   selector: 'app-playlist-page',
-  imports: [DatePipe, DecimalPipe, CollectionLayout, MediaShelf, TrackTable],
+  imports: [CollectionLayout, PageState, TrackTable],
   templateUrl: './playlist-page.html',
   styleUrl: './playlist-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,30 +20,40 @@ export class PlaylistPage {
   /** Bound from the `:id` route parameter. */
   readonly id = input.required<string>();
 
-  private readonly catalog = inject(CatalogService);
+  private readonly collections = inject(CollectionService);
+  private readonly auth = inject(AuthStore);
   protected readonly player = inject(PlayerService);
 
   protected readonly playlist = rxResource({
     params: () => this.id(),
-    stream: ({ params }) => this.catalog.getPlaylist(params),
+    stream: ({ params }) => this.collections.getPlaylist(params),
   });
 
-  protected readonly following = signal<boolean | null>(true);
+  protected readonly shuffle = signal(false);
   protected readonly saved = signal<boolean | null>(false);
-  protected readonly shuffle = signal(true);
 
-  private readonly datePipe = new DatePipe('en-US');
-  private readonly durationPipe = new DurationPipe();
+  protected readonly isOwner = computed(() => {
+    const playlist = this.playlist.hasValue() ? this.playlist.value() : undefined;
+    return !!playlist && playlist.ownerId === this.auth.user()?.id;
+  });
 
   protected readonly meta = computed<CollectionMetaItem[]>(() => {
-    const data = this.playlist.value();
-    if (!data) {
+    const playlist = this.playlist.hasValue() ? this.playlist.value() : undefined;
+    if (!playlist) {
       return [];
     }
-    return [
-      { text: data.owner.name, link: ['/playlist', data.owner.id] },
-      { text: this.datePipe.transform(data.releaseDate, 'y') ?? '', title: this.datePipe.transform(data.releaseDate, 'MMMM d, y') ?? '' },
-      { text: `${data.trackCount} songs, ${this.durationPipe.transform(data.totalDurationSeconds, 'long')}` },
-    ];
+    const items: CollectionMetaItem[] = [];
+    const owner = this.auth.user();
+    if (owner && owner.id === playlist.ownerId) {
+      items.push({ text: owner.displayName, link: ['/collection'] });
+    }
+    const count = playlist.tracks.length;
+    items.push({
+      text:
+        count === 0
+          ? 'No songs yet'
+          : `${count} ${count === 1 ? 'song' : 'songs'}, ${new DurationPipe().transform(playlist.totalDurationSeconds, 'long')}`,
+    });
+    return items;
   });
 }

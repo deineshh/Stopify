@@ -12,12 +12,12 @@
     </button>
   </div>
   <div class="now-playing-bar__track-info--group">
-    <a class="now-playing-bar__track-info--title-anchor" [routerLink]="['/playlist', track.album.id]">
+    <a class="now-playing-bar__track-info--title-anchor" [routerLink]="['/album', track.album.id]">
       <span class="now-playing-bar__track-info--title-span">{{ track.title }}</span>
     </a>
     <p class="now-playing-bar__track-info--artists" [title]="artists">
       @for (artist of track.artists; track artist.id; let last = $last) {
-        <a class="now-playing-bar__track-info--artist-anchor" [routerLink]="['/playlist', artist.id]">
+        <a class="now-playing-bar__track-info--artist-anchor" [routerLink]="['/artist', artist.id]">
           <span class="now-playing-bar__track-info--artist-span">{{ artist.name }}</span>
         </a>
         @if (!last) {

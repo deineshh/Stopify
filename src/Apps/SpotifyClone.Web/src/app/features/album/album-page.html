@@ -1,0 +1,27 @@
+@if (album.hasValue() ? album.value() : null; as data) {
+  <app-collection-layout
+    [title]="data.title"
+    [cover]="data.cover"
+    [eyebrow]="data.typeLabel"
+    [meta]="meta()"
+    [showViewAs]="false"
+    [playing]="player.isPlaying()"
+    [(shuffle)]="shuffle"
+    [(saved)]="saved"
+    (play)="player.togglePlay()"
+  >
+    <app-track-table [tracks]="data.tracks" [showAlbum]="false" [showDateAdded]="false" />
+
+    @if (data.releaseDate) {
+      <div class="playlist-page__main-section--credits-group">
+        <span class="playlist-page__main-section--date-text">{{ data.releaseDate | date: 'MMMM d, y' : 'UTC' }}</span>
+      </div>
+    }
+
+    @if (data.moreBy; as shelf) {
+      <app-media-shelf [shelf]="shelf" />
+    }
+  </app-collection-layout>
+} @else {
+  <app-page-state thing="album" [loading]="album.isLoading()" [error]="album.error()" (retry)="album.reload()" />
+}

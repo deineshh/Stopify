@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Genre, MediaCard, MediaShelf, ShortcutItem, Track } from '../models/catalog.models';
-import {
-  HOME_SHELVES,
-  PLAYLIST_SHELVES,
-  PLAYLIST_SHELVES_AFTER_ABOUT,
-  PLAYLIST_TRACKS,
-  RECENTLY_PLAYED,
-  SEARCH_RESULTS,
-} from '../mock/catalog.mock';
+import { HOME_SHELVES, RECENTLY_PLAYED, SEARCH_RESULTS } from '../mock/catalog.mock';
 import { GENRES } from '../mock/genres.mock';
-import { COVER } from '../mock/catalog.mock';
 
 export interface HomeFeed {
   shortcuts: readonly ShortcutItem[];
@@ -26,25 +18,6 @@ export interface SearchResults {
   playlists: readonly MediaCard[];
   profiles: readonly MediaCard[];
   genres: readonly { id: string; name: string; cover: string }[];
-}
-
-export interface PlaylistDetails {
-  id: string;
-  title: string;
-  description: string;
-  cover: string;
-  verified: boolean;
-  owner: { id: string; name: string };
-  releaseDate: string;
-  trackCount: number;
-  totalDurationSeconds: number;
-  publicPlaylists: number;
-  monthlyListeners: number;
-  about: string;
-  copyright: string;
-  tracks: readonly Track[];
-  shelves: readonly MediaShelf[];
-  shelvesAfterAbout: readonly MediaShelf[];
 }
 
 /**
@@ -63,26 +36,5 @@ export class CatalogService {
 
   search(query: string): Observable<SearchResults> {
     return of({ query, ...SEARCH_RESULTS });
-  }
-
-  getPlaylist(id: string): Observable<PlaylistDetails> {
-    return of({
-      id,
-      title: 'cali',
-      description: 'asd',
-      cover: COVER,
-      verified: true,
-      owner: { id: 'aqua-studios', name: 'Aqua Studios' },
-      releaseDate: '2025-10-18',
-      trackCount: 81,
-      totalDurationSeconds: 3 * 3600 + 30 * 60,
-      publicPlaylists: 18,
-      monthlyListeners: 668_849,
-      about: 'creator from hungary',
-      copyright: '© 2025 Supermanagement',
-      tracks: PLAYLIST_TRACKS,
-      shelves: PLAYLIST_SHELVES,
-      shelvesAfterAbout: PLAYLIST_SHELVES_AFTER_ABOUT,
-    });
   }
 }

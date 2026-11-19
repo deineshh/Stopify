@@ -32,6 +32,16 @@ export const routes: Routes = [
         loadComponent: () => import('@features/playlist/playlist-page').then((m) => m.PlaylistPage),
       },
       {
+        path: 'album/:id',
+        title: TITLE,
+        loadComponent: () => import('@features/album/album-page').then((m) => m.AlbumPage),
+      },
+      {
+        path: 'artist/:id',
+        title: TITLE,
+        loadComponent: () => import('@features/artist/artist-page').then((m) => m.ArtistPage),
+      },
+      {
         path: 'collection',
         title: 'Your Library - Stopify',
         canActivate: [authGuard],

@@ -13,7 +13,7 @@
         <fa-icon [icon]="['far', 'circle-right']" />
       </span>
     </button>
-    <a class="now-playing-view__header--title-anchor" [routerLink]="['/playlist', details.context.id]">
+    <a class="now-playing-view__header--title-anchor" [routerLink]="['/artist', details.context.id]">
       <h1 class="now-playing-view__header--title-text">{{ details.context.name }}</h1>
     </a>
   </div>
@@ -41,17 +41,17 @@
 
 <div class="now-playing-view__main">
   <div class="now-playing-view__track">
-    <a class="now-playing-view__track--cover--anchor" [routerLink]="['/playlist', track.album.id]">
+    <a class="now-playing-view__track--cover--anchor" [routerLink]="['/album', track.album.id]">
       <img class="now-playing-view__track--cover--img" [src]="track.cover" [alt]="track.title + ' cover'" />
     </a>
     <div class="now-playing-view__track--btns">
       <div class="now-playing-view__track--info">
-        <a class="now-playing-view__track--title-anchor" [routerLink]="['/playlist', track.album.id]">
+        <a class="now-playing-view__track--title-anchor" [routerLink]="['/album', track.album.id]">
           <span class="now-playing-view__track--title-span">{{ track.title }}</span>
         </a>
         <div class="now-playing-view__track--artists" [title]="track.title">
           @for (artist of track.artists; track artist.id; let last = $last) {
-            <a class="now-playing-view__track--artist-anchor" [routerLink]="['/playlist', artist.id]">
+            <a class="now-playing-view__track--artist-anchor" [routerLink]="['/artist', artist.id]">
               <span class="now-playing-view__track--artist-span">{{ artist.name }}</span>
             </a>
             @if (!last) {
@@ -92,7 +92,7 @@
       </figure>
     </div>
     <div class="now-playing-view__artist-info--main-group">
-      <a class="now-playing-view__artist-info--artist-anchor" [routerLink]="['/playlist', spotlight.artist.id]">
+      <a class="now-playing-view__artist-info--artist-anchor" [routerLink]="['/artist', spotlight.artist.id]">
         <span class="now-playing-view__artist-info--artist-span">{{ spotlight.artist.name }}</span>
       </a>
       <div class="now-playing-view__artist-info--center-group">
@@ -127,7 +127,7 @@
         @let followingCredit = isFollowing(credit.artist.id);
         <div class="now-playing-view__credits--artist-group">
           <div class="now-playing-view__credits--artist-info">
-            <a class="now-playing-view__credits--artist-name-btn" [routerLink]="['/playlist', credit.artist.id]">
+            <a class="now-playing-view__credits--artist-name-btn" [routerLink]="['/artist', credit.artist.id]">
               <span class="now-playing-view__credits--artist-name-span">{{ credit.artist.name }}</span>
             </a>
             <span class="now-playing-view__credits--artist-role">{{ credit.role }}</span>

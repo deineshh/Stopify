@@ -88,19 +88,6 @@ export const HOME_SHELVES: readonly MediaShelf[] = [
 
 // ---------------------------------------------------------------- tracks
 
-const keepYou = (i: number): Track => ({
-  id: `keep-you-${i + 1}`,
-  title: 'Keep You',
-  artists: [artist('Spektrum'), artist('Sara Skinner')],
-  album: { id: 'keep-you', name: 'Keep You' },
-  cover: COVER,
-  durationSeconds: 289,
-  addedAt: '2025-03-18',
-  saved: true,
-});
-
-export const PLAYLIST_TRACKS: readonly Track[] = repeat(10, keepYou);
-
 export const SEARCH_SONGS: readonly Track[] = repeat(4, (i) => ({
   id: `acelerada-${i + 1}`,
   title: 'ACELERADA',
@@ -133,53 +120,3 @@ export const SEARCH_RESULTS = {
   profiles: repeat(10, card('profile', { kind: 'profile', title: 'a', shape: 'circle', text: ['Profile'] })),
   genres: repeat(10, (i) => ({ id: `genre-${i + 1}`, name: 'Afro', cover: COVER })),
 } as const;
-
-// ---------------------------------------------------------------- playlist page
-
-export const PLAYLIST_SHELVES: readonly MediaShelf[] = [
-  {
-    id: 'more-by',
-    title: 'More by Azahriah',
-    showAllLabel: 'See discography',
-    items: repeat(10, card('more-by', { kind: 'album', title: 'skatulya II', shape: 'rounded', text: ['2025'] })),
-  },
-  {
-    id: 'discography',
-    title: 'Discography',
-    showAllLabel: 'Show all',
-    filters: ['Popular releases', 'Albums', 'Singles and EPs'],
-    items: repeat(
-      10,
-      card('discography', { kind: 'album', title: 'Aziverzum', shape: 'rounded', text: ['2025', 'Album'] }),
-    ),
-  },
-];
-
-export const PLAYLIST_SHELVES_AFTER_ABOUT: readonly MediaShelf[] = [
-  {
-    id: 'fans-also-like',
-    title: 'Fans also like',
-    showAllLabel: 'Show all',
-    items: repeat(10, card('fans-like', { kind: 'artist', title: 'DESH', shape: 'circle', text: ['Artist'] })),
-  },
-  {
-    id: 'appears-on',
-    title: 'Appears on',
-    showAllLabel: 'Show all',
-    items: repeat(10, card('appears-on', { kind: 'ep', title: 'BAKPAKK', shape: 'rounded', text: ['2024', 'EP'] })),
-  },
-  {
-    id: 'public-playlists',
-    title: 'Public Playlists',
-    showAllLabel: 'Show all',
-    items: repeat(
-      10,
-      card('public-playlist', {
-        kind: 'playlist',
-        title: 'Aziverzum',
-        shape: 'rounded',
-        text: ['2 Followers'],
-      }),
-    ),
-  },
-];

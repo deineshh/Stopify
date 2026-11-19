@@ -1,0 +1,109 @@
+:host {
+  display: block;
+}
+
+// ---------------------------------------------------------------- skeleton
+
+.page-state__skeleton {
+  padding: 64px 25px 24px;
+}
+
+.page-state__skeleton-hero {
+  align-items: flex-end;
+  display: flex;
+  gap: 23px;
+  margin-bottom: 48px;
+}
+
+.page-state__skeleton-cover,
+.page-state__skeleton-line,
+.page-state__skeleton-row {
+  animation: page-state-pulse 1.4s ease-in-out infinite;
+  background-color: var(--primary-element-bg-color);
+  border-radius: 4px;
+}
+
+.page-state__skeleton-cover {
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  max-width: 232px;
+  min-width: 128px;
+  width: 21.3%;
+
+  &.circle {
+    border-radius: 100%;
+  }
+}
+
+.page-state__skeleton-lines {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.page-state__skeleton-line {
+  height: 16px;
+  width: 40%;
+
+  &.short {
+    width: 15%;
+  }
+
+  &.title {
+    height: 56px;
+    width: 70%;
+  }
+}
+
+.page-state__skeleton-row {
+  height: 48px;
+  margin-bottom: 8px;
+}
+
+@keyframes page-state-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-state__skeleton-cover,
+  .page-state__skeleton-line,
+  .page-state__skeleton-row {
+    animation: none;
+  }
+}
+
+// ---------------------------------------------------------------- messages
+
+.page-state__message {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 96px 24px;
+  text-align: center;
+}
+
+.page-state__title {
+  font-size: 1.6rem;
+}
+
+.page-state__text {
+  color: var(--light-gray-fg-color);
+}
+
+.page-state__btn {
+  background-color: var(--primary-fg-color);
+  border-radius: 1000px;
+  color: black;
+  font-weight: bold;
+  margin-top: 16px;
+  padding: 12px 32px;
+  transition: transform 0.1s ease-in-out;
+}
+
+.page-state__btn:hover {
+  transform: scale(1.04);
+}

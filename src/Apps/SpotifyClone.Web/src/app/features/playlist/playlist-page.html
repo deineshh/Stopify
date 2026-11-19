@@ -1,51 +1,24 @@
-@if (playlist.value(); as data) {
+@if (playlist.hasValue() ? playlist.value() : null; as data) {
   <app-collection-layout
-    coverShape="circle"
-    editableCover
     [title]="data.title"
     [cover]="data.cover"
-    [verified]="data.verified"
+    [eyebrow]="data.isPublic ? 'Public Playlist' : 'Private Playlist'"
     [description]="data.description"
     [meta]="meta()"
-    [details]="[data.publicPlaylists + ' Public Playlists']"
+    [editableCover]="isOwner()"
+    [showInvite]="isOwner()"
     [playing]="player.isPlaying()"
-    [showInvite]="true"
     [(shuffle)]="shuffle"
-    [(following)]="following"
-    [(saved)]="saved"
+    [saved]="isOwner() ? null : saved()"
+    (savedChange)="saved.set($event)"
     (play)="player.togglePlay()"
   >
-    <app-track-table [tracks]="data.tracks" />
-
-    <div class="playlist-page__main-section--see-more-group">
-      <span class="playlist-page__main-section--see-more-text">See more</span>
-    </div>
-    <div class="playlist-page__main-section--find-more-group">
-      <button class="playlist-page__main-section--find-more-btn" type="button">
-        <span class="playlist-page__main-section--find-more-span">Find more</span>
-      </button>
-    </div>
-    <div class="playlist-page__main-section--credits-group">
-      <span class="playlist-page__main-section--date-text">{{ data.releaseDate | date: 'MMMM d, y' }}</span>
-      <span class="playlist-page__main-section--copyright-text">{{ data.copyright }}</span>
-    </div>
-
-    @for (shelf of data.shelves; track shelf.id) {
-      <app-media-shelf [shelf]="shelf" />
-    }
-
-    <section class="playlist-page__main-section--about-group" aria-labelledby="playlist-about-title">
-      <h2 id="playlist-about-title" class="playlist-page__about-group--title">About</h2>
-      <button class="playlist-page__about-group--main-btn" type="button">
-        <span class="playlist-page__about-group--monthly-listeners">
-          {{ data.monthlyListeners | number }} monthly listeners
-        </span>
-        <span class="playlist-page__about-group--description">{{ data.about }}</span>
-      </button>
-    </section>
-
-    @for (shelf of data.shelvesAfterAbout; track shelf.id) {
-      <app-media-shelf [shelf]="shelf" />
+    @if (data.tracks.length) {
+      <app-track-table [tracks]="data.tracks" [showDateAdded]="false" />
+    } @else {
+      <p class="playlist-page__empty">This playlist doesn't have any songs yet.</p>
     }
   </app-collection-layout>
+} @else {
+  <app-page-state thing="playlist" [loading]="playlist.isLoading()" [error]="playlist.error()" (retry)="playlist.reload()" />
 }

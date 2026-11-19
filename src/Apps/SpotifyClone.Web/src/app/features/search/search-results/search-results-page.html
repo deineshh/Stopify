@@ -7,7 +7,7 @@
   }
 </nav>
 
-@if (results.value(); as data) {
+@if (results.hasValue() ? results.value() : null; as data) {
   <div class="search-results__main-group">
     @if (isVisible('songs')) {
       <div class="search-results__top-result-and-songs">
@@ -19,7 +19,7 @@
               <div class="search-results__top-result-item--info">
                 <a
                   class="search-results__top-result-item--title"
-                  [routerLink]="['/playlist', data.topResult.id]"
+                  [routerLink]="['/artist', data.topResult.id]"
                   [title]="data.topResult.name"
                 >
                   <span class="search-results__top-result-item--title-span">{{ data.topResult.name }}</span>
@@ -55,14 +55,14 @@
                   <div class="search-results__songs-item--info-group">
                     <a
                       class="search-results__songs-item--title-anchor"
-                      [routerLink]="['/playlist', song.album.id]"
+                      [routerLink]="['/album', song.album.id]"
                       [title]="song.title"
                     >
                       <span class="search-results__songs-item--title-span">{{ song.title }}</span>
                     </a>
                     <div class="search-results__songs-item--authors" [title]="artists">
                       @for (artist of song.artists; track artist.id; let last = $last) {
-                        <a class="search-results__songs-item--author" [routerLink]="['/playlist', artist.id]">{{
+                        <a class="search-results__songs-item--author" [routerLink]="['/artist', artist.id]">{{
                           artist.name
                         }}</a>
                         @if (!last) {

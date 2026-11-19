@@ -1,0 +1,35 @@
+@if (artist.hasValue() ? artist.value() : null; as data) {
+  <app-collection-layout
+    coverShape="circle"
+    [title]="data.name"
+    [cover]="data.avatar"
+    [verified]="data.verified"
+    [eyebrow]="data.verified ? 'Verified Artist' : 'Artist'"
+    [showDownload]="false"
+    [showViewAs]="false"
+    [playing]="player.isPlaying()"
+    [(shuffle)]="shuffle"
+    [(following)]="following"
+    (play)="player.togglePlay()"
+  >
+    @if (data.popularTracks.length) {
+      <h2 class="artist-page__section-title">Popular</h2>
+      <app-track-table [tracks]="data.popularTracks" [showHeader]="false" [showDateAdded]="false" />
+    }
+
+    @if (data.discography; as shelf) {
+      <app-media-shelf [shelf]="shelf" />
+    }
+
+    @if (data.bio) {
+      <section class="playlist-page__main-section--about-group" aria-labelledby="artist-about-title">
+        <h2 id="artist-about-title" class="playlist-page__about-group--title">About</h2>
+        <div class="playlist-page__about-group--main-btn">
+          <span class="playlist-page__about-group--description">{{ data.bio }}</span>
+        </div>
+      </section>
+    }
+  </app-collection-layout>
+} @else {
+  <app-page-state thing="artist" shape="circle" [loading]="artist.isLoading()" [error]="artist.error()" (retry)="artist.reload()" />
+}

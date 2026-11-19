@@ -14,7 +14,7 @@
   </p>
   <p class="right-sidebar__track-item--artists">
     @for (artist of item.artists; track artist.id; let last = $last) {
-      <a class="right-sidebar__track-item--artist-anchor" [routerLink]="['/playlist', artist.id]">
+      <a class="right-sidebar__track-item--artist-anchor" [routerLink]="['/artist', artist.id]">
         <span class="right-sidebar__track-item--artist-span">{{ artist.name }}</span>
       </a>
       @if (!last) {

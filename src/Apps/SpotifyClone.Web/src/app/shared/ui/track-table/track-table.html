@@ -1,4 +1,5 @@
 <table class="track-table">
+  @if (showHeader()) {
   <thead>
     <tr class="track-table__header">
       <th class="track-table__header--index-column" scope="col">
@@ -7,12 +8,16 @@
       <th class="track-table__header--title-column" scope="col">
         <span class="track-table__header--title-text">Title</span>
       </th>
-      <th class="track-table__header--album-column" scope="col">
-        <span class="track-table__header--album-text">Album</span>
-      </th>
-      <th class="track-table__header--date-added-column" scope="col">
-        <span class="track-table__header--date-added-text">Date added</span>
-      </th>
+      @if (showAlbum()) {
+        <th class="track-table__header--album-column" scope="col">
+          <span class="track-table__header--album-text">Album</span>
+        </th>
+      }
+      @if (showDateAdded()) {
+        <th class="track-table__header--date-added-column" scope="col">
+          <span class="track-table__header--date-added-text">Date added</span>
+        </th>
+      }
       <th class="track-table__header--duration-column" scope="col">
         <span class="track-table__header--duration-text" title="Duration">
           <fa-icon [icon]="['fas', 'clock']" />
@@ -28,6 +33,7 @@
       </th>
     </tr>
   </thead>
+  }
   <tbody class="track-table__list">
     @for (track of tracks(); track track.id; let index = $index) {
       @let byline = track.title + ' by ' + (track.artists | artistNames);
@@ -43,26 +49,32 @@
         <td class="track-table__track--title-column">
           <img [src]="track.cover" alt="" class="track-table__track--cover" loading="lazy" />
           <div class="track-table__track--info-group">
-            <a class="track-table__track--title-anchor" [routerLink]="['/playlist', track.album.id]">
+            <a class="track-table__track--title-anchor" [routerLink]="track.album.id ? ['/album', track.album.id] : null">
               <span class="track-table__track--title-span">{{ track.title }}</span>
             </a>
             <div class="track-table__track--authors-group">
               @for (artist of track.artists; track artist.id; let last = $last) {
-                <a class="track-table__track--author-anchor" [class.last-author]="last" [routerLink]="['/playlist', artist.id]"
+                <a class="track-table__track--author-anchor" [class.last-author]="last" [routerLink]="['/artist', artist.id]"
                   ><span class="track-table__track--author-span">{{ artist.name }}</span>&ngsp;</a
                 >&ngsp;
               }
             </div>
           </div>
         </td>
-        <td class="track-table__track--album-column">
-          <a class="track-table__track--album-anchor" [routerLink]="['/playlist', track.album.id]">
-            <span class="track-table__track--album-span">{{ track.album.name }}</span>
-          </a>
-        </td>
-        <td class="track-table__track--date-added-column">
-          <span class="track-table__track--date-added-text">{{ track.addedAt | date: 'MMM d, y' }}</span>
-        </td>
+        @if (showAlbum()) {
+          <td class="track-table__track--album-column">
+            @if (track.album.id) {
+              <a class="track-table__track--album-anchor" [routerLink]="['/album', track.album.id]">
+                <span class="track-table__track--album-span">{{ track.album.name }}</span>
+              </a>
+            }
+          </td>
+        }
+        @if (showDateAdded()) {
+          <td class="track-table__track--date-added-column">
+            <span class="track-table__track--date-added-text">{{ track.addedAt | date: 'MMM d, y' }}</span>
+          </td>
+        }
         <td class="track-table__track--duration-column">
           <button
             class="track-table__track--save-btn"

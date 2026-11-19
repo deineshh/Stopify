@@ -31,8 +31,9 @@ describe('MediaCard', () => {
     const authors = el.querySelectorAll('.track-item__author');
     expect(authors.length).toBe(2);
     expect(authors[1].classList).toContain('last-author');
+    expect(authors[0].getAttribute('href')).toBe('/artist/sayfalse');
     expect(el.querySelector('.track-item__cover')?.classList).toContain('rounded');
-    expect(el.querySelector('a.track-item__title-anchor')?.getAttribute('href')).toBe('/playlist/album-1');
+    expect(el.querySelector('a.track-item__title-anchor')?.getAttribute('href')).toBe('/album/album-1');
   });
 
   it('renders mixes without a title (description only)', () => {

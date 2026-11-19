@@ -59,7 +59,7 @@ export class SearchResultsPage {
 
   /** Card sections in mockup order: Artists, Albums, Playlists, Profiles. */
   protected readonly cardSections = computed<readonly CardSection[]>(() => {
-    const data = this.results.value();
+    const data = this.results.hasValue() ? this.results.value() : undefined;
     if (!data) {
       return [];
     }

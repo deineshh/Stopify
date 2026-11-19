@@ -19,7 +19,7 @@
 
 @if (card.title) {
   <div class="track-item__info-group">
-    <a class="track-item__title-anchor" [routerLink]="['/playlist', card.id]" [title]="card.title">
+    <a class="track-item__title-anchor" [routerLink]="link()" [title]="card.title">
       <p class="track-item__title-text">{{ card.title }}</p>
     </a>
     <ng-container [ngTemplateOutlet]="description" />
@@ -40,7 +40,7 @@
     @if (card.authors?.length) {
       <div class="track-item__authors">
         @for (author of card.authors; track author.id; let last = $last) {
-          <a class="track-item__author" [class.last-author]="last" [routerLink]="['/playlist', author.id]"
+          <a class="track-item__author" [class.last-author]="last" [routerLink]="['/artist', author.id]"
             >{{ author.name }}&ngsp;</a
           >&ngsp;
         }

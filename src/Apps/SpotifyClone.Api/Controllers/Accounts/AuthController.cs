@@ -380,6 +380,7 @@ public sealed class AuthController(IMediator mediator, IHostEnvironment hostEnvi
             HttpOnly = false,
             Secure = !hostEnvironment.IsDevelopment(),
             SameSite = SameSiteMode.Lax,
+            Path = "/", // without it the browser scopes the cookies to /api/v1/auth and /auth-success can't read them
             Expires = DateTime.UtcNow.AddMinutes(2)
         };
 

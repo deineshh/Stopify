@@ -1,168 +1,51 @@
 @if (playlist.value(); as data) {
-  <header class="playlist-page__header" [style.opacity]="headerOpacity()" [attr.aria-hidden]="headerOpacity() < 1">
-    <button
-      appPlayButton
-      class="playlist-page__header--play-btn"
-      [playing]="player.isPlaying()"
-      [attr.aria-label]="'Play ' + data.title"
-      [attr.tabindex]="headerOpacity() < 1 ? -1 : 0"
-      (click)="player.togglePlay()"
-    ></button>
-    <span class="playlist-page__header--title">{{ data.title }}</span>
-  </header>
+  <app-collection-layout
+    coverShape="circle"
+    editableCover
+    [title]="data.title"
+    [cover]="data.cover"
+    [verified]="data.verified"
+    [description]="data.description"
+    [meta]="meta()"
+    [details]="[data.publicPlaylists + ' Public Playlists']"
+    [playing]="player.isPlaying()"
+    [showInvite]="true"
+    [(shuffle)]="shuffle"
+    [(following)]="following"
+    [(saved)]="saved"
+    (play)="player.togglePlay()"
+  >
+    <app-track-table [tracks]="data.tracks" />
 
-  <div class="playlist-page__main">
-    <section class="playlist-page__info-section">
-      <div class="playlist-page__info-section--left-group circle">
-        <div class="playlist-page__info-section--cover-group custom-cover">
-          <img class="playlist-page__info-section--cover" [src]="data.cover" [alt]="data.title" />
-        </div>
-        <button class="playlist-page__info-section--choose-photo-btn" type="button">
-          <span class="playlist-page__info-section--choose-photo-icon">
-            <fa-icon [icon]="['fas', 'pen']" />
-          </span>
-          <span class="playlist-page__info-section--choose-photo-text">Choose photo</span>
-        </button>
-      </div>
-      <div class="playlist-page__info-section--right-group">
-        @if (data.verified) {
-          <div class="playlist-page__info-section--header-group">
-            <span class="playlist-page__info-section--verification-icon">
-              <fa-icon [icon]="['fas', 'circle-check']" />
-            </span>
-            <span class="playlist-page__info-section--header-text">Verified Artist</span>
-          </div>
-        }
-        <h1 class="playlist-page__info-section--title">{{ data.title }}</h1>
-        <span class="playlist-page__info-section--description">{{ data.description }}</span>
-        <div class="playlist-page__info-section--bottom-info-group">
-          <a class="playlist-page__info-section--author-anchor" [routerLink]="['/playlist', data.owner.id]">
-            <span class="playlist-page__info-section--author-span">{{ data.owner.name }}</span>
-          </a>
-          &ngsp;<span class="playlist-page__info-section--separator">•</span>&ngsp;
-          <span class="playlist-page__info-section--year-text" [title]="data.releaseDate | date: 'MMMM d, y'">{{
-            data.releaseDate | date: 'y'
-          }}</span>
-          &ngsp;<span class="playlist-page__info-section--separator">•</span>&ngsp;
-          <span class="playlist-page__info-section--count-and-duration-text"
-            >{{ data.trackCount }} songs, {{ data.totalDurationSeconds | duration: 'long' }}</span
-          >
-          <div class="playlist-page__info-section--monthly-listeners">
-            {{ data.monthlyListeners | number }} monthly listeners
-          </div>
-          <div class="playlist-page__info-section--public-playlist-count">{{ data.publicPlaylists }} Public Playlists</div>
-        </div>
-      </div>
+    <div class="playlist-page__main-section--see-more-group">
+      <span class="playlist-page__main-section--see-more-text">See more</span>
+    </div>
+    <div class="playlist-page__main-section--find-more-group">
+      <button class="playlist-page__main-section--find-more-btn" type="button">
+        <span class="playlist-page__main-section--find-more-span">Find more</span>
+      </button>
+    </div>
+    <div class="playlist-page__main-section--credits-group">
+      <span class="playlist-page__main-section--date-text">{{ data.releaseDate | date: 'MMMM d, y' }}</span>
+      <span class="playlist-page__main-section--copyright-text">{{ data.copyright }}</span>
+    </div>
+
+    @for (shelf of data.shelves; track shelf.id) {
+      <app-media-shelf [shelf]="shelf" />
+    }
+
+    <section class="playlist-page__main-section--about-group" aria-labelledby="playlist-about-title">
+      <h2 id="playlist-about-title" class="playlist-page__about-group--title">About</h2>
+      <button class="playlist-page__about-group--main-btn" type="button">
+        <span class="playlist-page__about-group--monthly-listeners">
+          {{ data.monthlyListeners | number }} monthly listeners
+        </span>
+        <span class="playlist-page__about-group--description">{{ data.about }}</span>
+      </button>
     </section>
 
-    <section class="playlist-page__main-section">
-      <div class="playlist-page__main-section--btns-group">
-        <button
-          appPlayButton
-          class="playlist-page__main-section--play-btn"
-          [playing]="player.isPlaying()"
-          [title]="(player.isPlaying() ? 'Pause ' : 'Play ') + data.title"
-          (click)="player.togglePlay()"
-        ></button>
-        <button
-          class="playlist-page__main-section--shuffle-btn playlist-page__main-section--btn"
-          type="button"
-          [class.shuffling]="shuffle()"
-          [title]="(shuffle() ? 'Disable' : 'Enable') + ' Shuffle for ' + data.title"
-          [attr.aria-pressed]="shuffle()"
-          (click)="shuffle.set(!shuffle())"
-        >
-          <span class="playlist-page__main-section--shuffle-icon">
-            <fa-icon [icon]="['fas', 'shuffle']" />
-          </span>
-        </button>
-        <button
-          class="playlist-page__main-section--follow-btn playlist-page__main-section--btn"
-          type="button"
-          [attr.aria-pressed]="following()"
-          (click)="following.set(!following())"
-        >
-          <span class="playlist-page__main-section--follow-icon">{{ following() ? 'Following' : 'Follow' }}</span>
-        </button>
-        <button
-          class="playlist-page__main-section--save-btn playlist-page__main-section--btn"
-          type="button"
-          [class.saved]="saved()"
-          [title]="saved() ? 'Remove from Your Library' : 'Save to Your Library'"
-          [attr.aria-pressed]="saved()"
-          (click)="saved.set(!saved())"
-        >
-          <span class="playlist-page__main-section--save-icon">
-            <fa-icon [icon]="['fas', saved() ? 'check' : 'plus']" />
-          </span>
-        </button>
-        <button
-          class="playlist-page__main-section--download-btn playlist-page__main-section--btn"
-          type="button"
-          title="Download"
-        >
-          <span class="playlist-page__main-section--download-icon">
-            <fa-icon [icon]="['fas', 'arrow-down']" />
-          </span>
-        </button>
-        <button
-          class="playlist-page__main-section--invite-btn playlist-page__main-section--btn"
-          type="button"
-          [title]="'Invite collaborators to ' + data.title"
-        >
-          <span class="playlist-page__main-section--invite-icon">
-            <fa-icon [icon]="['fas', 'user-plus']" />
-          </span>
-        </button>
-        <button
-          class="playlist-page__main-section--more-options-btn playlist-page__main-section--btn"
-          type="button"
-          [title]="'More options for ' + data.title"
-        >
-          <span class="playlist-page__main-section--more-options-icon">
-            <fa-icon [icon]="['fas', 'ellipsis']" />
-          </span>
-        </button>
-        <button class="playlist-page__main-section--view-as-btn" type="button" title="View as">
-          <span class="playlist-page__main-section--view-as-text">List</span>
-          <span class="playlist-page__main-section--view-as-icon">
-            <fa-icon [icon]="['fas', 'list-ul']" />
-          </span>
-        </button>
-      </div>
-
-      <app-track-table [tracks]="data.tracks" />
-
-      <div class="playlist-page__main-section--see-more-group">
-        <span class="playlist-page__main-section--see-more-text">See more</span>
-      </div>
-      <div class="playlist-page__main-section--find-more-group">
-        <button class="playlist-page__main-section--find-more-btn" type="button">
-          <span class="playlist-page__main-section--find-more-span">Find more</span>
-        </button>
-      </div>
-      <div class="playlist-page__main-section--credits-group">
-        <span class="playlist-page__main-section--date-text">{{ data.releaseDate | date: 'MMMM d, y' }}</span>
-        <span class="playlist-page__main-section--copyright-text">{{ data.copyright }}</span>
-      </div>
-
-      @for (shelf of data.shelves; track shelf.id) {
-        <app-media-shelf [shelf]="shelf" />
-      }
-
-      <section class="playlist-page__main-section--about-group" aria-labelledby="playlist-about-title">
-        <h2 id="playlist-about-title" class="playlist-page__about-group--title">About</h2>
-        <button class="playlist-page__about-group--main-btn" type="button">
-          <span class="playlist-page__about-group--monthly-listeners">
-            {{ data.monthlyListeners | number }} monthly listeners
-          </span>
-          <span class="playlist-page__about-group--description">{{ data.about }}</span>
-        </button>
-      </section>
-
-      @for (shelf of data.shelvesAfterAbout; track shelf.id) {
-        <app-media-shelf [shelf]="shelf" />
-      }
-    </section>
-  </div>
+    @for (shelf of data.shelvesAfterAbout; track shelf.id) {
+      <app-media-shelf [shelf]="shelf" />
+    }
+  </app-collection-layout>
 }

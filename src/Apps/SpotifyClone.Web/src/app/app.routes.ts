@@ -1,33 +1,53 @@
 import { Routes } from '@angular/router';
-import { RenderMode } from '@angular/ssr';
-import { ShellComponent } from './shell/shell.component';
+import { MainLayout } from '@layout/main-layout/main-layout';
+
+const TITLE = 'Stopify - Web Player: Music for everyone';
 
 export const routes: Routes = [
   {
     path: '',
-    component: ShellComponent,
+    component: MainLayout,
     children: [
       {
         path: '',
-        // data: { renderMode: RenderMode.Prerender },
-        loadComponent: () => import('./pages/playlist/playlist.component').then(m => m.PlaylistComponent),
+        title: TITLE,
+        loadComponent: () => import('@features/home/home-page').then((m) => m.HomePage),
       },
       {
         path: 'search',
-        loadComponent: () => import('./pages/search-browse/search-browse.component').then(m => m.SearchBrowseComponent),
+        title: 'Search - Stopify',
+        loadComponent: () =>
+          import('@features/search/search-browse/search-browse-page').then((m) => m.SearchBrowsePage),
       },
       {
         path: 'search/:query',
-        loadComponent: () => import('./pages/search-results/search-results.component').then(m => m.SearchResultsComponent),
+        title: 'Search - Stopify',
+        loadComponent: () =>
+          import('@features/search/search-results/search-results-page').then((m) => m.SearchResultsPage),
       },
       {
         path: 'playlist/:id',
-        loadComponent: () => import('./pages/playlist/playlist.component').then(m => m.PlaylistComponent),
+        title: TITLE,
+        loadComponent: () => import('@features/playlist/playlist-page').then((m) => m.PlaylistPage),
+      },
+      {
+        path: 'collection',
+        title: 'Your Library - Stopify',
+        loadComponent: () => import('@features/library/library-page').then((m) => m.LibraryPage),
       },
     ],
   },
   {
-    path: '**',
-    redirectTo: '',
+    path: 'signup',
+    title: 'Sign up - Stopify',
+    data: { flow: 'signup' },
+    loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
   },
+  {
+    path: 'login',
+    title: 'Log in - Stopify',
+    data: { flow: 'login' },
+    loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
+  },
+  { path: '**', redirectTo: '' },
 ];

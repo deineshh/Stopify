@@ -1,0 +1,76 @@
+// Ported from the queue rules in mockups/css/layout/queue-view.css
+:host {
+  display: flex;
+  inset: 0;
+  flex-direction: column;
+  height: 100%;
+  position: absolute;
+}
+
+.queue-view__header {
+  align-items: center;
+  box-shadow: 0 6px 10px -6px black;
+  display: flex;
+  justify-content: space-between;
+  padding: var(--layout-section-spacing-primary);
+  padding-bottom: var(--layout-section-spacing-primary);
+}
+
+.queue-view__header--title {
+  font-size: 1.1rem;
+}
+
+.queue-view__header--close-btn {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 100%;
+  color: var(--light-gray-fg-color);
+  display: flex;
+  justify-content: center;
+  font-size: 1.2rem;
+  transform: scale(1);
+  transition: .15s ease-in-out;
+  transition-property: color background transform;
+  width: 32px;
+}
+
+.queue-view__header--close-btn:hover {
+  color: var(--primary-fg-color);
+  background-color: var(--primary-element-bg-color);
+  transform: scale(1.05);
+}
+
+.queue-view__main {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  padding-top: var(--layout-section-spacing-primary);
+  padding-left: var(--layout-section-padding);
+  padding-bottom: var(--layout-section-padding);
+}
+
+.queue-view__now-playing--title {
+  font-size: 1.1rem;
+  margin: 7px;
+}
+
+.queue-view__next-from--group {
+  margin-top: 23px;
+}
+
+.queue-view__next-from--title-group {
+  align-items: center;
+  display: flex;
+  gap: 3px;
+  margin: 8px;
+}
+
+.queue-view__next-from--title-text,
+.queue-view__next-from--title-artist--anchor {
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+.queue-view__next-from--title-artist--anchor:hover {
+  text-decoration: underline;
+}

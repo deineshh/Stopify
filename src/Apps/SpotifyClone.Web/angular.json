@@ -9,7 +9,12 @@
   "projects": {
     "SpotifyClone.Web": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "changeDetection": "OnPush"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -31,11 +36,22 @@
             "server": "src/main.server.ts",
             "outputMode": "server",
             "security": {
-              "allowedHosts": []
+              "allowedHosts": [
+                "localhost",
+                "127.0.0.1",
+                "web",
+                "*.pinggy-free.link"
+              ]
             },
             "ssr": {
               "entry": "src/server.ts"
-            }
+            },
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
+            "inlineStyleLanguage": "scss"
           },
           "configurations": {
             "production": {
@@ -47,8 +63,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10kB",
-                  "maximumError": "20kB"
+                  "maximumWarning": "12kB",
+                  "maximumError": "24kB"
                 }
               ],
               "outputHashing": "all"
@@ -64,7 +80,10 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "allowedHosts": [".pinggy-free.link", "localhost"],
+            "allowedHosts": [
+              ".pinggy-free.link",
+              "localhost"
+            ],
             "proxyConfig": "proxy.conf.json"
           },
           "configurations": {

@@ -1,0 +1,88 @@
+<table class="track-table">
+  <thead>
+    <tr class="track-table__header">
+      <th class="track-table__header--index-column" scope="col">
+        <span class="track-table__header--index-text">#</span>
+      </th>
+      <th class="track-table__header--title-column" scope="col">
+        <span class="track-table__header--title-text">Title</span>
+      </th>
+      <th class="track-table__header--album-column" scope="col">
+        <span class="track-table__header--album-text">Album</span>
+      </th>
+      <th class="track-table__header--date-added-column" scope="col">
+        <span class="track-table__header--date-added-text">Date added</span>
+      </th>
+      <th class="track-table__header--duration-column" scope="col">
+        <span class="track-table__header--duration-text" title="Duration">
+          <fa-icon [icon]="['fas', 'clock']" />
+          <span class="visually-hidden">Duration</span>
+        </span>
+      </th>
+      <th class="track-table__header--more-column" scope="col">
+        <button class="track-table__header--more-btn" type="button" title="Columns">
+          <span class="track-table__header--more-icon">
+            <fa-icon [icon]="['fas', 'caret-down']" />
+          </span>
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="track-table__list">
+    @for (track of tracks(); track track.id; let index = $index) {
+      @let byline = track.title + ' by ' + (track.artists | artistNames);
+      <tr class="track-table__track">
+        <td class="track-table__track--index-column">
+          <span class="track-table__track--index-text">{{ index + 1 }}</span>
+          <button class="track-table__track--play-btn" type="button" [title]="'Play ' + byline" (click)="play.emit(track)">
+            <span class="track-table__track--play-icon">
+              <fa-icon [icon]="['fas', 'play']" />
+            </span>
+          </button>
+        </td>
+        <td class="track-table__track--title-column">
+          <img [src]="track.cover" alt="" class="track-table__track--cover" loading="lazy" />
+          <div class="track-table__track--info-group">
+            <a class="track-table__track--title-anchor" [routerLink]="['/playlist', track.album.id]">
+              <span class="track-table__track--title-span">{{ track.title }}</span>
+            </a>
+            <div class="track-table__track--authors-group">
+              @for (artist of track.artists; track artist.id; let last = $last) {
+                <a class="track-table__track--author-anchor" [class.last-author]="last" [routerLink]="['/playlist', artist.id]"
+                  ><span class="track-table__track--author-span">{{ artist.name }}</span>&ngsp;</a
+                >&ngsp;
+              }
+            </div>
+          </div>
+        </td>
+        <td class="track-table__track--album-column">
+          <a class="track-table__track--album-anchor" [routerLink]="['/playlist', track.album.id]">
+            <span class="track-table__track--album-span">{{ track.album.name }}</span>
+          </a>
+        </td>
+        <td class="track-table__track--date-added-column">
+          <span class="track-table__track--date-added-text">{{ track.addedAt | date: 'MMM d, y' }}</span>
+        </td>
+        <td class="track-table__track--duration-column">
+          <button
+            class="track-table__track--save-btn"
+            type="button"
+            [title]="track.saved ? 'Add to playlist' : 'Add to Liked Songs'"
+          >
+            <span class="track-table__track--save-icon">
+              <fa-icon [icon]="['fas', track.saved ? 'check' : 'plus']" />
+            </span>
+          </button>
+          &ngsp;<span class="track-table__track--duration-text">{{ track.durationSeconds | duration }}</span>
+        </td>
+        <td class="track-table__track--more-column">
+          <button class="track-table__track--more-btn" type="button" [title]="'More options for ' + byline">
+            <span class="track-table__track--more-icon">
+              <fa-icon [icon]="['fas', 'ellipsis']" />
+            </span>
+          </button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>

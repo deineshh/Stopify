@@ -1,0 +1,199 @@
+@let track = player.nowPlaying().track;
+@let artists = track.artists | artistNames;
+<section class="now-playing-bar__track-info--section">
+  <div class="now-playing-bar__img-group">
+    <button class="now-playing-bar__img-group--btn" type="button" [title]="track.title">
+      <img class="now-playing-bar__img-group--img" [src]="track.cover" [alt]="track.title + ' cover'" />
+    </button>
+    <button class="now-playing-bar__expand-btn" type="button" title="Collapse">
+      <span class="now-playing-bar__expand-icon">
+        <fa-icon [icon]="['fas', 'chevron-up']" />
+      </span>
+    </button>
+  </div>
+  <div class="now-playing-bar__track-info--group">
+    <a class="now-playing-bar__track-info--title-anchor" [routerLink]="['/playlist', track.album.id]">
+      <span class="now-playing-bar__track-info--title-span">{{ track.title }}</span>
+    </a>
+    <p class="now-playing-bar__track-info--artists" [title]="artists">
+      @for (artist of track.artists; track artist.id; let last = $last) {
+        <a class="now-playing-bar__track-info--artist-anchor" [routerLink]="['/playlist', artist.id]">
+          <span class="now-playing-bar__track-info--artist-span">{{ artist.name }}</span>
+        </a>
+        @if (!last) {
+          &ngsp;<span class="now-playing-bar__track-info--artist-seperator">,</span>&ngsp;
+        }
+      }
+    </p>
+  </div>
+  <button
+    class="now-playing-bar__save-btn"
+    type="button"
+    [class.saved]="player.saved()"
+    [title]="player.saved() ? 'Remove from Liked Songs' : 'Add to Liked Songs'"
+    [attr.aria-pressed]="player.saved()"
+    (click)="player.toggleSaved()"
+  >
+    <span class="now-playing-bar__save-icon">
+      <fa-icon [icon]="['fas', player.saved() ? 'check' : 'plus']" />
+    </span>
+  </button>
+  <!-- Mini player (phones only) -->
+  <button
+    class="now-playing-bar__mobile-play-btn"
+    type="button"
+    [title]="player.isPlaying() ? 'Pause' : 'Play'"
+    (click)="player.togglePlay()"
+  >
+    <fa-icon [icon]="['fas', player.isPlaying() ? 'pause' : 'play']" />
+  </button>
+</section>
+
+<section class="now-playing-bar__player--section">
+  <div class="now-playing-bar__player--btns">
+    <button
+      class="now-playing-bar__player--shuffle-btn now-playing-bar__btn-base"
+      type="button"
+      [class.active]="player.shuffle()"
+      [title]="player.shuffle() ? 'Disable shuffle' : 'Enable shuffle'"
+      [attr.aria-pressed]="player.shuffle()"
+      (click)="player.toggleShuffle()"
+    >
+      <span class="now-playing-bar__player--shuffle-icon">
+        <fa-icon [icon]="['fas', 'shuffle']" />
+      </span>
+    </button>
+    <button
+      class="now-playing-bar__player--previous-btn now-playing-bar__btn-base now-playing-bar__skip-btn"
+      type="button"
+      title="Previous"
+    >
+      <span class="now-playing-bar__player--previous-icon now-playing-bar__skip-icon">
+        <fa-icon [icon]="['fas', 'backward-step']" />
+      </span>
+    </button>
+    <button
+      class="now-playing-bar__player--play-btn"
+      type="button"
+      [title]="player.isPlaying() ? 'Pause' : 'Play'"
+      (click)="player.togglePlay()"
+    >
+      <span class="now-playing-bar__player--play-icon" [class.paused]="player.isPlaying()">
+        <fa-icon [icon]="['fas', player.isPlaying() ? 'pause' : 'play']" />
+      </span>
+    </button>
+    <button
+      class="now-playing-bar__player--next-btn now-playing-bar__btn-base now-playing-bar__skip-btn"
+      type="button"
+      title="Next"
+    >
+      <span class="now-playing-bar__player--next-icon now-playing-bar__skip-icon">
+        <fa-icon [icon]="['fas', 'forward-step']" />
+      </span>
+    </button>
+    <button
+      class="now-playing-bar__player--repeat-btn now-playing-bar__btn-base"
+      type="button"
+      [class.active]="player.repeat() !== 'off'"
+      [class.repeat-one]="player.repeat() === 'one'"
+      [title]="repeatTitle()"
+      (click)="player.cycleRepeat()"
+    >
+      <span class="now-playing-bar__player--repeat-icon">
+        <fa-icon [icon]="['fas', 'repeat']" />
+      </span>
+    </button>
+  </div>
+  <div class="now-playing-bar__player--slider-group">
+    <span class="now-playing-bar__player--playback-position now-playing-bar__player--playback-time">{{
+      player.positionSeconds() | duration
+    }}</span>
+    <div class="now-playing-bar__player--slider">
+      <app-range-slider
+        label="Change progress"
+        [value]="player.progress()"
+        [valueText]="player.positionSeconds() | duration"
+        (valueChange)="player.seek($event)"
+      />
+    </div>
+    <span class="now-playing-bar__player--playback-duration now-playing-bar__player--playback-time">{{
+      track.durationSeconds | duration
+    }}</span>
+  </div>
+</section>
+
+<section class="now-playing-bar__btns-section">
+  <button
+    class="now-playing-bar__now-playing-view-btn now-playing-bar__btn-base"
+    type="button"
+    title="Now playing view"
+    [class.active]="layout.rightPanel() === 'now-playing'"
+    [attr.aria-pressed]="layout.rightPanel() === 'now-playing'"
+    (click)="layout.toggleRightPanel('now-playing')"
+  >
+    <span class="now-playing-bar__now-playing-view-icon now-playing-bar__btns-section--icon">
+      <fa-icon [icon]="['fas', 'play']" />
+    </span>
+  </button>
+  <button class="now-playing-bar__lyrics-btn now-playing-bar__btn-base" type="button" title="Lyrics">
+    <span class="now-playing-bar__lyrics-icon now-playing-bar__btns-section--icon">
+      <fa-icon [icon]="['fas', 'microphone']" />
+    </span>
+  </button>
+  <button
+    class="now-playing-bar__queue-btn now-playing-bar__btn-base"
+    type="button"
+    title="Queue"
+    [class.active]="layout.rightPanel() === 'queue'"
+    [attr.aria-pressed]="layout.rightPanel() === 'queue'"
+    (click)="layout.toggleRightPanel('queue')"
+  >
+    <span class="now-playing-bar__queue-icon now-playing-bar__btns-section--icon">
+      <fa-icon [icon]="['fas', 'bars']" />
+    </span>
+  </button>
+  <button
+    class="now-playing-bar__connect-to-device-btn now-playing-bar__btn-base"
+    type="button"
+    title="Connect to a device"
+  >
+    <span class="now-playing-bar__connect-to-device-icon now-playing-bar__btns-section--icon">
+      <fa-icon [icon]="['fas', 'computer']" />
+    </span>
+  </button>
+  <div class="now-playing-bar__volume-group">
+    <button
+      class="now-playing-bar__mute-btn now-playing-bar__btn-base"
+      type="button"
+      [title]="player.muted() ? 'Unmute' : 'Mute'"
+      [attr.aria-pressed]="player.muted()"
+      (click)="player.toggleMute()"
+    >
+      <span class="now-playing-bar__mute-icon now-playing-bar__btns-section--icon">
+        <fa-icon [icon]="['fas', volumeIcon()]" />
+      </span>
+    </button>
+    <div class="now-playing-bar__volume-slider">
+      <app-range-slider
+        label="Change volume"
+        [value]="player.effectiveVolume()"
+        (valueChange)="player.setVolume($event)"
+      />
+    </div>
+  </div>
+  <button class="now-playing-bar__miniplayer-btn now-playing-bar__btn-base" type="button" title="Open Miniplayer">
+    <span class="now-playing-bar__miniplayer-icon now-playing-bar__btns-section--icon">
+      <fa-icon [icon]="['fas', 'up-right-from-square']" />
+    </span>
+  </button>
+  <button class="now-playing-bar__full-screen-btn now-playing-bar__btn-base" type="button" title="Enter Full screen">
+    <span class="now-playing-bar__full-screen-icon now-playing-bar__btns-section--icon">
+      <fa-icon [icon]="['fas', 'expand']" />
+    </span>
+  </button>
+</section>
+
+<!-- Mini player progress line (phones only) -->
+<div class="now-playing-bar__mobile-progress" aria-hidden="true">
+  <div class="now-playing-bar__mobile-progress--fill" [style.width.%]="player.progress()"></div>
+</div>

@@ -1,0 +1,42 @@
+<h1 class="visually-hidden">Home</h1>
+<header class="home-page__header" [style.background-color]="headerBackground()">
+  <nav class="home-page__header-nav" aria-label="Filter the home feed">
+    @for (filter of filters; track filter.id) {
+      <button
+        appFilterChip
+        class="home-page__header-nav--filter-btn"
+        [active]="activeFilter() === filter.id"
+        (click)="activeFilter.set(filter.id)"
+      >
+        {{ filter.label }}
+      </button>
+    }
+  </nav>
+</header>
+
+<div class="home-page__main">
+  <section class="home-page__recently-played-section" aria-label="Recently played">
+    @for (item of feed().shortcuts; track item.id) {
+      <div class="home-page__recently-played-item play-btn-parent">
+        <div class="home-page__recently-played-item--left-side">
+          <img class="home-page__recently-played-item--cover" [src]="item.cover" alt="" />
+        </div>
+        <div class="home-page__recently-played-item--right-side">
+          <a class="home-page__recently-played-item--title-anchor" [routerLink]="['/playlist', item.id]">
+            <p class="home-page__recently-played-item--title-text">{{ item.title }}</p>
+          </a>
+          <button
+            appPlayButton
+            revealOnHover
+            class="home-page__recently-played-item--play-btn"
+            [attr.aria-label]="'Play ' + item.title"
+          ></button>
+        </div>
+      </div>
+    }
+  </section>
+
+  @for (shelf of feed().shelves; track shelf.id) {
+    <app-media-shelf [shelf]="shelf" />
+  }
+</div>

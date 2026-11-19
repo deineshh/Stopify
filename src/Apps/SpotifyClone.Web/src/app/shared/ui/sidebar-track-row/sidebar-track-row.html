@@ -1,0 +1,32 @@
+@let item = track();
+@let byline = item.title + ' by ' + (item.artists | artistNames);
+<div class="right-sidebar__track-item--left-group">
+  <div class="right-sidebar__track-item--img-group"></div>
+  <button class="right-sidebar__track-item--play-btn" type="button" [title]="'Play ' + byline">
+    <span class="right-sidebar__track-item--play-icon">
+      <fa-icon [icon]="['fas', 'play']" />
+    </span>
+  </button>
+</div>
+<div class="right-sidebar__track-item--center-group">
+  <p class="right-sidebar__track-item--title">
+    <span class="right-sidebar__track-item--title-span">{{ item.title }}</span>
+  </p>
+  <p class="right-sidebar__track-item--artists">
+    @for (artist of item.artists; track artist.id; let last = $last) {
+      <a class="right-sidebar__track-item--artist-anchor" [routerLink]="['/playlist', artist.id]">
+        <span class="right-sidebar__track-item--artist-span">{{ artist.name }}</span>
+      </a>
+      @if (!last) {
+        &ngsp;<span class="right-sidebar__track-item--artist-seperator">,</span>&ngsp;
+      }
+    }
+  </p>
+</div>
+<div class="right-sidebar__track-item--right-group">
+  <button class="right-sidebar__track-item--more-btn" type="button" [title]="'More options for ' + item.title">
+    <span class="right-sidebar__track-item--more-icon">
+      <fa-icon [icon]="['fas', 'ellipsis']" />
+    </span>
+  </button>
+</div>

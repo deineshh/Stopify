@@ -1,0 +1,37 @@
+<hr class="main-footer__top-horizontal-rule main-footer__horizontal-rule" />
+<nav class="main-footer__nav-group" aria-label="Footer">
+  <div class="main-footer__top-group">
+    <div class="main-footer__table-group">
+      @for (column of columns; track column.id) {
+        <div class="main-footer__table-ul" role="group" [attr.aria-labelledby]="'footer-' + column.id">
+          <p class="main-footer__ul-title" [id]="'footer-' + column.id">{{ column.title }}</p>
+          @for (link of column.links; track link) {
+            <a class="main-footer__ul-item" href="" (click)="$event.preventDefault()">
+              <span>{{ link }}</span>
+            </a>
+          }
+        </div>
+      }
+    </div>
+    <div class="main-footer__social--group">
+      @for (social of socials; track social.label) {
+        <a class="main-footer__social--anchor" href="" [title]="social.label" [attr.aria-label]="social.label" (click)="$event.preventDefault()">
+          <span class="main-footer__social--icon" [class]="'main-footer__' + social.id + '--icon'">
+            <fa-icon [icon]="social.icon" />
+          </span>
+        </a>
+      }
+    </div>
+  </div>
+  <hr class="main-footer__bottom-horizontal-rule main-footer__horizontal-rule" />
+  <div class="main-footer__bottom-group">
+    <div class="main-footer__bottom-links">
+      @for (link of legalLinks; track link) {
+        <a class="main-footer__bottom-link" href="" (click)="$event.preventDefault()">
+          <span>{{ link }}</span>
+        </a>
+      }
+    </div>
+    <p class="main-footer__bottom-copyright">&copy; {{ year }} Stopify AB</p>
+  </div>
+</nav>

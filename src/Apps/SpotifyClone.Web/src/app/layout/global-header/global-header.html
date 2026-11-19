@@ -1,0 +1,87 @@
+<section class="global-header__left-section">
+  <a class="global-header__stopify-logo--anchor" routerLink="/" draggable="false" title="Stopify">
+    <img
+      class="global-header__stopify-logo--img"
+      src="/assets/images/icons/favicon.svg"
+      alt="Stopify"
+      draggable="false"
+    />
+  </a>
+</section>
+
+<section class="global-header__middle-section">
+  <a class="global-header__home-btn global-header__btn-base" routerLink="/" title="Home" aria-label="Home">
+    <span class="global-header__home-btn--span">
+      <fa-icon [icon]="['fas', 'house']" />
+    </span>
+  </a>
+  <form class="global-header__search-form" role="search" (submit)="$event.preventDefault()">
+    <label class="global-header__search-bar--group" for="global-search-input">
+      <span class="global-header__search-btn global-header__btn-base" aria-hidden="true">
+        <span class="global-header__search-btn--span">
+          <fa-icon [icon]="['fas', 'magnifying-glass']" />
+        </span>
+      </span>
+      <input
+        id="global-search-input"
+        class="global-header__search-bar--input"
+        type="text"
+        autocomplete="off"
+        placeholder=" "
+        aria-label="What do you want to play?"
+        [value]="query()"
+        (input)="onInput($any($event.target).value)"
+      />
+      <div class="global-header__search-bar--placeholder-group" aria-hidden="true">
+        <span class="global-header__search-bar--placeholder-text">What do you want to play?</span>
+      </div>
+      <button
+        class="global-header__search-btns--clear-btn global-header__btn-base global-header__search-bar--btn"
+        type="button"
+        title="Clear search field"
+        (click)="clear()"
+      >
+        <span class="global-header__search-btns--clear-span">
+          <fa-icon [icon]="['fas', 'xmark']" />
+        </span>
+      </button>
+      <div class="global-header__search-btns--browse-group">
+        <a
+          class="global-header__search-btns--browse-btn global-header__btn-base global-header__search-bar--btn"
+          routerLink="/search"
+          title="Browse"
+          aria-label="Browse"
+        >
+          <span class="global-header__search-btns--browse-span">
+            <fa-icon [icon]="['fas', 'bucket']" />
+          </span>
+        </a>
+      </div>
+    </label>
+  </form>
+</section>
+
+<section class="global-header__right-section">
+  <a class="global-header__install-app--anchor global-header__btn-base" href="" draggable="false" (click)="$event.preventDefault()">
+    <span class="global-header__install-app--span">
+      <fa-icon [icon]="['fas', 'arrow-down']" />
+    </span>
+    <span class="global-header__install-app--text">Install App</span>
+  </a>
+  <div class="global-header__right-group--btns">
+    <button class="global-header__content-feed-btn global-header__right-group--btn" type="button" title="What's New">
+      <fa-icon [icon]="['fas', 'bell']" />
+    </button>
+    &ngsp;
+    <button
+      class="global-header__friend-activity-btn global-header__right-group--btn"
+      type="button"
+      title="Friend Activity"
+    >
+      <fa-icon [icon]="['fas', 'user-group']" />
+    </button>
+  </div>
+  <a class="global-header__user-widget--btn" routerLink="/login" title="Aqua Studios">
+    <span class="global-header__user-widget--span">A</span>
+  </a>
+</section>

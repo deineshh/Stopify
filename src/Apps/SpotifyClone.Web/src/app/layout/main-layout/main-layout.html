@@ -1,0 +1,62 @@
+<nav aria-label="Skip links"><a class="skip-link" href="#main-content">Skip to main content</a></nav>
+
+<app-global-header />
+
+<div class="layout-main layout-section">
+  <section
+    class="left-sidebar__group main-section sidebar-group"
+    aria-label="Library panel"
+    [style.width.px]="layout.libraryWidth()"
+  >
+    <app-library-sidebar />
+    <app-resize-handle
+      label="Resize Your Library"
+      [width]="layout.libraryWidth()"
+      (resized)="layout.resizeLibrary($event)"
+    />
+  </section>
+
+  <main
+    #mainView
+    id="main-content"
+    class="main-view main-section"
+    tabindex="-1"
+    (scroll)="onMainScroll($event)"
+  >
+    <div class="main-page__main">
+      <router-outlet />
+    </div>
+    <app-main-footer />
+  </main>
+
+  @if (layout.isRightPanelVisible()) {
+    <section
+      class="right-sidebar__group main-section sidebar-group"
+      aria-label="Now Playing panel"
+      [style.width.px]="layout.rightPanelWidth()"
+    >
+      <app-resize-handle
+        edge="start"
+        label="Resize Now Playing view"
+        [width]="layout.rightPanelWidth()"
+        (resized)="layout.resizeRightPanel($event)"
+      />
+      <aside class="right-sidebar__main-group sidebar-main">
+        @switch (layout.rightPanel()) {
+          @case ('now-playing') {
+            <app-now-playing-panel />
+          }
+          @case ('queue') {
+            <app-queue-panel />
+          }
+        }
+      </aside>
+    </section>
+  }
+</div>
+
+<app-now-playing-bar />
+
+@if (viewport.isMobile()) {
+  <app-mobile-nav />
+}

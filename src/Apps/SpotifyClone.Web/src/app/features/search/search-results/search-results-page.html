@@ -1,0 +1,128 @@
+<h1 class="visually-hidden">Search results for "{{ query() }}"</h1>
+<nav class="search-results__header-nav" aria-label="Filter search results">
+  @for (filter of filters; track filter.id) {
+    <button appFilterChip [active]="activeFilter() === filter.id" (click)="activeFilter.set(filter.id)">
+      {{ filter.label }}
+    </button>
+  }
+</nav>
+
+@if (results.value(); as data) {
+  <div class="search-results__main-group">
+    @if (isVisible('songs')) {
+      <div class="search-results__top-result-and-songs">
+        @if (activeFilter() === 'all') {
+          <section class="search-results__top-result-group" aria-labelledby="top-result-title">
+            <h2 id="top-result-title" class="search-results__top-result-title">Top result</h2>
+            <div class="search-results__top-result-item play-btn-parent">
+              <img class="search-results__top-result-item--cover" [src]="data.topResult.cover" alt="" />
+              <div class="search-results__top-result-item--info">
+                <a
+                  class="search-results__top-result-item--title"
+                  [routerLink]="['/playlist', data.topResult.id]"
+                  [title]="data.topResult.name"
+                >
+                  <span class="search-results__top-result-item--title-span">{{ data.topResult.name }}</span>
+                </a>
+                <span class="search-results__top-result-item--type">{{ data.topResult.type }}</span>
+              </div>
+              <button
+                appPlayButton
+                revealOnHover
+                class="search-results__top-result-item--play-btn"
+                [attr.aria-label]="'Play ' + data.topResult.name"
+              ></button>
+            </div>
+          </section>
+        }
+
+        <section class="search-results__songs-group" aria-labelledby="songs-title">
+          <a id="songs-title" class="search-results__songs-title" (click)="activeFilter.set('songs')">Songs</a>
+          <div class="search-results__songs-items" role="list">
+            @for (song of data.songs; track song.id) {
+              @let artists = song.artists | artistNames;
+              @let byline = song.title + ' by ' + artists;
+              <div class="search-results__songs-item" role="listitem">
+                <div class="search-results__songs-item--left-group">
+                  <div class="search-results__songs-item--cover-group" [title]="'Play ' + byline">
+                    <img class="search-results__songs-item--cover" [src]="song.cover" alt="" />
+                    <button class="search-results__songs-item--play-btn" type="button" [attr.aria-label]="'Play ' + byline">
+                      <span class="search-results__songs-item--play-icon">
+                        <fa-icon [icon]="['fas', 'play']" />
+                      </span>
+                    </button>
+                  </div>
+                  <div class="search-results__songs-item--info-group">
+                    <a
+                      class="search-results__songs-item--title-anchor"
+                      [routerLink]="['/playlist', song.album.id]"
+                      [title]="song.title"
+                    >
+                      <span class="search-results__songs-item--title-span">{{ song.title }}</span>
+                    </a>
+                    <div class="search-results__songs-item--authors" [title]="artists">
+                      @for (artist of song.artists; track artist.id; let last = $last) {
+                        <a class="search-results__songs-item--author" [routerLink]="['/playlist', artist.id]">{{
+                          artist.name
+                        }}</a>
+                        @if (!last) {
+                          &ngsp;<span class="search-results__songs-item--author-separator">,</span>&ngsp;
+                        }
+                      }
+                    </div>
+                  </div>
+                </div>
+                <div class="search-results__songs-item--right-group">
+                  <button class="search-results__songs-item--save-btn" type="button" title="Add to Liked Songs">
+                    <span class="search-results__songs-item--save-icon">
+                      <fa-icon [icon]="['fas', 'plus']" />
+                    </span>
+                  </button>
+                  <span class="search-results__songs-item--duration">{{ song.durationSeconds | duration }}</span>
+                  <button class="search-results__songs-item--more-btn" type="button" [title]="'More options for ' + byline">
+                    <span class="search-results__songs-item--more-icon">
+                      <fa-icon [icon]="['fas', 'ellipsis']" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            }
+          </div>
+        </section>
+      </div>
+    }
+
+    @for (section of cardSections(); track section.id) {
+      @if (isVisible(section.id)) {
+        <section class="search-results__section" [attr.aria-labelledby]="'results-' + section.id">
+          <h2 class="search-results__title" [id]="'results-' + section.id">
+            <a (click)="activeFilter.set(section.id)">{{ section.title }}</a>
+          </h2>
+          <div class="track-items" role="list" appSingleRow>
+            @for (item of section.items; track item.id) {
+              <app-media-card [item]="item" />
+            }
+          </div>
+        </section>
+      }
+    }
+
+    @if (isVisible('genres')) {
+      <section class="search-results__section" aria-labelledby="results-genres">
+        <h2 id="results-genres" class="search-results__title">
+          <a (click)="activeFilter.set('genres')">Genres &amp; Moods</a>
+        </h2>
+        <div class="track-items" appSingleRow>
+          @for (genre of data.genres; track genre.id) {
+            <a class="search-results__genres-moods-item track-item" [routerLink]="['/search', genre.name]">
+              <img class="search-results__genres-moods-item--cover track-item__cover rounded" [src]="genre.cover" alt="" />
+              <span class="search-results__genres-moods-item--title-anchor track-item__title-anchor">
+                <p class="search-results__genres-moods-item--title-text track-item__title-text">{{ genre.name }}</p>
+              </span>
+            </a>
+          }
+        </div>
+      </section>
+    }
+  </div>
+}

@@ -51,6 +51,13 @@ export interface Track {
   addedAt?: string;
   saved?: boolean;
   explicit?: boolean;
+  /** Who is credited and how (only known for tracks loaded on their own, not album listings). */
+  credits?: readonly TrackCredit[];
+}
+
+export interface TrackCredit {
+  artist: EntityRef;
+  role: 'Main Artist' | 'Featured Artist';
 }
 
 export interface Genre {

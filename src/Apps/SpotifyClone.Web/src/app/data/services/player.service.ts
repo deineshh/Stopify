@@ -8,12 +8,11 @@ import { ToastService } from '@core/notifications/toast.service';
 import { AudioEngine } from '@core/playback/audio-engine';
 import { DEVICE_ID } from '@core/playback/device-id';
 import { CatalogApi } from '../api/catalog-api';
-import { AlbumDetailsDto } from '../api/catalog.dtos';
-import { trackToViewModel } from '../api/catalog.mappers';
 import { PlaybackApi } from '../api/playback-api';
 import { PlaybackSessionDto, PlaybackStreamDto } from '../api/playback.dtos';
 import { Track } from '../models/catalog.models';
 import { PlaybackContextRef, PlaybackTarget, RepeatMode } from '../models/player.models';
+import { TrackLookup } from './track-lookup.service';
 
 /** How often progress is reported while playing, so another device can pick up where this one was. */
 const SYNC_INTERVAL_MS = 10_000;
@@ -30,6 +29,7 @@ const VOLUME_KEY = 'stopify.volume';
 export class PlayerService {
   private readonly api = inject(PlaybackApi);
   private readonly catalog = inject(CatalogApi);
+  private readonly lookup = inject(TrackLookup);
   private readonly engine = inject(AudioEngine);
   private readonly auth = inject(AuthStore);
   private readonly router = inject(Router);
@@ -75,7 +75,6 @@ export class PlayerService {
   });
 
   private loading?: Subscription;
-  private readonly albumCache = new Map<string, Observable<AlbumDetailsDto | null>>();
 
   constructor() {
     effect(() => {
@@ -278,7 +277,7 @@ export class PlayerService {
     this.restoredPosition.set(0);
     if (this.track()?.id !== trackId) {
       this.saved.set(false);
-      this.loadTrack(trackId).subscribe((track) => this.track.set(track));
+      this.lookup.track(trackId).subscribe((track) => this.track.set(track));
     }
     void this.engine.load(url, startSeconds, autoplay);
   }
@@ -350,7 +349,7 @@ export class PlayerService {
     this.shuffle.set(session.isShuffled);
     this.repeat.set(toRepeatMode(session.repeatMode));
     this.restoredPosition.set(session.currentPositionMs / 1000);
-    this.loadTrack(trackId).subscribe((track) => this.track.set(track));
+    this.lookup.track(trackId).subscribe((track) => this.track.set(track));
   }
 
   private reset(): void {
@@ -362,33 +361,6 @@ export class PlayerService {
     this.shuffle.set(false);
     this.repeat.set('off');
     this.restoredPosition.set(0);
-  }
-
-  /** Track plus its album (title and cover). Albums are cached: a queue usually stays on one. */
-  private loadTrack(trackId: string): Observable<Track> {
-    return this.catalog.track(trackId).pipe(
-      switchMap((dto) =>
-        (dto.albumId ? this.album(dto.albumId) : of(null)).pipe(
-          map((album) =>
-            trackToViewModel(dto, album ? { id: album.id, title: album.title, coverImageId: album.cover?.imageId } : undefined),
-          ),
-        ),
-      ),
-    );
-  }
-
-  private album(id: string): Observable<AlbumDetailsDto | null> {
-    let album = this.albumCache.get(id);
-    if (!album) {
-      album = this.catalog.album(id).pipe(
-        catchError(() => {
-          this.albumCache.delete(id);
-          return of(null);
-        }),
-      );
-      this.albumCache.set(id, album);
-    }
-    return album;
   }
 }
 

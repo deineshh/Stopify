@@ -21,7 +21,7 @@ import { ArtistNamesPipe } from '@shared/pipes/artist-names.pipe';
     class: 'now-playing-bar layout-section',
     '[class.empty]': '!player.track()',
     role: 'region',
-    'aria-label': 'Now playing',
+    'aria-label': 'Player',
   },
 })
 export class NowPlayingBar {

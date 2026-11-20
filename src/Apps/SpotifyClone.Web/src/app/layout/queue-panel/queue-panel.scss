@@ -74,3 +74,24 @@
 .queue-view__next-from--title-artist--anchor:hover {
   text-decoration: underline;
 }
+
+// ---------------------------------------------------------------- API states (not in the mockup)
+
+.queue-view__empty {
+  color: var(--light-gray-fg-color);
+  font-size: 0.9rem;
+  padding: 8px 0;
+}
+
+.queue-view__empty-state {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.queue-view__empty-state--title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}

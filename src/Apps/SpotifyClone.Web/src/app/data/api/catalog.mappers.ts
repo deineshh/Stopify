@@ -139,6 +139,10 @@ export function trackToViewModel(track: TrackDetailsDto | TrackSummaryDto, album
     cover: imageUrl(album?.coverImageId),
     durationSeconds: timeSpanToSeconds(track.duration),
     explicit: track.containsExplicitContent,
+    credits: [
+      ...track.mainArtists.map((artist) => ({ artist: toRef(artist), role: 'Main Artist' as const })),
+      ...track.featuredArtists.map((artist) => ({ artist: toRef(artist), role: 'Featured Artist' as const })),
+    ],
   };
 }
 

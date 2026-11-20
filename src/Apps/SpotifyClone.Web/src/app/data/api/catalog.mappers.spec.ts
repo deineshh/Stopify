@@ -104,6 +104,10 @@ describe('catalog mappers', () => {
       cover: '/images/c1/image.webp',
       durationSeconds: 147,
       explicit: true,
+      credits: [
+        { artist: { id: 'desh', name: 'DESH' }, role: 'Main Artist' },
+        { artist: { id: 'yf', name: 'Young Fly' }, role: 'Featured Artist' },
+      ],
     });
   });
 

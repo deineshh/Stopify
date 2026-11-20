@@ -2,7 +2,7 @@
 
 Angular 21 web client for Stopify. It is a server-rendered (SSR + hydration), zoneless, standalone-component app built from the HTML/CSS mockups in [`mockups/`](./mockups).
 
-Authentication, the catalog (home, search, albums, artists and playlists), Your Library (the signed-in user's playlists) and playback (HLS streaming through the API's playback session) are connected to the API. The Now Playing and Queue panels still show static content. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
+Authentication, the catalog (home, search, albums, artists and playlists), Your Library (the signed-in user's playlists) and playback (HLS streaming through the API's playback session, with the Now Playing and Queue panels) are connected to the API. Following artists and Liked Songs are UI-only because the API has no endpoints for them yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
 
 ## Getting started
 
@@ -33,8 +33,7 @@ src/
     ├── data/             Everything the UI reads
     │   ├── api/          Typed API clients (CatalogApi, PlaybackApi), DTOs and DTO → view model mappers
     │   ├── models/       View models, independent of backend DTOs
-    │   ├── mock/         Static fixtures for what isn't connected yet (the right-hand panels)
-    │   └── services/     CatalogService, LibraryService, PlayerService
+    │   └── services/     Catalog, Collection, Library, Player, NowPlaying, TrackLookup
     ├── layout/           Application shell (header, library, right panels, player bar, footer, mobile nav)
     ├── features/         Lazy-loaded pages: home, search, playlist, library, auth
     ├── shared/           Reusable UI: media card/shelf, track table, play button, filter chip, slider, pipes
@@ -65,6 +64,7 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 - **Audio:** `AudioEngine` plays the stream through a detached `<audio>` element. The light build of hls.js is loaded on the first play (it isn't in the main bundle); browsers without Media Source Extensions but with native HLS get the URL directly.
 - **Play buttons:** `<button appPlayButton [target]="…">` plays an album, playlist or artist and shows pause while it is playing. Track rows play their album or playlist from that song. An artist plays their latest track's album. Guests are sent to log in.
 - **Devices:** each browser has an id (`stopify.deviceId` in localStorage). Skip, seek, shuffle and repeat only work from the active device, so if another device took over, the player resumes here first and retries.
+- **Panels:** `NowPlayingService` loads what the right-hand panels show: the album or playlist name, the first artist's bio and avatar, and the queue (`/me/playback/queue`, only while a panel is on screen). A queued song plays the same album or playlist from that song.
 - **Not yet in the API:** Search has no playback context of its own (the API's `search` context can't be started), so a song from search plays from its album.
 
 ## Routes

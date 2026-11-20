@@ -1,12 +1,24 @@
 @let item = track();
 @let byline = item.title + ' by ' + (item.artists | artistNames);
 <div class="right-sidebar__track-item--left-group">
-  <div class="right-sidebar__track-item--img-group"></div>
-  <button class="right-sidebar__track-item--play-btn" type="button" [title]="'Play ' + byline">
-    <span class="right-sidebar__track-item--play-icon">
-      <fa-icon [icon]="['fas', 'play']" />
-    </span>
-  </button>
+  <div class="right-sidebar__track-item--img-group">
+    @if (item.cover) {
+      <img class="right-sidebar__track-item--img" [src]="item.cover" alt="" loading="lazy" />
+    }
+  </div>
+  @if (current() || target()) {
+    <button
+      class="right-sidebar__track-item--play-btn"
+      type="button"
+      [title]="(playing() ? 'Pause ' : 'Play ') + byline"
+      [attr.aria-pressed]="playing()"
+      (click)="onPlay()"
+    >
+      <span class="right-sidebar__track-item--play-icon">
+        <fa-icon [icon]="['fas', playing() ? 'pause' : 'play']" />
+      </span>
+    </button>
+  }
 </div>
 <div class="right-sidebar__track-item--center-group">
   <p class="right-sidebar__track-item--title">

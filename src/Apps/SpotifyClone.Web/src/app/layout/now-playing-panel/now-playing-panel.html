@@ -1,6 +1,6 @@
-@let details = nowPlaying();
-@let track = details.track;
-@let spotlight = details.spotlight;
+@let track = player.track();
+@let context = nowPlaying.context();
+@let spotlight = nowPlaying.artist();
 <header class="now-playing-view__header">
   <div class="now-playing-view__header--title-group">
     <button
@@ -13,15 +13,19 @@
         <fa-icon [icon]="['far', 'circle-right']" />
       </span>
     </button>
-    <a class="now-playing-view__header--title-anchor" [routerLink]="['/artist', details.context.id]">
-      <h1 class="now-playing-view__header--title-text">{{ details.context.name }}</h1>
-    </a>
+    @if (context) {
+      <a class="now-playing-view__header--title-anchor" [routerLink]="context.link">
+        <h1 class="now-playing-view__header--title-text">{{ context.name }}</h1>
+      </a>
+    } @else {
+      <h1 class="now-playing-view__header--title-text">{{ track ? track.album.name : 'Now playing' }}</h1>
+    }
   </div>
   <div class="now-playing-view__header--btns">
     <button
       class="now-playing-view__header--more-btn now-playing-view__header--btn"
       type="button"
-      [title]="'More options for ' + track.title"
+      [title]="track ? 'More options for ' + track.title : 'More options'"
     >
       <span class="now-playing-view__header--more-icon now-playing-view__header--btn-icon">
         <fa-icon [icon]="['fas', 'ellipsis']" />
@@ -40,13 +44,14 @@
 </header>
 
 <div class="now-playing-view__main">
+  @if (track) {
   <div class="now-playing-view__track">
-    <a class="now-playing-view__track--cover--anchor" [routerLink]="['/album', track.album.id]">
+    <a class="now-playing-view__track--cover--anchor" [routerLink]="track.album.id ? ['/album', track.album.id] : null">
       <img class="now-playing-view__track--cover--img" [src]="track.cover" [alt]="track.title + ' cover'" />
     </a>
     <div class="now-playing-view__track--btns">
       <div class="now-playing-view__track--info">
-        <a class="now-playing-view__track--title-anchor" [routerLink]="['/album', track.album.id]">
+        <a class="now-playing-view__track--title-anchor" [routerLink]="track.album.id ? ['/album', track.album.id] : null">
           <span class="now-playing-view__track--title-span">{{ track.title }}</span>
         </a>
         <div class="now-playing-view__track--artists" [title]="track.title">
@@ -84,6 +89,7 @@
     </div>
   </div>
 
+  @if (spotlight) {
   <section class="now-playing-view__artist-info now-playing-view__section">
     <div class="now-playing-view__artist-info--header-group">
       <h2 class="now-playing-view__artist-info--title now-playing-view__section--title">About the artist</h2>
@@ -96,9 +102,8 @@
         <span class="now-playing-view__artist-info--artist-span">{{ spotlight.artist.name }}</span>
       </a>
       <div class="now-playing-view__artist-info--center-group">
-        <span class="now-playing-view__artist-info--monthly-listeners"
-          >{{ spotlight.monthlyListeners | number }} monthly listeners</span
-        >
+        <!-- The API has no listener counts, so this line says what kind of artist it is instead. -->
+        <span class="now-playing-view__artist-info--monthly-listeners">{{ spotlight.verified ? 'Verified Artist' : 'Artist' }}</span>
         @let followingSpotlight = isFollowing(spotlight.artist.id);
         <button
           class="now-playing-view__artist-info--follow-btn now-playing-view__follow-btn"
@@ -111,9 +116,12 @@
           }}</span>
         </button>
       </div>
-      <span class="now-playing-view__artist-info--description">{{ spotlight.bio }}</span>
+      @if (spotlight.bio) {
+        <span class="now-playing-view__artist-info--description">{{ spotlight.bio }}</span>
+      }
     </div>
   </section>
+  }
 
   <section class="now-playing-view__credits now-playing-view__section">
     <div class="now-playing-view__credits--header-group">
@@ -123,7 +131,7 @@
       </button>
     </div>
     <div class="now-playing-view__credits--main-group">
-      @for (credit of details.credits; track credit.artist.id) {
+      @for (credit of credits(); track credit.artist.id) {
         @let followingCredit = isFollowing(credit.artist.id);
         <div class="now-playing-view__credits--artist-group">
           <div class="now-playing-view__credits--artist-info">
@@ -158,8 +166,16 @@
         <span class="now-playing-view__next--open-queue-span now-playing-view__section--more-span">Open queue</span>
       </button>
     </div>
-    @if (queue().upNext[0]; as next) {
-      <app-sidebar-track-row [track]="next" />
+    @if (nowPlaying.next(); as next) {
+      <app-sidebar-track-row [track]="next" [target]="rowTarget(next)" />
+    } @else if (!nowPlaying.queueLoading()) {
+      <p class="now-playing-view__next--empty">Nothing else in the queue.</p>
     }
   </section>
+  } @else {
+    <div class="now-playing-view__empty">
+      <p class="now-playing-view__empty--title">Nothing playing yet</p>
+      <p class="now-playing-view__empty--text">Play a song and you'll see its artwork, artist and what's up next here.</p>
+    </div>
+  }
 </div>

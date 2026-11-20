@@ -350,3 +350,34 @@
     opacity: 1;
   }
 }
+
+// ---------------------------------------------------------------- API states (not in the mockup)
+
+.now-playing-view__empty {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 48px 16px;
+  text-align: center;
+}
+
+.now-playing-view__empty--title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.now-playing-view__empty--text,
+.now-playing-view__next--empty {
+  color: var(--light-gray-fg-color);
+  font-size: 0.9rem;
+}
+
+.now-playing-view__next--empty {
+  padding: 8px 0;
+}
+
+// "Verified Artist" is shorter than the mockup's listener count, so keep the button off it.
+.now-playing-view__artist-info--center-group {
+  gap: 12px;
+  justify-content: space-between;
+}

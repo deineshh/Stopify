@@ -14,7 +14,9 @@ npm test            # unit tests (Vitest)
 npm run serve:ssr:SpotifyClone.Web   # serve the production build on :4000
 ```
 
-The dev server proxies `/api` to `API_PROXY_TARGET` (default `http://localhost:5000`) and `/audio` to `STORAGE_PROXY_TARGET` (default `http://localhost:9000`). Docker Compose points them at the `api` and `minio` containers. Server-side rendering calls the API directly at `API_URL`.
+The dev server proxies `/api` and `/hubs` (SignalR, WebSockets included) to `API_PROXY_TARGET` (default `http://localhost:5000`), and `/audio` and `/images` to `STORAGE_PROXY_TARGET` (default `http://localhost:9000`). Docker Compose points them at the `api` and `minio` containers. Server-side rendering calls the API directly at `API_URL`.
+
+In production the SSR server (`npm run serve:ssr:SpotifyClone.Web`) only serves the web app: put a reverse proxy in front that routes `/api` and `/hubs` (with WebSocket upgrades) to the API, and `/audio` and `/images` to the storage. If one of those paths reaches the SSR server anyway, it answers 404 instead of rendering a page.
 
 ## Architecture
 
@@ -29,7 +31,7 @@ src/
     │   ├── icons/        Font Awesome registry (only the icons we use are bundled)
     │   ├── layout/       LayoutStore (sidebars, panels, scroll) + ViewportService (breakpoints)
     │   ├── notifications/ ToastService
-    │   └── playback/     AudioEngine (HLS via hls.js) + this browser's device id
+    │   └── playback/     AudioEngine (HLS via hls.js), PlaybackSignals (SignalR), this browser's device id
     ├── data/             Everything the UI reads
     │   ├── api/          Typed API clients (CatalogApi, PlaybackApi), DTOs and DTO → view model mappers
     │   ├── models/       View models, independent of backend DTOs
@@ -63,7 +65,7 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 - **The session lives on the server.** `PlayerService` sends every control to `/me/playback` (play, pause/resume, next/previous, seek, shuffle, repeat) and plays the HLS URL the API returns (`/audio/{asset}/media_0.m3u8`, or `master.m3u8` for Premium). Progress is synced every 10 seconds and before pausing, so a reload restores the last song, paused at the same second.
 - **Audio:** `AudioEngine` plays the stream through a detached `<audio>` element. The light build of hls.js is loaded on the first play (it isn't in the main bundle); browsers without Media Source Extensions but with native HLS get the URL directly.
 - **Play buttons:** `<button appPlayButton [target]="…">` plays an album, playlist or artist and shows pause while it is playing. Track rows play their album or playlist from that song. An artist plays their latest track's album. Guests are sent to log in.
-- **Devices:** each browser has an id (`stopify.deviceId` in localStorage). Skip, seek, shuffle and repeat only work from the active device, so if another device took over, the player resumes here first and retries.
+- **Devices:** each browser has an id (`stopify.deviceId` in localStorage). While signed in, `PlaybackSignals` listens to the Streaming hub (`/hubs/streaming`, SignalR loaded on demand): when playback starts on another device, this one pauses and says so. Skip, seek, shuffle and repeat only work from the active device, so if another device took over, the player resumes here first and retries.
 - **Panels:** `NowPlayingService` loads what the right-hand panels show: the album or playlist name, the first artist's bio and avatar, and the queue (`/me/playback/queue`, only while a panel is on screen). A queued song plays the same album or playlist from that song.
 - **Not yet in the API:** Search has no playback context of its own (the API's `search` context can't be started), so a song from search plays from its album.
 

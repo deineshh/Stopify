@@ -8,6 +8,7 @@ import { PlayerService } from './player.service';
 import { provideTestDefaults } from '../../testing/test-providers';
 import { mockAuthStore } from '../../testing/auth-store.mock';
 import { fakeAudioEngine } from '../../testing/audio-engine.fake';
+import { fakeHub } from '../../testing/hub.fake';
 
 const DEVICE = 'device-1';
 const track = (id: string, albumId = 'a1') => ({
@@ -45,13 +46,14 @@ describe('PlayerService', () => {
   function setup(status: 'anonymous' | 'authenticated' = 'authenticated') {
     const auth = mockAuthStore(status);
     const audio = fakeAudioEngine();
+    const hub = fakeHub();
     TestBed.configureTestingModule({
-      providers: [...provideTestDefaults(), auth.provider, audio.provider, { provide: DEVICE_ID, useValue: DEVICE }],
+      providers: [...provideTestDefaults(), auth.provider, audio.provider, hub.provider, { provide: DEVICE_ID, useValue: DEVICE }],
     });
     const player = TestBed.inject(PlayerService);
     const http = TestBed.inject(HttpTestingController);
     TestBed.tick();
-    return { player, http, engine: audio.engine, auth };
+    return { player, http, engine: audio.engine, auth, hub };
   }
 
   /** Signed in with no previous session. */
@@ -264,6 +266,24 @@ describe('PlayerService', () => {
     player.play({ kind: 'album', id: 'a1' });
     expectPost(http, 'play').flush({ title: 'Media.NotFound' }, { status: 404, statusText: 'Not Found' });
     expect(toast.current()?.text).toBe("This song isn't available right now.");
+  });
+
+  it('stops when another device takes over, and takes it back on play', async () => {
+    const { player, http, engine, hub } = signedIn();
+    player.play({ kind: 'album', id: 'a1' });
+    expectPost(http, 'play').flush(stream('t1'));
+    flushTrack(http, 't1');
+    await settle();
+    await new Promise((resolve) => setTimeout(resolve));
+
+    hub.latest()!.emit('ReceiveStopPlayback');
+    expect(engine.pause).toHaveBeenCalled();
+    expect(player.isPlaying()).toBe(false);
+    expect(TestBed.inject(ToastService).current()?.text).toBe('Playing on another device.');
+    http.expectNone((r) => r.url.endsWith('/pause'));
+
+    player.togglePlay();
+    expectPost(http, 'resume').flush(null);
   });
 
   it('forgets the session on sign-out', async () => {

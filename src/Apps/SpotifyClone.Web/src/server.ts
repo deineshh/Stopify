@@ -13,16 +13,22 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * The API (/api, /hubs) and the media storage (/audio, /images) are separate services: in production a
+ * reverse proxy routes those paths to them. If one reaches this server anyway, answer 404 instead of
+ * rendering the app's HTML, so a missing proxy rule fails loudly rather than as "invalid JSON".
  */
+app.use(['/api', '/hubs', '/audio', '/images'], (req, res) => {
+  res
+    .status(404)
+    .type('application/problem+json')
+    .send(
+      JSON.stringify({
+        title: 'NotFound',
+        status: 404,
+        detail: `${req.originalUrl} is served by the Stopify API or storage, not the web app. Route it there in the reverse proxy.`,
+      }),
+    );
+});
 
 /**
  * Serve static files from /browser

@@ -25,6 +25,7 @@
     "@fortawesome/free-brands-svg-icons": "^7.2.0",
     "@fortawesome/free-regular-svg-icons": "^7.2.0",
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
+    "@microsoft/signalr": "^11.0.0",
     "express": "^5.1.0",
     "hls.js": "^1.7.4",
     "rxjs": "~7.8.0",

@@ -7,6 +7,7 @@ import { AuthStore } from '@core/auth/auth.store';
 import { ToastService } from '@core/notifications/toast.service';
 import { AudioEngine } from '@core/playback/audio-engine';
 import { DEVICE_ID } from '@core/playback/device-id';
+import { PlaybackSignals } from '@core/playback/playback-signals';
 import { CatalogApi } from '../api/catalog-api';
 import { PlaybackApi } from '../api/playback-api';
 import { PlaybackSessionDto, PlaybackStreamDto } from '../api/playback.dtos';
@@ -91,6 +92,13 @@ export class PlayerService {
     const destroyRef = inject(DestroyRef);
     const ended = this.engine.ended.subscribe(() => this.next());
     const failed = this.engine.failed.subscribe(() => this.toast.show("Couldn't play this song."));
+    // Another device started playing: stop here (pressing play takes the session back).
+    const movedAway = inject(PlaybackSignals).stop.subscribe(() => {
+      if (this.isPlaying()) {
+        this.engine.pause();
+        this.toast.show('Playing on another device.');
+      }
+    });
     const browser = isPlatformBrowser(inject(PLATFORM_ID));
     const sync = (browser ? interval(SYNC_INTERVAL_MS) : EMPTY).subscribe(() => {
       if (this.isPlaying()) {
@@ -100,6 +108,7 @@ export class PlayerService {
     destroyRef.onDestroy(() => {
       ended.unsubscribe();
       failed.unsubscribe();
+      movedAway.unsubscribe();
       sync.unsubscribe();
     });
   }

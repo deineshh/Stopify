@@ -6,6 +6,7 @@ export interface LibraryItem {
   kind: 'playlist' | 'artist';
   /** Library items without artwork show the solid placeholder tile. */
   cover?: string;
-  trackCount: number;
-  pinned: boolean;
+  /** Second line after the kind, e.g. the playlist owner. */
+  subtitle?: string;
+  link: readonly string[];
 }

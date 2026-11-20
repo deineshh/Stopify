@@ -2,7 +2,7 @@
 
 Angular 21 web client for Stopify. It is a server-rendered (SSR + hydration), zoneless, standalone-component app built from the HTML/CSS mockups in [`mockups/`](./mockups).
 
-Authentication and the catalog (home, search, albums, artists and playlists) are connected to the API. The library and the player still run on mock data, so their buttons, toggles, sliders and panels work but nothing is streamed yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
+Authentication, the catalog (home, search, albums, artists and playlists) and Your Library (the signed-in user's playlists) are connected to the API. The player still runs on mock data, so its buttons, toggles, sliders and panels work but nothing is streamed yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
 
 ## Getting started
 
@@ -28,7 +28,7 @@ src/
     │   └── layout/       LayoutStore (sidebars, panels, scroll) + ViewportService (breakpoints)
     ├── data/             Everything the UI reads
     │   ├── models/       View models, independent of backend DTOs
-    │   ├── mock/         Static fixtures for what isn't connected yet (library, player)
+    │   ├── mock/         Static fixtures for what isn't connected yet (the player)
     │   └── services/     CatalogService, LibraryService, PlayerService
     ├── layout/           Application shell (header, library, right panels, player bar, footer, mobile nav)
     ├── features/         Lazy-loaded pages: home, search, playlist, library, auth

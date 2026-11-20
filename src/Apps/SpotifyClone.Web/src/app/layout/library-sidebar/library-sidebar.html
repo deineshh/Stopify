@@ -101,9 +101,20 @@
         </button>
       </div>
 
-      <div class="left-sidebar__main-items" role="list">
+      <!-- Only a list while it has items: the empty, loading and error states aren't list items. -->
+      <div
+        class="left-sidebar__main-items"
+        [attr.role]="library.visibleItems().length ? 'list' : null"
+        [attr.aria-busy]="library.isLoading()"
+      >
         @for (item of library.visibleItems(); track item.id) {
           <div class="left-sidebar__main-item" role="listitem" [title]="item.title">
+            <a
+              class="left-sidebar__main-item--link"
+              routerLinkActive="active"
+              [routerLink]="item.link"
+              [attr.aria-label]="item.title + ', ' + kindLabel(item) + (item.subtitle ? ', ' + item.subtitle : '')"
+            ></a>
             <div class="left-sidebar__main-item--left-group">
               <div class="left-sidebar__main-item--img-group">
                 @if (item.cover) {
@@ -116,24 +127,42 @@
                 </span>
               </button>
             </div>
-            <div class="left-sidebar__main-item--right-group">
+            <div class="left-sidebar__main-item--right-group" aria-hidden="true">
               <p class="left-sidebar__main-item--title">
                 <span class="left-sidebar__main-item--title-span">{{ item.title }}</span>
               </p>
               <p class="left-sidebar__main-item--description">
-                @if (item.pinned) {
-                  <span class="left-sidebar__main-item--pin-icon" title="Pinned">
-                    <fa-icon [icon]="['fas', 'thumbtack']" />
-                  </span>&ngsp;
-                }
                 <span class="left-sidebar__main-item--description-text"
-                  >{{ item.kind === 'playlist' ? 'Playlist' : 'Artist' }} • {{ item.trackCount }} songs</span
+                  >{{ kindLabel(item) }}@if (item.subtitle) {&ngsp;•&ngsp;{{ item.subtitle }}}</span
                 >
               </p>
             </div>
           </div>
         } @empty {
-          <p class="left-sidebar__empty">Couldn't find anything in Your Library.</p>
+          @if (library.isLoading()) {
+            @for (row of [1, 2, 3]; track row) {
+              <div class="left-sidebar__skeleton" aria-hidden="true">
+                <div class="left-sidebar__skeleton--img"></div>
+                <div class="left-sidebar__skeleton--lines">
+                  <div class="left-sidebar__skeleton--line"></div>
+                  <div class="left-sidebar__skeleton--line short"></div>
+                </div>
+              </div>
+            }
+            <span class="visually-hidden" role="status">Loading Your Library…</span>
+          } @else if (library.error()) {
+            <div class="left-sidebar__empty" role="alert">
+              <p>Couldn't load Your Library.</p>
+              <button class="left-sidebar__retry-btn" type="button" (click)="library.reload()">Try again</button>
+            </div>
+          } @else if (library.items().length) {
+            <p class="left-sidebar__empty">Couldn't find anything in Your Library.</p>
+          } @else {
+            <section class="left-sidebar__guest-card" aria-labelledby="library-empty-title">
+              <h2 id="library-empty-title" class="left-sidebar__guest-title">Create your first playlist</h2>
+              <p class="left-sidebar__guest-text">Playlists you create will show up here.</p>
+            </section>
+          }
         }
       </div>
     </form>

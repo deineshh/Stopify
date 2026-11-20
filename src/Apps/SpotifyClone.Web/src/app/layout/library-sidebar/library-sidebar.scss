@@ -454,7 +454,89 @@
 }
 
 @container left-sidebar__group (max-width: 120px) {
-  .left-sidebar__guest {
+  .left-sidebar__guest,
+  .left-sidebar__main-items .left-sidebar__guest-card,
+  .left-sidebar__empty,
+  .left-sidebar__skeleton--lines {
     display: none;
   }
+}
+
+// ---------------------------------------------------------------- API states (not in the mockup)
+
+// The whole row links to the item; the play button sits above the link.
+.left-sidebar__main-item {
+  position: relative;
+}
+
+.left-sidebar__main-item--link {
+  border-radius: inherit;
+  inset: 0;
+  position: absolute;
+}
+
+.left-sidebar__main-item--play-btn {
+  z-index: 1;
+}
+
+.left-sidebar__main-item:has(.left-sidebar__main-item--link.active) {
+  background-color: var(--primary-element-bg-color);
+}
+
+.left-sidebar__skeleton {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+  padding: 8.5px;
+}
+
+.left-sidebar__skeleton--img,
+.left-sidebar__skeleton--line {
+  animation: left-sidebar-pulse 1.4s ease-in-out infinite;
+  background-color: var(--primary-element-bg-color);
+  border-radius: 4px;
+}
+
+.left-sidebar__skeleton--img {
+  aspect-ratio: 1 / 1;
+  height: 2.95em;
+}
+
+.left-sidebar__skeleton--lines {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.left-sidebar__skeleton--line {
+  height: 12px;
+  width: 70%;
+}
+
+.left-sidebar__skeleton--line.short {
+  width: 40%;
+}
+
+@keyframes left-sidebar-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .left-sidebar__skeleton--img,
+  .left-sidebar__skeleton--line {
+    animation: none;
+  }
+}
+
+.left-sidebar__retry-btn {
+  border: 1px solid var(--light-gray-fg-color);
+  border-radius: 1000px;
+  color: var(--primary-fg-color);
+  font-size: 0.875rem;
+  font-weight: bold;
+  margin-top: 12px;
+  padding: 6px 16px;
 }

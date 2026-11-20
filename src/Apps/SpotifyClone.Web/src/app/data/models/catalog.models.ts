@@ -63,4 +63,5 @@ export interface ShortcutItem {
   id: string;
   title: string;
   cover: string;
+  link: readonly string[];
 }

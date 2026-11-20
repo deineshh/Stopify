@@ -2,7 +2,7 @@
 
 Angular 21 web client for Stopify. It is a server-rendered (SSR + hydration), zoneless, standalone-component app built from the HTML/CSS mockups in [`mockups/`](./mockups).
 
-Authentication is connected to the Accounts API. The catalog, library and player still run on mock data, so their buttons, toggles, sliders and panels work but nothing is loaded from the API or streamed yet.
+Authentication and the catalog (home, search, albums, artists and playlists) are connected to the API. The library and the player still run on mock data, so their buttons, toggles, sliders and panels work but nothing is streamed yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
 
 ## Getting started
 
@@ -28,7 +28,7 @@ src/
     │   └── layout/       LayoutStore (sidebars, panels, scroll) + ViewportService (breakpoints)
     ├── data/             Everything the UI reads
     │   ├── models/       View models, independent of backend DTOs
-    │   ├── mock/         Static fixtures mirroring the mockups
+    │   ├── mock/         Static fixtures for what isn't connected yet (library, player)
     │   └── services/     CatalogService, LibraryService, PlayerService
     ├── layout/           Application shell (header, library, right panels, player bar, footer, mobile nav)
     ├── features/         Lazy-loaded pages: home, search, playlist, library, auth
@@ -77,5 +77,5 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 
 ## Testing
 
-- **Unit tests** (`npm test`): pipes, stores and services, the auth session and interceptor against a mocked HTTP backend, guards, and component behaviour (cards, shelves, header, account menu, library, every auth flow).
+- **Unit tests** (`npm test`): pipes, stores and services, the auth session and interceptor against a mocked HTTP backend, guards, and component behaviour (cards, shelves, header, account menu, library, home, search, collection pages, every auth flow).
 - The UI was also checked against the mockups with pixel diffs (0.03–0.17% difference per page at 1920×1080; the remaining pixels are intentional state differences). End-to-end interaction checks and an axe-core accessibility audit (0 violations) were run as well.

@@ -6,6 +6,7 @@ import {
   genreToTile,
   playlistToCard,
   searchToViewModels,
+  TILE_COLORS,
   tileColor,
   trackToViewModel,
 } from './catalog.mappers';
@@ -62,6 +63,19 @@ describe('catalog mappers', () => {
       image: '/x.jpg',
       color: tileColor('rock'),
     });
+  });
+
+  it('only uses tile colours with AA contrast for the white label', () => {
+    const luminance = (hex: string) => {
+      const [r, g, b] = [1, 3, 5].map((i) => {
+        const c = parseInt(hex.slice(i, i + 2), 16) / 255;
+        return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    };
+    for (const color of TILE_COLORS) {
+      expect(1.05 / (luminance(color) + 0.05), color).toBeGreaterThanOrEqual(4.5);
+    }
   });
 
   it('maps tracks with album context and featured artists', () => {

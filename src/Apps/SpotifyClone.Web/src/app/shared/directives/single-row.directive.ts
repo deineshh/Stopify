@@ -13,7 +13,8 @@ export class SingleRowDirective {
   constructor() {
     const element = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
     const destroyRef = inject(DestroyRef);
-    if (!isPlatformBrowser(inject(PLATFORM_ID))) {
+    // No ResizeObserver on the server (or in jsdom): the shelf then simply keeps its natural height.
+    if (!isPlatformBrowser(inject(PLATFORM_ID)) || typeof ResizeObserver === 'undefined') {
       return;
     }
 

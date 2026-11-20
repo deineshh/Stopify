@@ -12,7 +12,10 @@ import {
   TrackSummaryDto,
 } from './catalog.dtos';
 
-/** Tile colours from the browse mockup; each genre gets a stable one based on its id. */
+/**
+ * Tile colours from the browse mockup, keeping only those where the white label reaches
+ * WCAG AA (4.5:1); each genre gets a stable one based on its id.
+ */
 export const TILE_COLORS: readonly string[] = [
   '#dc148c',
   '#006450',
@@ -24,27 +27,20 @@ export const TILE_COLORS: readonly string[] = [
   '#af2896',
   '#b06239',
   '#e91429',
-  '#777777',
   '#bc5900',
   '#ba5d07',
   '#e61e32',
-  '#0d73ec',
   '#1e3264',
   '#5179a1',
-  '#a66853',
   '#b02897',
   '#7d4b32',
   '#d84000',
   '#a56752',
   '#e8115b',
-  '#148a08',
   '#537aa1',
-  '#e13300',
   '#0d72ed',
-  '#0e73ed',
   '#8c1932',
   '#27856a',
-  '#ff0090',
 ];
 
 export function tileColor(id: string): string {

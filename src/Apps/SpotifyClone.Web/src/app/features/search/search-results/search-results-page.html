@@ -9,33 +9,39 @@
 
 @if (results.hasValue() ? results.value() : null; as data) {
   <div class="search-results__main-group">
-    @if (isVisible('songs')) {
+    @if (isVisible('songs') && (data.topResult || data.songs.length)) {
       <div class="search-results__top-result-and-songs">
-        @if (activeFilter() === 'all') {
+        @if (activeFilter() === 'all' && data.topResult; as top) {
           <section class="search-results__top-result-group" aria-labelledby="top-result-title">
             <h2 id="top-result-title" class="search-results__top-result-title">Top result</h2>
             <div class="search-results__top-result-item play-btn-parent">
-              <img class="search-results__top-result-item--cover" [src]="data.topResult.cover" alt="" />
+              <img
+                class="search-results__top-result-item--cover"
+                [class.rounded]="top.shape === 'rounded'"
+                [src]="top.cover"
+                alt=""
+              />
               <div class="search-results__top-result-item--info">
                 <a
                   class="search-results__top-result-item--title"
-                  [routerLink]="['/artist', data.topResult.id]"
-                  [title]="data.topResult.name"
+                  [routerLink]="top.link"
+                  [title]="top.name"
                 >
-                  <span class="search-results__top-result-item--title-span">{{ data.topResult.name }}</span>
+                  <span class="search-results__top-result-item--title-span">{{ top.name }}</span>
                 </a>
-                <span class="search-results__top-result-item--type">{{ data.topResult.type }}</span>
+                <span class="search-results__top-result-item--type">{{ top.type }}</span>
               </div>
               <button
                 appPlayButton
                 revealOnHover
                 class="search-results__top-result-item--play-btn"
-                [attr.aria-label]="'Play ' + data.topResult.name"
+                [attr.aria-label]="'Play ' + top.name"
               ></button>
             </div>
           </section>
         }
 
+        @if (data.songs.length) {
         <section class="search-results__songs-group" aria-labelledby="songs-title">
           <a id="songs-title" class="search-results__songs-title" (click)="activeFilter.set('songs')">Songs</a>
           <div class="search-results__songs-items" role="list">
@@ -55,7 +61,7 @@
                   <div class="search-results__songs-item--info-group">
                     <a
                       class="search-results__songs-item--title-anchor"
-                      [routerLink]="['/album', song.album.id]"
+                      [routerLink]="song.album.id ? ['/album', song.album.id] : null"
                       [title]="song.title"
                     >
                       <span class="search-results__songs-item--title-span">{{ song.title }}</span>
@@ -78,7 +84,9 @@
                       <fa-icon [icon]="['fas', 'plus']" />
                     </span>
                   </button>
-                  <span class="search-results__songs-item--duration">{{ song.durationSeconds | duration }}</span>
+                  @if (song.durationSeconds) {
+                    <span class="search-results__songs-item--duration">{{ song.durationSeconds | duration }}</span>
+                  }
                   <button class="search-results__songs-item--more-btn" type="button" [title]="'More options for ' + byline">
                     <span class="search-results__songs-item--more-icon">
                       <fa-icon [icon]="['fas', 'ellipsis']" />
@@ -89,6 +97,7 @@
             }
           </div>
         </section>
+        }
       </div>
     }
 
@@ -107,7 +116,7 @@
       }
     }
 
-    @if (isVisible('genres')) {
+    @if (isVisible('genres') && data.genres.length) {
       <section class="search-results__section" aria-labelledby="results-genres">
         <h2 id="results-genres" class="search-results__title">
           <a (click)="activeFilter.set('genres')">Genres &amp; Moods</a>
@@ -125,4 +134,12 @@
       </section>
     }
   </div>
+}
+@if (isEmpty()) {
+  <div class="search-results__empty" role="status">
+    <p class="search-results__empty-title">No results found for "{{ query() }}"</p>
+    <p class="search-results__empty-text">Check the spelling, or try fewer or different keywords.</p>
+  </div>
+} @else if (!results.hasValue()) {
+  <app-page-state thing="result" [loading]="results.isLoading()" [error]="results.error()" (retry)="results.reload()" />
 }

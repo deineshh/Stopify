@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { AuthStore } from '@core/auth/auth.store';
 import { LayoutStore } from '@core/layout/layout.store';
 import { CatalogService } from '@data/services/catalog.service';
 import { FilterChip } from '@shared/ui/filter-chip/filter-chip';
@@ -22,8 +23,16 @@ const HEADER_FADE_DISTANCE = 100;
 })
 export class HomePage {
   private readonly layout = inject(LayoutStore);
+  private readonly catalog = inject(CatalogService);
+  private readonly auth = inject(AuthStore);
 
-  protected readonly feed = toSignal(inject(CatalogService).getHomeFeed(), { requireSync: true });
+  protected readonly shelves = rxResource({ stream: () => this.catalog.getHomeShelves() });
+
+  /** Re-runs when the session resolves, swapping new albums for the user's own playlists. */
+  protected readonly shortcuts = rxResource({
+    params: () => this.auth.isAuthenticated(),
+    stream: ({ params: signedIn }) => this.catalog.getShortcuts(signedIn),
+  });
 
   protected readonly filters: readonly { id: HomeFilter; label: string }[] = [
     { id: 'all', label: 'All' },
@@ -31,6 +40,16 @@ export class HomePage {
     { id: 'podcasts', label: 'Podcasts' },
   ];
   protected readonly activeFilter = signal<HomeFilter>('all');
+
+  protected readonly visibleShelves = computed(() => {
+    const shelves = this.shelves.hasValue() ? this.shelves.value() : [];
+    const filter = this.activeFilter();
+    return filter === 'all' ? shelves : shelves.filter((shelf) => shelf.category === filter);
+  });
+
+  protected readonly visibleShortcuts = computed(() =>
+    this.activeFilter() !== 'podcasts' && this.shortcuts.hasValue() ? this.shortcuts.value() : [],
+  );
 
   protected readonly headerBackground = computed(() => {
     const opacity = Math.min(this.layout.mainScrollTop() / HEADER_FADE_DISTANCE, 1);

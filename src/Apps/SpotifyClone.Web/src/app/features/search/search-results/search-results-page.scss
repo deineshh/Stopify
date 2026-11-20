@@ -347,3 +347,26 @@
     flex: 0 0 148px;
   }
 }
+
+// Albums and songs can be the top result too; only artists are round.
+.search-results__top-result-item--cover.rounded {
+  border-radius: 6px;
+}
+
+.search-results__empty {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 96px 16px;
+  text-align: center;
+}
+
+.search-results__empty-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.search-results__empty-text {
+  color: var(--light-gray-fg-color);
+}

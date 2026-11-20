@@ -18,6 +18,7 @@ import { QueuePanel } from '../queue-panel/queue-panel';
 import { NowPlayingBar } from '../now-playing-bar/now-playing-bar';
 import { MainFooter } from '../main-footer/main-footer';
 import { MobileNav } from '../mobile-nav/mobile-nav';
+import { ToastOutlet } from '@shared/ui/toast/toast';
 import { ResizeHandle } from '../resize-handle/resize-handle';
 
 /**
@@ -35,8 +36,7 @@ import { ResizeHandle } from '../resize-handle/resize-handle';
     NowPlayingBar,
     MainFooter,
     MobileNav,
-    ResizeHandle,
-  ],
+    ResizeHandle, ToastOutlet],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

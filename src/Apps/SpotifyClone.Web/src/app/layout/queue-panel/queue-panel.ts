@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LayoutStore } from '@core/layout/layout.store';
-import { PlayerService } from '@data/services/player.service';
+import { QUEUE } from '@data/mock/player.mock';
 import { SidebarTrackRow } from '@shared/ui/sidebar-track-row/sidebar-track-row';
 
 /** Right sidebar "Queue" view. */
@@ -16,5 +16,6 @@ import { SidebarTrackRow } from '@shared/ui/sidebar-track-row/sidebar-track-row'
 })
 export class QueuePanel {
   protected readonly layout = inject(LayoutStore);
-  protected readonly player = inject(PlayerService);
+  // Static until the panel is connected to the playback API.
+  protected readonly queue = signal(QUEUE).asReadonly();
 }

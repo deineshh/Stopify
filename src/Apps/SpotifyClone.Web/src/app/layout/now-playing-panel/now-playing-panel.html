@@ -1,4 +1,4 @@
-@let details = player.nowPlaying();
+@let details = nowPlaying();
 @let track = details.track;
 @let spotlight = details.spotlight;
 <header class="now-playing-view__header">
@@ -158,7 +158,7 @@
         <span class="now-playing-view__next--open-queue-span now-playing-view__section--more-span">Open queue</span>
       </button>
     </div>
-    @if (player.queue().upNext[0]; as next) {
+    @if (queue().upNext[0]; as next) {
       <app-sidebar-track-row [track]="next" />
     }
   </section>

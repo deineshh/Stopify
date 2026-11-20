@@ -37,12 +37,22 @@
   <tbody class="track-table__list">
     @for (track of tracks(); track track.id; let index = $index) {
       @let byline = track.title + ' by ' + (track.artists | artistNames);
-      <tr class="track-table__track">
+      @let rowTarget = target(track);
+      @let current = rowTarget !== null && player.isCurrentTarget(rowTarget);
+      @let playing = current && player.isPlaying();
+      <tr class="track-table__track" [class.current]="current" (dblclick)="rowTarget && player.play(rowTarget)">
         <td class="track-table__track--index-column">
           <span class="track-table__track--index-text">{{ index + 1 }}</span>
-          <button class="track-table__track--play-btn" type="button" [title]="'Play ' + byline" (click)="play.emit(track)">
+          <button
+            class="track-table__track--play-btn"
+            type="button"
+            [title]="(playing ? 'Pause ' : 'Play ') + byline"
+            [attr.aria-pressed]="playing"
+            [disabled]="!rowTarget"
+            (click)="rowTarget && player.toggle(rowTarget)"
+          >
             <span class="track-table__track--play-icon">
-              <fa-icon [icon]="['fas', 'play']" />
+              <fa-icon [icon]="['fas', playing ? 'pause' : 'play']" />
             </span>
           </button>
         </td>

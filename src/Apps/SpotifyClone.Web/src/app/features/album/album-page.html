@@ -5,12 +5,11 @@
     [eyebrow]="data.typeLabel"
     [meta]="meta()"
     [showViewAs]="false"
-    [playing]="player.isPlaying()"
+    [target]="{ kind: 'album', id: data.id }"
     [(shuffle)]="shuffle"
     [(saved)]="saved"
-    (play)="player.togglePlay()"
   >
-    <app-track-table [tracks]="data.tracks" [showAlbum]="false" [showDateAdded]="false" />
+    <app-track-table [tracks]="data.tracks" [context]="{ kind: 'album', id: data.id }" [showAlbum]="false" [showDateAdded]="false" />
 
     @if (data.releaseDate) {
       <div class="playlist-page__main-section--credits-group">

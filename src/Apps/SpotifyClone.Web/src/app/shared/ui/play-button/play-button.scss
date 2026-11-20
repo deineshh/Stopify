@@ -26,7 +26,8 @@
   transform: translateY(10px);
 }
 
-:host(.hover-transition:focus-visible) {
+:host(.hover-transition:focus-visible),
+:host(.hover-transition.active) {
   opacity: 1;
   transform: translateY(0);
 }

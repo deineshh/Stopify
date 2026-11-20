@@ -17,7 +17,8 @@ describe('SearchResultsPage', () => {
     fixture.detectChanges();
     const el = fixture.nativeElement as HTMLElement;
     const render = async () => {
-      await vi.runAllTimersAsync();
+      // Past the search debounce (not runAllTimers: the player keeps an interval running).
+      await vi.advanceTimersByTimeAsync(300);
       fixture.detectChanges();
     };
     return { fixture, http, el, render };

@@ -5,7 +5,9 @@ import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { switchMap, timer } from 'rxjs';
 import { CatalogService } from '@data/services/catalog.service';
-import { MediaCard as MediaCardModel } from '@data/models/catalog.models';
+import { MediaCard as MediaCardModel, Track } from '@data/models/catalog.models';
+import { PlaybackTarget } from '@data/models/player.models';
+import { PlayerService } from '@data/services/player.service';
 import { FilterChip } from '@shared/ui/filter-chip/filter-chip';
 import { MediaCard } from '@shared/ui/media-card/media-card';
 import { PageState } from '@shared/ui/page-state/page-state';
@@ -47,6 +49,7 @@ export class SearchResultsPage {
   readonly query = input.required<string>();
 
   private readonly catalog = inject(CatalogService);
+  protected readonly player = inject(PlayerService);
   /** Typing changes the route on every keystroke; wait for a pause before searching (browser only). */
   private readonly debounceMs = isPlatformBrowser(inject(PLATFORM_ID)) ? SEARCH_DEBOUNCE_MS : 0;
 
@@ -93,5 +96,10 @@ export class SearchResultsPage {
   protected isVisible(section: ResultFilter): boolean {
     const active = this.activeFilter();
     return active === 'all' || active === section;
+  }
+
+  /** Search has no playback context of its own yet, so a song plays from its album. */
+  protected songTarget(song: Track): PlaybackTarget | null {
+    return song.album.id ? { kind: 'album', id: song.album.id, trackId: song.id } : null;
   }
 }

@@ -4,6 +4,7 @@ import { Page } from '@core/api/pagination';
 import { CatalogApi } from '../api/catalog-api';
 import { albumToCard, artistToCard, genreToTile, playlistToCard, searchToViewModels } from '../api/catalog.mappers';
 import { Genre, MediaCard, MediaShelf, ShortcutItem, Track } from '../models/catalog.models';
+import { PlaybackTarget } from '../models/player.models';
 
 export type ShelfCategory = 'music' | 'podcasts';
 
@@ -18,6 +19,8 @@ export interface TopResult {
   cover: string;
   shape: 'rounded' | 'circle';
   link: readonly string[];
+  /** What its play button starts; a song plays from its album. */
+  target: PlaybackTarget | null;
 }
 
 export interface SearchResults {
@@ -63,10 +66,10 @@ export class CatalogService {
   getShortcuts(signedIn: boolean): Observable<readonly ShortcutItem[]> {
     const source$: Observable<ShortcutItem[]> = signedIn
       ? this.api.myPlaylists({ pageSize: SHORTCUT_COUNT }).pipe(
-          map((page) => page.items.map(playlistToCard).map((card) => toShortcut(card, ['/playlist', card.id]))),
+          map((page) => page.items.map(playlistToCard).map((card) => toShortcut(card, 'playlist'))),
         )
       : this.api.albums({}, { pageSize: SHORTCUT_COUNT }).pipe(
-          map((page) => page.items.map(albumToCard).map((card) => toShortcut(card, ['/album', card.id]))),
+          map((page) => page.items.map(albumToCard).map((card) => toShortcut(card, 'album'))),
         );
     return source$.pipe(catchError(() => of([])));
   }
@@ -102,19 +105,19 @@ function shelf(id: string, title: string, items: MediaCard[], category: ShelfCat
   return { id, title, eyebrow, items, category, showAllLabel: 'Show all' };
 }
 
-function toShortcut(card: MediaCard, link: string[]): ShortcutItem {
-  return { id: card.id, title: card.title ?? '', cover: card.cover, link };
+function toShortcut(card: MediaCard, kind: 'album' | 'playlist'): ShortcutItem {
+  return { id: card.id, title: card.title ?? '', cover: card.cover, link: [`/${kind}`, card.id], target: { kind, id: card.id } };
 }
 
 /** Artists beat albums beat songs, like the search page of the mockup. */
 function pickTopResult(view: ReturnType<typeof searchToViewModels>): TopResult | null {
   const [artist] = view.artists;
   if (artist) {
-    return { id: artist.id, name: artist.title ?? '', type: 'Artist', cover: artist.cover, shape: 'circle', link: ['/artist', artist.id] };
+    return { id: artist.id, name: artist.title ?? '', type: 'Artist', cover: artist.cover, shape: 'circle', link: ['/artist', artist.id], target: { kind: 'artist', id: artist.id } };
   }
   const [album] = view.albums;
   if (album) {
-    return { id: album.id, name: album.title ?? '', type: 'Album', cover: album.cover, shape: 'rounded', link: ['/album', album.id] };
+    return { id: album.id, name: album.title ?? '', type: 'Album', cover: album.cover, shape: 'rounded', link: ['/album', album.id], target: { kind: 'album', id: album.id } };
   }
   const [track] = view.tracks;
   if (track) {
@@ -125,6 +128,7 @@ function pickTopResult(view: ReturnType<typeof searchToViewModels>): TopResult |
       cover: track.cover,
       shape: 'rounded',
       link: track.album.id ? ['/album', track.album.id] : [],
+      target: track.album.id ? { kind: 'album', id: track.album.id, trackId: track.id } : null,
     };
   }
   return null;

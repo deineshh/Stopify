@@ -7,10 +7,9 @@
     [eyebrow]="data.verified ? 'Verified Artist' : 'Artist'"
     [showDownload]="false"
     [showViewAs]="false"
-    [playing]="player.isPlaying()"
+    [target]="{ kind: 'artist', id: data.id }"
     [(shuffle)]="shuffle"
     [(following)]="following"
-    (play)="player.togglePlay()"
   >
     @if (data.popularTracks.length) {
       <h2 class="artist-page__section-title">Popular</h2>

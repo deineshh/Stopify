@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, linkedSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, linkedSignal, signal } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LayoutStore } from '@core/layout/layout.store';
 import { PlayerService } from '@data/services/player.service';
 import { SidebarTrackRow } from '@shared/ui/sidebar-track-row/sidebar-track-row';
+import { NOW_PLAYING, QUEUE } from '@data/mock/player.mock';
 
 /** Right sidebar "Now Playing" view: artwork, artist spotlight, credits and what's next. */
 @Component({
@@ -18,10 +19,13 @@ import { SidebarTrackRow } from '@shared/ui/sidebar-track-row/sidebar-track-row'
 export class NowPlayingPanel {
   protected readonly layout = inject(LayoutStore);
   protected readonly player = inject(PlayerService);
+  // Static until the panel is connected to the playback API.
+  protected readonly nowPlaying = signal(NOW_PLAYING).asReadonly();
+  protected readonly queue = signal(QUEUE).asReadonly();
 
   /** Local follow state per artist (UI only until the API exists). */
   protected readonly following = linkedSignal(() => {
-    const details = this.player.nowPlaying();
+    const details = this.nowPlaying();
     return new Map<string, boolean>([
       [details.spotlight.artist.id, details.spotlight.following],
       ...details.credits.map((credit) => [credit.artist.id, credit.following] as const),

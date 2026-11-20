@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, booleanAttribute, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, booleanAttribute, inject, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { Track } from '@data/models/catalog.models';
+import { PlaybackContextRef, PlaybackTarget } from '@data/models/player.models';
+import { PlayerService } from '@data/services/player.service';
 import { DurationPipe } from '../../pipes/duration.pipe';
 import { ArtistNamesPipe } from '../../pipes/artist-names.pipe';
 
@@ -23,5 +25,16 @@ export class TrackTable {
   readonly showDateAdded = input(true, { transform: booleanAttribute });
   /** Hides the header row (artist "Popular" lists). */
   readonly showHeader = input(true, { transform: booleanAttribute });
-  readonly play = output<Track>();
+  /** The album or playlist the rows play in; without one each row plays from its own album. */
+  readonly context = input<PlaybackContextRef | null>(null);
+
+  protected readonly player = inject(PlayerService);
+
+  protected target(track: Track): PlaybackTarget | null {
+    const context = this.context();
+    if (context) {
+      return { ...context, trackId: track.id };
+    }
+    return track.album.id ? { kind: 'album', id: track.album.id, trackId: track.id } : null;
+  }
 }

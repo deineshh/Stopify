@@ -35,6 +35,7 @@
                 appPlayButton
                 revealOnHover
                 class="search-results__top-result-item--play-btn"
+                [target]="top.target"
                 [attr.aria-label]="'Play ' + top.name"
               ></button>
             </div>
@@ -48,13 +49,23 @@
             @for (song of data.songs; track song.id) {
               @let artists = song.artists | artistNames;
               @let byline = song.title + ' by ' + artists;
-              <div class="search-results__songs-item" role="listitem">
+              @let target = songTarget(song);
+              @let current = target !== null && player.isCurrentTarget(target);
+              @let playing = current && player.isPlaying();
+              <div class="search-results__songs-item" role="listitem" [class.current]="current">
                 <div class="search-results__songs-item--left-group">
                   <div class="search-results__songs-item--cover-group" [title]="'Play ' + byline">
                     <img class="search-results__songs-item--cover" [src]="song.cover" alt="" />
-                    <button class="search-results__songs-item--play-btn" type="button" [attr.aria-label]="'Play ' + byline">
+                    <button
+                      class="search-results__songs-item--play-btn"
+                      type="button"
+                      [attr.aria-label]="(playing ? 'Pause ' : 'Play ') + byline"
+                      [attr.aria-pressed]="playing"
+                      [disabled]="!target"
+                      (click)="target && player.toggle(target)"
+                    >
                       <span class="search-results__songs-item--play-icon">
-                        <fa-icon [icon]="['fas', 'play']" />
+                        <fa-icon [icon]="['fas', playing ? 'pause' : 'play']" />
                       </span>
                     </button>
                   </div>

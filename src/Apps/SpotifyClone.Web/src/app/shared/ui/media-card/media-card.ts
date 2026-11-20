@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MediaCard as MediaCardModel } from '@data/models/catalog.models';
+import { PlaybackTarget } from '@data/models/player.models';
 import { PlayButton } from '../play-button/play-button';
 
 /** Album / playlist / artist tile used inside shelves (mockup `.track-item`). */
@@ -21,6 +22,24 @@ export class MediaCard {
 
   /** Albums, singles and EPs open the album page, artists the artist page, everything else a playlist. */
   protected readonly link = computed(() => cardLink(this.item()));
+  protected readonly target = computed(() => cardTarget(this.item()));
+}
+
+/** What the card's play button starts; profiles have nothing to play. */
+export function cardTarget(card: MediaCardModel): PlaybackTarget | null {
+  switch (card.kind) {
+    case 'album':
+    case 'single':
+    case 'ep':
+      return { kind: 'album', id: card.id };
+    case 'artist':
+      return { kind: 'artist', id: card.id };
+    case 'playlist':
+    case 'mix':
+      return { kind: 'playlist', id: card.id };
+    case 'profile':
+      return null;
+  }
 }
 
 export function cardLink(card: MediaCardModel): string[] | null {

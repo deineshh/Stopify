@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
 import { DatePipe } from '@angular/common';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CollectionService } from '@data/services/collection.service';
-import { PlayerService } from '@data/services/player.service';
 import { CollectionLayout, CollectionMetaItem } from '@shared/ui/collection-layout/collection-layout';
 import { MediaShelf } from '@shared/ui/media-shelf/media-shelf';
 import { PageState } from '@shared/ui/page-state/page-state';
@@ -21,7 +20,6 @@ export class AlbumPage {
   readonly id = input.required<string>();
 
   private readonly collections = inject(CollectionService);
-  protected readonly player = inject(PlayerService);
 
   protected readonly album = rxResource({
     params: () => this.id(),

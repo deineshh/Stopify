@@ -1,3 +1,5 @@
+import type { PlaybackTarget } from './player.models';
+
 /**
  * View models for the catalog UI. They describe what the screens render,
  * so the API layer can map backend DTOs onto them later without touching components.
@@ -64,4 +66,6 @@ export interface ShortcutItem {
   title: string;
   cover: string;
   link: readonly string[];
+  /** What its play button starts. */
+  target: PlaybackTarget;
 }

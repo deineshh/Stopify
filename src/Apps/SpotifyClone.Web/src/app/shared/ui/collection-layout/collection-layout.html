@@ -3,10 +3,9 @@
   <button
     appPlayButton
     class="playlist-page__header--play-btn"
-    [playing]="playing()"
+    [target]="target()"
     [attr.aria-label]="'Play ' + name"
     [attr.tabindex]="headerOpacity() < 1 ? -1 : 0"
-    (click)="play.emit()"
   ></button>
   <span class="playlist-page__header--title">{{ name }}</span>
 </header>
@@ -68,9 +67,8 @@
       <button
         appPlayButton
         class="playlist-page__main-section--play-btn"
-        [playing]="playing()"
-        [title]="(playing() ? 'Pause ' : 'Play ') + name"
-        (click)="play.emit()"
+        [target]="target()"
+        [title]="'Play ' + name"
       ></button>
       <button
         class="playlist-page__main-section--shuffle-btn playlist-page__main-section--btn"

@@ -370,3 +370,7 @@
 .search-results__empty-text {
   color: var(--light-gray-fg-color);
 }
+
+.search-results__songs-item.current .search-results__songs-item--title-span {
+  color: var(--primary-green-color);
+}

@@ -6,12 +6,12 @@ import {
   inject,
   input,
   model,
-  output,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LayoutStore } from '@core/layout/layout.store';
 import { PlayButton } from '../play-button/play-button';
+import { PlaybackTarget } from '@data/models/player.models';
 
 /** One entry of the "Owner • 2025 • 81 songs, 3 hr 30 min" line under the title. */
 export interface CollectionMetaItem {
@@ -53,8 +53,8 @@ export class CollectionLayout {
   /** Shows "Choose photo" on hover (the owner's own playlists). */
   readonly editableCover = input(false, { transform: booleanAttribute });
 
-  readonly playing = input(false);
-  readonly play = output<void>();
+  /** What the big play buttons start (and show as playing). */
+  readonly target = input<PlaybackTarget | null>(null);
   readonly shuffle = model(false);
   /** `null` hides the Follow button. */
   readonly following = model<boolean | null>(null);

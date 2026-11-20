@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, input, signal } f
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '@core/auth/auth.store';
 import { CollectionService } from '@data/services/collection.service';
-import { PlayerService } from '@data/services/player.service';
 import { CollectionLayout, CollectionMetaItem } from '@shared/ui/collection-layout/collection-layout';
 import { PageState } from '@shared/ui/page-state/page-state';
 import { TrackTable } from '@shared/ui/track-table/track-table';
@@ -22,7 +21,6 @@ export class PlaylistPage {
 
   private readonly collections = inject(CollectionService);
   private readonly auth = inject(AuthStore);
-  protected readonly player = inject(PlayerService);
 
   protected readonly playlist = rxResource({
     params: () => this.id(),

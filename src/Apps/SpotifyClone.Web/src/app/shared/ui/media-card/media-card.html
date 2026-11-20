@@ -9,12 +9,15 @@
     loading="lazy"
     draggable="false"
   />
-  <button
-    appPlayButton
-    revealOnHover
-    class="track-item__play-btn"
-    [attr.aria-label]="'Play ' + (card.title ?? 'mix')"
-  ></button>
+  @if (target(); as target) {
+    <button
+      appPlayButton
+      revealOnHover
+      class="track-item__play-btn"
+      [target]="target"
+      [attr.aria-label]="'Play ' + (card.title ?? 'mix')"
+    ></button>
+  }
 </div>
 
 @if (card.title) {

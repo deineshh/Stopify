@@ -7,14 +7,13 @@
     [meta]="meta()"
     [editableCover]="isOwner()"
     [showInvite]="isOwner()"
-    [playing]="player.isPlaying()"
+    [target]="{ kind: 'playlist', id: data.id }"
     [(shuffle)]="shuffle"
     [saved]="isOwner() ? null : saved()"
     (savedChange)="saved.set($event)"
-    (play)="player.togglePlay()"
   >
     @if (data.tracks.length) {
-      <app-track-table [tracks]="data.tracks" [showDateAdded]="false" />
+      <app-track-table [tracks]="data.tracks" [context]="{ kind: 'playlist', id: data.id }" [showDateAdded]="false" />
     } @else {
       <p class="playlist-page__empty">This playlist doesn't have any songs yet.</p>
     }

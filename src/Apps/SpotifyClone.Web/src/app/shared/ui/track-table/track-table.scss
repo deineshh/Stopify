@@ -265,3 +265,9 @@
     opacity: 1;
   }
 }
+
+// The current song: green number and title (Spotify shows an equaliser instead of the number).
+.track-table__track.current .track-table__track--index-text,
+.track-table__track.current .track-table__track--title-span {
+  color: var(--primary-green-color);
+}

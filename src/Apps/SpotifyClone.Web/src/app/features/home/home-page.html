@@ -30,6 +30,7 @@
             appPlayButton
             revealOnHover
             class="home-page__recently-played-item--play-btn"
+            [target]="item.target"
             [attr.aria-label]="'Play ' + item.title"
           ></button>
         </div>

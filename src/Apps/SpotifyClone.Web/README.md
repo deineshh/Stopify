@@ -2,7 +2,7 @@
 
 Angular 21 web client for Stopify. It is a server-rendered (SSR + hydration), zoneless, standalone-component app built from the HTML/CSS mockups in [`mockups/`](./mockups).
 
-Authentication, the catalog (home, search, albums, artists and playlists) and Your Library (the signed-in user's playlists) are connected to the API. The player still runs on mock data, so its buttons, toggles, sliders and panels work but nothing is streamed yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
+Authentication, the catalog (home, search, albums, artists and playlists), Your Library (the signed-in user's playlists) and playback (HLS streaming through the API's playback session) are connected to the API. The Now Playing and Queue panels still show static content. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
 
 ## Getting started
 
@@ -24,11 +24,16 @@ src/
 ├── styles.scss           Global entry (document-level rules only)
 └── app/
     ├── core/             App-wide singletons
+    │   ├── api/          API base URL, ProblemDetails → ApiError, paging, media URLs
+    │   ├── auth/         AuthStore (session), interceptor, guards
     │   ├── icons/        Font Awesome registry (only the icons we use are bundled)
-    │   └── layout/       LayoutStore (sidebars, panels, scroll) + ViewportService (breakpoints)
+    │   ├── layout/       LayoutStore (sidebars, panels, scroll) + ViewportService (breakpoints)
+    │   ├── notifications/ ToastService
+    │   └── playback/     AudioEngine (HLS via hls.js) + this browser's device id
     ├── data/             Everything the UI reads
+    │   ├── api/          Typed API clients (CatalogApi, PlaybackApi), DTOs and DTO → view model mappers
     │   ├── models/       View models, independent of backend DTOs
-    │   ├── mock/         Static fixtures for what isn't connected yet (the player)
+    │   ├── mock/         Static fixtures for what isn't connected yet (the right-hand panels)
     │   └── services/     CatalogService, LibraryService, PlayerService
     ├── layout/           Application shell (header, library, right panels, player bar, footer, mobile nav)
     ├── features/         Lazy-loaded pages: home, search, playlist, library, auth
@@ -53,6 +58,14 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 - **Routes:** `authGuard` protects signed-in pages such as `/collection`. `guestGuard` sends signed-in users away from `/login` and `/signup`. Redirect targets are restricted to in-app paths.
 - **Flows:** sign up with email verification, log in with a password or an SMS code (phone numbers), password reset, and Google sign-in (the API redirects to `/auth-success`).
 - **Password policy:** the rules shown on screen mirror the API's ASP.NET Identity options (`features/auth/password-policy.ts`).
+
+## Playback
+
+- **The session lives on the server.** `PlayerService` sends every control to `/me/playback` (play, pause/resume, next/previous, seek, shuffle, repeat) and plays the HLS URL the API returns (`/audio/{asset}/media_0.m3u8`, or `master.m3u8` for Premium). Progress is synced every 10 seconds and before pausing, so a reload restores the last song, paused at the same second.
+- **Audio:** `AudioEngine` plays the stream through a detached `<audio>` element. The light build of hls.js is loaded on the first play (it isn't in the main bundle); browsers without Media Source Extensions but with native HLS get the URL directly.
+- **Play buttons:** `<button appPlayButton [target]="…">` plays an album, playlist or artist and shows pause while it is playing. Track rows play their album or playlist from that song. An artist plays their latest track's album. Guests are sent to log in.
+- **Devices:** each browser has an id (`stopify.deviceId` in localStorage). Skip, seek, shuffle and repeat only work from the active device, so if another device took over, the player resumes here first and retries.
+- **Not yet in the API:** Search has no playback context of its own (the API's `search` context can't be started), so a song from search plays from its album.
 
 ## Routes
 

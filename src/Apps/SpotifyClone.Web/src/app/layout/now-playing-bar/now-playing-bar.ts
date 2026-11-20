@@ -19,6 +19,7 @@ import { ArtistNamesPipe } from '@shared/pipes/artist-names.pipe';
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     class: 'now-playing-bar layout-section',
+    '[class.empty]': '!player.track()',
     role: 'region',
     'aria-label': 'Now playing',
   },

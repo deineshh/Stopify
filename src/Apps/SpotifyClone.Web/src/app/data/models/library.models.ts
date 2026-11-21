@@ -9,4 +9,8 @@ export interface LibraryItem {
   /** Second line after the kind, e.g. the playlist owner. */
   subtitle?: string;
   link: readonly string[];
+  /** The signed-in user owns it, so they may edit, delete and add songs. */
+  owned?: boolean;
+  isPublic?: boolean;
+  description?: string | null;
 }

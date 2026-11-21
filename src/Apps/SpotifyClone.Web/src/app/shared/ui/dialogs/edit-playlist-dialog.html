@@ -1,0 +1,64 @@
+<form class="dialog edit-playlist" (submit)="save($event)">
+  <div class="dialog__header">
+    <h2 id="edit-playlist-title" class="dialog__title">Edit details</h2>
+    <button class="dialog__close" type="button" title="Close" (click)="ref.close(false)">
+      <fa-icon [icon]="['fas', 'xmark']" />
+    </button>
+  </div>
+
+  @if (error(); as message) {
+    <p class="dialog__error" role="alert">{{ message }}</p>
+  }
+
+  <div class="edit-playlist__body">
+    <div class="edit-playlist__cover">
+      @if (playlist.cover) {
+        <img class="edit-playlist__cover-img" [src]="playlist.cover" alt="" />
+      } @else {
+        <fa-icon class="edit-playlist__cover-icon" [icon]="['fas', 'music']" />
+      }
+    </div>
+
+    <div class="edit-playlist__fields">
+      <label class="edit-playlist__field">
+        <span class="edit-playlist__label">Name</span>
+        <input
+          class="edit-playlist__input"
+          name="name"
+          autocomplete="off"
+          [maxLength]="nameMax"
+          [value]="name()"
+          [attr.aria-invalid]="nameMissing()"
+          aria-describedby="edit-playlist-name-hint"
+          (input)="name.set($any($event.target).value)"
+          cdkFocusInitial
+        />
+        <span id="edit-playlist-name-hint" class="edit-playlist__hint" [class.edit-playlist__hint--error]="nameMissing()">
+          {{ nameMissing() ? 'Playlist name is required.' : name().length + '/' + nameMax }}
+        </span>
+      </label>
+
+      <label class="edit-playlist__field edit-playlist__field--grow">
+        <span class="edit-playlist__label">Description</span>
+        <textarea
+          class="edit-playlist__input edit-playlist__textarea"
+          name="description"
+          placeholder="Add an optional description"
+          [maxLength]="descriptionMax"
+          [value]="description()"
+          aria-describedby="edit-playlist-description-hint"
+          (input)="description.set($any($event.target).value)"
+        ></textarea>
+        <span id="edit-playlist-description-hint" class="edit-playlist__hint">
+          {{ description().length }}/{{ descriptionMax }}
+        </span>
+      </label>
+    </div>
+  </div>
+
+  <div class="dialog__actions">
+    <button class="dialog__btn dialog__btn--primary" type="submit" [disabled]="!canSave()">
+      {{ saving() ? 'Saving…' : 'Save' }}
+    </button>
+  </div>
+</form>

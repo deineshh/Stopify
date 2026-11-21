@@ -50,9 +50,31 @@ describe('LibraryService', () => {
     await settle();
 
     expect(service.items()).toEqual([
-      { id: 'p1', title: 'Road trip', kind: 'playlist', cover: '/images/g1/image.webp', subtitle: 'Aqua Studios', link: ['/playlist', 'p1'] },
-      { id: 'p2', title: 'Shared mix', kind: 'playlist', cover: undefined, subtitle: undefined, link: ['/playlist', 'p2'] },
+      {
+        id: 'p1',
+        title: 'Road trip',
+        kind: 'playlist',
+        cover: '/images/g1/image.webp',
+        subtitle: 'Aqua Studios',
+        link: ['/playlist', 'p1'],
+        owned: true,
+        isPublic: false,
+        description: null,
+      },
+      {
+        id: 'p2',
+        title: 'Shared mix',
+        kind: 'playlist',
+        cover: undefined,
+        subtitle: undefined,
+        link: ['/playlist', 'p2'],
+        owned: false,
+        isPublic: false,
+        description: null,
+      },
     ]);
+    // Only your own playlists are offered under "Add to playlist".
+    expect(service.ownPlaylists().map((item) => item.id)).toEqual(['p1']);
   });
 
   it('filters by title and kind', async () => {

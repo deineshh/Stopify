@@ -17,7 +17,11 @@
         <img class="playlist-page__info-section--cover" [src]="cover()" [alt]="name" />
       </div>
       @if (editableCover()) {
-        <button class="playlist-page__info-section--choose-photo-btn" type="button">
+        <button
+          class="playlist-page__info-section--choose-photo-btn"
+          type="button"
+          (click)="editable() && edit.emit()"
+        >
           <span class="playlist-page__info-section--choose-photo-icon">
             <fa-icon [icon]="['fas', 'pen']" />
           </span>
@@ -36,7 +40,15 @@
           <span class="playlist-page__info-section--header-text">{{ eyebrow() ?? 'Verified Artist' }}</span>
         </div>
       }
-      <h1 class="playlist-page__info-section--title">{{ name }}</h1>
+      <h1 class="playlist-page__info-section--title">
+        @if (editable()) {
+          <button class="playlist-page__info-section--title-btn" type="button" title="Edit details" (click)="edit.emit()">
+            {{ name }}
+          </button>
+        } @else {
+          {{ name }}
+        }
+      </h1>
       @if (description()) {
         <span class="playlist-page__info-section--description">{{ description() }}</span>
       }
@@ -128,6 +140,8 @@
         class="playlist-page__main-section--more-options-btn playlist-page__main-section--btn"
         type="button"
         [title]="'More options for ' + name"
+        [cdkMenuTriggerFor]="moreMenu()"
+        [cdkMenuTriggerData]="{ $implicit: moreMenuData() }"
       >
         <span class="playlist-page__main-section--more-options-icon">
           <fa-icon [icon]="['fas', 'ellipsis']" />

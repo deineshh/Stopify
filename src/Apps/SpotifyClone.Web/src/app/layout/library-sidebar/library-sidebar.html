@@ -18,7 +18,8 @@
     <button
       class="left-sidebar__title-bar--create-btn left-sidebar__header-title-btn"
       type="button"
-      title="Create a playlist, folder, or Jam"
+      title="Create a playlist"
+      (click)="createPlaylist()"
     >
       <fa-icon [icon]="['fas', 'plus']" />
       <span class="left-sidebar__title-bar--create-text">Create</span>
@@ -108,7 +109,17 @@
         [attr.aria-busy]="library.isLoading()"
       >
         @for (item of library.visibleItems(); track item.id) {
-          <div class="left-sidebar__main-item" role="listitem" [title]="item.title">
+          <div
+            class="left-sidebar__main-item"
+            role="listitem"
+            [title]="item.title"
+            [cdkContextMenuTriggerFor]="playlistMenu.template()"
+            [cdkContextMenuTriggerData]="{ $implicit: toRef(item) }"
+            [cdkContextMenuDisabled]="!item.owned"
+            [class.menu-open]="menuItemId() === item.id"
+            (cdkContextMenuOpened)="menuItemId.set(item.id)"
+            (cdkContextMenuClosed)="menuClosed(item.id)"
+          >
             <a
               class="left-sidebar__main-item--link"
               routerLinkActive="active"
@@ -160,7 +171,8 @@
           } @else {
             <section class="left-sidebar__guest-card" aria-labelledby="library-empty-title">
               <h2 id="library-empty-title" class="left-sidebar__guest-title">Create your first playlist</h2>
-              <p class="left-sidebar__guest-text">Playlists you create will show up here.</p>
+              <p class="left-sidebar__guest-text">It's easy, we'll help you.</p>
+              <button class="left-sidebar__guest-btn" type="button" (click)="createPlaylist()">Create playlist</button>
             </section>
           }
         }
@@ -177,3 +189,5 @@
     </div>
   }
 }
+
+<app-playlist-menu #playlistMenu />

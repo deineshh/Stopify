@@ -216,7 +216,8 @@
   padding: 8.5px;
 }
 
-.left-sidebar__main-item:hover {
+.left-sidebar__main-item:hover,
+.left-sidebar__main-item.menu-open {
   background-color: var(--primary-element-bg-color);
 }
 

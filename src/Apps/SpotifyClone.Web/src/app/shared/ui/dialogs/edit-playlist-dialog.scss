@@ -1,0 +1,103 @@
+@use 'breakpoints' as bp;
+
+.edit-playlist__body {
+  display: flex;
+  gap: 16px;
+}
+
+.edit-playlist__cover {
+  align-items: center;
+  aspect-ratio: 1;
+  background-color: #333;
+  border-radius: 4px;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex: 0 0 180px;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.edit-playlist__cover-img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.edit-playlist__cover-icon {
+  color: var(--light-gray-fg-color);
+  font-size: 3rem;
+}
+
+.edit-playlist__fields {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.edit-playlist__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.edit-playlist__field--grow {
+  flex: 1;
+}
+
+.edit-playlist__label {
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.edit-playlist__input {
+  background-color: #3e3e3e;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--primary-fg-color);
+  font: inherit;
+  font-size: 0.875rem;
+  padding: 10px 12px;
+}
+
+.edit-playlist__input:focus {
+  background-color: #333;
+  border-color: #535353;
+  outline: none;
+}
+
+.edit-playlist__input[aria-invalid='true'] {
+  border-color: #e91429;
+}
+
+.edit-playlist__textarea {
+  flex: 1;
+  min-height: 96px;
+  resize: none;
+}
+
+.edit-playlist__hint {
+  align-self: flex-end;
+  color: var(--light-gray-fg-color);
+  font-size: 0.75rem;
+}
+
+.edit-playlist__hint--error {
+  align-self: flex-start;
+  color: #f3727f;
+}
+
+@include bp.mobile {
+  .edit-playlist__body {
+    flex-direction: column;
+  }
+
+  .edit-playlist__cover {
+    align-self: center;
+    box-shadow: none;
+    flex: none;
+    height: 140px;
+    width: 140px;
+  }
+}

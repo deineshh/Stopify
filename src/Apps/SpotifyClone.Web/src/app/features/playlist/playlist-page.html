@@ -1,4 +1,4 @@
-@if (playlist.hasValue() ? playlist.value() : null; as data) {
+@if (view(); as data) {
   <app-collection-layout
     [title]="data.title"
     [cover]="data.cover"
@@ -6,6 +6,10 @@
     [description]="data.description"
     [meta]="meta()"
     [editableCover]="isOwner()"
+    [editable]="isOwner()"
+    (edit)="dialogs.editDetails(ref()!)"
+    [moreMenu]="isOwner() ? playlistMenu.template() : null"
+    [moreMenuData]="ref()"
     [showInvite]="isOwner()"
     [target]="{ kind: 'playlist', id: data.id }"
     [(shuffle)]="shuffle"
@@ -13,11 +17,19 @@
     (savedChange)="saved.set($event)"
   >
     @if (data.tracks.length) {
-      <app-track-table [tracks]="data.tracks" [context]="{ kind: 'playlist', id: data.id }" [showDateAdded]="false" />
+      <app-track-table
+        [tracks]="data.tracks"
+        [context]="{ kind: 'playlist', id: data.id }"
+        [showDateAdded]="false"
+      />
     } @else {
-      <p class="playlist-page__empty">This playlist doesn't have any songs yet.</p>
+      <div class="playlist-page__empty">
+        <p class="playlist-page__empty-title">This playlist doesn't have any songs yet.</p>
+      </div>
     }
   </app-collection-layout>
 } @else {
   <app-page-state thing="playlist" [loading]="playlist.isLoading()" [error]="playlist.error()" (retry)="playlist.reload()" />
 }
+
+<app-playlist-menu #playlistMenu />

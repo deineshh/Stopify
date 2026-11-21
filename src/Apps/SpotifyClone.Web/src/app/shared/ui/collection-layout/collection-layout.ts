@@ -6,7 +6,10 @@ import {
   inject,
   input,
   model,
+  output,
+  TemplateRef,
 } from '@angular/core';
+import { CdkMenuTrigger } from '@angular/cdk/menu';
 import { RouterLink } from '@angular/router';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { LayoutStore } from '@core/layout/layout.store';
@@ -32,7 +35,7 @@ const HEADER_FADE_DISTANCE = 300;
  */
 @Component({
   selector: 'app-collection-layout',
-  imports: [RouterLink, FaIconComponent, PlayButton],
+  imports: [RouterLink, FaIconComponent, PlayButton, CdkMenuTrigger],
   templateUrl: './collection-layout.html',
   styleUrl: './collection-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -63,6 +66,12 @@ export class CollectionLayout {
   readonly showDownload = input(true, { transform: booleanAttribute });
   readonly showInvite = input(false, { transform: booleanAttribute });
   readonly showViewAs = input(true, { transform: booleanAttribute });
+  /** Menu for the "…" button (a cdkMenu template) and the data it receives as `$implicit`. */
+  readonly moreMenu = input<TemplateRef<unknown> | null>(null);
+  readonly moreMenuData = input<unknown>(null);
+  /** The owner can click the title or the cover to edit the details (Spotify's "Edit details"). */
+  readonly editable = input(false, { transform: booleanAttribute });
+  readonly edit = output<void>();
 
   protected readonly headerOpacity = computed(() =>
     Math.min(this.layout.mainScrollTop() / HEADER_FADE_DISTANCE, 1),

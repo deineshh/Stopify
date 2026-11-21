@@ -1,4 +1,6 @@
+import { ApplicationRef } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { LibrarySidebar } from './library-sidebar';
 import { provideTestDefaults } from '../../testing/test-providers';
@@ -60,6 +62,50 @@ describe('LibrarySidebar', () => {
     await render();
     expect(el.querySelector('#library-empty-title')?.textContent).toContain('Create your first playlist');
   });
+
+  it('creates a playlist from the empty-library card and from Create', async () => {
+    const { el, http, render } = setup('authenticated');
+    const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
+    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    await render();
+
+    el.querySelector<HTMLButtonElement>('.left-sidebar__guest-card .left-sidebar__guest-btn')!.click();
+    http.expectOne((r) => r.method === 'POST' && r.url === '/api/v1/playlists').flush({ playlistId: 'new' });
+    expect(navigate).toHaveBeenCalledWith(['/playlist', 'new']);
+    await settle();
+    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([playlist('new', 'My Playlist #1')]);
+
+    el.querySelector<HTMLButtonElement>('.left-sidebar__title-bar--create-btn')!.click();
+    http.expectOne((r) => r.method === 'POST' && r.url === '/api/v1/playlists').flush({ playlistId: 'new2' });
+    expect(navigate).toHaveBeenCalledWith(['/playlist', 'new2']);
+    await settle();
+    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+  });
+
+  it('opens the playlist menu on right-click, only for your own playlists', async () => {
+    const { el, http, render } = setup('authenticated');
+    http
+      .expectOne((r) => r.url === '/api/v1/me/playlists')
+      .flush([playlist('p1', 'Road trip'), { ...playlist('p2', 'Shared mix'), ownerId: 'someone-else' }]);
+    await render();
+    const [own, shared] = el.querySelectorAll<HTMLElement>('.left-sidebar__main-item');
+
+    shared.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true }));
+    await settle();
+    expect(document.querySelector('.cdk-overlay-container .menu')).toBeNull();
+
+    own.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: 5, clientY: 5 }));
+    await settle();
+    const labels = [...document.querySelectorAll('.cdk-overlay-container .menu .menu__label')].map((l) => l.textContent?.trim());
+    expect(labels).toEqual(['Edit details', 'Make public', 'Delete']);
+    document.querySelectorAll('.cdk-overlay-container').forEach((container) => (container.innerHTML = ''));
+  });
+
+  async function settle() {
+    TestBed.inject(ApplicationRef).tick();
+    await new Promise((resolve) => setTimeout(resolve));
+    TestBed.inject(ApplicationRef).tick();
+  }
 
   it('offers a retry when the library fails to load', async () => {
     const { el, http, render, fixture } = setup('authenticated');

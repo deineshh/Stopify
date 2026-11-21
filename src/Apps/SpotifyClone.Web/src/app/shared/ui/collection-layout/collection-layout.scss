@@ -116,6 +116,14 @@
   opacity: .7;
 }
 
+// The owner's title opens "Edit details" (not in the mockup).
+.playlist-page__info-section--title-btn {
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+}
+
 .playlist-page__info-section--bottom-info-group {
   color: var(--light-gray-fg-color);
   font-size: .97rem;

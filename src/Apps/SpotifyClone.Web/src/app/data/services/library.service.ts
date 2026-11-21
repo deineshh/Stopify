@@ -1,4 +1,4 @@
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, linkedSignal, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
 import { AuthStore } from '@core/auth/auth.store';
@@ -19,10 +19,31 @@ export class LibraryService {
   private readonly api = inject(CatalogApi);
   private readonly auth = inject(AuthStore);
 
+  /**
+   * Bumped by `reload()`. It's part of the request on purpose: `resource.reload()` is dropped when
+   * it lands between a response arriving and being applied, so two quick changes could leave the
+   * library stale. A new request always runs, and cancels an older one still in flight.
+   */
+  private readonly version = signal(0);
+
   /** Keyed on the user id: idle (no request) while signed out, reloads when the account changes. */
   private readonly playlists = rxResource({
-    params: () => this.auth.user()?.id,
+    params: () => {
+      const userId = this.auth.user()?.id;
+      return userId ? { userId, version: this.version() } : undefined;
+    },
     stream: () => this.api.myPlaylists({ pageSize: LIBRARY_PAGE_SIZE }).pipe(map((page) => page.items)),
+  });
+
+  /** The last loaded list, kept on screen while a newer one loads; empty once signed out. */
+  private readonly loaded = linkedSignal<readonly PlaylistSummaryDto[] | undefined, readonly PlaylistSummaryDto[]>({
+    source: () => {
+      if (this.playlists.hasValue()) {
+        return this.playlists.value();
+      }
+      return this.auth.user() ? undefined : [];
+    },
+    computation: (playlists, previous) => playlists ?? previous?.value ?? [],
   });
 
   readonly filter = signal<LibraryFilter | null>(null);
@@ -33,9 +54,11 @@ export class LibraryService {
 
   readonly items = computed<readonly LibraryItem[]>(() => {
     const user = this.auth.user();
-    const playlists = this.playlists.hasValue() ? this.playlists.value() : [];
-    return playlists.map((playlist) => toLibraryItem(playlist, playlist.ownerId === user?.id ? user.displayName : undefined));
+    return this.loaded().map((playlist) => toLibraryItem(playlist, playlist.ownerId === user?.id ? user.displayName : undefined));
   });
+
+  /** Playlists the user can add songs to ("Add to playlist"). */
+  readonly ownPlaylists = computed(() => this.items().filter((item) => item.kind === 'playlist' && item.owned));
 
   readonly visibleItems = computed(() => {
     const filter = this.filter();
@@ -52,7 +75,7 @@ export class LibraryService {
   }
 
   reload(): void {
-    this.playlists.reload();
+    this.version.update((version) => version + 1);
   }
 }
 
@@ -69,5 +92,8 @@ function toLibraryItem(playlist: PlaylistSummaryDto, ownerName: string | undefin
     cover: imageUrl(playlist.customCover?.imageId ?? playlist.generatedCoverImageIds[0], '') || undefined,
     subtitle: ownerName,
     link: ['/playlist', playlist.id],
+    owned: ownerName !== undefined,
+    isPublic: playlist.isPublic,
+    description: playlist.description,
   };
 }

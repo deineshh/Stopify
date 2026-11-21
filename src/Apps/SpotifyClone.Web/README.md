@@ -2,7 +2,7 @@
 
 Angular 21 web client for Stopify. It is a server-rendered (SSR + hydration), zoneless, standalone-component app built from the HTML/CSS mockups in [`mockups/`](./mockups).
 
-Authentication, the catalog (home, search, albums, artists and playlists), Your Library (the signed-in user's playlists) and playback (HLS streaming through the API's playback session, with the Now Playing and Queue panels) are connected to the API. Following artists and Liked Songs are UI-only because the API has no endpoints for them yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
+Authentication, the catalog (home, search, albums, artists and playlists), Your Library and playlists (create, edit and delete), and playback (HLS streaming through the API's playback session, with the Now Playing and Queue panels) are connected to the API. Following artists and Liked Songs are UI-only because the API has no endpoints for them yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
 
 ## Getting started
 
@@ -22,7 +22,7 @@ In production the SSR server (`npm run serve:ssr:SpotifyClone.Web`) only serves 
 
 ```
 src/
-├── styles/               Design tokens, reset, fonts, scrollbar, breakpoint mixins
+├── styles/               Design tokens, reset, fonts, scrollbar, breakpoint mixins, menus and dialogs (overlays)
 ├── styles.scss           Global entry (document-level rules only)
 └── app/
     ├── core/             App-wide singletons
@@ -33,12 +33,12 @@ src/
     │   ├── notifications/ ToastService
     │   └── playback/     AudioEngine (HLS via hls.js), PlaybackSignals (SignalR), this browser's device id
     ├── data/             Everything the UI reads
-    │   ├── api/          Typed API clients (CatalogApi, PlaybackApi), DTOs and DTO → view model mappers
+    │   ├── api/          Typed API clients (CatalogApi, PlaylistsApi, PlaybackApi), DTOs and DTO → view model mappers
     │   ├── models/       View models, independent of backend DTOs
-    │   └── services/     Catalog, Collection, Library, Player, NowPlaying, TrackLookup
+    │   └── services/     Catalog, Collection, Library, PlaylistEditor, Player, NowPlaying, TrackLookup
     ├── layout/           Application shell (header, library, right panels, player bar, footer, mobile nav)
     ├── features/         Lazy-loaded pages: home, search, playlist, library, auth
-    ├── shared/           Reusable UI: media card/shelf, track table, play button, filter chip, slider, pipes
+    ├── shared/           Reusable UI: media card/shelf, track table, play button, menus, dialogs, filter chip, slider, pipes
     └── testing/          Test helpers
 ```
 
@@ -68,6 +68,14 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 - **Devices:** each browser has an id (`stopify.deviceId` in localStorage). While signed in, `PlaybackSignals` listens to the Streaming hub (`/hubs/streaming`, SignalR loaded on demand): when playback starts on another device, this one pauses and says so. Skip, seek, shuffle and repeat only work from the active device, so if another device took over, the player resumes here first and retries.
 - **Panels:** `NowPlayingService` loads what the right-hand panels show: the album or playlist name, the first artist's bio and avatar, and the queue (`/me/playback/queue`, only while a panel is on screen). A queued song plays the same album or playlist from that song.
 - **Not yet in the API:** Search has no playback context of its own (the API's `search` context can't be started), so a song from search plays from its album.
+
+## Playlists
+
+- **One place for changes.** `PlaylistEditor` creates, edits and deletes playlists and adds or removes songs through `PlaylistsApi`. It refreshes Your Library, bumps the playlist's revision (an open playlist page reloads in place) and reports the result as a toast. Guests are sent to log in.
+- **Menus** use the Angular CDK (`@angular/cdk/menu`): right-click or the "…" button, keyboard navigation and focus return. A view renders one menu and passes the row as trigger data. `app-playlist-menu` (Edit details, Make public/private, Delete) is on your playlists in the library and on the playlist page.
+- **Dialogs** use `@angular/cdk/dialog`: Edit details (also opened by clicking the title or the cover, like Spotify) and a delete confirmation. Menu and dialog styles live in `styles/_overlays.scss`, because the overlay renders outside every component.
+- **Rules from the API:** new playlists are private and named "My Playlist #N"; names are required (100 characters max) and descriptions are limited to 300; a song can be in a playlist only once; only the owner edits or deletes.
+- **Not yet:** uploading a cover (the API's cover endpoint needs image metadata that the upload endpoint doesn't return), collaborators and reordering songs.
 
 ## Routes
 

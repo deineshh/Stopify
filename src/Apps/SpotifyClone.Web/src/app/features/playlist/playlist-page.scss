@@ -1,5 +1,14 @@
 // Playlist pages use the shared collection layout; only the empty state is page-specific.
 .playlist-page__empty {
   color: var(--light-gray-fg-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   padding: 32px 0;
+}
+
+.playlist-page__empty-title {
+  color: var(--primary-fg-color);
+  font-size: 1.1rem;
+  font-weight: bold;
 }

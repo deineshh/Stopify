@@ -28,9 +28,10 @@ internal sealed class GetPlaylistDetailsQueryHandler(
             return Result.Failure<PlaylistDetails>(PlaylistErrors.NotFound);
         }
 
-        if ((!_currentUser.IsAuthenticated ||
-            !playlist.Collaborators.Any(c => c.Id == _currentUser.Id)) &&
-            !_currentUser.IsInRole(UserRoles.Admin))
+        // Public playlists are for everyone; private ones for the owner, collaborators and admins.
+        bool isMember = _currentUser.IsAuthenticated &&
+            (playlist.OwnerId == _currentUser.Id || playlist.Collaborators.Any(c => c.Id == _currentUser.Id));
+        if (!playlist.IsPublic && !isMember && !_currentUser.IsInRole(UserRoles.Admin))
         {
             return Result.Failure<PlaylistDetails>(PlaylistErrors.NotOwned);
         }

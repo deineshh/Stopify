@@ -1,0 +1,195 @@
+@use 'breakpoints' as bp;
+
+.edit-playlist__body {
+  display: flex;
+  gap: 16px;
+}
+
+.edit-playlist__cover-column {
+  align-items: center;
+  display: flex;
+  flex: 0 0 180px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edit-playlist__cover {
+  align-items: center;
+  aspect-ratio: 1;
+  background-color: #333;
+  border-radius: 4px;
+  box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.edit-playlist__remove-photo {
+  color: var(--light-gray-fg-color);
+  font-size: 0.8125rem;
+  font-weight: bold;
+  padding: 4px 8px;
+}
+
+.edit-playlist__remove-photo:hover:not(:disabled),
+.edit-playlist__remove-photo:focus-visible {
+  color: var(--primary-fg-color);
+  text-decoration: underline;
+}
+
+// The cover is a button: Spotify shows "Choose photo" over it on hover.
+.edit-playlist__cover {
+  color: var(--primary-fg-color);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.edit-playlist__cover:disabled {
+  cursor: default;
+}
+
+.edit-playlist__cover-overlay {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  inset: 0;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.edit-playlist__cover:hover:not(:disabled) .edit-playlist__cover-overlay,
+.edit-playlist__cover:focus-visible .edit-playlist__cover-overlay {
+  opacity: 1;
+}
+
+.edit-playlist__cover:focus-visible {
+  outline: 2px solid var(--primary-fg-color);
+  outline-offset: 2px;
+}
+
+.edit-playlist__cover-overlay-icon {
+  font-size: 2.5rem;
+}
+
+.edit-playlist__cover-overlay-text {
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.edit-playlist__file {
+  display: none;
+}
+
+// No hover on touch screens: show that the cover can be changed.
+@media (hover: none) {
+  .edit-playlist__cover-overlay {
+    background-color: transparent;
+    justify-content: flex-end;
+    opacity: 1;
+    padding-bottom: 8px;
+  }
+
+  .edit-playlist__cover-overlay-icon {
+    display: none;
+  }
+
+  .edit-playlist__cover-overlay-text {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 1000px;
+    padding: 4px 10px;
+  }
+}
+
+.edit-playlist__cover-img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.edit-playlist__cover-icon {
+  color: var(--light-gray-fg-color);
+  font-size: 3rem;
+}
+
+.edit-playlist__fields {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.edit-playlist__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.edit-playlist__field--grow {
+  flex: 1;
+}
+
+.edit-playlist__label {
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+.edit-playlist__input {
+  background-color: #3e3e3e;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: var(--primary-fg-color);
+  font: inherit;
+  font-size: 0.875rem;
+  padding: 10px 12px;
+}
+
+.edit-playlist__input:focus {
+  background-color: #333;
+  border-color: #535353;
+  outline: none;
+}
+
+.edit-playlist__input[aria-invalid='true'] {
+  border-color: #e91429;
+}
+
+.edit-playlist__textarea {
+  flex: 1;
+  min-height: 96px;
+  resize: none;
+}
+
+.edit-playlist__hint {
+  align-self: flex-end;
+  color: var(--light-gray-fg-color);
+  font-size: 0.75rem;
+}
+
+.edit-playlist__hint--error {
+  align-self: flex-start;
+  color: #f3727f;
+}
+
+@include bp.mobile {
+  .edit-playlist__body {
+    flex-direction: column;
+  }
+
+  .edit-playlist__cover-column {
+    align-self: center;
+    flex: none;
+  }
+
+  .edit-playlist__cover {
+    box-shadow: none;
+    height: 140px;
+    width: 140px;
+  }
+}

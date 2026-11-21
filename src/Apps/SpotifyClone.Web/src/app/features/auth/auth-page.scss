@@ -411,34 +411,9 @@
   margin-bottom: 24px;
 }
 
-.sign-up-page__verification-group--code-group {
-  display: flex;
-  gap: 16px;
-}
 
-.sign-up-page__verification-group--code-input {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border: 1px solid #7d7d7d;
-  border-radius: 4px;
-  caret-color: transparent;
-  font-size: 1.5rem;
-  font-weight: bold;
-  height: 52px;
-  text-align: center;
-  transition: .1s border-width ease-in-out;
-  width: 44px;
-}
 
-.sign-up-page__verification-group--code-input:focus {
-  border-color: var(--primary-fg-color);
-  border-width: 4px;
-}
 
-.sign-up-page__verification-group--code-input:valid {
-  border-color: var(--primary-fg-color);
-}
 
 .sign-up-page__verification-group--error-group {
   display: block;
@@ -603,9 +578,6 @@
   margin-bottom: 16px;
 }
 
-.sign-up-page__verification-group--code-input {
-  text-align: center;
-}
 
 .sign-up-page__footer-group--anchor {
   cursor: pointer;
@@ -625,12 +597,87 @@
     font-size: 2.2rem;
   }
 
-  .sign-up-page__verification-group--code-group {
-    gap: 8px;
-    justify-content: space-between;
-  }
-
   .sign-up-page__terms-group {
     width: 100%;
   }
+}
+
+// ---------------------------------------------------------------- API-connected flows (not in the mockup)
+
+.sign-up-page__form-description {
+  margin-bottom: 24px;
+}
+
+.sign-up-page__form-description strong {
+  color: var(--primary-fg-color);
+}
+
+.sign-up-page__server-error {
+  margin-top: 24px;
+}
+
+.sign-up-page__server-error a {
+  font-weight: bold;
+  margin-left: 4px;
+  text-decoration: underline;
+}
+
+.sign-up-page__next-btn:disabled {
+  cursor: progress;
+  opacity: 0.6;
+  transform: none;
+}
+
+.sign-up-page__forgot-password {
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 12px;
+  text-decoration: underline;
+}
+
+.sign-up-page__verification-group--resend-btn:disabled {
+  border-color: #4d4d4d;
+  color: var(--light-gray-fg-color);
+  cursor: default;
+  transform: none;
+}
+
+.sign-up-page__divider {
+  align-items: center;
+  color: var(--light-gray-fg-color);
+  display: flex;
+  font-size: 0.9rem;
+  gap: 12px;
+  margin: 32px 0;
+
+  &::before,
+  &::after {
+    border-top: 1px solid #7d7d7d;
+    content: '';
+    flex: 1;
+  }
+}
+
+.sign-up-page__social-btn {
+  align-items: center;
+  border: 1px solid #7d7d7d;
+  border-radius: 1000px;
+  box-sizing: border-box;
+  display: flex;
+  font-weight: bold;
+  gap: 12px;
+  height: 48px;
+  justify-content: center;
+  transition: border-color 0.1s ease-in-out;
+  width: 100%;
+}
+
+.sign-up-page__social-btn:hover {
+  border-color: var(--primary-fg-color);
+}
+
+.sign-up-page__social-icon {
+  font-size: 1.2rem;
 }

@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { AuthStore } from '@core/auth/auth.store';
+import { UserMenu } from './user-menu/user-menu';
 
 const SEARCH_ROUTE = /^\/search(?:\/([^?#]*))?/;
 
@@ -12,7 +14,7 @@ const SEARCH_ROUTE = /^\/search(?:\/([^?#]*))?/;
  */
 @Component({
   selector: 'app-global-header',
-  imports: [RouterLink, FaIconComponent],
+  imports: [RouterLink, FaIconComponent, UserMenu],
   templateUrl: './global-header.html',
   styleUrl: './global-header.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -20,8 +22,16 @@ const SEARCH_ROUTE = /^\/search(?:\/([^?#]*))?/;
 })
 export class GlobalHeader {
   private readonly router = inject(Router);
+  protected readonly auth = inject(AuthStore);
 
   protected readonly query = signal('');
+  private readonly currentUrl = signal('/');
+
+  /** Sign up / log in bring people back to the page they were on. */
+  protected readonly returnTo = computed(() => {
+    const url = this.currentUrl();
+    return url === '/' || url.startsWith('/login') || url.startsWith('/signup') ? {} : { redirect: url };
+  });
 
   constructor() {
     // Keep the field in sync when the URL changes (back/forward, links).
@@ -31,6 +41,7 @@ export class GlobalHeader {
         takeUntilDestroyed(inject(DestroyRef)),
       )
       .subscribe(({ urlAfterRedirects }) => {
+        this.currentUrl.set(urlAfterRedirects);
         const match = SEARCH_ROUTE.exec(urlAfterRedirects);
         this.query.set(match?.[1] ? decodeURIComponent(match[1]) : '');
       });

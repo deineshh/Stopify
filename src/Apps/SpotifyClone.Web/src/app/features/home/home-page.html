@@ -15,28 +15,56 @@
 </header>
 
 <div class="home-page__main">
-  <section class="home-page__recently-played-section" aria-label="Recently played">
-    @for (item of feed().shortcuts; track item.id) {
+  @if (visibleShortcuts().length) {
+  <section class="home-page__recently-played-section" aria-label="Jump back in">
+    @for (item of visibleShortcuts(); track item.id) {
       <div class="home-page__recently-played-item play-btn-parent">
         <div class="home-page__recently-played-item--left-side">
           <img class="home-page__recently-played-item--cover" [src]="item.cover" alt="" />
         </div>
         <div class="home-page__recently-played-item--right-side">
-          <a class="home-page__recently-played-item--title-anchor" [routerLink]="['/playlist', item.id]">
+          <a class="home-page__recently-played-item--title-anchor" [routerLink]="item.link">
             <p class="home-page__recently-played-item--title-text">{{ item.title }}</p>
           </a>
           <button
             appPlayButton
             revealOnHover
             class="home-page__recently-played-item--play-btn"
+            [target]="item.target"
             [attr.aria-label]="'Play ' + item.title"
           ></button>
         </div>
       </div>
     }
   </section>
+  }
 
-  @for (shelf of feed().shelves; track shelf.id) {
+  @for (shelf of visibleShelves(); track shelf.id) {
     <app-media-shelf [shelf]="shelf" />
+  }
+
+  @if (shelves.isLoading()) {
+    <div class="home-page__loading" role="status">
+      <span class="visually-hidden">Loading…</span>
+      @for (row of [1, 2]; track row) {
+        <div class="home-page__loading-title"></div>
+        <div class="home-page__loading-row">
+          @for (card of [1, 2, 3, 4, 5, 6]; track card) {
+            <div class="home-page__loading-card"></div>
+          }
+        </div>
+      }
+    </div>
+  } @else if (!visibleShelves().length && !visibleShortcuts().length) {
+    <div class="home-page__empty">
+      @if (activeFilter() === 'podcasts') {
+        <p class="home-page__empty-title">No podcasts yet</p>
+        <p class="home-page__empty-text">Podcasts are coming to Stopify soon.</p>
+      } @else {
+        <p class="home-page__empty-title">Nothing to show yet</p>
+        <p class="home-page__empty-text">Stopify couldn't load any music right now.</p>
+        <button class="home-page__empty-btn" type="button" (click)="shelves.reload(); shortcuts.reload()">Try again</button>
+      }
+    </div>
   }
 </div>

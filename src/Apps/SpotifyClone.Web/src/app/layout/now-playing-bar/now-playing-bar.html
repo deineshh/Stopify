@@ -1,52 +1,54 @@
-@let track = player.nowPlaying().track;
-@let artists = track.artists | artistNames;
+@let track = player.track();
 <section class="now-playing-bar__track-info--section">
-  <div class="now-playing-bar__img-group">
-    <button class="now-playing-bar__img-group--btn" type="button" [title]="track.title">
-      <img class="now-playing-bar__img-group--img" [src]="track.cover" [alt]="track.title + ' cover'" />
-    </button>
-    <button class="now-playing-bar__expand-btn" type="button" title="Collapse">
-      <span class="now-playing-bar__expand-icon">
-        <fa-icon [icon]="['fas', 'chevron-up']" />
+  @if (track) {
+    @let artists = track.artists | artistNames;
+    <div class="now-playing-bar__img-group">
+      <button class="now-playing-bar__img-group--btn" type="button" [title]="track.title">
+        <img class="now-playing-bar__img-group--img" [src]="track.cover" [alt]="track.title + ' cover'" />
+      </button>
+      <button class="now-playing-bar__expand-btn" type="button" title="Collapse">
+        <span class="now-playing-bar__expand-icon">
+          <fa-icon [icon]="['fas', 'chevron-up']" />
+        </span>
+      </button>
+    </div>
+    <div class="now-playing-bar__track-info--group">
+      <a class="now-playing-bar__track-info--title-anchor" [routerLink]="track.album.id ? ['/album', track.album.id] : null">
+        <span class="now-playing-bar__track-info--title-span">{{ track.title }}</span>
+      </a>
+      <p class="now-playing-bar__track-info--artists" [title]="artists">
+        @for (artist of track.artists; track artist.id; let last = $last) {
+          <a class="now-playing-bar__track-info--artist-anchor" [routerLink]="['/artist', artist.id]">
+            <span class="now-playing-bar__track-info--artist-span">{{ artist.name }}</span>
+          </a>
+          @if (!last) {
+            &ngsp;<span class="now-playing-bar__track-info--artist-seperator">,</span>&ngsp;
+          }
+        }
+      </p>
+    </div>
+    <button
+      class="now-playing-bar__save-btn"
+      type="button"
+      [class.saved]="player.saved()"
+      [title]="player.saved() ? 'Remove from Liked Songs' : 'Add to Liked Songs'"
+      [attr.aria-pressed]="player.saved()"
+      (click)="player.toggleSaved()"
+    >
+      <span class="now-playing-bar__save-icon">
+        <fa-icon [icon]="['fas', player.saved() ? 'check' : 'plus']" />
       </span>
     </button>
-  </div>
-  <div class="now-playing-bar__track-info--group">
-    <a class="now-playing-bar__track-info--title-anchor" [routerLink]="['/playlist', track.album.id]">
-      <span class="now-playing-bar__track-info--title-span">{{ track.title }}</span>
-    </a>
-    <p class="now-playing-bar__track-info--artists" [title]="artists">
-      @for (artist of track.artists; track artist.id; let last = $last) {
-        <a class="now-playing-bar__track-info--artist-anchor" [routerLink]="['/playlist', artist.id]">
-          <span class="now-playing-bar__track-info--artist-span">{{ artist.name }}</span>
-        </a>
-        @if (!last) {
-          &ngsp;<span class="now-playing-bar__track-info--artist-seperator">,</span>&ngsp;
-        }
-      }
-    </p>
-  </div>
-  <button
-    class="now-playing-bar__save-btn"
-    type="button"
-    [class.saved]="player.saved()"
-    [title]="player.saved() ? 'Remove from Liked Songs' : 'Add to Liked Songs'"
-    [attr.aria-pressed]="player.saved()"
-    (click)="player.toggleSaved()"
-  >
-    <span class="now-playing-bar__save-icon">
-      <fa-icon [icon]="['fas', player.saved() ? 'check' : 'plus']" />
-    </span>
-  </button>
-  <!-- Mini player (phones only) -->
-  <button
-    class="now-playing-bar__mobile-play-btn"
-    type="button"
-    [title]="player.isPlaying() ? 'Pause' : 'Play'"
-    (click)="player.togglePlay()"
-  >
-    <fa-icon [icon]="['fas', player.isPlaying() ? 'pause' : 'play']" />
-  </button>
+    <!-- Mini player (phones only) -->
+    <button
+      class="now-playing-bar__mobile-play-btn"
+      type="button"
+      [title]="player.isPlaying() ? 'Pause' : 'Play'"
+      (click)="player.togglePlay()"
+    >
+      <fa-icon [icon]="['fas', player.isPlaying() ? 'pause' : 'play']" />
+    </button>
+  }
 </section>
 
 <section class="now-playing-bar__player--section">
@@ -57,6 +59,7 @@
       [class.active]="player.shuffle()"
       [title]="player.shuffle() ? 'Disable shuffle' : 'Enable shuffle'"
       [attr.aria-pressed]="player.shuffle()"
+      [disabled]="!track"
       (click)="player.toggleShuffle()"
     >
       <span class="now-playing-bar__player--shuffle-icon">
@@ -67,6 +70,8 @@
       class="now-playing-bar__player--previous-btn now-playing-bar__btn-base now-playing-bar__skip-btn"
       type="button"
       title="Previous"
+      [disabled]="!track"
+      (click)="player.previous()"
     >
       <span class="now-playing-bar__player--previous-icon now-playing-bar__skip-icon">
         <fa-icon [icon]="['fas', 'backward-step']" />
@@ -76,6 +81,8 @@
       class="now-playing-bar__player--play-btn"
       type="button"
       [title]="player.isPlaying() ? 'Pause' : 'Play'"
+      [disabled]="!track"
+      [attr.aria-busy]="player.isBuffering()"
       (click)="player.togglePlay()"
     >
       <span class="now-playing-bar__player--play-icon" [class.paused]="player.isPlaying()">
@@ -86,6 +93,8 @@
       class="now-playing-bar__player--next-btn now-playing-bar__btn-base now-playing-bar__skip-btn"
       type="button"
       title="Next"
+      [disabled]="!track"
+      (click)="player.next()"
     >
       <span class="now-playing-bar__player--next-icon now-playing-bar__skip-icon">
         <fa-icon [icon]="['fas', 'forward-step']" />
@@ -97,6 +106,7 @@
       [class.active]="player.repeat() !== 'off'"
       [class.repeat-one]="player.repeat() === 'one'"
       [title]="repeatTitle()"
+      [disabled]="!track"
       (click)="player.cycleRepeat()"
     >
       <span class="now-playing-bar__player--repeat-icon">
@@ -106,18 +116,21 @@
   </div>
   <div class="now-playing-bar__player--slider-group">
     <span class="now-playing-bar__player--playback-position now-playing-bar__player--playback-time">{{
-      player.positionSeconds() | duration
+      track ? (player.positionSeconds() | duration) : '-:--'
     }}</span>
     <div class="now-playing-bar__player--slider">
       <app-range-slider
         label="Change progress"
+        [step]="0.1"
         [value]="player.progress()"
         [valueText]="player.positionSeconds() | duration"
-        (valueChange)="player.seek($event)"
+        [disabled]="!track"
+        (valueChange)="player.scrub($event)"
+        (committed)="player.seek($event)"
       />
     </div>
     <span class="now-playing-bar__player--playback-duration now-playing-bar__player--playback-time">{{
-      track.durationSeconds | duration
+      track ? (player.durationSeconds() | duration) : '-:--'
     }}</span>
   </div>
 </section>

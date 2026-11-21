@@ -1,0 +1,79 @@
+// Avatar styles moved verbatim from global-header.scss (the widget now lives in this component).
+:host {
+  display: block;
+  position: relative;
+}
+
+.global-header__user-widget--btn {
+  align-items: center;
+  background-color: #19e68c;
+  border: 9px var(--primary-element-bg-color) solid;
+  border-radius: 100%;
+  color: black;
+  display: flex;
+  font-weight: 700;
+  justify-content: center;
+  height: 31px;
+  margin-left: 14px;
+  transition: .05s transform ease-in-out;
+  transform: scale(1);
+  width: 31px;
+}
+
+.global-header__user-widget--btn:hover {
+  transform: scale(1.05);
+}
+
+.global-header__user-widget--img {
+  border-radius: 100%;
+  height: 31px;
+  object-fit: cover;
+  width: 31px;
+}
+
+// ---------------------------------------------------------------- menu (not in the mockup)
+
+.user-menu {
+  background-color: #282828;
+  border-radius: 4px;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.3), 0 6px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  min-width: 196px;
+  padding: 4px;
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 10;
+}
+
+.user-menu__item {
+  align-items: center;
+  border-radius: 2px;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  font-size: 0.9rem;
+  justify-content: space-between;
+  padding: 12px 8px 12px 12px;
+}
+
+.user-menu__item:hover,
+.user-menu__item:focus-visible {
+  background-color: #3e3e3e;
+  color: var(--primary-fg-color);
+}
+
+.user-menu__item:disabled {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+.user-menu__external {
+  font-size: 0.8rem;
+}
+
+.user-menu__divider {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin: 0;
+}

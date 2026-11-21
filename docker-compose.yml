@@ -4,6 +4,10 @@ services:
     build: 
       context: ./src/Apps/SpotifyClone.Web
       dockerfile: Dockerfile
+    environment:
+      API_PROXY_TARGET: http://api:8080
+      API_URL: http://api:8080
+      STORAGE_PROXY_TARGET: http://minio:9000
     ports:
       - "4200:4200"
     volumes:
@@ -81,7 +85,10 @@ services:
       retries: 5
 
   minio:
-    image: minio/minio
+    # minio/minio was withdrawn from Docker Hub and quay.io (Sept 2026); Chainguard's build is free and public.
+    image: cgr.dev/chainguard/minio:latest
+    # It runs as uid 65532 by default; root keeps access to the existing minio_data volume.
+    user: root
     container_name: spotifyclone-minio
     ports:
       - "9000:9000"

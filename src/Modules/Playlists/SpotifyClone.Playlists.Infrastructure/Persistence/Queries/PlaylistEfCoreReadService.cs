@@ -98,9 +98,12 @@ internal sealed class PlaylistEfCoreReadService(
         
         if (!isAdmin)
         {
+            // Guests see public playlists; signed-in users also their own and the ones they collaborate on.
             query = ownerId is null
                 ? query.Where(p => p.IsPublic)
-                : query.Where(p => p.IsPublic || p.OwnerId == ownerId);
+                : query.Where(p => p.IsPublic ||
+                    p.OwnerId == ownerId ||
+                    p.Collaborators.Any(c => c.Value == ownerId.Value));
         }
 
         if (filters.Name is not null)

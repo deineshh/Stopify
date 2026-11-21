@@ -116,11 +116,13 @@
   transition: .1s background ease;
 }
 
-.search-results__songs-item:hover .search-results__songs-item--play-btn {
+.search-results__songs-item:hover .search-results__songs-item--play-btn,
+.search-results__songs-item.menu-open .search-results__songs-item--play-btn {
   opacity: 1;
 }
 
-.search-results__songs-item:hover {
+.search-results__songs-item:hover,
+.search-results__songs-item.menu-open {
   background-color: var(--primary-element-bg-color-hover);
 }
 
@@ -346,4 +348,31 @@
   .track-item {
     flex: 0 0 148px;
   }
+}
+
+// Albums and songs can be the top result too; only artists are round.
+.search-results__top-result-item--cover.rounded {
+  border-radius: 6px;
+}
+
+.search-results__empty {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 96px 16px;
+  text-align: center;
+}
+
+.search-results__empty-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.search-results__empty-text {
+  color: var(--light-gray-fg-color);
+}
+
+.search-results__songs-item.current .search-results__songs-item--title-span {
+  color: var(--primary-green-color);
 }

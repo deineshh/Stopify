@@ -6,6 +6,15 @@ export interface LibraryItem {
   kind: 'playlist' | 'artist';
   /** Library items without artwork show the solid placeholder tile. */
   cover?: string;
-  trackCount: number;
-  pinned: boolean;
+  /** Second line after the kind, e.g. the playlist owner. */
+  subtitle?: string;
+  link: readonly string[];
+  /** The signed-in user owns it, so they may edit, delete and add songs. */
+  owned?: boolean;
+  /** Someone else's playlist the user collaborates on: they may add, remove and reorder songs. */
+  collaborative?: boolean;
+  isPublic?: boolean;
+  description?: string | null;
+  /** The cover is an uploaded photo. */
+  hasCustomCover?: boolean;
 }

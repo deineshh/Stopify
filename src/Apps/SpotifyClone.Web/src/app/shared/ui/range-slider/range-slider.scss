@@ -58,3 +58,16 @@
 .now-playing-bar__slider--input::-moz-range-thumb:hover {
   transform: scale(1.1);
 }
+
+// Nothing loaded yet: no thumb, no pointer.
+.now-playing-bar__slider--input:disabled {
+  cursor: default;
+}
+
+.now-playing-bar__slider--input:disabled::-webkit-slider-thumb {
+  display: none;
+}
+
+.now-playing-bar__slider--input:disabled::-moz-range-thumb {
+  display: none;
+}

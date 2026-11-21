@@ -1,0 +1,164 @@
+@let name = title();
+<header class="playlist-page__header" [style.opacity]="headerOpacity()" [attr.aria-hidden]="headerOpacity() < 1">
+  <button
+    appPlayButton
+    class="playlist-page__header--play-btn"
+    [target]="target()"
+    [attr.aria-label]="'Play ' + name"
+    [attr.tabindex]="headerOpacity() < 1 ? -1 : 0"
+  ></button>
+  <span class="playlist-page__header--title">{{ name }}</span>
+</header>
+
+<div class="playlist-page__main">
+  <section class="playlist-page__info-section">
+    <div class="playlist-page__info-section--left-group" [class.circle]="coverShape() === 'circle'">
+      <div class="playlist-page__info-section--cover-group custom-cover">
+        <img class="playlist-page__info-section--cover" [src]="cover()" [alt]="name" />
+      </div>
+      @if (editableCover()) {
+        <button
+          class="playlist-page__info-section--choose-photo-btn"
+          type="button"
+          (click)="editable() && edit.emit()"
+        >
+          <span class="playlist-page__info-section--choose-photo-icon">
+            <fa-icon [icon]="['fas', 'pen']" />
+          </span>
+          <span class="playlist-page__info-section--choose-photo-text">Choose photo</span>
+        </button>
+      }
+    </div>
+    <div class="playlist-page__info-section--right-group">
+      @if (verified() || eyebrow()) {
+        <div class="playlist-page__info-section--header-group">
+          @if (verified()) {
+            <span class="playlist-page__info-section--verification-icon">
+              <fa-icon [icon]="['fas', 'circle-check']" />
+            </span>
+          }
+          <span class="playlist-page__info-section--header-text">{{ eyebrow() ?? 'Verified Artist' }}</span>
+        </div>
+      }
+      <h1 class="playlist-page__info-section--title">
+        @if (editable()) {
+          <button class="playlist-page__info-section--title-btn" type="button" title="Edit details" (click)="edit.emit()">
+            {{ name }}
+          </button>
+        } @else {
+          {{ name }}
+        }
+      </h1>
+      @if (description()) {
+        <span class="playlist-page__info-section--description">{{ description() }}</span>
+      }
+      @if (meta().length) {
+        <div class="playlist-page__info-section--bottom-info-group">
+          @for (item of meta(); track $index; let first = $first) {
+            @if (!first) {
+              &ngsp;<span class="playlist-page__info-section--separator">•</span>&ngsp;
+            }
+            @if (item.link) {
+              <a class="playlist-page__info-section--author-anchor" [routerLink]="item.link" [title]="item.title ?? ''">
+                <span class="playlist-page__info-section--author-span">{{ item.text }}</span>
+              </a>
+            } @else {
+              <span class="playlist-page__info-section--meta-text" [title]="item.title ?? ''">{{ item.text }}</span>
+            }
+          }
+          @for (line of details(); track line) {
+            <div class="playlist-page__info-section--public-playlist-count">{{ line }}</div>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="playlist-page__main-section">
+    <div class="playlist-page__main-section--btns-group">
+      <button
+        appPlayButton
+        class="playlist-page__main-section--play-btn"
+        [target]="target()"
+        [title]="'Play ' + name"
+      ></button>
+      <button
+        class="playlist-page__main-section--shuffle-btn playlist-page__main-section--btn"
+        type="button"
+        [class.shuffling]="shuffle()"
+        [title]="(shuffle() ? 'Disable' : 'Enable') + ' Shuffle for ' + name"
+        [attr.aria-pressed]="shuffle()"
+        (click)="shuffle.set(!shuffle())"
+      >
+        <span class="playlist-page__main-section--shuffle-icon">
+          <fa-icon [icon]="['fas', 'shuffle']" />
+        </span>
+      </button>
+      @if (following() !== null) {
+        <button
+          class="playlist-page__main-section--follow-btn playlist-page__main-section--btn"
+          type="button"
+          [attr.aria-pressed]="following()"
+          (click)="toggleFollowing()"
+        >
+          <span class="playlist-page__main-section--follow-icon">{{ following() ? 'Following' : 'Follow' }}</span>
+        </button>
+      }
+      @if (saved() !== null) {
+        <button
+          class="playlist-page__main-section--save-btn playlist-page__main-section--btn"
+          type="button"
+          [class.saved]="saved()"
+          [title]="saved() ? 'Remove from Your Library' : 'Save to Your Library'"
+          [attr.aria-pressed]="saved()"
+          (click)="toggleSaved()"
+        >
+          <span class="playlist-page__main-section--save-icon">
+            <fa-icon [icon]="['fas', saved() ? 'check' : 'plus']" />
+          </span>
+        </button>
+      }
+      @if (showDownload()) {
+        <button class="playlist-page__main-section--download-btn playlist-page__main-section--btn" type="button" title="Download">
+          <span class="playlist-page__main-section--download-icon">
+            <fa-icon [icon]="['fas', 'arrow-down']" />
+          </span>
+        </button>
+      }
+      @if (showInvite()) {
+        <button
+          class="playlist-page__main-section--invite-btn playlist-page__main-section--btn"
+          type="button"
+          [title]="'Invite collaborators to ' + name"
+          aria-haspopup="dialog"
+          (click)="invite.emit()"
+        >
+          <span class="playlist-page__main-section--invite-icon">
+            <fa-icon [icon]="['fas', 'user-plus']" />
+          </span>
+        </button>
+      }
+      <button
+        class="playlist-page__main-section--more-options-btn playlist-page__main-section--btn"
+        type="button"
+        [title]="'More options for ' + name"
+        [cdkMenuTriggerFor]="moreMenu()"
+        [cdkMenuTriggerData]="{ $implicit: moreMenuData() }"
+      >
+        <span class="playlist-page__main-section--more-options-icon">
+          <fa-icon [icon]="['fas', 'ellipsis']" />
+        </span>
+      </button>
+      @if (showViewAs()) {
+        <button class="playlist-page__main-section--view-as-btn" type="button" title="View as">
+          <span class="playlist-page__main-section--view-as-text">List</span>
+          <span class="playlist-page__main-section--view-as-icon">
+            <fa-icon [icon]="['fas', 'list-ul']" />
+          </span>
+        </button>
+      }
+    </div>
+
+    <ng-content />
+  </section>
+</div>

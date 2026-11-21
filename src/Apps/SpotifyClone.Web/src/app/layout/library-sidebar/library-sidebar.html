@@ -18,7 +18,8 @@
     <button
       class="left-sidebar__title-bar--create-btn left-sidebar__header-title-btn"
       type="button"
-      title="Create a playlist, folder, or Jam"
+      title="Create a playlist"
+      (click)="createPlaylist()"
     >
       <fa-icon [icon]="['fas', 'plus']" />
       <span class="left-sidebar__title-bar--create-text">Create</span>
@@ -31,105 +32,162 @@
       <fa-icon [icon]="['fas', 'up-right-and-down-left-from-center']" />
     </button>
   </div>
-  <div class="left-sidebar__filter-btns" role="group" aria-label="Filter Your Library">
-    @for (filter of filters; track filter.id) {
-      <button
-        class="left-sidebar__filter-btn"
-        type="button"
-        [class.active]="library.filter() === filter.id"
-        [attr.aria-pressed]="library.filter() === filter.id"
-        (click)="library.toggleFilter(filter.id)"
-      >
-        {{ filter.label }}
-      </button>
-    }
-  </div>
+  @if (auth.isAuthenticated()) {
+    <div class="left-sidebar__filter-btns" role="group" aria-label="Filter Your Library">
+      @for (filter of filters; track filter.id) {
+        <button
+          class="left-sidebar__filter-btn"
+          type="button"
+          [class.active]="library.filter() === filter.id"
+          [attr.aria-pressed]="library.filter() === filter.id"
+          (click)="library.toggleFilter(filter.id)"
+        >
+          {{ filter.label }}
+        </button>
+      }
+    </div>
+  }
 </header>
 
-<form class="left-sidebar__main" [class.search-open]="searchOpen()" (submit)="$event.preventDefault()">
-  <div class="left-sidebar__main--header">
-    <button
-      class="left-sidebar__search-btn left-sidebar__search-bar--btn"
-      type="button"
-      title="Search in Your Library"
-      (click)="openSearch()"
-    >
-      <span class="left-sidebar__search-btn--span">
-        <fa-icon [icon]="['fas', 'magnifying-glass']" />
-      </span>
-    </button>
-    @if (searchOpen()) {
-      <label class="left-sidebar__search-bar" for="library-search-input">
-        <input
-          #searchInput
-          id="library-search-input"
-          class="left-sidebar__search-bar--input"
-          type="text"
-          autocomplete="off"
-          placeholder=" "
-          aria-label="Search in Your Library"
-          [value]="library.query()"
-          (input)="library.query.set($any($event.target).value)"
-          (blur)="closeSearchIfEmpty()"
-          (keydown.escape)="library.query.set(''); searchOpen.set(false)"
-        />
-        <div class="left-sidebar__search-bar--placeholder-group" aria-hidden="true">
-          <span class="left-sidebar__search-bar--placeholder-text">Search in Your Library</span>
-        </div>
+@switch (auth.status()) {
+  @case ('authenticated') {
+    <form class="left-sidebar__main" [class.search-open]="searchOpen()" (submit)="$event.preventDefault()">
+      <div class="left-sidebar__main--header">
         <button
-          class="left-sidebar__search-bar--clear-btn left-sidebar__search-bar--btn"
+          class="left-sidebar__search-btn left-sidebar__search-bar--btn"
           type="button"
-          title="Clear search field"
-          (mousedown)="$event.preventDefault()"
-          (click)="clearSearch()"
+          title="Search in Your Library"
+          (click)="openSearch()"
         >
-          <span class="left-sidebar__search-bar--clear-span">
-            <fa-icon [icon]="['fas', 'xmark']" />
+          <span class="left-sidebar__search-btn--span">
+            <fa-icon [icon]="['fas', 'magnifying-glass']" />
           </span>
         </button>
-      </label>
-    }
-    <button class="left-sidebar__sort--btn" type="button" title="Sort by">
-      <span class="left-sidebar__sort--text">Recents</span>
-      <span class="left-sidebar__sort--icon">
-        <fa-icon [icon]="['fas', 'list-ul']" />
-      </span>
-    </button>
-  </div>
-
-  <div class="left-sidebar__main-items" role="list">
-    @for (item of library.visibleItems(); track item.id) {
-      <div class="left-sidebar__main-item" role="listitem" [title]="item.title">
-        <div class="left-sidebar__main-item--left-group">
-          <div class="left-sidebar__main-item--img-group">
-            @if (item.cover) {
-              <img class="left-sidebar__main-item--img" [src]="item.cover" alt="" />
-            }
-          </div>
-          <button class="left-sidebar__main-item--play-btn" type="button" [title]="'Play ' + item.title">
-            <span class="left-sidebar__main-item--play-icon">
-              <fa-icon [icon]="['fas', 'play']" />
-            </span>
-          </button>
-        </div>
-        <div class="left-sidebar__main-item--right-group">
-          <p class="left-sidebar__main-item--title">
-            <span class="left-sidebar__main-item--title-span">{{ item.title }}</span>
-          </p>
-          <p class="left-sidebar__main-item--description">
-            @if (item.pinned) {
-              <span class="left-sidebar__main-item--pin-icon" title="Pinned">
-                <fa-icon [icon]="['fas', 'thumbtack']" />
-              </span>&ngsp;
-            }
-            <span class="left-sidebar__main-item--description-text"
-              >{{ item.kind === 'playlist' ? 'Playlist' : 'Artist' }} • {{ item.trackCount }} songs</span
+        @if (searchOpen()) {
+          <label class="left-sidebar__search-bar" for="library-search-input">
+            <input
+              #searchInput
+              id="library-search-input"
+              class="left-sidebar__search-bar--input"
+              type="text"
+              autocomplete="off"
+              placeholder=" "
+              aria-label="Search in Your Library"
+              [value]="library.query()"
+              (input)="library.query.set($any($event.target).value)"
+              (blur)="closeSearchIfEmpty()"
+              (keydown.escape)="library.query.set(''); searchOpen.set(false)"
+            />
+            <div class="left-sidebar__search-bar--placeholder-group" aria-hidden="true">
+              <span class="left-sidebar__search-bar--placeholder-text">Search in Your Library</span>
+            </div>
+            <button
+              class="left-sidebar__search-bar--clear-btn left-sidebar__search-bar--btn"
+              type="button"
+              title="Clear search field"
+              (mousedown)="$event.preventDefault()"
+              (click)="clearSearch()"
             >
-          </p>
-        </div>
+              <span class="left-sidebar__search-bar--clear-span">
+                <fa-icon [icon]="['fas', 'xmark']" />
+              </span>
+            </button>
+          </label>
+        }
+        <button class="left-sidebar__sort--btn" type="button" title="Sort by">
+          <span class="left-sidebar__sort--text">Recents</span>
+          <span class="left-sidebar__sort--icon">
+            <fa-icon [icon]="['fas', 'list-ul']" />
+          </span>
+        </button>
       </div>
-    } @empty {
-      <p class="left-sidebar__empty">Couldn't find anything in Your Library.</p>
-    }
-  </div>
-</form>
+
+      <!-- Only a list while it has items: the empty, loading and error states aren't list items. -->
+      <div
+        class="left-sidebar__main-items"
+        [attr.role]="library.visibleItems().length ? 'list' : null"
+        [attr.aria-busy]="library.isLoading()"
+      >
+        @for (item of library.visibleItems(); track item.id) {
+          <div
+            class="left-sidebar__main-item"
+            role="listitem"
+            [title]="item.title"
+            [cdkContextMenuTriggerFor]="playlistMenu.template()"
+            [cdkContextMenuTriggerData]="{ $implicit: refFor(item.id) }"
+            [cdkContextMenuDisabled]="!item.owned"
+            [class.menu-open]="menuItemId() === item.id"
+            (cdkContextMenuOpened)="menuItemId.set(item.id)"
+            (cdkContextMenuClosed)="menuClosed(item.id)"
+          >
+            <a
+              class="left-sidebar__main-item--link"
+              routerLinkActive="active"
+              [routerLink]="item.link"
+              [attr.aria-label]="item.title + ', ' + kindLabel(item) + (item.subtitle ? ', ' + item.subtitle : '')"
+            ></a>
+            <div class="left-sidebar__main-item--left-group">
+              <div class="left-sidebar__main-item--img-group">
+                @if (item.cover) {
+                  <img class="left-sidebar__main-item--img" [src]="item.cover" alt="" />
+                }
+              </div>
+              <button class="left-sidebar__main-item--play-btn" type="button" [title]="'Play ' + item.title">
+                <span class="left-sidebar__main-item--play-icon">
+                  <fa-icon [icon]="['fas', 'play']" />
+                </span>
+              </button>
+            </div>
+            <div class="left-sidebar__main-item--right-group" aria-hidden="true">
+              <p class="left-sidebar__main-item--title">
+                <span class="left-sidebar__main-item--title-span">{{ item.title }}</span>
+              </p>
+              <p class="left-sidebar__main-item--description">
+                <span class="left-sidebar__main-item--description-text"
+                  >{{ kindLabel(item) }}@if (item.subtitle) {&ngsp;•&ngsp;{{ item.subtitle }}}</span
+                >
+              </p>
+            </div>
+          </div>
+        } @empty {
+          @if (library.isLoading()) {
+            @for (row of [1, 2, 3]; track row) {
+              <div class="left-sidebar__skeleton" aria-hidden="true">
+                <div class="left-sidebar__skeleton--img"></div>
+                <div class="left-sidebar__skeleton--lines">
+                  <div class="left-sidebar__skeleton--line"></div>
+                  <div class="left-sidebar__skeleton--line short"></div>
+                </div>
+              </div>
+            }
+            <span class="visually-hidden" role="status">Loading Your Library…</span>
+          } @else if (library.error()) {
+            <div class="left-sidebar__empty" role="alert">
+              <p>Couldn't load Your Library.</p>
+              <button class="left-sidebar__retry-btn" type="button" (click)="library.reload()">Try again</button>
+            </div>
+          } @else if (library.items().length) {
+            <p class="left-sidebar__empty">Couldn't find anything in Your Library.</p>
+          } @else {
+            <section class="left-sidebar__guest-card" aria-labelledby="library-empty-title">
+              <h2 id="library-empty-title" class="left-sidebar__guest-title">Create your first playlist</h2>
+              <p class="left-sidebar__guest-text">It's easy, we'll help you.</p>
+              <button class="left-sidebar__guest-btn" type="button" (click)="createPlaylist()">Create playlist</button>
+            </section>
+          }
+        }
+      </div>
+    </form>
+  }
+  @case ('anonymous') {
+    <div class="left-sidebar__guest">
+      <section class="left-sidebar__guest-card" aria-labelledby="library-guest-title">
+        <h2 id="library-guest-title" class="left-sidebar__guest-title">Create your first playlist</h2>
+        <p class="left-sidebar__guest-text">Log in to save songs, follow artists and build playlists.</p>
+        <a class="left-sidebar__guest-btn" routerLink="/login" [queryParams]="{ redirect: '/collection' }">Log in</a>
+      </section>
+    </div>
+  }
+}
+
+<app-playlist-menu #playlistMenu />

@@ -1,0 +1,46 @@
+@use 'breakpoints' as bp;
+
+:host {
+  bottom: 104px;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  z-index: 100;
+}
+
+.toast__message {
+  animation: toast-in 0.2s ease-out;
+  background-color: #2e77d0;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgb(0 0 0 / 50%);
+  color: white;
+  cursor: default;
+  font-size: 0.95rem;
+  max-width: min(90vw, 520px);
+  padding: 12px 16px;
+  pointer-events: auto;
+  text-align: center;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toast__message {
+    animation: none;
+  }
+}
+
+// Above the mini player and the tab bar.
+@include bp.mobile {
+  :host {
+    bottom: 140px;
+  }
+}

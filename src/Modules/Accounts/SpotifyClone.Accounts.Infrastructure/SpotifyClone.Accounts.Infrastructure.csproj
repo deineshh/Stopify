@@ -58,6 +58,8 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Identity" />
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
+		<!-- Direct reference so the patched version wins over the transitive one. -->
+		<PackageReference Include="Microsoft.AspNetCore.WebUtilities" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

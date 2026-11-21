@@ -1,4 +1,3 @@
-@let queue = player.queue();
 <header class="queue-view__header">
   <h1 class="queue-view__header--title">Queue</h1>
   <button class="queue-view__header--close-btn" type="button" title="Close" (click)="layout.closeRightPanel()">
@@ -8,21 +7,34 @@
   </button>
 </header>
 <div class="queue-view__main">
-  <section class="queue-view__now-playing--group" aria-labelledby="queue-now-playing-title">
-    <h2 id="queue-now-playing-title" class="queue-view__now-playing--title">Now playing</h2>
-    <app-sidebar-track-row [track]="queue.current" />
-  </section>
-  <section class="queue-view__next-from--group" aria-labelledby="queue-next-from-title">
-    <div class="queue-view__next-from--title-group">
-      <h2 id="queue-next-from-title" class="queue-view__next-from--title-text">Next from:</h2>
-      <a class="queue-view__next-from--title-artist--anchor" [routerLink]="['/playlist', queue.nextFrom.id]">
-        <span class="queue-view__next-from--title-artist--span">{{ queue.nextFrom.name }}</span>
-      </a>
-    </div>
-    <div class="queue-view__next-from--items" role="list">
-      @for (track of queue.upNext; track track.id) {
-        <app-sidebar-track-row role="listitem" [track]="track" />
+  @if (player.track(); as current) {
+    <section class="queue-view__now-playing--group" aria-labelledby="queue-now-playing-title">
+      <h2 id="queue-now-playing-title" class="queue-view__now-playing--title">Now playing</h2>
+      <app-sidebar-track-row [track]="current" [current]="true" />
+    </section>
+    <section class="queue-view__next-from--group" aria-labelledby="queue-next-from-title">
+      <div class="queue-view__next-from--title-group">
+        <h2 id="queue-next-from-title" class="queue-view__next-from--title-text">Next from:</h2>
+        @if (nowPlaying.context(); as context) {
+          <a class="queue-view__next-from--title-artist--anchor" [routerLink]="context.link">
+            <span class="queue-view__next-from--title-artist--span">{{ context.name }}</span>
+          </a>
+        }
+      </div>
+      @if (nowPlaying.queue().length) {
+        <div class="queue-view__next-from--items" role="list">
+          @for (track of nowPlaying.queue(); track $index) {
+            <app-sidebar-track-row role="listitem" [track]="track" [target]="rowTarget(track)" />
+          }
+        </div>
+      } @else if (!nowPlaying.queueLoading()) {
+        <p class="queue-view__empty">Nothing else in the queue.</p>
       }
+    </section>
+  } @else {
+    <div class="queue-view__empty-state">
+      <p class="queue-view__empty-state--title">Your queue is empty</p>
+      <p class="queue-view__empty">Play an album or a playlist and its songs will line up here.</p>
     </div>
-  </section>
+  }
 </div>

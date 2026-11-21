@@ -1,3 +1,5 @@
+import type { PlaybackTarget } from './player.models';
+
 /**
  * View models for the catalog UI. They describe what the screens render,
  * so the API layer can map backend DTOs onto them later without touching components.
@@ -48,6 +50,14 @@ export interface Track {
   /** ISO date the track was added to the playlist. */
   addedAt?: string;
   saved?: boolean;
+  explicit?: boolean;
+  /** Who is credited and how (only known for tracks loaded on their own, not album listings). */
+  credits?: readonly TrackCredit[];
+}
+
+export interface TrackCredit {
+  artist: EntityRef;
+  role: 'Main Artist' | 'Featured Artist';
 }
 
 export interface Genre {
@@ -62,4 +72,7 @@ export interface ShortcutItem {
   id: string;
   title: string;
   cover: string;
+  link: readonly string[];
+  /** What its play button starts. */
+  target: PlaybackTarget;
 }

@@ -1,0 +1,97 @@
+<div class="dialog collaborators">
+  <div class="dialog__header">
+    <h2 id="collaborators-title" class="dialog__title">Invite collaborators</h2>
+    <button class="dialog__close" type="button" title="Close" (click)="ref.close()">
+      <fa-icon [icon]="['fas', 'xmark']" />
+    </button>
+  </div>
+  <p class="dialog__text">Collaborators can add, remove and reorder songs in {{ data.playlist.name }}.</p>
+
+  <div class="collaborators__search">
+    <fa-icon class="collaborators__search-icon" [icon]="['fas', 'magnifying-glass']" />
+    <input
+      class="collaborators__search-input"
+      type="search"
+      name="people"
+      placeholder="Search for people"
+      aria-label="Search for people"
+      autocomplete="off"
+      [value]="term()"
+      (input)="term.set($any($event.target).value)"
+      cdkFocusInitial
+    />
+  </div>
+
+  @if (term().trim()) {
+    <section class="collaborators__section" aria-labelledby="collaborators-results-title">
+      <h3 id="collaborators-results-title" class="collaborators__heading">People</h3>
+      <p class="collaborators__status" role="status">
+        @if (searching()) {
+          Searching…
+        } @else if (searchFailed()) {
+          Couldn't search right now. Try again.
+        } @else if (!results().length) {
+          No one found for “{{ term().trim() }}”.
+        } @else {
+          <span class="visually-hidden">{{ results().length }} {{ results().length === 1 ? 'person' : 'people' }} found.</span>
+        }
+      </p>
+      @if (results().length) {
+        <ul class="collaborators__list">
+          @for (user of results(); track user.id) {
+            <li class="collaborators__person">
+              <ng-container [ngTemplateOutlet]="avatar" [ngTemplateOutletContext]="{ $implicit: user }" />
+              <span class="collaborators__name">{{ user.name }}</span>
+              <button
+                class="collaborators__btn collaborators__btn--add"
+                type="button"
+                [disabled]="busy().has(user.id)"
+                [attr.aria-label]="'Add ' + user.name"
+                (click)="add(user)"
+              >
+                Add
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </section>
+  }
+
+  <section class="collaborators__section" aria-labelledby="collaborators-members-title">
+    <h3 id="collaborators-members-title" class="collaborators__heading">Collaborators</h3>
+    @if (members().length) {
+      <ul class="collaborators__list">
+        @for (member of members(); track member.id) {
+          <li class="collaborators__person">
+            <ng-container [ngTemplateOutlet]="avatar" [ngTemplateOutletContext]="{ $implicit: member }" />
+            <span class="collaborators__name">{{ member.name }}</span>
+            <button
+              class="collaborators__btn"
+              type="button"
+              [disabled]="busy().has(member.id)"
+              [attr.aria-label]="'Remove ' + member.name"
+              (click)="remove(member)"
+            >
+              Remove
+            </button>
+          </li>
+        }
+      </ul>
+    } @else {
+      <p class="collaborators__empty">No one yet. Search for people above to add them.</p>
+    }
+  </section>
+
+  <div class="dialog__actions">
+    <button class="dialog__btn dialog__btn--primary" type="button" (click)="ref.close()">Done</button>
+  </div>
+</div>
+
+<ng-template #avatar let-person>
+  @if (person.avatar) {
+    <img class="collaborators__avatar" [src]="person.avatar" alt="" />
+  } @else {
+    <span class="collaborators__avatar collaborators__avatar--initial" aria-hidden="true">{{ initial(person.name) }}</span>
+  }
+</ng-template>

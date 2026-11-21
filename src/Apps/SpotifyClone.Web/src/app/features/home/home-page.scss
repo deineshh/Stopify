@@ -139,3 +139,74 @@
     display: none;
   }
 }
+
+// ---------------------------------------------------------------- loading / empty (not in the mockup)
+
+.home-page__loading {
+  margin-top: 60px;
+}
+
+.home-page__loading-title,
+.home-page__loading-card {
+  animation: home-page-pulse 1.4s ease-in-out infinite;
+  background-color: var(--primary-element-bg-color);
+  border-radius: 6px;
+}
+
+.home-page__loading-title {
+  height: 24px;
+  margin: 0 0 20px 11px;
+  width: 220px;
+}
+
+.home-page__loading-row {
+  display: flex;
+  gap: 24px;
+  height: 230px;
+  margin-bottom: 48px;
+  overflow: hidden;
+}
+
+.home-page__loading-card {
+  flex: 0 0 clamp(159px, 13vw, 170px);
+}
+
+@keyframes home-page-pulse {
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-page__loading-title,
+  .home-page__loading-card {
+    animation: none;
+  }
+}
+
+.home-page__empty {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 96px 16px;
+  text-align: center;
+}
+
+.home-page__empty-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.home-page__empty-text {
+  color: var(--light-gray-fg-color);
+}
+
+.home-page__empty-btn {
+  background-color: var(--primary-fg-color);
+  border-radius: 1000px;
+  color: black;
+  font-weight: bold;
+  margin-top: 16px;
+  padding: 12px 32px;
+}

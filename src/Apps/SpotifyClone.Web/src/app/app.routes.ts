@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { MainLayout } from '@layout/main-layout/main-layout';
+import { authGuard, guestGuard } from '@core/auth/auth.guards';
 
 const TITLE = 'Stopify - Web Player: Music for everyone';
 
@@ -31,8 +32,19 @@ export const routes: Routes = [
         loadComponent: () => import('@features/playlist/playlist-page').then((m) => m.PlaylistPage),
       },
       {
+        path: 'album/:id',
+        title: TITLE,
+        loadComponent: () => import('@features/album/album-page').then((m) => m.AlbumPage),
+      },
+      {
+        path: 'artist/:id',
+        title: TITLE,
+        loadComponent: () => import('@features/artist/artist-page').then((m) => m.ArtistPage),
+      },
+      {
         path: 'collection',
         title: 'Your Library - Stopify',
+        canActivate: [authGuard],
         loadComponent: () => import('@features/library/library-page').then((m) => m.LibraryPage),
       },
     ],
@@ -41,13 +53,21 @@ export const routes: Routes = [
     path: 'signup',
     title: 'Sign up - Stopify',
     data: { flow: 'signup' },
+    canActivate: [guestGuard],
     loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
   },
   {
     path: 'login',
     title: 'Log in - Stopify',
     data: { flow: 'login' },
+    canActivate: [guestGuard],
     loadComponent: () => import('@features/auth/auth-page').then((m) => m.AuthPage),
+  },
+  {
+    // Google sign-in lands here (AuthController.LoginGoogleCallback).
+    path: 'auth-success',
+    title: 'Logging in - Stopify',
+    loadComponent: () => import('@features/auth/auth-callback-page').then((m) => m.AuthCallbackPage),
   },
   { path: '**', redirectTo: '' },
 ];

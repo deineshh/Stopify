@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, booleanAttribute, computed, input, model, output, signal } from '@angular/core';
 
 /**
  * Thin progress/volume slider. The filled part turns green while hovered
@@ -14,10 +14,12 @@ import { ChangeDetectionStrategy, Component, computed, input, model, signal } fr
       [max]="max()"
       [step]="step()"
       [value]="value()"
+      [disabled]="disabled()"
       [attr.aria-label]="label()"
       [attr.aria-valuetext]="valueText()"
       [style.background]="background()"
       (input)="onInput($event)"
+      (change)="committed.emit(value())"
       (pointerenter)="hovered.set(true)"
       (pointerleave)="hovered.set(false)"
       (focus)="hovered.set(true)"
@@ -33,12 +35,15 @@ export class RangeSlider {
   readonly step = input(1);
   readonly label = input.required<string>();
   readonly valueText = input<string>();
+  readonly disabled = input(false, { transform: booleanAttribute });
+  /** Fires once the user lets go (or presses a key): `valueChange` fires on every move while dragging. */
+  readonly committed = output<number>();
 
   protected readonly hovered = signal(false);
 
   protected readonly background = computed(() => {
     const percent = (this.value() / this.max()) * 100;
-    const fill = this.hovered() ? '#1db954' : '#ffffff';
+    const fill = this.hovered() && !this.disabled() ? '#1db954' : '#ffffff';
     return `linear-gradient(to right, ${fill} ${percent}%, #535353 ${percent}%)`;
   });
 

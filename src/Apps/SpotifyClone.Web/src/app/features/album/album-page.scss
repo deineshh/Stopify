@@ -1,0 +1,13 @@
+// Credits under the track list. Ported from mockups/css/pages/playlist.css.
+
+.playlist-page__main-section--credits-group {
+  display: flex;
+  margin: 30px 0;
+}
+.playlist-page__main-section--credits-group {
+  color: var(--light-gray-fg-color);
+  flex-direction: column;
+}
+.playlist-page__main-section--copyright-text {
+  font-size: .8rem;
+}

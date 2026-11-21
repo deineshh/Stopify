@@ -350,3 +350,32 @@
     height: 100%;
   }
 }
+
+// ---------------------------------------------------------------- nothing loaded yet (not in the mockup)
+
+.now-playing-bar__btn-base:disabled,
+.now-playing-bar__player--play-btn:disabled {
+  cursor: default;
+  opacity: 0.4;
+  transform: none;
+}
+
+.now-playing-bar__btn-base:disabled:hover {
+  color: inherit;
+}
+
+// Keep the controls where they'll be once a song shows up (cover + title column + save button).
+:host(.empty) .now-playing-bar__track-info--section {
+  flex: 0 0 253px;
+}
+
+.now-playing-bar__player--playback-time {
+  white-space: nowrap;
+}
+
+@include bp.mobile {
+  // No mini player until something has played.
+  :host(.empty) {
+    display: none;
+  }
+}

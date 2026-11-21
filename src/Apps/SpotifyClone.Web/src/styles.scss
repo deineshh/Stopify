@@ -5,6 +5,7 @@
 @use 'tokens';
 @use 'reset';
 @use 'scrollbar';
+@use 'overlays';
 
 html {
   background-color: var(--primary-bg-color);

@@ -92,3 +92,19 @@
   transform: scale(1.02);
   transform: scaleX(1.25);
 }
+
+// ---------------------------------------------------------------- API data (not in the mockup)
+
+.right-sidebar__track-item--img-group {
+  overflow: hidden;
+}
+
+.right-sidebar__track-item--img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+:host(.current) .right-sidebar__track-item--title-span {
+  color: var(--primary-green-color);
+}

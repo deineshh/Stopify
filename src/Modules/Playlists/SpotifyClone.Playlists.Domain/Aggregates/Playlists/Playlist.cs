@@ -135,6 +135,10 @@ public sealed class Playlist : AggregateRoot<PlaylistId, Guid>
         // Domain event can be raised here if needed
     }
 
+    /// <summary>The owner and collaborators may add, remove and reorder songs.</summary>
+    public bool IsOwnerOrCollaborator(UserId userId)
+        => OwnerId == userId || _collaborators.Contains(userId);
+
     public void AddTrack(TrackId trackId, UserId addedBy, bool isAdmin)
     {
         ArgumentNullException.ThrowIfNull(trackId);

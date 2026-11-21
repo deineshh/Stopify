@@ -93,17 +93,18 @@
   transition: .1s background ease-in-out;
 }
 
-.track-table__track:hover td {
+.track-table__track:hover td,
+.track-table__track.menu-open td {
   background-color: rgba(255, 255, 255, .05);
 }
 
-.track-table__track:hover
-.track-table__track--index-text {
+.track-table__track:hover .track-table__track--index-text,
+.track-table__track.menu-open .track-table__track--index-text {
   visibility: hidden;
 }
 
-.track-table__track:hover
-.track-table__track--play-btn {
+.track-table__track:hover .track-table__track--play-btn,
+.track-table__track.menu-open .track-table__track--play-btn {
   display: initial;
 }
 
@@ -264,4 +265,56 @@
   .track-table__track--more-btn {
     opacity: 1;
   }
+}
+
+// The current song: green number and title (Spotify shows an equaliser instead of the number).
+.track-table__track.current .track-table__track--index-text,
+.track-table__track.current .track-table__track--title-span {
+  color: var(--primary-green-color);
+}
+
+// ---------------------------------------------------------------- reordering (drag and drop)
+
+// Spotify shows the dragged song as a small label next to the pointer, and a green line where
+// it will land.
+.track-table__drag-preview {
+  background-color: var(--primary-element-bg-color-hover);
+  border-radius: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+  color: var(--primary-fg-color);
+  display: flex;
+  flex-direction: column;
+  max-width: 280px;
+  padding: 8px 12px;
+}
+
+.track-table__drag-preview--title,
+.track-table__drag-preview--artists {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.track-table__drag-preview--title {
+  font-weight: bold;
+}
+
+.track-table__drag-preview--artists {
+  color: var(--light-gray-fg-color);
+  font-size: .875rem;
+}
+
+.track-table__track.cdk-drag-placeholder td {
+  background-color: rgba(255, 255, 255, .03);
+  box-shadow: inset 0 2px 0 var(--primary-green-color);
+  opacity: .5;
+}
+
+.track-table__list.cdk-drop-list-dragging .track-table__track:not(.cdk-drag-placeholder) {
+  transition: transform .2s cubic-bezier(0, 0, .2, 1);
+}
+
+// No hover highlight on the other rows while dragging.
+.track-table__list.cdk-drop-list-dragging .track-table__track:hover:not(.cdk-drag-placeholder) td {
+  background-color: transparent;
 }

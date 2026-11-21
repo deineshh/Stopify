@@ -1,4 +1,5 @@
 <table class="track-table">
+  @if (showHeader()) {
   <thead>
     <tr class="track-table__header">
       <th class="track-table__header--index-column" scope="col">
@@ -7,12 +8,16 @@
       <th class="track-table__header--title-column" scope="col">
         <span class="track-table__header--title-text">Title</span>
       </th>
-      <th class="track-table__header--album-column" scope="col">
-        <span class="track-table__header--album-text">Album</span>
-      </th>
-      <th class="track-table__header--date-added-column" scope="col">
-        <span class="track-table__header--date-added-text">Date added</span>
-      </th>
+      @if (showAlbum()) {
+        <th class="track-table__header--album-column" scope="col">
+          <span class="track-table__header--album-text">Album</span>
+        </th>
+      }
+      @if (showDateAdded()) {
+        <th class="track-table__header--date-added-column" scope="col">
+          <span class="track-table__header--date-added-text">Date added</span>
+        </th>
+      }
       <th class="track-table__header--duration-column" scope="col">
         <span class="track-table__header--duration-text" title="Duration">
           <fa-icon [icon]="['fas', 'clock']" />
@@ -28,41 +33,78 @@
       </th>
     </tr>
   </thead>
-  <tbody class="track-table__list">
+  }
+  <tbody
+    class="track-table__list"
+    cdkDropList
+    cdkDropListLockAxis="y"
+    [cdkDropListDisabled]="!draggable()"
+    (cdkDropListDropped)="dropped($event)"
+  >
     @for (track of tracks(); track track.id; let index = $index) {
       @let byline = track.title + ' by ' + (track.artists | artistNames);
-      <tr class="track-table__track">
+      @let rowTarget = target(track);
+      @let current = rowTarget !== null && player.isCurrentTarget(rowTarget);
+      @let playing = current && player.isPlaying();
+      <tr
+        class="track-table__track"
+        [attr.data-track-id]="track.id"
+        [class.current]="current"
+        [class.menu-open]="menuTrackId() === track.id"
+        [class.draggable]="draggable()"
+        cdkDrag
+        [cdkDragData]="track"
+        [cdkDragDisabled]="!draggable()"
+        [cdkContextMenuTriggerFor]="trackMenu.template()"
+        [cdkContextMenuTriggerData]="{ $implicit: track }"
+        (cdkContextMenuOpened)="menuTrackId.set(track.id)"
+        (cdkContextMenuClosed)="menuClosed(track.id)"
+        (dblclick)="rowTarget && player.play(rowTarget)"
+      >
         <td class="track-table__track--index-column">
           <span class="track-table__track--index-text">{{ index + 1 }}</span>
-          <button class="track-table__track--play-btn" type="button" [title]="'Play ' + byline" (click)="play.emit(track)">
+          <button
+            class="track-table__track--play-btn"
+            type="button"
+            [title]="(playing ? 'Pause ' : 'Play ') + byline"
+            [attr.aria-pressed]="playing"
+            [disabled]="!rowTarget"
+            (click)="rowTarget && player.toggle(rowTarget)"
+          >
             <span class="track-table__track--play-icon">
-              <fa-icon [icon]="['fas', 'play']" />
+              <fa-icon [icon]="['fas', playing ? 'pause' : 'play']" />
             </span>
           </button>
         </td>
         <td class="track-table__track--title-column">
           <img [src]="track.cover" alt="" class="track-table__track--cover" loading="lazy" />
           <div class="track-table__track--info-group">
-            <a class="track-table__track--title-anchor" [routerLink]="['/playlist', track.album.id]">
+            <a class="track-table__track--title-anchor" [routerLink]="track.album.id ? ['/album', track.album.id] : null">
               <span class="track-table__track--title-span">{{ track.title }}</span>
             </a>
             <div class="track-table__track--authors-group">
               @for (artist of track.artists; track artist.id; let last = $last) {
-                <a class="track-table__track--author-anchor" [class.last-author]="last" [routerLink]="['/playlist', artist.id]"
+                <a class="track-table__track--author-anchor" [class.last-author]="last" [routerLink]="['/artist', artist.id]"
                   ><span class="track-table__track--author-span">{{ artist.name }}</span>&ngsp;</a
                 >&ngsp;
               }
             </div>
           </div>
         </td>
-        <td class="track-table__track--album-column">
-          <a class="track-table__track--album-anchor" [routerLink]="['/playlist', track.album.id]">
-            <span class="track-table__track--album-span">{{ track.album.name }}</span>
-          </a>
-        </td>
-        <td class="track-table__track--date-added-column">
-          <span class="track-table__track--date-added-text">{{ track.addedAt | date: 'MMM d, y' }}</span>
-        </td>
+        @if (showAlbum()) {
+          <td class="track-table__track--album-column">
+            @if (track.album.id) {
+              <a class="track-table__track--album-anchor" [routerLink]="['/album', track.album.id]">
+                <span class="track-table__track--album-span">{{ track.album.name }}</span>
+              </a>
+            }
+          </td>
+        }
+        @if (showDateAdded()) {
+          <td class="track-table__track--date-added-column">
+            <span class="track-table__track--date-added-text">{{ track.addedAt | date: 'MMM d, y' }}</span>
+          </td>
+        }
         <td class="track-table__track--duration-column">
           <button
             class="track-table__track--save-btn"
@@ -76,7 +118,19 @@
           &ngsp;<span class="track-table__track--duration-text">{{ track.durationSeconds | duration }}</span>
         </td>
         <td class="track-table__track--more-column">
-          <button class="track-table__track--more-btn" type="button" [title]="'More options for ' + byline">
+          <div class="track-table__drag-preview" *cdkDragPreview>
+            <span class="track-table__drag-preview--title">{{ track.title }}</span>
+            <span class="track-table__drag-preview--artists">{{ track.artists | artistNames }}</span>
+          </div>
+          <button
+            class="track-table__track--more-btn"
+            type="button"
+            [title]="'More options for ' + byline"
+            [cdkMenuTriggerFor]="trackMenu.template()"
+            [cdkMenuTriggerData]="{ $implicit: track }"
+            (cdkMenuOpened)="menuTrackId.set(track.id)"
+            (cdkMenuClosed)="menuClosed(track.id)"
+          >
             <span class="track-table__track--more-icon">
               <fa-icon [icon]="['fas', 'ellipsis']" />
             </span>
@@ -86,3 +140,10 @@
     }
   </tbody>
 </table>
+
+<app-track-menu
+  #trackMenu
+  [playlist]="menuPlaylist()"
+  [reorderList]="reorderable() ? tracks() : null"
+  (moved)="movedFromMenu($event)"
+/>

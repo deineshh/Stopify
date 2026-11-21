@@ -40,7 +40,16 @@
       @let rowTarget = target(track);
       @let current = rowTarget !== null && player.isCurrentTarget(rowTarget);
       @let playing = current && player.isPlaying();
-      <tr class="track-table__track" [class.current]="current" (dblclick)="rowTarget && player.play(rowTarget)">
+      <tr
+        class="track-table__track"
+        [class.current]="current"
+        [class.menu-open]="menuTrackId() === track.id"
+        [cdkContextMenuTriggerFor]="trackMenu.template()"
+        [cdkContextMenuTriggerData]="{ $implicit: track }"
+        (cdkContextMenuOpened)="menuTrackId.set(track.id)"
+        (cdkContextMenuClosed)="menuClosed(track.id)"
+        (dblclick)="rowTarget && player.play(rowTarget)"
+      >
         <td class="track-table__track--index-column">
           <span class="track-table__track--index-text">{{ index + 1 }}</span>
           <button
@@ -98,7 +107,15 @@
           &ngsp;<span class="track-table__track--duration-text">{{ track.durationSeconds | duration }}</span>
         </td>
         <td class="track-table__track--more-column">
-          <button class="track-table__track--more-btn" type="button" [title]="'More options for ' + byline">
+          <button
+            class="track-table__track--more-btn"
+            type="button"
+            [title]="'More options for ' + byline"
+            [cdkMenuTriggerFor]="trackMenu.template()"
+            [cdkMenuTriggerData]="{ $implicit: track }"
+            (cdkMenuOpened)="menuTrackId.set(track.id)"
+            (cdkMenuClosed)="menuClosed(track.id)"
+          >
             <span class="track-table__track--more-icon">
               <fa-icon [icon]="['fas', 'ellipsis']" />
             </span>
@@ -108,3 +125,5 @@
     }
   </tbody>
 </table>
+
+<app-track-menu #trackMenu [playlist]="menuPlaylist()" />

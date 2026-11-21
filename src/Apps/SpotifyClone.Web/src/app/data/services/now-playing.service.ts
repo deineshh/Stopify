@@ -56,12 +56,17 @@ export class NowPlayingService {
   });
   readonly artist = computed(() => (this.artistResource.hasValue() ? this.artistResource.value() : null));
 
-  /** Upcoming songs. Reloaded when the song, shuffle or repeat changes. */
+  /** Upcoming songs. Reloaded when the song, shuffle or repeat changes, or a song is queued. */
   private readonly queueResource = rxResource({
     params: () => {
       const track = this.player.track();
       return track && this.layout.isRightPanelVisible()
-        ? { trackId: track.id, shuffle: this.player.shuffle(), repeat: this.player.repeat() }
+        ? {
+            trackId: track.id,
+            shuffle: this.player.shuffle(),
+            repeat: this.player.repeat(),
+            queued: this.player.queueRevision(),
+          }
         : undefined;
     },
     stream: () => this.playback.queue().pipe(switchMap((queue) => this.lookup.tracks(queue.tracksInQueue))),

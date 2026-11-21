@@ -49,6 +49,8 @@ export class PlayerService {
   readonly repeat = signal<RepeatMode>('off');
   /** UI only: the API has no Liked Songs yet. */
   readonly saved = signal(false);
+  /** Bumped when a song is queued from here, so the queue panel reloads. */
+  readonly queueRevision = signal(0);
 
   /** 0–100. */
   readonly volume = signal(readStoredVolume());
@@ -237,6 +239,30 @@ export class PlayerService {
         error: () => this.toast.show("Couldn't change repeat."),
       });
     }
+  }
+
+  /** Plays `track` after the current song. The queue belongs to a session, so something must be playing. */
+  addToQueue(track: Track): void {
+    if (!this.auth.isAuthenticated()) {
+      void this.router.navigate(['/login'], { queryParams: { redirect: this.router.url } });
+      return;
+    }
+    if (!this.track()) {
+      this.toast.show('Play something first, then add songs to its queue.');
+      return;
+    }
+    this.api.addToQueue(track.id).subscribe({
+      next: () => {
+        this.queueRevision.update((revision) => revision + 1);
+        this.toast.show('Added to queue.');
+      },
+      error: (error: unknown) => {
+        const apiError = toApiError(error);
+        this.toast.show(
+          apiError.isNetworkError ? "Couldn't reach Stopify. Check your connection." : "Couldn't add this song to the queue.",
+        );
+      },
+    });
   }
 
   toggleSaved(): void {

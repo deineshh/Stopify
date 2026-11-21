@@ -116,11 +116,13 @@
   transition: .1s background ease;
 }
 
-.search-results__songs-item:hover .search-results__songs-item--play-btn {
+.search-results__songs-item:hover .search-results__songs-item--play-btn,
+.search-results__songs-item.menu-open .search-results__songs-item--play-btn {
   opacity: 1;
 }
 
-.search-results__songs-item:hover {
+.search-results__songs-item:hover,
+.search-results__songs-item.menu-open {
   background-color: var(--primary-element-bg-color-hover);
 }
 

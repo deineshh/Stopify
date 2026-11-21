@@ -7,6 +7,7 @@ import { CollectionService } from '@data/services/collection.service';
 import { PlaylistEditor } from '@data/services/playlist-editor.service';
 import { PlaylistDialogs } from '@shared/ui/dialogs/playlist-dialogs';
 import { PlaylistMenu } from '@shared/ui/menus/playlist-menu';
+import { TrackMenuPlaylist } from '@shared/ui/menus/track-menu';
 import { CollectionLayout, CollectionMetaItem } from '@shared/ui/collection-layout/collection-layout';
 import { PageState } from '@shared/ui/page-state/page-state';
 import { TrackTable } from '@shared/ui/track-table/track-table';
@@ -47,6 +48,12 @@ export class PlaylistPage {
     return playlist
       ? { id: playlist.id, name: playlist.title, description: playlist.description, isPublic: playlist.isPublic, cover: playlist.cover }
       : null;
+  });
+
+  /** Track rows: "Remove from this playlist" for the owner. */
+  protected readonly menuPlaylist = computed<TrackMenuPlaylist | null>(() => {
+    const ref = this.ref();
+    return ref ? { id: ref.id, name: ref.name, canRemove: this.isOwner() } : null;
   });
 
   protected readonly shuffle = signal(false);

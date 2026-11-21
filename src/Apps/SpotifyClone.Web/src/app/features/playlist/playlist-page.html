@@ -20,11 +20,15 @@
       <app-track-table
         [tracks]="data.tracks"
         [context]="{ kind: 'playlist', id: data.id }"
+        [menuPlaylist]="menuPlaylist()"
         [showDateAdded]="false"
       />
     } @else {
       <div class="playlist-page__empty">
         <p class="playlist-page__empty-title">This playlist doesn't have any songs yet.</p>
+        @if (isOwner()) {
+          <p class="playlist-page__empty-text">Find a song, open its menu (right-click or •••) and choose Add to playlist.</p>
+        }
       </div>
     }
   </app-collection-layout>

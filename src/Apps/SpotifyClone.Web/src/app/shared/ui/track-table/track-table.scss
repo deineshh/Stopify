@@ -93,17 +93,18 @@
   transition: .1s background ease-in-out;
 }
 
-.track-table__track:hover td {
+.track-table__track:hover td,
+.track-table__track.menu-open td {
   background-color: rgba(255, 255, 255, .05);
 }
 
-.track-table__track:hover
-.track-table__track--index-text {
+.track-table__track:hover .track-table__track--index-text,
+.track-table__track.menu-open .track-table__track--index-text {
   visibility: hidden;
 }
 
-.track-table__track:hover
-.track-table__track--play-btn {
+.track-table__track:hover .track-table__track--play-btn,
+.track-table__track.menu-open .track-table__track--play-btn {
   display: initial;
 }
 

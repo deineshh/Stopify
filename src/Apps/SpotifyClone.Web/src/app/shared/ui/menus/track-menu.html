@@ -1,0 +1,92 @@
+<ng-template #menu let-track>
+  <div class="menu" cdkMenu [attr.aria-label]="'Options for ' + track.title">
+    @if (auth.isAuthenticated()) {
+      <button
+        class="menu__item"
+        type="button"
+        cdkMenuItem
+        appSubmenuTrigger
+        [cdkMenuTriggerFor]="playlists"
+        [cdkMenuTriggerData]="{ $implicit: track }"
+      >
+        <fa-icon class="menu__icon" [icon]="['fas', 'plus']" />
+        <span class="menu__label">Add to playlist</span>
+        <fa-icon class="menu__chevron" [icon]="['fas', 'chevron-right']" />
+      </button>
+    } @else {
+      <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="logIn()">
+        <fa-icon class="menu__icon" [icon]="['fas', 'plus']" />
+        <span class="menu__label">Add to playlist</span>
+      </button>
+    }
+    @if (playlist()?.canRemove) {
+      <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="removeFromPlaylist(track)">
+        <fa-icon class="menu__icon" [icon]="['fas', 'trash-can']" />
+        <span class="menu__label">Remove from this playlist</span>
+      </button>
+    }
+    <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="addToQueue(track)">
+      <fa-icon class="menu__icon" [icon]="['fas', 'list-ul']" />
+      <span class="menu__label">Add to queue</span>
+    </button>
+    <hr class="menu__divider" />
+    @if (track.artists.length > 1) {
+      <button
+        class="menu__item"
+        type="button"
+        cdkMenuItem
+        appSubmenuTrigger
+        [cdkMenuTriggerFor]="artists"
+        [cdkMenuTriggerData]="{ $implicit: track }"
+      >
+        <fa-icon class="menu__icon" [icon]="['fas', 'user']" />
+        <span class="menu__label">Go to artist</span>
+        <fa-icon class="menu__chevron" [icon]="['fas', 'chevron-right']" />
+      </button>
+    } @else if (track.artists[0]; as artist) {
+      <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="open(['/artist', artist.id])">
+        <fa-icon class="menu__icon" [icon]="['fas', 'user']" />
+        <span class="menu__label">Go to artist</span>
+      </button>
+    }
+    @if (track.album.id) {
+      <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="open(['/album', track.album.id])">
+        <fa-icon class="menu__icon" [icon]="['fas', 'compact-disc']" />
+        <span class="menu__label">Go to album</span>
+      </button>
+    }
+  </div>
+</ng-template>
+
+<ng-template #playlists let-track>
+  <div class="menu" cdkMenu aria-label="Add to playlist">
+    <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="addToNewPlaylist(track)">
+      <fa-icon class="menu__icon" [icon]="['fas', 'plus']" />
+      <span class="menu__label">New playlist</span>
+    </button>
+    @if (library.ownPlaylists().length) {
+      <hr class="menu__divider" />
+    }
+    @for (item of library.ownPlaylists(); track item.id) {
+      <button
+        class="menu__item"
+        type="button"
+        cdkMenuItem
+        [cdkMenuitemTypeaheadLabel]="item.title"
+        (cdkMenuItemTriggered)="addTo({ id: item.id, name: item.title }, track)"
+      >
+        <span class="menu__label">{{ item.title }}</span>
+      </button>
+    }
+  </div>
+</ng-template>
+
+<ng-template #artists let-track>
+  <div class="menu" cdkMenu aria-label="Go to artist">
+    @for (artist of track.artists; track artist.id) {
+      <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="open(['/artist', artist.id])">
+        <span class="menu__label">{{ artist.name }}</span>
+      </button>
+    }
+  </div>
+</ng-template>

@@ -2,7 +2,7 @@
 
 Angular 21 web client for Stopify. It is a server-rendered (SSR + hydration), zoneless, standalone-component app built from the HTML/CSS mockups in [`mockups/`](./mockups).
 
-Authentication, the catalog (home, search, albums, artists and playlists), Your Library and playlists (create, edit and delete), and playback (HLS streaming through the API's playback session, with the Now Playing and Queue panels) are connected to the API. Following artists and Liked Songs are UI-only because the API has no endpoints for them yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
+Authentication, the catalog (home, search, albums, artists and playlists), Your Library and playlists (create, edit, delete, add and remove songs), and playback (HLS streaming through the API's playback session, with the Now Playing and Queue panels) are connected to the API. Following artists and Liked Songs are UI-only because the API has no endpoints for them yet. The API has no recommendations endpoint, so the home feed is composed from the album, artist and public playlist lists.
 
 ## Getting started
 
@@ -72,9 +72,11 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 ## Playlists
 
 - **One place for changes.** `PlaylistEditor` creates, edits and deletes playlists and adds or removes songs through `PlaylistsApi`. It refreshes Your Library, bumps the playlist's revision (an open playlist page reloads in place) and reports the result as a toast. Guests are sent to log in.
-- **Menus** use the Angular CDK (`@angular/cdk/menu`): right-click or the "…" button, keyboard navigation and focus return. A view renders one menu and passes the row as trigger data. `app-playlist-menu` (Edit details, Make public/private, Delete) is on your playlists in the library and on the playlist page.
+- **Menus** use the Angular CDK (`@angular/cdk/menu`): right-click or the "…" button, keyboard navigation, submenus and focus return. Each list renders one menu and passes the row as trigger data:
+  - `app-track-menu`: Add to playlist ▸ (New playlist or one of yours), Remove from this playlist (your own playlist), Add to queue, Go to artist, Go to album.
+  - `app-playlist-menu`: Edit details, Make public/private, Delete. On your playlists in the library and on the playlist page.
 - **Dialogs** use `@angular/cdk/dialog`: Edit details (also opened by clicking the title or the cover, like Spotify) and a delete confirmation. Menu and dialog styles live in `styles/_overlays.scss`, because the overlay renders outside every component.
-- **Rules from the API:** new playlists are private and named "My Playlist #N"; names are required (100 characters max) and descriptions are limited to 300; a song can be in a playlist only once; only the owner edits or deletes.
+- **Rules from the API:** new playlists are private and named "My Playlist #N"; names are required (100 characters max) and descriptions are limited to 300; a song can be in a playlist only once; only the owner edits or deletes. "Add to queue" needs something playing, because the queue belongs to the playback session.
 - **Not yet:** uploading a cover (the API's cover endpoint needs image metadata that the upload endpoint doesn't return), collaborators and reordering songs.
 
 ## Routes

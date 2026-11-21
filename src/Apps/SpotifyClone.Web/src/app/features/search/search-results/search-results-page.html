@@ -52,7 +52,16 @@
               @let target = songTarget(song);
               @let current = target !== null && player.isCurrentTarget(target);
               @let playing = current && player.isPlaying();
-              <div class="search-results__songs-item" role="listitem" [class.current]="current">
+              <div
+                class="search-results__songs-item"
+                role="listitem"
+                [class.current]="current"
+                [class.menu-open]="menuSongId() === song.id"
+                [cdkContextMenuTriggerFor]="trackMenu.template()"
+                [cdkContextMenuTriggerData]="{ $implicit: song }"
+                (cdkContextMenuOpened)="menuSongId.set(song.id)"
+                (cdkContextMenuClosed)="menuClosed(song.id)"
+              >
                 <div class="search-results__songs-item--left-group">
                   <div class="search-results__songs-item--cover-group" [title]="'Play ' + byline">
                     <img class="search-results__songs-item--cover" [src]="song.cover" alt="" />
@@ -98,7 +107,15 @@
                   @if (song.durationSeconds) {
                     <span class="search-results__songs-item--duration">{{ song.durationSeconds | duration }}</span>
                   }
-                  <button class="search-results__songs-item--more-btn" type="button" [title]="'More options for ' + byline">
+                  <button
+                    class="search-results__songs-item--more-btn"
+                    type="button"
+                    [title]="'More options for ' + byline"
+                    [cdkMenuTriggerFor]="trackMenu.template()"
+                    [cdkMenuTriggerData]="{ $implicit: song }"
+                    (cdkMenuOpened)="menuSongId.set(song.id)"
+                    (cdkMenuClosed)="menuClosed(song.id)"
+                  >
                     <span class="search-results__songs-item--more-icon">
                       <fa-icon [icon]="['fas', 'ellipsis']" />
                     </span>
@@ -154,3 +171,5 @@
 } @else if (!results.hasValue()) {
   <app-page-state thing="result" [loading]="results.isLoading()" [error]="results.error()" (retry)="results.reload()" />
 }
+
+<app-track-menu #trackMenu />

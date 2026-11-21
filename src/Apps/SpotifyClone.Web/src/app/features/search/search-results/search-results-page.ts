@@ -11,6 +11,8 @@ import { PlayerService } from '@data/services/player.service';
 import { FilterChip } from '@shared/ui/filter-chip/filter-chip';
 import { MediaCard } from '@shared/ui/media-card/media-card';
 import { PageState } from '@shared/ui/page-state/page-state';
+import { CdkContextMenuTrigger, CdkMenuTrigger } from '@angular/cdk/menu';
+import { TrackMenu } from '@shared/ui/menus/track-menu';
 import { PlayButton } from '@shared/ui/play-button/play-button';
 import { SingleRowDirective } from '@shared/directives/single-row.directive';
 import { DurationPipe } from '@shared/pipes/duration.pipe';
@@ -33,6 +35,9 @@ interface CardSection {
     FaIconComponent,
     FilterChip,
     PageState,
+    CdkContextMenuTrigger,
+    CdkMenuTrigger,
+    TrackMenu,
     MediaCard,
     PlayButton,
     SingleRowDirective,
@@ -50,6 +55,8 @@ export class SearchResultsPage {
 
   private readonly catalog = inject(CatalogService);
   protected readonly player = inject(PlayerService);
+  /** The song whose menu is open stays highlighted. */
+  protected readonly menuSongId = signal<string | null>(null);
   /** Typing changes the route on every keystroke; wait for a pause before searching (browser only). */
   private readonly debounceMs = isPlatformBrowser(inject(PLATFORM_ID)) ? SEARCH_DEBOUNCE_MS : 0;
 
@@ -96,6 +103,12 @@ export class SearchResultsPage {
   protected isVisible(section: ResultFilter): boolean {
     const active = this.activeFilter();
     return active === 'all' || active === section;
+  }
+
+  protected menuClosed(songId: string): void {
+    if (this.menuSongId() === songId) {
+      this.menuSongId.set(null);
+    }
   }
 
   /** Search has no playback context of its own yet, so a song plays from its album. */

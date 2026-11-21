@@ -34,7 +34,13 @@
     </tr>
   </thead>
   }
-  <tbody class="track-table__list">
+  <tbody
+    class="track-table__list"
+    cdkDropList
+    cdkDropListLockAxis="y"
+    [cdkDropListDisabled]="!draggable()"
+    (cdkDropListDropped)="dropped($event)"
+  >
     @for (track of tracks(); track track.id; let index = $index) {
       @let byline = track.title + ' by ' + (track.artists | artistNames);
       @let rowTarget = target(track);
@@ -42,8 +48,13 @@
       @let playing = current && player.isPlaying();
       <tr
         class="track-table__track"
+        [attr.data-track-id]="track.id"
         [class.current]="current"
         [class.menu-open]="menuTrackId() === track.id"
+        [class.draggable]="draggable()"
+        cdkDrag
+        [cdkDragData]="track"
+        [cdkDragDisabled]="!draggable()"
         [cdkContextMenuTriggerFor]="trackMenu.template()"
         [cdkContextMenuTriggerData]="{ $implicit: track }"
         (cdkContextMenuOpened)="menuTrackId.set(track.id)"
@@ -107,6 +118,10 @@
           &ngsp;<span class="track-table__track--duration-text">{{ track.durationSeconds | duration }}</span>
         </td>
         <td class="track-table__track--more-column">
+          <div class="track-table__drag-preview" *cdkDragPreview>
+            <span class="track-table__drag-preview--title">{{ track.title }}</span>
+            <span class="track-table__drag-preview--artists">{{ track.artists | artistNames }}</span>
+          </div>
           <button
             class="track-table__track--more-btn"
             type="button"
@@ -126,4 +141,9 @@
   </tbody>
 </table>
 
-<app-track-menu #trackMenu [playlist]="menuPlaylist()" />
+<app-track-menu
+  #trackMenu
+  [playlist]="menuPlaylist()"
+  [reorderList]="reorderable() ? tracks() : null"
+  (moved)="movedFromMenu($event)"
+/>

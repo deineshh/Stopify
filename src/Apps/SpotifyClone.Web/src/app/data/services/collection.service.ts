@@ -32,6 +32,7 @@ export class CollectionService {
             isPublic: playlist.isPublic,
             ownerId: playlist.ownerId,
             tracks,
+            trackIds: ordered.map((track) => track.id),
             totalDurationSeconds: sumDurations(tracks),
           })),
         );

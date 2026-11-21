@@ -9,19 +9,21 @@
     [editable]="isOwner()"
     (edit)="dialogs.editDetails(ref()!)"
     [moreMenu]="isOwner() ? playlistMenu.template() : null"
-    [moreMenuData]="ref()"
+    [moreMenuData]="ref"
     [showInvite]="isOwner()"
     [target]="{ kind: 'playlist', id: data.id }"
     [(shuffle)]="shuffle"
     [saved]="isOwner() ? null : saved()"
     (savedChange)="saved.set($event)"
   >
-    @if (data.tracks.length) {
+    @if (order()?.tracks?.length) {
       <app-track-table
-        [tracks]="data.tracks"
+        [tracks]="order()!.tracks"
         [context]="{ kind: 'playlist', id: data.id }"
         [menuPlaylist]="menuPlaylist()"
         [showDateAdded]="false"
+        [reorderable]="canReorder()"
+        (reorder)="reorder($event)"
       />
     } @else {
       <div class="playlist-page__empty">

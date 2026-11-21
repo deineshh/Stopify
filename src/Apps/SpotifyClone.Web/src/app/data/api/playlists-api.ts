@@ -45,4 +45,15 @@ export class PlaylistsApi {
       this.url(`/playlists/${encodeURIComponent(id)}/tracks/${encodeURIComponent(trackId)}`),
     );
   }
+
+  /**
+   * Moves a song so it ends up at `targetPositionIndex` (0-based) of the playlist's full track
+   * list. The API clamps the index to the list.
+   */
+  moveTrack(id: string, trackId: string, targetPositionIndex: number): Observable<void> {
+    return this.http.post<void>(
+      this.url(`/playlists/${encodeURIComponent(id)}/tracks/${encodeURIComponent(trackId)}/move`),
+      { targetPositionIndex },
+    );
+  }
 }

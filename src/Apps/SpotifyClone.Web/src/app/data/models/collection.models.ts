@@ -9,6 +9,8 @@ export interface PlaylistView {
   isPublic: boolean;
   ownerId: string;
   tracks: readonly Track[];
+  /** Every song id in the playlist's order, including songs that no longer load (not in `tracks`). */
+  trackIds: readonly string[];
   totalDurationSeconds: number;
 }
 

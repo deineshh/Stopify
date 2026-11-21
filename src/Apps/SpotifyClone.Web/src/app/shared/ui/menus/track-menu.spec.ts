@@ -4,7 +4,7 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { Track } from '@data/models/catalog.models';
 import { PlayerService } from '@data/services/player.service';
-import { TrackTable } from '../track-table/track-table';
+import { TrackReorder, TrackTable } from '../track-table/track-table';
 import { TrackMenuPlaylist } from './track-menu';
 import { provideTestDefaults } from '../../../testing/test-providers';
 import { mockAuthStore } from '../../../testing/auth-store.mock';
@@ -21,13 +21,22 @@ const pannonia: Track = {
   durationSeconds: 147,
 };
 
+const pnf: Track = { ...pannonia, id: 't2', title: 'PNF', artists: [{ id: 'desh', name: 'DESH' }] };
+
 @Component({
   imports: [TrackTable],
-  template: `<app-track-table [tracks]="tracks" [menuPlaylist]="playlist()" />`,
+  template: `<app-track-table
+    [tracks]="tracks()"
+    [menuPlaylist]="playlist()"
+    [reorderable]="reorderable()"
+    (reorder)="moves.push($event)"
+  />`,
 })
 class Host {
-  readonly tracks = [pannonia];
+  readonly tracks = signal<readonly Track[]>([pannonia]);
   readonly playlist = signal<TrackMenuPlaylist | null>(null);
+  readonly reorderable = signal(false);
+  readonly moves: TrackReorder[] = [];
 }
 
 const ownPlaylist = (id: string, name: string) => ({
@@ -153,5 +162,38 @@ describe('TrackMenu (through TrackTable)', () => {
     await rightClick(row);
     item(menus()[0], 'Add to playlist').click();
     expect(navigate).toHaveBeenCalledWith(['/login'], { queryParams: { redirect: '/' } });
+  });
+
+  it('offers Move up / Move down in lists you can reorder and keeps focus on the row', async () => {
+    const { fixture } = await setup();
+    const host = fixture.componentInstance;
+    const el = fixture.nativeElement as HTMLElement;
+    host.tracks.set([pannonia, pnf]);
+    fixture.detectChanges();
+    await rightClick(el.querySelectorAll<HTMLElement>('.track-table__track')[0]);
+    expect(labels(menus()[0])).not.toContain('Move down');
+    menus()[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', keyCode: 27, bubbles: true }));
+    await settle();
+    expect(menus().length).toBe(0);
+
+    host.reorderable.set(true);
+    fixture.detectChanges();
+    await rightClick(el.querySelectorAll<HTMLElement>('.track-table__track')[0]);
+    expect(labels(menus()[0])).toEqual(['Add to playlist', 'Move down', 'Add to queue', 'Go to artist', 'Go to album']);
+    item(menus()[0], 'Move down').click();
+    expect(host.moves).toEqual([{ trackId: 't1', from: 0, to: 1 }]);
+
+    // The list applies the move; the moved row's "…" button gets focus back.
+    host.tracks.set([pnf, pannonia]);
+    await settle();
+    expect(document.activeElement).toBe(el.querySelector('[data-track-id="t1"] .track-table__track--more-btn'));
+
+    await settle();
+    await rightClick(el.querySelector<HTMLElement>('[data-track-id="t1"]')!);
+    expect(menus().length).toBe(1);
+    expect(labels(menus()[0])).toContain('Move up');
+    expect(labels(menus()[0])).not.toContain('Move down');
+    item(menus()[0], 'Move up').click();
+    expect(host.moves.at(-1)).toEqual({ trackId: 't1', from: 1, to: 0 });
   });
 });

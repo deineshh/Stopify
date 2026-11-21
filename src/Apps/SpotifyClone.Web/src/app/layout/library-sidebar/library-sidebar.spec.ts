@@ -118,4 +118,34 @@ describe('LibrarySidebar', () => {
     await render();
     expect(el.querySelectorAll('.left-sidebar__main-item').length).toBe(1);
   });
+
+  it('shows the current visibility the next time the menu opens', async () => {
+    const { el, http, render } = setup('authenticated');
+    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([playlist('p1', 'Road trip')]);
+    await render();
+    const row = el.querySelector<HTMLElement>('.left-sidebar__main-item')!;
+    const open = async () => {
+      row.dispatchEvent(new MouseEvent('contextmenu', { bubbles: true, cancelable: true, clientX: 5, clientY: 5 }));
+      await settle();
+    };
+    const item = (label: string) =>
+      [...document.querySelectorAll<HTMLButtonElement>('.cdk-overlay-container .menu__item')].find(
+        (button) => button.querySelector('.menu__label')?.textContent?.trim() === label,
+      );
+
+    await open();
+    item('Make public')!.click();
+    const req = http.expectOne((r) => r.method === 'PUT' && r.url === '/api/v1/playlists/p1');
+    expect(req.request.body.isPublic).toBe(true);
+    req.flush(null);
+    await settle();
+    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([{ ...playlist('p1', 'Road trip'), isPublic: true }]);
+    await render();
+
+    // Same row, same trigger: the menu must not reuse what it was first opened with.
+    await open();
+    expect(item('Make private')).toBeTruthy();
+    expect(item('Make public')).toBeUndefined();
+    document.querySelectorAll('.cdk-overlay-container').forEach((container) => (container.innerHTML = ''));
+  });
 });

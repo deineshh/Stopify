@@ -4,6 +4,7 @@ import { faFacebook, faGoogle, faInstagram, faTwitter } from '@fortawesome/free-
 import { faCircleLeft, faCircleRight } from '@fortawesome/free-regular-svg-icons';
 import {
   faArrowDown,
+  faArrowUp,
   faBackwardStep,
   faBars,
   faBell,
@@ -65,6 +66,7 @@ const APP_ICONS = [
   faCircleRight,
   // solid
   faArrowDown,
+  faArrowUp,
   faBackwardStep,
   faBars,
   faBell,

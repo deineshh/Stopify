@@ -3,7 +3,9 @@ import {
   Component,
   ElementRef,
   Injector,
+  Signal,
   afterNextRender,
+  computed,
   inject,
   signal,
   viewChild,
@@ -62,9 +64,22 @@ export class LibrarySidebar {
     }
   }
 
-  /** What the playlist menu (right-click on one of your playlists) acts on. */
-  protected toRef(item: LibraryItem): PlaylistRef {
-    return { id: item.id, name: item.title, description: item.description ?? null, isPublic: !!item.isPublic, cover: item.cover };
+  private readonly refs = new Map<string, Signal<PlaylistRef | null>>();
+
+  /**
+   * What the playlist menu (right-click on one of your playlists) acts on: the row's playlist as
+   * it is now (see PlaylistMenu for why it's a signal). One stable signal per playlist.
+   */
+  protected refFor(id: string): Signal<PlaylistRef | null> {
+    let ref = this.refs.get(id);
+    if (!ref) {
+      ref = computed(() => {
+        const item = this.library.items().find((candidate) => candidate.id === id);
+        return item ? toRef(item) : null;
+      });
+      this.refs.set(id, ref);
+    }
+    return ref;
   }
   private readonly injector = inject(Injector);
   private readonly searchInput = viewChild<ElementRef<HTMLInputElement>>('searchInput');
@@ -85,4 +100,8 @@ export class LibrarySidebar {
     this.library.query.set('');
     this.searchInput()?.nativeElement.focus();
   }
+}
+
+function toRef(item: LibraryItem): PlaylistRef {
+  return { id: item.id, name: item.title, description: item.description ?? null, isPublic: !!item.isPublic, cover: item.cover };
 }

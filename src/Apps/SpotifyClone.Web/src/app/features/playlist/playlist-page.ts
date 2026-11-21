@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, linkedSignal, signal, untracked } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '@core/auth/auth.store';
 import { PlaylistView } from '@data/models/collection.models';
 import { PlaylistRef } from '@data/models/playlist.models';
+import { PlaylistOrder, moveInPlaylist } from '@data/models/playlist-order';
 import { CollectionService } from '@data/services/collection.service';
 import { PlaylistEditor } from '@data/services/playlist-editor.service';
 import { PlaylistDialogs } from '@shared/ui/dialogs/playlist-dialogs';
@@ -10,7 +11,7 @@ import { PlaylistMenu } from '@shared/ui/menus/playlist-menu';
 import { TrackMenuPlaylist } from '@shared/ui/menus/track-menu';
 import { CollectionLayout, CollectionMetaItem } from '@shared/ui/collection-layout/collection-layout';
 import { PageState } from '@shared/ui/page-state/page-state';
-import { TrackTable } from '@shared/ui/track-table/track-table';
+import { TrackReorder, TrackTable } from '@shared/ui/track-table/track-table';
 import { DurationPipe } from '@shared/pipes/duration.pipe';
 
 @Component({
@@ -42,6 +43,21 @@ export class PlaylistPage {
     computation: (source, previous) => source.value ?? (previous?.value?.id === source.id ? previous.value : null),
   });
 
+  /**
+   * The songs in the order on screen. A move shows at once; the page keeps this order while
+   * moves are on their way, then takes the reloaded playlist (which has them, or undoes a failed one).
+   */
+  protected readonly order = linkedSignal<PlaylistView | null, PlaylistOrder | null>({
+    source: () => this.view(),
+    computation: (playlist, previous) => {
+      if (!playlist) {
+        return null;
+      }
+      const keep = previous?.value && previous.source?.id === playlist.id && untracked(() => this.editor.isMoving(playlist.id));
+      return keep ? previous.value : { ids: playlist.trackIds, tracks: playlist.tracks };
+    },
+  });
+
   /** What the playlist menu and the edit dialog act on. */
   protected readonly ref = computed<PlaylistRef | null>(() => {
     const playlist = this.view();
@@ -55,6 +71,19 @@ export class PlaylistPage {
     const ref = this.ref();
     return ref ? { id: ref.id, name: ref.name, canRemove: this.isOwner() } : null;
   });
+
+  /** The owner can reorder the songs. */
+  protected readonly canReorder = computed(() => this.isOwner());
+
+  protected reorder({ from, to }: TrackReorder): void {
+    const order = this.order();
+    const ref = this.ref();
+    const move = order && ref ? moveInPlaylist(order, from, to) : null;
+    if (move && ref) {
+      this.order.set(move.order);
+      this.editor.moveTrack(ref, move.trackId, move.targetIndex);
+    }
+  }
 
   protected readonly shuffle = signal(false);
   protected readonly saved = signal<boolean | null>(false);

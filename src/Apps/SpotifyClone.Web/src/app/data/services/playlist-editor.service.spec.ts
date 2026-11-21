@@ -133,4 +133,53 @@ describe('PlaylistEditor', () => {
     http.expectOne('/api/v1/playlists/p1').flush({ title: 'Playlist.NotOwned' }, { status: 403, statusText: 'Forbidden' });
     expect(toast.current()?.text).toBe("You can't change this playlist.");
   });
+
+  it('sends moves one at a time and reloads once they are all answered', async () => {
+    const { editor, http } = await setup();
+    editor.moveTrack(roadTrip, 't3', 0);
+    editor.moveTrack(roadTrip, 't1', 2);
+    expect(editor.isMoving('p1')).toBe(true);
+
+    // The second move waits for the first: it was worked out from the order the first leaves.
+    const first = http.expectOne('/api/v1/playlists/p1/tracks/t3/move');
+    expect(first.request.method).toBe('POST');
+    expect(first.request.body).toEqual({ targetPositionIndex: 0 });
+    http.expectNone('/api/v1/playlists/p1/tracks/t1/move');
+    first.flush(null);
+    expect(editor.revision('p1')).toBe(0);
+
+    const second = http.expectOne('/api/v1/playlists/p1/tracks/t1/move');
+    expect(second.request.body).toEqual({ targetPositionIndex: 2 });
+    second.flush(null);
+    expect(editor.isMoving('p1')).toBe(false);
+    expect(editor.revision('p1')).toBe(1);
+    await expectLibraryReload(http);
+  });
+
+  it('drops the queued moves after a failed one and reloads the real order', async () => {
+    const { editor, http, toast } = await setup();
+    editor.moveTrack(roadTrip, 't3', 0);
+    editor.moveTrack(roadTrip, 't1', 2);
+    http
+      .expectOne('/api/v1/playlists/p1/tracks/t3/move')
+      .flush({ title: 'Playlist.NotOwned' }, { status: 403, statusText: 'Forbidden' });
+    http.expectNone('/api/v1/playlists/p1/tracks/t1/move');
+    expect(toast.current()?.text).toBe("You can't change this playlist.");
+    expect(editor.isMoving('p1')).toBe(false);
+    expect(editor.revision('p1')).toBe(1);
+    await expectLibraryReload(http);
+
+    // The next move goes out again.
+    editor.moveTrack(roadTrip, 't1', 1);
+    http.expectOne('/api/v1/playlists/p1/tracks/t1/move').flush(null);
+    await expectLibraryReload(http);
+  });
+
+  it('sends guests to log in instead of moving', async () => {
+    const { editor, http, navigate } = await setup('anonymous');
+    editor.moveTrack(roadTrip, 't1', 1);
+    expect(navigate).toHaveBeenCalledWith(['/login'], { queryParams: { redirect: '/' } });
+    expect(editor.isMoving('p1')).toBe(false);
+    http.expectNone((r) => r.url.endsWith('/move'));
+  });
 });

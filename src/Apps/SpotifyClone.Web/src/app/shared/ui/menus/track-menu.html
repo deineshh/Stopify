@@ -25,6 +25,20 @@
         <span class="menu__label">Remove from this playlist</span>
       </button>
     }
+    @if (position(track); as at) {
+      @if (at.index > 0) {
+        <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="move(track, at.index, at.index - 1)">
+          <fa-icon class="menu__icon" [icon]="['fas', 'arrow-up']" />
+          <span class="menu__label">Move up</span>
+        </button>
+      }
+      @if (at.index < at.count - 1) {
+        <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="move(track, at.index, at.index + 1)">
+          <fa-icon class="menu__icon" [icon]="['fas', 'arrow-down']" />
+          <span class="menu__label">Move down</span>
+        </button>
+      }
+    }
     <button class="menu__item" type="button" cdkMenuItem (cdkMenuItemTriggered)="addToQueue(track)">
       <fa-icon class="menu__icon" [icon]="['fas', 'list-ul']" />
       <span class="menu__label">Add to queue</span>

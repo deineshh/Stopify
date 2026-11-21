@@ -72,12 +72,13 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 ## Playlists
 
 - **One place for changes.** `PlaylistEditor` creates, edits and deletes playlists and adds or removes songs through `PlaylistsApi`. It refreshes Your Library, bumps the playlist's revision (an open playlist page reloads in place) and reports the result as a toast. Guests are sent to log in.
-- **Menus** use the Angular CDK (`@angular/cdk/menu`): right-click or the "…" button, keyboard navigation, submenus and focus return. Each list renders one menu and passes the row as trigger data:
-  - `app-track-menu`: Add to playlist ▸ (New playlist or one of yours), Remove from this playlist (your own playlist), Add to queue, Go to artist, Go to album.
+- **Menus** use the Angular CDK (`@angular/cdk/menu`): right-click or the "…" button, keyboard navigation, submenus and focus return. Each list renders one menu and passes the row as trigger data. A CDK trigger keeps the data it was first opened with, so anything that changes (a playlist's name or visibility, a song's position) is read live: the playlist menu gets a signal, the song menu gets the reorderable list as an input.
+  - `app-track-menu`: Add to playlist ▸ (New playlist or one of yours), Remove from this playlist (your own playlist), Move up / Move down (lists you can reorder), Add to queue, Go to artist, Go to album.
   - `app-playlist-menu`: Edit details, Make public/private, Delete. On your playlists in the library and on the playlist page.
+- **Reordering:** drag a song with the mouse (CDK drag-drop) or use Move up / Move down in its menu (keyboard, touch screens). The page shows the new order at once. `moveInPlaylist` maps the row to an index in the full list, which can hold songs that no longer load and aren't shown. `PlaylistEditor` sends moves one at a time, in order, and reloads the playlist once they're all answered; after a failure it drops the queued moves and the reload brings back the real order.
 - **Dialogs** use `@angular/cdk/dialog`: Edit details (also opened by clicking the title or the cover, like Spotify) and a delete confirmation. Menu and dialog styles live in `styles/_overlays.scss`, because the overlay renders outside every component.
 - **Rules from the API:** new playlists are private and named "My Playlist #N"; names are required (100 characters max) and descriptions are limited to 300; a song can be in a playlist only once; only the owner edits or deletes. "Add to queue" needs something playing, because the queue belongs to the playback session.
-- **Not yet:** uploading a cover (the API's cover endpoint needs image metadata that the upload endpoint doesn't return), collaborators and reordering songs.
+- **Not yet:** uploading a cover (the API's cover endpoint needs image metadata that the upload endpoint doesn't return) and collaborators.
 
 ## Routes
 

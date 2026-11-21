@@ -114,7 +114,7 @@
             role="listitem"
             [title]="item.title"
             [cdkContextMenuTriggerFor]="playlistMenu.template()"
-            [cdkContextMenuTriggerData]="{ $implicit: toRef(item) }"
+            [cdkContextMenuTriggerData]="{ $implicit: refFor(item.id) }"
             [cdkContextMenuDisabled]="!item.owned"
             [class.menu-open]="menuItemId() === item.id"
             (cdkContextMenuOpened)="menuItemId.set(item.id)"

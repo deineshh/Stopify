@@ -1,0 +1,6 @@
+# Installed inside the image (Linux binaries); the host's copy must not overwrite it.
+node_modules
+# Build output and caches
+dist
+.angular
+coverage

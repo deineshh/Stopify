@@ -3,6 +3,9 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { PlaylistDialogs } from './playlist-dialogs';
+import { CoverUploadError, PlaylistEditor } from '@data/services/playlist-editor.service';
+import { ApiError } from '@core/api/api-error';
+import { of, throwError } from 'rxjs';
 import { provideTestDefaults } from '../../../testing/test-providers';
 import { mockAuthStore } from '../../../testing/auth-store.mock';
 import { flushLibrary, flushAnyLibrary } from '../../../testing/library.fixtures';
@@ -101,6 +104,81 @@ describe('PlaylistDialogs', () => {
       await settle();
       expect($('.dialog__error')?.textContent).toContain('Only the owner can edit this playlist.');
       expect($<HTMLButtonElement>('.dialog__btn--primary')?.disabled).toBe(false);
+    });
+  });
+
+  describe('Edit details: cover photo', () => {
+    const photo = (type = 'image/png', size = 1000) => new File([new Uint8Array(size)], 'cover.png', { type });
+    function choose(file: File) {
+      const input = $<HTMLInputElement>('input[type="file"][name="photo"]')!;
+      Object.defineProperty(input, 'files', { configurable: true, value: [file] });
+      input.dispatchEvent(new Event('change'));
+    }
+
+    beforeEach(() => {
+      URL.createObjectURL = vi.fn(() => 'blob:preview');
+      URL.revokeObjectURL = vi.fn();
+    });
+
+    it('checks the photo and shows it at once', async () => {
+      const { dialogs } = await setup();
+      dialogs.editDetails(roadTrip);
+      await settle();
+      expect($('.edit-playlist__cover')?.textContent).toContain('Choose photo');
+
+      choose(photo('application/pdf'));
+      await settle();
+      expect($('.dialog__error')?.textContent).toContain('Choose a JPEG, PNG or WebP image.');
+
+      choose(photo('image/png', 11 * 1024 * 1024));
+      await settle();
+      expect($('.dialog__error')?.textContent).toContain('Choose one under 10 MB.');
+
+      choose(photo());
+      await settle();
+      expect($('.dialog__error')).toBeNull();
+      expect($('.edit-playlist__cover-img')?.getAttribute('src')).toBe('blob:preview');
+    });
+
+    it('uploads the photo on Save, then the details', async () => {
+      const { dialogs, http } = await setup();
+      const editor = TestBed.inject(PlaylistEditor);
+      const changeCover = vi.spyOn(editor, 'changeCover').mockReturnValue(of(undefined));
+      dialogs.editDetails(roadTrip);
+      await settle();
+      const file = photo();
+      choose(file);
+      type('.edit-playlist__input[name="name"]', 'Night drive');
+      await settle();
+      $('form.edit-playlist')!.dispatchEvent(new Event('submit', { cancelable: true }));
+
+      expect(changeCover).toHaveBeenCalledWith(roadTrip, file);
+      const details = http.expectOne('/api/v1/playlists/p1');
+      expect(details.request.body.name).toBe('Night drive');
+      details.flush(null);
+      await settle();
+      expect($('.edit-playlist')).toBeNull();
+      expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:preview');
+      flushLibrary(http);
+    });
+
+    it('explains a failed upload and stays open', async () => {
+      const { dialogs, http } = await setup();
+      const editor = TestBed.inject(PlaylistEditor);
+      vi.spyOn(editor, 'changeCover').mockReturnValue(
+        throwError(() => new CoverUploadError('processing', new ApiError(404, 'NotFound', 'Not found'))),
+      );
+      dialogs.editDetails(roadTrip);
+      await settle();
+      choose(photo());
+      type('.edit-playlist__input[name="name"]', 'Night drive');
+      await settle();
+      $('form.edit-playlist')!.dispatchEvent(new Event('submit', { cancelable: true }));
+      await settle();
+      expect($('.dialog__error')?.textContent).toContain('Your photo is taking too long to process.');
+      // The details weren't sent: the save stopped at the photo.
+      http.expectNone('/api/v1/playlists/p1');
+      expect($<HTMLButtonElement>('.dialog__btn--primary')?.textContent?.trim()).toBe('Save');
     });
   });
 

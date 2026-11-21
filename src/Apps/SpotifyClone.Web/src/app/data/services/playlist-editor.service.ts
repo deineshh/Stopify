@@ -1,9 +1,10 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { EMPTY, Observable, Subject, catchError, concatMap, finalize, map, switchMap, tap } from 'rxjs';
-import { toApiError } from '@core/api/api-error';
+import { ApiError, toApiError } from '@core/api/api-error';
 import { AuthStore } from '@core/auth/auth.store';
 import { ToastService } from '@core/notifications/toast.service';
+import { MediaApi } from '../api/media-api';
 import { PlaylistDetailsChange, PlaylistsApi } from '../api/playlists-api';
 import { Collaborator, PlaylistRef } from '../models/playlist.models';
 import { LibraryService } from './library.service';
@@ -19,6 +20,7 @@ import { LibraryService } from './library.service';
 @Injectable({ providedIn: 'root' })
 export class PlaylistEditor {
   private readonly api = inject(PlaylistsApi);
+  private readonly media = inject(MediaApi);
   private readonly library = inject(LibraryService);
   private readonly toast = inject(ToastService);
   private readonly auth = inject(AuthStore);
@@ -79,6 +81,28 @@ export class PlaylistEditor {
       tap(() => this.changed(playlist.id)),
       catchError((error: unknown) => {
         throw toApiError(error);
+      }),
+    );
+  }
+
+  /**
+   * Uploads a photo and makes it the cover: upload, wait for the API to convert it, link it.
+   * Errors are passed on as `CoverUploadError` (which step failed) for the edit dialog to show.
+   */
+  changeCover(playlist: Pick<PlaylistRef, 'id'>, file: File): Observable<void> {
+    let step: CoverUploadStep = 'upload';
+    return this.media.uploadImage(file).pipe(
+      switchMap((imageId) => {
+        step = 'processing';
+        return this.media.waitForImage(imageId);
+      }),
+      switchMap((image) => {
+        step = 'link';
+        return this.api.linkCover(playlist.id, image);
+      }),
+      tap(() => this.changed(playlist.id)),
+      catchError((error: unknown) => {
+        throw new CoverUploadError(step, toApiError(error));
       }),
     );
   }
@@ -253,6 +277,19 @@ export class PlaylistEditor {
       this.toast.show(failureMessage(toApiError(error), fallback));
       return EMPTY;
     });
+  }
+}
+
+export type CoverUploadStep = 'upload' | 'processing' | 'link';
+
+/** A cover upload that failed, and at which step. */
+export class CoverUploadError extends Error {
+  constructor(
+    readonly step: CoverUploadStep,
+    readonly apiError: ApiError,
+  ) {
+    super(apiError.message);
+    this.name = 'CoverUploadError';
   }
 }
 

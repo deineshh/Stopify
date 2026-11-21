@@ -2,7 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { Router } from '@angular/router';
 import { ToastService } from '@core/notifications/toast.service';
-import { PlaylistEditor } from './playlist-editor.service';
+import { CoverUploadError, PlaylistEditor } from './playlist-editor.service';
+import { MediaApi } from '../api/media-api';
+import { of, throwError } from 'rxjs';
+import { ApiError } from '@core/api/api-error';
 import { provideTestDefaults } from '../../testing/test-providers';
 import { mockAuthStore } from '../../testing/auth-store.mock';
 import { flushLibrary, flushAnyLibrary } from '../../testing/library.fixtures';
@@ -222,5 +225,47 @@ describe('PlaylistEditor', () => {
       .expectOne('/api/v1/playlists/p1/tracks/t1')
       .flush({ title: 'Playlist.InvalidCollaborator' }, { status: 400, statusText: 'Bad Request' });
     expect(toast.current()?.text).toBe('You can only remove songs you added.');
+  });
+
+  describe('changeCover', () => {
+    const image = { imageId: 'img1', width: 640, height: 640, fileType: 'webp', sizeInBytes: 1234 };
+    const file = new File(['x'], 'cover.jpg', { type: 'image/jpeg' });
+
+    it('uploads, waits for the conversion and links the image as the cover', async () => {
+      const { editor, http } = await setup();
+      const media = TestBed.inject(MediaApi);
+      vi.spyOn(media, 'uploadImage').mockReturnValue(of('img1'));
+      const wait = vi.spyOn(media, 'waitForImage').mockReturnValue(of(image));
+      const done = vi.fn();
+      editor.changeCover(roadTrip, file).subscribe(done);
+
+      expect(wait).toHaveBeenCalledWith('img1');
+      const link = http.expectOne('/api/v1/playlists/p1/cover');
+      expect(link.request.method).toBe('PUT');
+      expect(link.request.body).toEqual({
+        imageId: 'img1',
+        imageWidth: 640,
+        imageHeight: 640,
+        imageFileType: 'webp',
+        imageSizeInBytes: 1234,
+      });
+      link.flush(null);
+      expect(done).toHaveBeenCalled();
+      expect(editor.revision('p1')).toBe(1);
+      await expectLibraryReload(http);
+    });
+
+    it('says which step failed', async () => {
+      const { editor } = await setup();
+      const media = TestBed.inject(MediaApi);
+      vi.spyOn(media, 'uploadImage').mockReturnValue(of('img1'));
+      vi.spyOn(media, 'waitForImage').mockReturnValue(throwError(() => new ApiError(404, 'NotFound', 'Not found')));
+      const failed = vi.fn();
+      editor.changeCover(roadTrip, file).subscribe({ error: failed });
+      const error = failed.mock.calls[0][0] as CoverUploadError;
+      expect(error).toBeInstanceOf(CoverUploadError);
+      expect(error.step).toBe('processing');
+      expect(editor.revision('p1')).toBe(0);
+    });
   });
 });

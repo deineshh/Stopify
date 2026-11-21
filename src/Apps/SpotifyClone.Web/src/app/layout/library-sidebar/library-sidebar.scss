@@ -237,6 +237,15 @@
   background-color: slateblue;
   border-radius: 4px;
   height: 2.95em;
+  overflow: hidden;
+}
+
+// Covers aren't always square (an uploaded photo keeps its shape): crop to the tile.
+.left-sidebar__main-item--img {
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
 
 .left-sidebar__main-item--play-btn {

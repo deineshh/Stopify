@@ -63,7 +63,11 @@
   grid-template-columns: 1fr;
 }
 
+// Uploaded playlist photos keep their shape: crop them to the square (or circle) like Spotify.
 .playlist-page__info-section--cover {
+  aspect-ratio: 1 / 1;
+  display: block;
+  object-fit: cover;
   width: 100%;
 }
 

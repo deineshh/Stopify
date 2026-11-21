@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { injectApiUrl } from '@core/api/api.config';
+import { UploadedImage } from './media-api';
 
 export interface PlaylistDetailsChange {
   name: string;
@@ -45,6 +46,17 @@ export class PlaylistsApi {
     return this.http.delete<void>(
       this.url(`/playlists/${encodeURIComponent(id)}/tracks/${encodeURIComponent(trackId)}`),
     );
+  }
+
+  /** Owner only: makes an uploaded image the playlist's cover (see `MediaApi`). */
+  linkCover(id: string, image: UploadedImage): Observable<void> {
+    return this.http.put<void>(this.url(`/playlists/${encodeURIComponent(id)}/cover`), {
+      imageId: image.imageId,
+      imageWidth: image.width,
+      imageHeight: image.height,
+      imageFileType: image.fileType,
+      imageSizeInBytes: image.sizeInBytes,
+    });
   }
 
   /** Owner only. Fails with `Playlist.InvalidCollaborator` for an unknown user or one already added. */

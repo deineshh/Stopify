@@ -11,13 +11,34 @@
   }
 
   <div class="edit-playlist__body">
-    <div class="edit-playlist__cover">
-      @if (playlist.cover) {
-        <img class="edit-playlist__cover-img" [src]="playlist.cover" alt="" />
+    <button
+      class="edit-playlist__cover"
+      type="button"
+      [disabled]="saving()"
+      aria-describedby="edit-playlist-cover-hint"
+      (click)="photoInput.click()"
+    >
+      @if (preview() ?? playlist.cover; as cover) {
+        <img class="edit-playlist__cover-img" [src]="cover" alt="" />
       } @else {
         <fa-icon class="edit-playlist__cover-icon" [icon]="['fas', 'music']" />
       }
-    </div>
+      <span class="edit-playlist__cover-overlay">
+        <fa-icon class="edit-playlist__cover-overlay-icon" [icon]="['fas', 'pen']" />
+        <span class="edit-playlist__cover-overlay-text">Choose photo</span>
+      </span>
+    </button>
+    <span id="edit-playlist-cover-hint" class="visually-hidden">JPEG, PNG or WebP, up to 10 MB.</span>
+    <input
+      #photoInput
+      class="edit-playlist__file"
+      type="file"
+      name="photo"
+      tabindex="-1"
+      aria-hidden="true"
+      [accept]="coverTypes"
+      (change)="choosePhoto($event)"
+    />
 
     <div class="edit-playlist__fields">
       <label class="edit-playlist__field">
@@ -58,7 +79,7 @@
 
   <div class="dialog__actions">
     <button class="dialog__btn dialog__btn--primary" type="submit" [disabled]="!canSave()">
-      {{ saving() ? 'Saving…' : 'Save' }}
+      {{ uploading() ? 'Uploading photo…' : saving() ? 'Saving…' : 'Save' }}
     </button>
   </div>
 </form>

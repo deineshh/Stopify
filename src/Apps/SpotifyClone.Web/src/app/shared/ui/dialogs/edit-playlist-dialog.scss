@@ -17,6 +17,74 @@
   overflow: hidden;
 }
 
+// The cover is a button: Spotify shows "Choose photo" over it on hover.
+.edit-playlist__cover {
+  color: var(--primary-fg-color);
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.edit-playlist__cover:disabled {
+  cursor: default;
+}
+
+.edit-playlist__cover-overlay {
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  inset: 0;
+  justify-content: center;
+  opacity: 0;
+  position: absolute;
+  transition: opacity 0.15s ease-in-out;
+}
+
+.edit-playlist__cover:hover:not(:disabled) .edit-playlist__cover-overlay,
+.edit-playlist__cover:focus-visible .edit-playlist__cover-overlay {
+  opacity: 1;
+}
+
+.edit-playlist__cover:focus-visible {
+  outline: 2px solid var(--primary-fg-color);
+  outline-offset: 2px;
+}
+
+.edit-playlist__cover-overlay-icon {
+  font-size: 2.5rem;
+}
+
+.edit-playlist__cover-overlay-text {
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.edit-playlist__file {
+  display: none;
+}
+
+// No hover on touch screens: show that the cover can be changed.
+@media (hover: none) {
+  .edit-playlist__cover-overlay {
+    background-color: transparent;
+    justify-content: flex-end;
+    opacity: 1;
+    padding-bottom: 8px;
+  }
+
+  .edit-playlist__cover-overlay-icon {
+    display: none;
+  }
+
+  .edit-playlist__cover-overlay-text {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 1000px;
+    padding: 4px 10px;
+  }
+}
+
 .edit-playlist__cover-img {
   height: 100%;
   object-fit: cover;

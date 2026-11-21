@@ -1,12 +1,20 @@
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, computed, inject, signal } from '@angular/core';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { Observable, concat, defer, last } from 'rxjs';
 import { PLAYLIST_DESCRIPTION_MAX_LENGTH, PLAYLIST_NAME_MAX_LENGTH } from '@data/api/playlists-api';
 import { PlaylistRef } from '@data/models/playlist.models';
-import { PlaylistEditor } from '@data/services/playlist-editor.service';
+import { CoverUploadError, PlaylistEditor } from '@data/services/playlist-editor.service';
 import { ApiError } from '@core/api/api-error';
 
-/** Spotify's "Edit details" dialog: name and description (cover upload isn't wired to the API yet). */
+/** Photos the API can convert, and the largest one accepted here. */
+export const COVER_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
+export const COVER_MAX_BYTES = 10 * 1024 * 1024;
+
+/**
+ * Spotify's "Edit details" dialog: cover photo, name and description. A chosen photo shows at
+ * once and is uploaded on Save, before the name and description.
+ */
 @Component({
   selector: 'app-edit-playlist-dialog',
   imports: [FaIconComponent],
@@ -22,6 +30,12 @@ export class EditPlaylistDialog {
   protected readonly nameMax = PLAYLIST_NAME_MAX_LENGTH;
   protected readonly descriptionMax = PLAYLIST_DESCRIPTION_MAX_LENGTH;
 
+  /** A newly chosen photo, uploaded on Save, and its preview. */
+  protected readonly photo = signal<File | null>(null);
+  protected readonly preview = signal<string | null>(null);
+  protected readonly uploading = signal(false);
+  protected readonly coverTypes = COVER_TYPES.join(',');
+
   protected readonly name = signal(this.playlist.name);
   protected readonly description = signal(this.playlist.description ?? '');
   protected readonly saving = signal(false);
@@ -36,6 +50,33 @@ export class EditPlaylistDialog {
       this.description().length <= this.descriptionMax,
   );
 
+  constructor() {
+    inject(DestroyRef).onDestroy(() => this.revokePreview());
+  }
+
+  /** A photo was picked: checked here, shown at once, uploaded on Save. */
+  protected choosePhoto(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    // Picking the same file again after an error should still fire `change`.
+    input.value = '';
+    if (!file) {
+      return;
+    }
+    if (!(COVER_TYPES as readonly string[]).includes(file.type)) {
+      this.error.set('Choose a JPEG, PNG or WebP image.');
+      return;
+    }
+    if (file.size > COVER_MAX_BYTES) {
+      this.error.set('That photo is too big. Choose one under 10 MB.');
+      return;
+    }
+    this.error.set(null);
+    this.revokePreview();
+    this.photo.set(file);
+    this.preview.set(URL.createObjectURL(file));
+  }
+
   protected save(event: Event): void {
     event.preventDefault();
     if (!this.canSave()) {
@@ -43,26 +84,74 @@ export class EditPlaylistDialog {
     }
     const name = this.name().trim();
     const description = this.description().trim() || null;
-    if (name === this.playlist.name && description === this.playlist.description) {
+    const photo = this.photo();
+    const detailsChanged = name !== this.playlist.name || description !== this.playlist.description;
+    if (!photo && !detailsChanged) {
       this.ref.close(false);
       return;
     }
+
+    const steps: Observable<void>[] = [];
+    if (photo) {
+      steps.push(
+        defer(() => {
+          this.uploading.set(true);
+          return this.editor.changeCover(this.playlist, photo);
+        }),
+      );
+    }
+    if (detailsChanged) {
+      steps.push(
+        defer(() => {
+          this.uploading.set(false);
+          // Once the photo is in, a failure here shouldn't upload it again on retry.
+          this.photo.set(null);
+          return this.editor.editDetails(this.playlist, { name, description, isPublic: this.playlist.isPublic });
+        }),
+      );
+    }
+
     this.saving.set(true);
     this.error.set(null);
-    this.editor.editDetails(this.playlist, { name, description, isPublic: this.playlist.isPublic }).subscribe({
-      next: () => this.ref.close(true),
-      error: (error: ApiError) => {
-        this.saving.set(false);
-        this.error.set(
-          error.isNetworkError
-            ? "Couldn't reach Stopify. Check your connection."
-            : error.status === 403 || error.has('Playlist.NotOwned')
-              ? 'Only the owner can edit this playlist.'
-              : error.has('Playlist.InvalidMetadata')
-                ? error.message
-                : "Couldn't save your changes. Try again.",
-        );
-      },
-    });
+    concat(...steps)
+      .pipe(last())
+      .subscribe({
+        next: () => this.ref.close(true),
+        error: (error: ApiError | CoverUploadError) => {
+          this.saving.set(false);
+          this.uploading.set(false);
+          this.error.set(error instanceof CoverUploadError ? coverMessage(error) : detailsMessage(error));
+        },
+      });
   }
+
+  private revokePreview(): void {
+    const preview = this.preview();
+    if (preview) {
+      URL.revokeObjectURL(preview);
+    }
+  }
+}
+
+function detailsMessage(error: ApiError): string {
+  if (error.isNetworkError) {
+    return "Couldn't reach Stopify. Check your connection.";
+  }
+  if (error.status === 403 || error.has('Playlist.NotOwned')) {
+    return 'Only the owner can edit this playlist.';
+  }
+  return error.has('Playlist.InvalidMetadata') ? error.message : "Couldn't save your changes. Try again.";
+}
+
+function coverMessage({ step, apiError }: CoverUploadError): string {
+  if (apiError.isNetworkError) {
+    return "Couldn't reach Stopify. Check your connection.";
+  }
+  if (step === 'processing') {
+    return "Your photo is taking too long to process. Try again in a moment.";
+  }
+  if (step === 'link' && (apiError.status === 403 || apiError.has('Playlist.NotOwned'))) {
+    return 'Only the owner can change the cover.';
+  }
+  return step === 'upload' ? "Couldn't upload that photo. Try another one." : "Couldn't change the cover. Try again.";
 }

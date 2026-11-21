@@ -8,6 +8,7 @@ import { TrackReorder, TrackTable } from '../track-table/track-table';
 import { TrackMenuPlaylist } from './track-menu';
 import { provideTestDefaults } from '../../../testing/test-providers';
 import { mockAuthStore } from '../../../testing/auth-store.mock';
+import { flushLibrary } from '../../../testing/library.fixtures';
 
 const pannonia: Track = {
   id: 't1',
@@ -58,8 +59,12 @@ describe('TrackMenu (through TrackTable)', () => {
     const fixture = TestBed.createComponent(Host);
     fixture.detectChanges();
     await settle();
-    for (const req of http.match((r) => r.url === '/api/v1/me/playlists')) {
-      req.flush([ownPlaylist('p1', 'Road trip'), { ...ownPlaylist('p2', 'Shared mix'), ownerId: 'someone-else' }]);
+    if (status === 'authenticated') {
+      flushLibrary(
+        http,
+        [ownPlaylist('p1', 'Road trip'), { ...ownPlaylist('p2', 'Old mix'), ownerId: 'someone-else' }],
+        [{ ...ownPlaylist('p3', 'Shared mix'), ownerId: 'u2' }],
+      );
     }
     await settle();
     const row = (fixture.nativeElement as HTMLElement).querySelector<HTMLElement>('.track-table__track')!;
@@ -111,14 +116,15 @@ describe('TrackMenu (through TrackTable)', () => {
     await settle();
 
     const submenu = menus()[1];
-    expect(labels(submenu)).toEqual(['New playlist', 'Road trip']);
+    // Your playlists and the ones you collaborate on.
+    expect(labels(submenu)).toEqual(['New playlist', 'Road trip', 'Shared mix']);
     item(submenu, 'Road trip').click();
     const req = http.expectOne('/api/v1/playlists/p1/tracks');
     expect(req.request.body).toEqual({ trackId: 't1' });
     req.flush(null);
     await settle();
     expect(menus().length).toBe(0);
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
   });
 
   it('offers "Remove from this playlist" only where allowed', async () => {
@@ -133,7 +139,7 @@ describe('TrackMenu (through TrackTable)', () => {
     expect(req.request.method).toBe('DELETE');
     req.flush(null);
     await settle();
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
 
     fixture.componentInstance.playlist.set({ id: 'p2', name: 'Shared mix', canRemove: false });
     fixture.detectChanges();

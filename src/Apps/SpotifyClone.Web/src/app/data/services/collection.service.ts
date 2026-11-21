@@ -33,6 +33,11 @@ export class CollectionService {
             ownerId: playlist.ownerId,
             tracks,
             trackIds: ordered.map((track) => track.id),
+            collaborators: playlist.collaborators.map((collaborator) => ({
+              id: collaborator.id,
+              name: collaborator.name,
+              avatar: collaborator.avatarImageId ? imageUrl(collaborator.avatarImageId) : null,
+            })),
             totalDurationSeconds: sumDurations(tracks),
           })),
         );

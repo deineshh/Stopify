@@ -1,4 +1,5 @@
 import { EntityRef, MediaShelf, Track } from './catalog.models';
+import { Collaborator } from './playlist.models';
 
 /** A user playlist, ready to render. */
 export interface PlaylistView {
@@ -11,6 +12,7 @@ export interface PlaylistView {
   tracks: readonly Track[];
   /** Every song id in the playlist's order, including songs that no longer load (not in `tracks`). */
   trackIds: readonly string[];
+  collaborators: readonly Collaborator[];
   totalDurationSeconds: number;
 }
 

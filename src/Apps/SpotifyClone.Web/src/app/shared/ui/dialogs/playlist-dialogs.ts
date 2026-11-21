@@ -3,6 +3,7 @@ import { Dialog } from '@angular/cdk/dialog';
 import { filter, switchMap } from 'rxjs';
 import { PlaylistRef } from '@data/models/playlist.models';
 import { PlaylistEditor } from '@data/services/playlist-editor.service';
+import type { CollaboratorsDialogData } from './collaborators-dialog';
 import { ConfirmDialog, ConfirmDialogData } from './confirm-dialog';
 import { EditPlaylistDialog } from './edit-playlist-dialog';
 
@@ -19,6 +20,19 @@ export class PlaylistDialogs {
       ...DIALOG_LOOK,
       data: playlist,
       ariaLabelledBy: 'edit-playlist-title',
+    });
+  }
+
+  /**
+   * Owner only: add or remove collaborators. Loaded on first use, as only owners ever open it
+   * and this service is part of the app shell (the library uses it).
+   */
+  async collaborators(data: CollaboratorsDialogData): Promise<void> {
+    const { CollaboratorsDialog } = await import('./collaborators-dialog');
+    this.dialog.open<void, CollaboratorsDialogData>(CollaboratorsDialog, {
+      ...DIALOG_LOOK,
+      data,
+      ariaLabelledBy: 'collaborators-title',
     });
   }
 

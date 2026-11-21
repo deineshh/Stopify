@@ -11,6 +11,7 @@
     [moreMenu]="isOwner() ? playlistMenu.template() : null"
     [moreMenuData]="ref"
     [showInvite]="isOwner()"
+    (invite)="openCollaborators()"
     [target]="{ kind: 'playlist', id: data.id }"
     [(shuffle)]="shuffle"
     [saved]="isOwner() ? null : saved()"
@@ -22,13 +23,13 @@
         [context]="{ kind: 'playlist', id: data.id }"
         [menuPlaylist]="menuPlaylist()"
         [showDateAdded]="false"
-        [reorderable]="canReorder()"
+        [reorderable]="canEditSongs()"
         (reorder)="reorder($event)"
       />
     } @else {
       <div class="playlist-page__empty">
         <p class="playlist-page__empty-title">This playlist doesn't have any songs yet.</p>
-        @if (isOwner()) {
+        @if (canEditSongs()) {
           <p class="playlist-page__empty-text">Find a song, open its menu (right-click or •••) and choose Add to playlist.</p>
         }
       </div>

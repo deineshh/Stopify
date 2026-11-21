@@ -15,7 +15,8 @@ export const PLAYLIST_DESCRIPTION_MAX_LENGTH = 300;
 
 /**
  * Typed client for changing playlists. Reading them stays in `CatalogApi`.
- * The API only lets the owner edit or delete; the owner and collaborators add songs.
+ * The API only lets the owner edit, delete and manage collaborators; the owner and collaborators
+ * add and reorder songs, and a song can be removed by the owner or whoever added it.
  */
 @Injectable({ providedIn: 'root' })
 export class PlaylistsApi {
@@ -43,6 +44,17 @@ export class PlaylistsApi {
   removeTrack(id: string, trackId: string): Observable<void> {
     return this.http.delete<void>(
       this.url(`/playlists/${encodeURIComponent(id)}/tracks/${encodeURIComponent(trackId)}`),
+    );
+  }
+
+  /** Owner only. Fails with `Playlist.InvalidCollaborator` for an unknown user or one already added. */
+  addCollaborator(id: string, collaboratorId: string): Observable<void> {
+    return this.http.post<void>(this.url(`/playlists/${encodeURIComponent(id)}/collaborators`), { collaboratorId });
+  }
+
+  removeCollaborator(id: string, collaboratorId: string): Observable<void> {
+    return this.http.delete<void>(
+      this.url(`/playlists/${encodeURIComponent(id)}/collaborators/${encodeURIComponent(collaboratorId)}`),
     );
   }
 

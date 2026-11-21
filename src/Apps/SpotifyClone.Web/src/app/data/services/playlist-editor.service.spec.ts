@@ -5,6 +5,7 @@ import { ToastService } from '@core/notifications/toast.service';
 import { PlaylistEditor } from './playlist-editor.service';
 import { provideTestDefaults } from '../../testing/test-providers';
 import { mockAuthStore } from '../../testing/auth-store.mock';
+import { flushLibrary, flushAnyLibrary } from '../../testing/library.fixtures';
 
 const roadTrip = { id: 'p1', name: 'Road trip', description: 'Long drives', isPublic: false };
 
@@ -19,7 +20,7 @@ describe('PlaylistEditor', () => {
     const toast = TestBed.inject(ToastService);
     await settleEffects();
     // The library loads the user's playlists as soon as it exists.
-    for (const req of http.match((r) => r.url === '/api/v1/me/playlists')) req.flush([]);
+    flushAnyLibrary(http);
     return { editor, http, navigate, navigateByUrl, toast, router };
   }
 
@@ -32,7 +33,7 @@ describe('PlaylistEditor', () => {
   /** A change reloads Your Library (names, covers and the list itself can change). */
   async function expectLibraryReload(http: HttpTestingController) {
     await settleEffects();
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
   }
 
   afterEach(() => TestBed.inject(HttpTestingController).verify());
@@ -181,5 +182,45 @@ describe('PlaylistEditor', () => {
     expect(navigate).toHaveBeenCalledWith(['/login'], { queryParams: { redirect: '/' } });
     expect(editor.isMoving('p1')).toBe(false);
     http.expectNone((r) => r.url.endsWith('/move'));
+  });
+
+  it('adds and removes collaborators', async () => {
+    const { editor, http, toast } = await setup();
+    editor.addCollaborator(roadTrip, { id: 'u2', name: 'Anna' }).subscribe();
+    const add = http.expectOne('/api/v1/playlists/p1/collaborators');
+    expect(add.request.body).toEqual({ collaboratorId: 'u2' });
+    add.flush(null);
+    expect(toast.current()?.text).toBe('Anna can now edit Road trip.');
+    expect(editor.revision('p1')).toBe(1);
+    await expectLibraryReload(http);
+
+    editor.removeCollaborator(roadTrip, { id: 'u2', name: 'Anna' }).subscribe();
+    const remove = http.expectOne('/api/v1/playlists/p1/collaborators/u2');
+    expect(remove.request.method).toBe('DELETE');
+    remove.flush(null);
+    expect(toast.current()?.text).toBe('Anna can no longer edit Road trip.');
+    await expectLibraryReload(http);
+  });
+
+  it('explains failed collaborator changes', async () => {
+    const { editor, http, toast } = await setup();
+    editor.addCollaborator(roadTrip, { id: 'u2', name: 'Anna' }).subscribe();
+    http
+      .expectOne('/api/v1/playlists/p1/collaborators')
+      .flush({ title: 'Playlist.InvalidCollaborator' }, { status: 400, statusText: 'Bad Request' });
+    expect(toast.current()?.text).toBe("Couldn't add Anna. They may already be a collaborator.");
+
+    editor.addCollaborator(roadTrip, { id: 'u2', name: 'Anna' }).subscribe();
+    http.expectOne('/api/v1/playlists/p1/collaborators').flush({ title: 'Playlist.NotOwned' }, { status: 403, statusText: 'Forbidden' });
+    expect(toast.current()?.text).toBe("You can't change this playlist.");
+  });
+
+  it("tells a collaborator they can only remove songs they added", async () => {
+    const { editor, http, toast } = await setup();
+    editor.removeTrack(roadTrip, 't1').subscribe();
+    http
+      .expectOne('/api/v1/playlists/p1/tracks/t1')
+      .flush({ title: 'Playlist.InvalidCollaborator' }, { status: 400, statusText: 'Bad Request' });
+    expect(toast.current()?.text).toBe('You can only remove songs you added.');
   });
 });

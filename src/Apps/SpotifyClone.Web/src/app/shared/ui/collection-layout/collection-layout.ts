@@ -64,7 +64,9 @@ export class CollectionLayout {
   /** `null` hides the Save button. */
   readonly saved = model<boolean | null>(null);
   readonly showDownload = input(true, { transform: booleanAttribute });
+  /** Shows "Invite collaborators" (your own playlists); `invite` fires on click. */
   readonly showInvite = input(false, { transform: booleanAttribute });
+  readonly invite = output<void>();
   readonly showViewAs = input(true, { transform: booleanAttribute });
   /** Menu for the "…" button (a cdkMenu template) and the data it receives as `$implicit`. */
   readonly moreMenu = input<TemplateRef<unknown> | null>(null);

@@ -78,10 +78,10 @@
       <fa-icon class="menu__icon" [icon]="['fas', 'plus']" />
       <span class="menu__label">New playlist</span>
     </button>
-    @if (library.ownPlaylists().length) {
+    @if (library.editablePlaylists().length) {
       <hr class="menu__divider" />
     }
-    @for (item of library.ownPlaylists(); track item.id) {
+    @for (item of library.editablePlaylists(); track item.id) {
       <button
         class="menu__item"
         type="button"

@@ -66,14 +66,32 @@ export class PlaylistPage {
       : null;
   });
 
-  /** Track rows: "Remove from this playlist" for the owner. */
+  /** Track rows: "Remove from this playlist" for the owner and collaborators. */
   protected readonly menuPlaylist = computed<TrackMenuPlaylist | null>(() => {
     const ref = this.ref();
-    return ref ? { id: ref.id, name: ref.name, canRemove: this.isOwner() } : null;
+    return ref ? { id: ref.id, name: ref.name, canRemove: this.canEditSongs() } : null;
   });
 
-  /** The owner can reorder the songs. */
-  protected readonly canReorder = computed(() => this.isOwner());
+  protected readonly collaborators = computed(() => this.view()?.collaborators ?? []);
+
+  protected readonly isCollaborator = computed(() => {
+    const userId = this.auth.user()?.id;
+    return !!userId && this.collaborators().some((collaborator) => collaborator.id === userId);
+  });
+
+  /**
+   * The owner and collaborators add, remove and reorder songs. (A collaborator may only remove
+   * songs they added; the API says so if they try another, as the playlist doesn't say who added what.)
+   */
+  protected readonly canEditSongs = computed(() => this.isOwner() || this.isCollaborator());
+
+  protected openCollaborators(): void {
+    const ref = this.ref();
+    const playlist = this.view();
+    if (ref && playlist) {
+      void this.dialogs.collaborators({ playlist: ref, ownerId: playlist.ownerId, collaborators: this.collaborators });
+    }
+  }
 
   protected reorder({ from, to }: TrackReorder): void {
     const order = this.order();
@@ -103,6 +121,12 @@ export class PlaylistPage {
     if (owner && owner.id === playlist.ownerId) {
       items.push({ text: owner.displayName, link: ['/collection'] });
     }
+    const collaborators = this.collaborators();
+    if (collaborators.length) {
+      const userId = this.auth.user()?.id;
+      const names = collaborators.map((collaborator) => (collaborator.id === userId ? 'You' : collaborator.name));
+      items.push({ text: `with ${listNames(names)}`, title: `Collaborators: ${names.join(', ')}` });
+    }
     const count = playlist.tracks.length;
     items.push({
       text:
@@ -112,4 +136,12 @@ export class PlaylistPage {
     });
     return items;
   });
+}
+
+/** "Anna", "Anna and Bence", "Anna, Bence and 2 more". */
+function listNames(names: readonly string[]): string {
+  if (names.length > 2) {
+    return `${names.slice(0, 2).join(', ')} and ${names.length - 2} more`;
+  }
+  return names.join(' and ');
 }

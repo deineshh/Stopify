@@ -43,6 +43,8 @@ export interface PlaylistFilters {
   name?: string;
   ownerId?: string;
   isPublic?: boolean;
+  /** Playlists any of these users collaborate on. */
+  collaboratorIds?: readonly string[];
 }
 
 /**

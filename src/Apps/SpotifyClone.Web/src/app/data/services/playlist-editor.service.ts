@@ -5,7 +5,7 @@ import { toApiError } from '@core/api/api-error';
 import { AuthStore } from '@core/auth/auth.store';
 import { ToastService } from '@core/notifications/toast.service';
 import { PlaylistDetailsChange, PlaylistsApi } from '../api/playlists-api';
-import { PlaylistRef } from '../models/playlist.models';
+import { Collaborator, PlaylistRef } from '../models/playlist.models';
 import { LibraryService } from './library.service';
 
 /**
@@ -138,7 +138,49 @@ export class PlaylistEditor {
           this.changed(playlist.id);
           this.toast.show(`Removed from ${playlist.name}.`);
         }),
-        this.reportFailure(`Couldn't remove this song from ${playlist.name}.`),
+        catchError((error: unknown) => {
+          const apiError = toApiError(error);
+          // Collaborators may only remove the songs they added themselves.
+          this.toast.show(
+            apiError.has('Playlist.InvalidCollaborator')
+              ? 'You can only remove songs you added.'
+              : failureMessage(apiError, `Couldn't remove this song from ${playlist.name}.`),
+          );
+          return EMPTY;
+        }),
+      ),
+    );
+  }
+
+  /** Owner only: lets someone add, remove and reorder songs. */
+  addCollaborator(playlist: Pick<PlaylistRef, 'id' | 'name'>, user: Pick<Collaborator, 'id' | 'name'>): Observable<void> {
+    return this.signedIn(() =>
+      this.api.addCollaborator(playlist.id, user.id).pipe(
+        tap(() => {
+          this.changed(playlist.id);
+          this.toast.show(`${user.name} can now edit ${playlist.name}.`);
+        }),
+        catchError((error: unknown) => {
+          const apiError = toApiError(error);
+          this.toast.show(
+            apiError.has('Playlist.InvalidCollaborator') && apiError.status !== 403
+              ? `Couldn't add ${user.name}. They may already be a collaborator.`
+              : failureMessage(apiError, `Couldn't add ${user.name}.`),
+          );
+          return EMPTY;
+        }),
+      ),
+    );
+  }
+
+  removeCollaborator(playlist: Pick<PlaylistRef, 'id' | 'name'>, user: Pick<Collaborator, 'id' | 'name'>): Observable<void> {
+    return this.signedIn(() =>
+      this.api.removeCollaborator(playlist.id, user.id).pipe(
+        tap(() => {
+          this.changed(playlist.id);
+          this.toast.show(`${user.name} can no longer edit ${playlist.name}.`);
+        }),
+        this.reportFailure(`Couldn't remove ${user.name}.`),
       ),
     );
   }

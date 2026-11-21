@@ -130,6 +130,8 @@
           class="playlist-page__main-section--invite-btn playlist-page__main-section--btn"
           type="button"
           [title]="'Invite collaborators to ' + name"
+          aria-haspopup="dialog"
+          (click)="invite.emit()"
         >
           <span class="playlist-page__main-section--invite-icon">
             <fa-icon [icon]="['fas', 'user-plus']" />

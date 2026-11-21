@@ -5,6 +5,7 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { LibrarySidebar } from './library-sidebar';
 import { provideTestDefaults } from '../../testing/test-providers';
 import { mockAuthStore } from '../../testing/auth-store.mock';
+import { flushLibrary, isCollaborativePlaylistsRequest, isOwnPlaylistsRequest } from '../../testing/library.fixtures';
 
 const playlist = (id: string, name: string) => ({
   id,
@@ -44,7 +45,7 @@ describe('LibrarySidebar', () => {
     const { el, http, render } = setup('authenticated');
     expect(el.querySelectorAll('.left-sidebar__skeleton').length).toBe(3);
 
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([playlist('p1', 'Road trip'), playlist('p2', 'Night drive')]);
+    flushLibrary(http, [playlist('p1', 'Road trip'), playlist('p2', 'Night drive')]);
     await render();
 
     const items = el.querySelectorAll('.left-sidebar__main-item');
@@ -58,7 +59,7 @@ describe('LibrarySidebar', () => {
 
   it('invites a new user to create a playlist', async () => {
     const { el, http, render } = setup('authenticated');
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
     await render();
     expect(el.querySelector('#library-empty-title')?.textContent).toContain('Create your first playlist');
   });
@@ -66,27 +67,25 @@ describe('LibrarySidebar', () => {
   it('creates a playlist from the empty-library card and from Create', async () => {
     const { el, http, render } = setup('authenticated');
     const navigate = vi.spyOn(TestBed.inject(Router), 'navigate').mockResolvedValue(true);
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
     await render();
 
     el.querySelector<HTMLButtonElement>('.left-sidebar__guest-card .left-sidebar__guest-btn')!.click();
     http.expectOne((r) => r.method === 'POST' && r.url === '/api/v1/playlists').flush({ playlistId: 'new' });
     expect(navigate).toHaveBeenCalledWith(['/playlist', 'new']);
     await settle();
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([playlist('new', 'My Playlist #1')]);
+    flushLibrary(http, [playlist('new', 'My Playlist #1')]);
 
     el.querySelector<HTMLButtonElement>('.left-sidebar__title-bar--create-btn')!.click();
     http.expectOne((r) => r.method === 'POST' && r.url === '/api/v1/playlists').flush({ playlistId: 'new2' });
     expect(navigate).toHaveBeenCalledWith(['/playlist', 'new2']);
     await settle();
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
   });
 
   it('opens the playlist menu on right-click, only for your own playlists', async () => {
     const { el, http, render } = setup('authenticated');
-    http
-      .expectOne((r) => r.url === '/api/v1/me/playlists')
-      .flush([playlist('p1', 'Road trip'), { ...playlist('p2', 'Shared mix'), ownerId: 'someone-else' }]);
+    flushLibrary(http, [playlist('p1', 'Road trip'), { ...playlist('p2', 'Shared mix'), ownerId: 'someone-else' }]);
     await render();
     const [own, shared] = el.querySelectorAll<HTMLElement>('.left-sidebar__main-item');
 
@@ -109,19 +108,20 @@ describe('LibrarySidebar', () => {
 
   it('offers a retry when the library fails to load', async () => {
     const { el, http, render, fixture } = setup('authenticated');
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush(null, { status: 500, statusText: 'Server Error' });
+    http.expectOne(isCollaborativePlaylistsRequest).flush([]);
+    http.expectOne(isOwnPlaylistsRequest).flush(null, { status: 500, statusText: 'Server Error' });
     await render();
     el.querySelector<HTMLButtonElement>('.left-sidebar__retry-btn')!.click();
     TestBed.tick();
     fixture.detectChanges();
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([playlist('p1', 'Road trip')]);
+    flushLibrary(http, [playlist('p1', 'Road trip')]);
     await render();
     expect(el.querySelectorAll('.left-sidebar__main-item').length).toBe(1);
   });
 
   it('shows the current visibility the next time the menu opens', async () => {
     const { el, http, render } = setup('authenticated');
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([playlist('p1', 'Road trip')]);
+    flushLibrary(http, [playlist('p1', 'Road trip')]);
     await render();
     const row = el.querySelector<HTMLElement>('.left-sidebar__main-item')!;
     const open = async () => {
@@ -139,7 +139,7 @@ describe('LibrarySidebar', () => {
     expect(req.request.body.isPublic).toBe(true);
     req.flush(null);
     await settle();
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([{ ...playlist('p1', 'Road trip'), isPublic: true }]);
+    flushLibrary(http, [{ ...playlist('p1', 'Road trip'), isPublic: true }]);
     await render();
 
     // Same row, same trigger: the menu must not reuse what it was first opened with.

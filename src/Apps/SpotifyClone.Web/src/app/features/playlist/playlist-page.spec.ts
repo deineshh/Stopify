@@ -6,8 +6,13 @@ import { PlaylistEditor } from '@data/services/playlist-editor.service';
 import { provideTestDefaults } from '../../testing/test-providers';
 import { mockAuthStore } from '../../testing/auth-store.mock';
 import { albumDto, trackDto } from '../../testing/catalog.fixtures';
+import { flushLibrary, flushAnyLibrary } from '../../testing/library.fixtures';
 
-const details = (ownerId: string, tracks: { id: string; position: number }[] = []) => ({
+const details = (
+  ownerId: string,
+  tracks: { id: string; position: number }[] = [],
+  collaborators: { id: string; name: string; avatarImageId: string | null }[] = [],
+) => ({
   id: 'p1',
   name: 'Road trip',
   description: 'Long drives',
@@ -15,20 +20,24 @@ const details = (ownerId: string, tracks: { id: string; position: number }[] = [
   isPublic: false,
   customCoverImageId: null,
   generatedCoverImageIds: [],
-  collaborators: [],
+  collaborators,
   tracks,
 });
 
 describe('PlaylistPage', () => {
-  async function setup(ownerId = 'u1', tracks: { id: string; position: number }[] = []) {
+  async function setup(
+    ownerId = 'u1',
+    tracks: { id: string; position: number }[] = [],
+    collaborators: { id: string; name: string; avatarImageId: string | null }[] = [],
+  ) {
     TestBed.configureTestingModule({ providers: [...provideTestDefaults(), mockAuthStore('authenticated').provider] });
     const http = TestBed.inject(HttpTestingController);
     const fixture = TestBed.createComponent(PlaylistPage);
     fixture.componentRef.setInput('id', 'p1');
     fixture.detectChanges();
     await settle();
-    for (const req of http.match((r) => r.url === '/api/v1/me/playlists')) req.flush([]);
-    http.expectOne('/api/v1/playlists/p1').flush(details(ownerId, tracks));
+    flushAnyLibrary(http);
+    http.expectOne('/api/v1/playlists/p1').flush(details(ownerId, tracks, collaborators));
     await settle();
     flushTracks(http, tracks.map((track) => track.id));
     await settle();
@@ -107,7 +116,7 @@ describe('PlaylistPage', () => {
     fixture.detectChanges();
     // Still showing the playlist (no loading state) while it reloads.
     expect(el.querySelector('app-page-state')).toBeNull();
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
     http.expectOne('/api/v1/playlists/p1').flush(details('u1', [{ id: 't1', position: 1 }]));
     await settle();
     http.expectOne('/api/v1/tracks/t1').flush(trackDto('t1'));
@@ -147,7 +156,7 @@ describe('PlaylistPage', () => {
     await settle();
 
     // Then it reloads, keeping the new order on screen meanwhile.
-    http.expectOne((r) => r.url === '/api/v1/me/playlists').flush([]);
+    flushLibrary(http);
     const reordered = [tracks[0], tracks[1], tracks[3], tracks[2]].map((track, index) => ({ id: track.id, position: index }));
     http.expectOne('/api/v1/playlists/p1').flush(details('u1', reordered));
     fixture.detectChanges();
@@ -170,5 +179,38 @@ describe('PlaylistPage', () => {
     await settle();
     const labels = [...document.querySelectorAll('.cdk-overlay-container .menu__label')].map((l) => l.textContent?.trim());
     expect(labels).not.toContain('Move down');
+  });
+
+  it('lets a collaborator reorder and remove songs, and names the collaborators', async () => {
+    const { el, http, fixture } = await setup(
+      'u2',
+      [
+        { id: 't1', position: 1 },
+        { id: 't2', position: 2 },
+      ],
+      [
+        { id: 'u3', name: 'Bence', avatarImageId: null },
+        { id: 'u1', name: 'Aqua Studios', avatarImageId: null },
+      ],
+    );
+    await flushAlbum(http);
+    fixture.detectChanges();
+    expect(el.querySelector('.playlist-page__info-section--title-btn')).toBeNull();
+    expect(el.textContent).toContain('with Bence and You');
+
+    el.querySelector<HTMLButtonElement>('.track-table__track--more-btn')!.click();
+    await settle();
+    const labels = [...document.querySelectorAll('.cdk-overlay-container .menu__label')].map((l) => l.textContent?.trim());
+    expect(labels).toContain('Remove from this playlist');
+    expect(labels).toContain('Move down');
+    // Inviting people stays with the owner.
+    expect(el.querySelector('.playlist-page__main-section--invite-btn')).toBeNull();
+  });
+
+  it('opens Invite collaborators for the owner', async () => {
+    const { el } = await setup('u1', [], [{ id: 'u3', name: 'Bence', avatarImageId: null }]);
+    el.querySelector<HTMLButtonElement>('.playlist-page__main-section--invite-btn')!.click();
+    await settle();
+    expect([...document.querySelectorAll('.collaborators__name')].map((n) => n.textContent?.trim())).toEqual(['Bence']);
   });
 });

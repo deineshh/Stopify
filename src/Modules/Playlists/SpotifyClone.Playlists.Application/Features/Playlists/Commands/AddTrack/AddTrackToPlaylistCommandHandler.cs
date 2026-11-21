@@ -44,7 +44,7 @@ internal sealed class AddTrackToPlaylistCommandHandler(
         }
 
         bool isAdmin = _currentUser.IsInRole(UserRoles.Admin);
-        if ((!_currentUser.IsAuthenticated || playlist.Collaborators.Any(c => c.Value != _currentUser.Id)) &&
+        if ((!_currentUser.IsAuthenticated || !playlist.IsOwnerOrCollaborator(UserId.From(_currentUser.Id))) &&
             !isAdmin)
         {
             return Result.Failure<AddTrackToPlaylistCommandResult>(PlaylistErrors.NotOwned);

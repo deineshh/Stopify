@@ -42,7 +42,7 @@ internal sealed class MoveTrackInPlaylistCommandHandler(
             return Result.Failure<MoveTrackInPlaylistCommandResult>(PlaylistErrors.InvalidTrack);
         }
 
-        if ((!_currentUser.IsAuthenticated || playlist.Collaborators.Any(c => c.Value != _currentUser.Id)) &&
+        if ((!_currentUser.IsAuthenticated || !playlist.IsOwnerOrCollaborator(UserId.From(_currentUser.Id))) &&
             !_currentUser.IsInRole(UserRoles.Admin))
         {
             return Result.Failure<MoveTrackInPlaylistCommandResult>(PlaylistErrors.NotOwned);

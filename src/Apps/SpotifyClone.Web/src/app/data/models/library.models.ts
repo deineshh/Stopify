@@ -15,4 +15,6 @@ export interface LibraryItem {
   collaborative?: boolean;
   isPublic?: boolean;
   description?: string | null;
+  /** The cover is an uploaded photo. */
+  hasCustomCover?: boolean;
 }

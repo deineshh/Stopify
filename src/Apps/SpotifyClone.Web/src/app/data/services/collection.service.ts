@@ -29,6 +29,7 @@ export class CollectionService {
             title: playlist.name,
             description: playlist.description,
             cover: imageUrl(playlist.customCoverImageId?.imageId ?? playlist.generatedCoverImageIds[0]),
+            hasCustomCover: !!playlist.customCoverImageId,
             isPublic: playlist.isPublic,
             ownerId: playlist.ownerId,
             tracks,

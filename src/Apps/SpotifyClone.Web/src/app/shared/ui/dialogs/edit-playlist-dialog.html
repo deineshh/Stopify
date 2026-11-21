@@ -11,23 +11,31 @@
   }
 
   <div class="edit-playlist__body">
-    <button
-      class="edit-playlist__cover"
-      type="button"
-      [disabled]="saving()"
-      aria-describedby="edit-playlist-cover-hint"
-      (click)="photoInput.click()"
-    >
-      @if (preview() ?? playlist.cover; as cover) {
-        <img class="edit-playlist__cover-img" [src]="cover" alt="" />
-      } @else {
-        <fa-icon class="edit-playlist__cover-icon" [icon]="['fas', 'music']" />
+    <div class="edit-playlist__cover-column">
+      <button
+        #coverButton
+        class="edit-playlist__cover"
+        type="button"
+        [disabled]="saving()"
+        aria-describedby="edit-playlist-cover-hint"
+        (click)="photoInput.click()"
+      >
+        @if (shownCover(); as cover) {
+          <img class="edit-playlist__cover-img" [src]="cover" alt="" />
+        } @else {
+          <fa-icon class="edit-playlist__cover-icon" [icon]="['fas', 'music']" />
+        }
+        <span class="edit-playlist__cover-overlay">
+          <fa-icon class="edit-playlist__cover-overlay-icon" [icon]="['fas', 'pen']" />
+          <span class="edit-playlist__cover-overlay-text">Choose photo</span>
+        </span>
+      </button>
+      @if (canRemovePhoto()) {
+        <button class="edit-playlist__remove-photo" type="button" [disabled]="saving()" (click)="removeChosenPhoto()">
+          Remove photo
+        </button>
       }
-      <span class="edit-playlist__cover-overlay">
-        <fa-icon class="edit-playlist__cover-overlay-icon" [icon]="['fas', 'pen']" />
-        <span class="edit-playlist__cover-overlay-text">Choose photo</span>
-      </span>
-    </button>
+    </div>
     <span id="edit-playlist-cover-hint" class="visually-hidden">JPEG, PNG or WebP, up to 10 MB.</span>
     <input
       #photoInput

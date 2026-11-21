@@ -70,6 +70,7 @@ describe('LibraryService', () => {
         collaborative: false,
         isPublic: false,
         description: null,
+        hasCustomCover: false,
       },
       {
         id: 'p2',
@@ -82,6 +83,7 @@ describe('LibraryService', () => {
         collaborative: false,
         isPublic: false,
         description: null,
+        hasCustomCover: false,
       },
       {
         id: 'p3',
@@ -94,6 +96,7 @@ describe('LibraryService', () => {
         collaborative: true,
         isPublic: false,
         description: null,
+        hasCustomCover: false,
       },
     ]);
     // "Add to playlist" offers your own playlists and the ones you collaborate on.

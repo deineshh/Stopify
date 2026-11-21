@@ -268,4 +268,19 @@ describe('PlaylistEditor', () => {
       expect(editor.revision('p1')).toBe(0);
     });
   });
+
+  it('removes the cover photo and passes errors on', async () => {
+    const { editor, http } = await setup();
+    editor.removeCover(roadTrip).subscribe();
+    const req = http.expectOne('/api/v1/playlists/p1/cover');
+    expect(req.request.method).toBe('DELETE');
+    req.flush(null);
+    expect(editor.revision('p1')).toBe(1);
+    await expectLibraryReload(http);
+
+    const failed = vi.fn();
+    editor.removeCover(roadTrip).subscribe({ error: failed });
+    http.expectOne('/api/v1/playlists/p1/cover').flush(null, { status: 405, statusText: 'Method Not Allowed' });
+    expect(failed.mock.calls[0][0].status).toBe(405);
+  });
 });

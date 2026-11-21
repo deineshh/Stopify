@@ -62,7 +62,14 @@ export class PlaylistPage {
   protected readonly ref = computed<PlaylistRef | null>(() => {
     const playlist = this.view();
     return playlist
-      ? { id: playlist.id, name: playlist.title, description: playlist.description, isPublic: playlist.isPublic, cover: playlist.cover }
+      ? {
+          id: playlist.id,
+          name: playlist.title,
+          description: playlist.description,
+          isPublic: playlist.isPublic,
+          cover: playlist.cover,
+          hasCustomCover: playlist.hasCustomCover,
+        }
       : null;
   });
 

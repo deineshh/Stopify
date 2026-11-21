@@ -182,6 +182,74 @@ describe('PlaylistDialogs', () => {
     });
   });
 
+  describe('Edit details: removing the photo', () => {
+    const withPhoto = { ...roadTrip, hasCustomCover: true };
+    const removeButton = () => $<HTMLButtonElement>('.edit-playlist__remove-photo');
+    const submit = () => $('form.edit-playlist')!.dispatchEvent(new Event('submit', { cancelable: true }));
+
+    beforeEach(() => {
+      URL.createObjectURL = vi.fn(() => 'blob:preview');
+      URL.revokeObjectURL = vi.fn();
+    });
+
+    it("isn't offered for a cover made from the songs", async () => {
+      const { dialogs } = await setup();
+      dialogs.editDetails(roadTrip);
+      await settle();
+      expect(removeButton()).toBeNull();
+    });
+
+    it('removes an uploaded photo on Save', async () => {
+      const { dialogs, http } = await setup();
+      dialogs.editDetails(withPhoto);
+      await settle();
+      removeButton()!.click();
+      await settle();
+      expect($('.edit-playlist__cover-img')).toBeNull();
+      expect(removeButton()).toBeNull();
+      expect(document.activeElement).toBe($('.edit-playlist__cover'));
+
+      submit();
+      const req = http.expectOne('/api/v1/playlists/p1/cover');
+      expect(req.request.method).toBe('DELETE');
+      req.flush(null);
+      await settle();
+      expect($('.edit-playlist')).toBeNull();
+      flushLibrary(http);
+    });
+
+    it("explains that the API can't remove photos yet", async () => {
+      const { dialogs, http } = await setup();
+      dialogs.editDetails(withPhoto);
+      await settle();
+      removeButton()!.click();
+      await settle();
+      submit();
+      http.expectOne('/api/v1/playlists/p1/cover').flush(null, { status: 405, statusText: 'Method Not Allowed' });
+      await settle();
+      expect($('.dialog__error')?.textContent).toContain("Removing photos isn't available yet.");
+      expect($('.edit-playlist')).toBeTruthy();
+    });
+
+    it('drops a newly chosen photo without any request', async () => {
+      const { dialogs, http } = await setup();
+      dialogs.editDetails(roadTrip);
+      await settle();
+      const input = $<HTMLInputElement>('input[type="file"][name="photo"]')!;
+      Object.defineProperty(input, 'files', { configurable: true, value: [new File(['x'], 'a.png', { type: 'image/png' })] });
+      input.dispatchEvent(new Event('change'));
+      await settle();
+      removeButton()!.click();
+      await settle();
+      expect($('.edit-playlist__cover-img')?.getAttribute('src')).toBe('/images/c/image.webp');
+      expect(URL.revokeObjectURL).toHaveBeenCalledWith('blob:preview');
+      submit();
+      await settle();
+      http.expectNone('/api/v1/playlists/p1/cover');
+      expect($('.edit-playlist')).toBeNull();
+    });
+  });
+
   describe('Delete', () => {
     it('does nothing when cancelled', async () => {
       const { dialogs, http } = await setup();

@@ -126,5 +126,6 @@ function toLibraryItem(playlist: PlaylistSummaryDto, ownerName: string | undefin
     collaborative,
     isPublic: playlist.isPublic,
     description: playlist.description,
+    hasCustomCover: !!playlist.customCover,
   };
 }

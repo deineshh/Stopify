@@ -5,6 +5,14 @@
   gap: 16px;
 }
 
+.edit-playlist__cover-column {
+  align-items: center;
+  display: flex;
+  flex: 0 0 180px;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .edit-playlist__cover {
   align-items: center;
   aspect-ratio: 1;
@@ -12,9 +20,22 @@
   border-radius: 4px;
   box-shadow: 0 4px 60px rgba(0, 0, 0, 0.5);
   display: flex;
-  flex: 0 0 180px;
   justify-content: center;
   overflow: hidden;
+  width: 100%;
+}
+
+.edit-playlist__remove-photo {
+  color: var(--light-gray-fg-color);
+  font-size: 0.8125rem;
+  font-weight: bold;
+  padding: 4px 8px;
+}
+
+.edit-playlist__remove-photo:hover:not(:disabled),
+.edit-playlist__remove-photo:focus-visible {
+  color: var(--primary-fg-color);
+  text-decoration: underline;
 }
 
 // The cover is a button: Spotify shows "Choose photo" over it on hover.
@@ -161,10 +182,13 @@
     flex-direction: column;
   }
 
-  .edit-playlist__cover {
+  .edit-playlist__cover-column {
     align-self: center;
-    box-shadow: none;
     flex: none;
+  }
+
+  .edit-playlist__cover {
+    box-shadow: none;
     height: 140px;
     width: 140px;
   }

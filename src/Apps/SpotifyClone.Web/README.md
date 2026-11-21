@@ -80,7 +80,7 @@ Path aliases: `@core/*`, `@data/*`, `@layout/*`, `@features/*`, `@shared/*`.
 - **Collaborators:** the owner's Invite button opens a dialog that finds people through search and adds or removes them (`app-collaborators-dialog`, loaded on first use). Collaborators see the playlist in Your Library ("Collaborative", from `GET /playlists?collaboratorIds=`), can add songs to it and reorder them, and remove the songs they added. The playlist page names them under the title.
 - **Rules from the API:** new playlists are private and named "My Playlist #N"; names are required (100 characters max) and descriptions are limited to 300; a song can be in a playlist only once; only the owner edits, deletes or manages collaborators; the API doesn't say who added a song, so a collaborator learns they can only remove their own songs when they try another. "Add to queue" needs something playing, because the queue belongs to the playback session.
 - **Cover photos:** Edit details takes a JPEG, PNG or WebP (up to 10 MB) and shows it at once. On Save `PlaylistEditor.changeCover` uploads it (`MediaApi`, `POST /media/images`), waits for the API's background job to publish the converted WebP, reads its size from that file (the upload endpoint doesn't return the metadata the cover endpoint needs) and links it (`PUT /playlists/{id}/cover`). Non-square photos are cropped to the square like Spotify.
-- **Not yet:** removing a cover photo (the API has no endpoint for it).
+- **Removing a cover photo:** "Remove photo" in Edit details calls `DELETE /playlists/{id}/cover`, which the API doesn't have yet (it answers 405, and the dialog says removing isn't available yet). Once the endpoint exists it works without changes here.
 
 ## Routes
 

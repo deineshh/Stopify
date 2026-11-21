@@ -7,6 +7,8 @@ export interface PlaylistView {
   title: string;
   description: string | null;
   cover: string;
+  /** The cover is an uploaded photo rather than the one made from the songs. */
+  hasCustomCover: boolean;
   isPublic: boolean;
   ownerId: string;
   tracks: readonly Track[];

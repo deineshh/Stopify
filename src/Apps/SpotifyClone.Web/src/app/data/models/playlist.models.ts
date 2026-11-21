@@ -13,4 +13,6 @@ export interface PlaylistRef {
   description: string | null;
   isPublic: boolean;
   cover?: string;
+  /** The cover is an uploaded photo (not the one made from the songs), so it can be removed. */
+  hasCustomCover?: boolean;
 }

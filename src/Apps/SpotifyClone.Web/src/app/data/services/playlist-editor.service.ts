@@ -107,6 +107,16 @@ export class PlaylistEditor {
     );
   }
 
+  /** Removes the uploaded photo. Errors are passed on (as ApiError) for the edit dialog to show. */
+  removeCover(playlist: Pick<PlaylistRef, 'id'>): Observable<void> {
+    return this.api.removeCover(playlist.id).pipe(
+      tap(() => this.changed(playlist.id)),
+      catchError((error: unknown) => {
+        throw toApiError(error);
+      }),
+    );
+  }
+
   setPublic(playlist: PlaylistRef, isPublic: boolean): Observable<void> {
     return this.signedIn(() =>
       this.api.editDetails(playlist.id, { name: playlist.name, description: playlist.description, isPublic }).pipe(

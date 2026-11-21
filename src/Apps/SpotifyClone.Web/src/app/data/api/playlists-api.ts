@@ -59,6 +59,15 @@ export class PlaylistsApi {
     });
   }
 
+  /**
+   * Owner only: drops the uploaded photo, so the cover is made from the songs again.
+   * `DELETE /playlists/{id}/cover` mirrors the genre and mood endpoints; until the API has it,
+   * it answers 405 (the route only allows PUT).
+   */
+  removeCover(id: string): Observable<void> {
+    return this.http.delete<void>(this.url(`/playlists/${encodeURIComponent(id)}/cover`));
+  }
+
   /** Owner only. Fails with `Playlist.InvalidCollaborator` for an unknown user or one already added. */
   addCollaborator(id: string, collaboratorId: string): Observable<void> {
     return this.http.post<void>(this.url(`/playlists/${encodeURIComponent(id)}/collaborators`), { collaboratorId });

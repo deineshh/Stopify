@@ -103,5 +103,12 @@ export class LibrarySidebar {
 }
 
 function toRef(item: LibraryItem): PlaylistRef {
-  return { id: item.id, name: item.title, description: item.description ?? null, isPublic: !!item.isPublic, cover: item.cover };
+  return {
+    id: item.id,
+    name: item.title,
+    description: item.description ?? null,
+    isPublic: !!item.isPublic,
+    cover: item.cover,
+    hasCustomCover: !!item.hasCustomCover,
+  };
 }
